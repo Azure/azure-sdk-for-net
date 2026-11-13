@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ComponentModel;
@@ -21,20 +21,20 @@ public partial class NamespaceReplicaLocation : ProvisionableConstruct
     /// </summary>
     public BicepValue<string> LocationName
     {
-        get { Initialize(); return _locationName!; }
-        set { Initialize(); _locationName!.Assign(value); }
+        get { Initialize(); return _locationName; }
+        set { Initialize(); _locationName.Assign(value); }
     }
-    private BicepValue<string>? _locationName;
+    private BicepValue<string> _locationName;
 
     /// <summary>
     /// GeoDR Role Types.
     /// </summary>
     public BicepValue<NamespaceGeoDRRoleType> RoleType
     {
-        get { Initialize(); return _roleType!; }
-        set { Initialize(); _roleType!.Assign(value); }
+        get { Initialize(); return _roleType; }
+        set { Initialize(); _roleType.Assign(value); }
     }
-    private BicepValue<NamespaceGeoDRRoleType>? _roleType;
+    private BicepValue<NamespaceGeoDRRoleType> _roleType;
 
     /// <summary>
     /// Optional property that denotes the ARM ID of the Cluster. This is
@@ -43,10 +43,10 @@ public partial class NamespaceReplicaLocation : ProvisionableConstruct
     /// </summary>
     public BicepValue<ResourceIdentifier> ClusterArmId
     {
-        get { Initialize(); return _clusterArmId!; }
-        set { Initialize(); _clusterArmId!.Assign(value); }
+        get { Initialize(); return _clusterArmId; }
+        set { Initialize(); _clusterArmId.Assign(value); }
     }
-    private BicepValue<ResourceIdentifier>? _clusterArmId;
+    private BicepValue<ResourceIdentifier> _clusterArmId;
 
     /// <summary>
     /// Creates a new NamespaceReplicaLocation.

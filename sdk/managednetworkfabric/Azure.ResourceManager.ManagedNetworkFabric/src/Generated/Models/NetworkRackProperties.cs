@@ -13,7 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network Rack Properties defines the properties of the resource. </summary>
-    public partial class NetworkRackProperties : AnnotationResourceProperties
+    internal partial class NetworkRackProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkRackProperties"/>. </summary>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>

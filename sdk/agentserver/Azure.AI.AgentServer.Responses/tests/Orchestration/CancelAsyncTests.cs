@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -28,8 +29,9 @@ public class CancelAsyncTests : IDisposable
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
-            NullLogger<ResponseOrchestrator>.Instance);
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), TestEventStreams.CreateInMemoryRegistry(), _tracker,
+            NullLogger<ResponseOrchestrator>.Instance,
+            Options.Create(new ResponsesServerOptions()));
     }
 
     [Test]
@@ -120,6 +122,28 @@ public class CancelAsyncTests : IDisposable
         var result = await _orchestrator.CancelAsync("resp_cancel_ip", PlatformContext.Empty);
 
         Assert.That(execution.CancelRequested, Is.True);
+    }
+
+    [Test]
+    public async Task InProgress_SignalsClientCancellationOnContext()
+    {
+        var execution = _tracker.Create("resp_cancel_sig", isBackground: true, isStreaming: false, store: true);
+        execution.Response = new Models.ResponseObject("resp_cancel_sig", "test") { Status = ResponseStatus.InProgress };
+        var context = new ResponseContext("resp_cancel_sig");
+        execution.Context = context;
+
+        Assert.That(context.IsClientCancelled, Is.False);
+
+        await _orchestrator.CancelAsync("resp_cancel_sig", PlatformContext.Empty);
+
+        Assert.Multiple(() =>
+        {
+            // An explicit client cancel surfaces the dedicated ClientCancellation signal so a handler
+            // can distinguish it from a shutdown or disconnect.
+            Assert.That(context.IsClientCancelled, Is.True);
+            Assert.That(context.ClientCancellation.IsCancellationRequested, Is.True);
+            Assert.That(context.IsShutdownRequested, Is.False);
+        });
     }
 
     public void Dispose()

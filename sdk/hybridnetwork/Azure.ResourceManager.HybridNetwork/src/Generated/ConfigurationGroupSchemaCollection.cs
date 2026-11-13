@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(ConfigurationGroupSchemaResource.ResourceType, out string configurationGroupSchemaApiVersion);
             _configurationGroupSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ConfigurationGroupSchemaResource.ResourceType.Namespace, Diagnostics);
-            _configurationGroupSchemasRestClient = new ConfigurationGroupSchemas(_configurationGroupSchemasClientDiagnostics, Pipeline, Endpoint, configurationGroupSchemaApiVersion ?? "2025-03-30");
+            _configurationGroupSchemasRestClient = new ConfigurationGroupSchemas(_configurationGroupSchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, configurationGroupSchemaApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfigurationGroupSchemaData, ConfigurationGroupSchemaResource>(new ConfigurationGroupSchemasGetByPublisherAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfigurationGroupSchemaData, ConfigurationGroupSchemaResource>(new ConfigurationGroupSchemaDataAsyncCollectionResultOfT(
                 _configurationGroupSchemasRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfigurationGroupSchemaData, ConfigurationGroupSchemaResource>(new ConfigurationGroupSchemasGetByPublisherCollectionResultOfT(
+            return new PageableWrapper<ConfigurationGroupSchemaData, ConfigurationGroupSchemaResource>(new ConfigurationGroupSchemaDataCollectionResultOfT(
                 _configurationGroupSchemasRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

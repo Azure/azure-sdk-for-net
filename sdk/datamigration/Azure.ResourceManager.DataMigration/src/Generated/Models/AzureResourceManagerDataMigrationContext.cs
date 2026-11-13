@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
@@ -61,14 +60,12 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(CopyProgressDetails))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigration))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationBase))]
-    [ModelReaderWriterBuildable(typeof(DatabaseMigrationBaseListResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationBaseProperties))]
-    [ModelReaderWriterBuildable(typeof(DatabaseMigrationCosmosDbMongoData))]
-    [ModelReaderWriterBuildable(typeof(DatabaseMigrationCosmosDbMongoListResult))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationCosmosDBMongoData))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationListResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationProperties))]
-    [ModelReaderWriterBuildable(typeof(DatabaseMigrationPropertiesCosmosDbMongo))]
-    [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDbRUMongoResource))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationPropertiesCosmosDBMongo))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDBRUMongoResource))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDbvCoreMongoResource))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationSqlDBData))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationSqlDBProperties))]
@@ -142,7 +139,6 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(DataMigrationServiceList))]
     [ModelReaderWriterBuildable(typeof(DataMigrationServiceNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(DataMigrationServiceNameAvailabilityResult))]
-    [ModelReaderWriterBuildable(typeof(DataMigrationServiceProperties))]
     [ModelReaderWriterBuildable(typeof(DataMigrationServiceResource))]
     [ModelReaderWriterBuildable(typeof(DataMigrationServiceSku))]
     [ModelReaderWriterBuildable(typeof(DataMigrationServiceStatusResponse))]
@@ -282,9 +278,7 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(MigrationOperationInput))]
     [ModelReaderWriterBuildable(typeof(MigrationReportResult))]
     [ModelReaderWriterBuildable(typeof(MigrationServiceData))]
-    [ModelReaderWriterBuildable(typeof(MigrationServiceListResult))]
     [ModelReaderWriterBuildable(typeof(MigrationServicePatch))]
-    [ModelReaderWriterBuildable(typeof(MigrationServiceProperties))]
     [ModelReaderWriterBuildable(typeof(MigrationServiceResource))]
     [ModelReaderWriterBuildable(typeof(MigrationValidationDatabaseSummaryResult))]
     [ModelReaderWriterBuildable(typeof(MigrationValidationError))]
@@ -294,12 +288,10 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(MongoConnectionInformation))]
     [ModelReaderWriterBuildable(typeof(MongoMigrationProgressDetails))]
     [ModelReaderWriterBuildable(typeof(ProjectList))]
-    [ModelReaderWriterBuildable(typeof(ProjectProperties))]
     [ModelReaderWriterBuildable(typeof(QueryAnalysisValidationResult))]
     [ModelReaderWriterBuildable(typeof(QueryExecutionResult))]
     [ModelReaderWriterBuildable(typeof(QuotaList))]
     [ModelReaderWriterBuildable(typeof(ResourceSkusResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchemaComparisonValidationResult))]
     [ModelReaderWriterBuildable(typeof(SchemaComparisonValidationResultType))]
     [ModelReaderWriterBuildable(typeof(SchemaMigrationSetting))]
@@ -314,7 +306,6 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(SqlMigrationRegenAuthKeys))]
     [ModelReaderWriterBuildable(typeof(SqlMigrationServiceData))]
     [ModelReaderWriterBuildable(typeof(SqlMigrationServicePatch))]
-    [ModelReaderWriterBuildable(typeof(SqlMigrationServiceProperties))]
     [ModelReaderWriterBuildable(typeof(SqlMigrationServiceResource))]
     [ModelReaderWriterBuildable(typeof(SqlMigrationTaskInput))]
     [ModelReaderWriterBuildable(typeof(SqlServerSqlMISyncTaskInput))]
@@ -326,7 +317,6 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(UnknownConnectionInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownConnectToSourceSqlServerTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownDatabaseMigrationBaseProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownDatabaseMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput))]

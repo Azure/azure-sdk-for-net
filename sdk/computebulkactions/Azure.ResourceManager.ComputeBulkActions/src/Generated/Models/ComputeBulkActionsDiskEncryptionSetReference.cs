@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </summary>
-    public partial class ComputeBulkActionsDiskEncryptionSetReference : ComputeBulkActionsSubResource
+    internal partial class ComputeBulkActionsDiskEncryptionSetReference : ComputeBulkActionsSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsDiskEncryptionSetReference"/>. </summary>
         public ComputeBulkActionsDiskEncryptionSetReference()

@@ -211,7 +211,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestsRequest(string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateGetTestsRequest(string @orderby, string search, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -228,13 +228,13 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("search", search, true);
             }
-            if (lastModifiedStartTime != null)
+            if (lastModifiedStartsOn != null)
             {
-                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (lastModifiedEndTime != null)
+            if (lastModifiedEndsOn != null)
             {
-                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (maxPageSize != null)
             {
@@ -392,7 +392,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestProfilesRequest(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
+        internal HttpMessage CreateGetTestProfilesRequest(int? maxpagesize, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -405,13 +405,13 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (lastModifiedStartTime != null)
+            if (lastModifiedStartsOn != null)
             {
-                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (lastModifiedEndTime != null)
+            if (lastModifiedEndsOn != null)
             {
-                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (testProfileIds != null && !(testProfileIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -429,7 +429,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetTestProfilesRequest(Uri nextPage, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
+        internal HttpMessage CreateNextGetTestProfilesRequest(Uri nextPage, int? maxpagesize, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -507,7 +507,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTriggersRequest(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTriggersRequest(string testIds, string states, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -524,13 +524,13 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("states", states, true);
             }
-            if (lastModifiedStartTime != null)
+            if (lastModifiedStartsOn != null)
             {
-                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (lastModifiedEndTime != null)
+            if (lastModifiedEndsOn != null)
             {
-                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (maxpagesize != null)
             {
@@ -544,7 +544,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetTriggersRequest(Uri nextPage, string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTriggersRequest(Uri nextPage, string testIds, string states, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -622,7 +622,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetNotificationRulesRequest(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetNotificationRulesRequest(string testIds, string scopes, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -639,13 +639,13 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("scopes", scopes, true);
             }
-            if (lastModifiedStartTime != null)
+            if (lastModifiedStartsOn != null)
             {
-                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedStartTime", TypeFormatters.ConvertToString(lastModifiedStartsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (lastModifiedEndTime != null)
+            if (lastModifiedEndsOn != null)
             {
-                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("lastModifiedEndTime", TypeFormatters.ConvertToString(lastModifiedEndsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (maxpagesize != null)
             {
@@ -659,7 +659,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetNotificationRulesRequest(Uri nextPage, string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetNotificationRulesRequest(Uri nextPage, string testIds, string scopes, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

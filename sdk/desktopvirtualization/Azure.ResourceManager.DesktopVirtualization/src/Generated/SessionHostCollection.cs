@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(SessionHostResource.ResourceType, out string sessionHostApiVersion);
             _sessionHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", SessionHostResource.ResourceType.Namespace, Diagnostics);
-            _sessionHostsRestClient = new SessionHosts(_sessionHostsClientDiagnostics, Pipeline, Endpoint, sessionHostApiVersion ?? "2026-03-01-preview");
+            _sessionHostsRestClient = new SessionHosts(_sessionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sessionHostApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SessionHostData, SessionHostResource>(new SessionHostsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SessionHostData, SessionHostResource>(new SessionHostDataAsyncCollectionResultOfT(
                 _sessionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SessionHostData, SessionHostResource>(new SessionHostsGetAllCollectionResultOfT(
+            return new PageableWrapper<SessionHostData, SessionHostResource>(new SessionHostDataCollectionResultOfT(
                 _sessionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

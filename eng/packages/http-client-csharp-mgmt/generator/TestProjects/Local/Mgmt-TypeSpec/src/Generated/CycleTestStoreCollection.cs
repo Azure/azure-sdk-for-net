@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(CycleTestStoreResource.ResourceType, out string cycleTestStoreApiVersion);
             _cycleTestStoresClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", CycleTestStoreResource.ResourceType.Namespace, Diagnostics);
-            _cycleTestStoresRestClient = new CycleTestStores(_cycleTestStoresClientDiagnostics, Pipeline, Endpoint, cycleTestStoreApiVersion ?? "2024-05-01");
+            _cycleTestStoresRestClient = new CycleTestStores(_cycleTestStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cycleTestStoreApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

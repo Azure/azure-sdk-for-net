@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// A pipeline activity.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ControlActivity"/>, <see cref="ExecutionActivity"/>, <see cref="CopyActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="CustomActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="DeleteActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="LookupActivity"/>, <see cref="WebActivity"/>, <see cref="GetDatasetMetadataActivity"/>, <see cref="IfConditionActivity"/>, <see cref="SwitchActivity"/>, <see cref="ForEachActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="WaitActivity"/>, <see cref="FailActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="FilterActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DatabricksJobActivity"/>, <see cref="SetVariableActivity"/>, <see cref="AppendVariableActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="WebHookActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="DataFactoryScriptActivity"/>, <see cref="SynapseNotebookActivity"/>, and <see cref="SynapseSparkJobDefinitionActivity"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataFactoryScriptActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksJobActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetDatasetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="SynapseNotebookActivity"/>, <see cref="SynapseSparkJobDefinitionActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/>, and <see cref="WebHookActivity"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownActivity))]
     public abstract partial class PipelineActivity : IJsonModel<PipelineActivity>
@@ -164,90 +164,90 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Container":
-                        return ControlActivity.DeserializeControlActivity(element, options);
-                    case "Execution":
-                        return ExecutionActivity.DeserializeExecutionActivity(element, options);
-                    case "Copy":
-                        return CopyActivity.DeserializeCopyActivity(element, options);
-                    case "HDInsightHive":
-                        return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element, options);
-                    case "HDInsightPig":
-                        return HDInsightPigActivity.DeserializeHDInsightPigActivity(element, options);
-                    case "HDInsightMapReduce":
-                        return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element, options);
-                    case "HDInsightStreaming":
-                        return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element, options);
-                    case "HDInsightSpark":
-                        return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element, options);
-                    case "ExecuteSSISPackage":
-                        return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element, options);
-                    case "Custom":
-                        return CustomActivity.DeserializeCustomActivity(element, options);
-                    case "SqlServerStoredProcedure":
-                        return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element, options);
-                    case "ExecutePipeline":
-                        return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
-                    case "Delete":
-                        return DeleteActivity.DeserializeDeleteActivity(element, options);
+                    case "AppendVariable":
+                        return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
                     case "AzureDataExplorerCommand":
                         return AzureDataExplorerCommandActivity.DeserializeAzureDataExplorerCommandActivity(element, options);
-                    case "Lookup":
-                        return LookupActivity.DeserializeLookupActivity(element, options);
-                    case "WebActivity":
-                        return WebActivity.DeserializeWebActivity(element, options);
-                    case "GetMetadata":
-                        return GetDatasetMetadataActivity.DeserializeGetDatasetMetadataActivity(element, options);
-                    case "IfCondition":
-                        return IfConditionActivity.DeserializeIfConditionActivity(element, options);
-                    case "Switch":
-                        return SwitchActivity.DeserializeSwitchActivity(element, options);
-                    case "ForEach":
-                        return ForEachActivity.DeserializeForEachActivity(element, options);
+                    case "AzureFunctionActivity":
+                        return AzureFunctionActivity.DeserializeAzureFunctionActivity(element, options);
                     case "AzureMLBatchExecution":
                         return AzureMLBatchExecutionActivity.DeserializeAzureMLBatchExecutionActivity(element, options);
-                    case "AzureMLUpdateResource":
-                        return AzureMLUpdateResourceActivity.DeserializeAzureMLUpdateResourceActivity(element, options);
                     case "AzureMLExecutePipeline":
                         return AzureMLExecutePipelineActivity.DeserializeAzureMLExecutePipelineActivity(element, options);
+                    case "AzureMLUpdateResource":
+                        return AzureMLUpdateResourceActivity.DeserializeAzureMLUpdateResourceActivity(element, options);
+                    case "Container":
+                        return ControlActivity.DeserializeControlActivity(element, options);
+                    case "Copy":
+                        return CopyActivity.DeserializeCopyActivity(element, options);
+                    case "Custom":
+                        return CustomActivity.DeserializeCustomActivity(element, options);
+                    case "Script":
+                        return DataFactoryScriptActivity.DeserializeDataFactoryScriptActivity(element, options);
                     case "DataLakeAnalyticsU-SQL":
                         return DataLakeAnalyticsUsqlActivity.DeserializeDataLakeAnalyticsUsqlActivity(element, options);
-                    case "Wait":
-                        return WaitActivity.DeserializeWaitActivity(element, options);
-                    case "Fail":
-                        return FailActivity.DeserializeFailActivity(element, options);
-                    case "Until":
-                        return UntilActivity.DeserializeUntilActivity(element, options);
-                    case "Validation":
-                        return ValidationActivity.DeserializeValidationActivity(element, options);
-                    case "Filter":
-                        return FilterActivity.DeserializeFilterActivity(element, options);
+                    case "DatabricksJob":
+                        return DatabricksJobActivity.DeserializeDatabricksJobActivity(element, options);
                     case "DatabricksNotebook":
                         return DatabricksNotebookActivity.DeserializeDatabricksNotebookActivity(element, options);
                     case "DatabricksSparkJar":
                         return DatabricksSparkJarActivity.DeserializeDatabricksSparkJarActivity(element, options);
                     case "DatabricksSparkPython":
                         return DatabricksSparkPythonActivity.DeserializeDatabricksSparkPythonActivity(element, options);
-                    case "DatabricksJob":
-                        return DatabricksJobActivity.DeserializeDatabricksJobActivity(element, options);
-                    case "SetVariable":
-                        return SetVariableActivity.DeserializeSetVariableActivity(element, options);
-                    case "AppendVariable":
-                        return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
-                    case "AzureFunctionActivity":
-                        return AzureFunctionActivity.DeserializeAzureFunctionActivity(element, options);
-                    case "WebHook":
-                        return WebHookActivity.DeserializeWebHookActivity(element, options);
+                    case "Delete":
+                        return DeleteActivity.DeserializeDeleteActivity(element, options);
                     case "ExecuteDataFlow":
                         return ExecuteDataFlowActivity.DeserializeExecuteDataFlowActivity(element, options);
+                    case "ExecutePipeline":
+                        return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
+                    case "ExecuteSSISPackage":
+                        return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element, options);
                     case "ExecuteWranglingDataflow":
                         return ExecuteWranglingDataflowActivity.DeserializeExecuteWranglingDataflowActivity(element, options);
-                    case "Script":
-                        return DataFactoryScriptActivity.DeserializeDataFactoryScriptActivity(element, options);
+                    case "Execution":
+                        return ExecutionActivity.DeserializeExecutionActivity(element, options);
+                    case "Fail":
+                        return FailActivity.DeserializeFailActivity(element, options);
+                    case "Filter":
+                        return FilterActivity.DeserializeFilterActivity(element, options);
+                    case "ForEach":
+                        return ForEachActivity.DeserializeForEachActivity(element, options);
+                    case "GetMetadata":
+                        return GetDatasetMetadataActivity.DeserializeGetDatasetMetadataActivity(element, options);
+                    case "HDInsightHive":
+                        return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element, options);
+                    case "HDInsightMapReduce":
+                        return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element, options);
+                    case "HDInsightPig":
+                        return HDInsightPigActivity.DeserializeHDInsightPigActivity(element, options);
+                    case "HDInsightSpark":
+                        return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element, options);
+                    case "HDInsightStreaming":
+                        return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element, options);
+                    case "IfCondition":
+                        return IfConditionActivity.DeserializeIfConditionActivity(element, options);
+                    case "Lookup":
+                        return LookupActivity.DeserializeLookupActivity(element, options);
+                    case "SetVariable":
+                        return SetVariableActivity.DeserializeSetVariableActivity(element, options);
+                    case "SqlServerStoredProcedure":
+                        return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element, options);
+                    case "Switch":
+                        return SwitchActivity.DeserializeSwitchActivity(element, options);
                     case "SynapseNotebook":
                         return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element, options);
                     case "SparkJob":
                         return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element, options);
+                    case "Until":
+                        return UntilActivity.DeserializeUntilActivity(element, options);
+                    case "Validation":
+                        return ValidationActivity.DeserializeValidationActivity(element, options);
+                    case "Wait":
+                        return WaitActivity.DeserializeWaitActivity(element, options);
+                    case "WebActivity":
+                        return WebActivity.DeserializeWebActivity(element, options);
+                    case "WebHook":
+                        return WebHookActivity.DeserializeWebHookActivity(element, options);
                 }
             }
             return UnknownActivity.DeserializeUnknownActivity(element, options);

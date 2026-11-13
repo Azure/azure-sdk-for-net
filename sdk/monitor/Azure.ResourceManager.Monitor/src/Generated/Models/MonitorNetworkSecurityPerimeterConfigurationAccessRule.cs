@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MonitorNetworkSecurityPerimeterConfigurationAccessRule(string name, MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Name of the access rule. </summary>
         public string Name { get; }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Properties of the access rule. </summary>
         public MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties Properties { get; }
     }
 }

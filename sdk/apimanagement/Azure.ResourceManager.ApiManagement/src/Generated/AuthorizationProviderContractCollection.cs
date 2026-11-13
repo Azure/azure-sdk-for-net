@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(AuthorizationProviderContractResource.ResourceType, out string authorizationProviderContractApiVersion);
             _authorizationProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", AuthorizationProviderContractResource.ResourceType.Namespace, Diagnostics);
-            _authorizationProviderRestClient = new AuthorizationProvider(_authorizationProviderClientDiagnostics, Pipeline, Endpoint, authorizationProviderContractApiVersion ?? "2025-09-01-preview");
+            _authorizationProviderRestClient = new AuthorizationProvider(_authorizationProviderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authorizationProviderContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthorizationProviderContractData, AuthorizationProviderContractResource>(new AuthorizationProviderGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AuthorizationProviderContractData, AuthorizationProviderContractResource>(new AuthorizationProviderContractDataAsyncCollectionResultOfT(
                 _authorizationProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthorizationProviderContractData, AuthorizationProviderContractResource>(new AuthorizationProviderGetByServiceCollectionResultOfT(
+            return new PageableWrapper<AuthorizationProviderContractData, AuthorizationProviderContractResource>(new AuthorizationProviderContractDataCollectionResultOfT(
                 _authorizationProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

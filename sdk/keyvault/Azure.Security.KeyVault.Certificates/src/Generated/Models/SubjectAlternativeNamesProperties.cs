@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             DnsNames = new ChangeTrackingList<string>();
             Upns = new ChangeTrackingList<string>();
             Uris = new ChangeTrackingList<string>();
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubjectAlternativeNamesProperties"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             DnsNames = dnsNames;
             Upns = upns;
             Uris = uris;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,6 @@ namespace Azure.Security.KeyVault.Certificates.Models
         public IList<string> Uris { get; }
 
         /// <summary> IP addresses; supports IPv4 and IPv6. </summary>
-        public IList<string> IpAddresses { get; }
+        public IList<string> IPAddresses { get; }
     }
 }

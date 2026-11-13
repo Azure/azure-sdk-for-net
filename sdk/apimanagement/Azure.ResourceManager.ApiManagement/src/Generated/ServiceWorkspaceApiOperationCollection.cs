@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceApiOperationResource.ResourceType, out string serviceWorkspaceApiOperationApiVersion);
             _workspaceApiOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiOperationResource.ResourceType.Namespace, Diagnostics);
-            _workspaceApiOperationRestClient = new WorkspaceApiOperation(_workspaceApiOperationClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiOperationApiVersion ?? "2025-09-01-preview");
+            _workspaceApiOperationRestClient = new WorkspaceApiOperation(_workspaceApiOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceApiOperationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiOperationData, ServiceWorkspaceApiOperationResource>(new WorkspaceApiOperationGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiOperationData, ServiceWorkspaceApiOperationResource>(new ApiOperationDataAsyncCollectionResultOfT(
                 _workspaceApiOperationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiOperationData, ServiceWorkspaceApiOperationResource>(new WorkspaceApiOperationGetByApiCollectionResultOfT(
+            return new PageableWrapper<ApiOperationData, ServiceWorkspaceApiOperationResource>(new ApiOperationDataCollectionResultOfT(
                 _workspaceApiOperationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

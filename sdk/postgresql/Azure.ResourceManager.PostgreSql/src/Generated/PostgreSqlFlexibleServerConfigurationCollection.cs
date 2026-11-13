@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(PostgreSqlFlexibleServerConfigurationResource.ResourceType, out string postgreSqlFlexibleServerConfigurationApiVersion);
             _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerConfigurationApiVersion ?? "2026-04-01-preview");
+            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerConfigurationApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerConfigurationData, PostgreSqlFlexibleServerConfigurationResource>(new ConfigurationsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerConfigurationData, PostgreSqlFlexibleServerConfigurationResource>(new PostgreSqlFlexibleServerConfigurationDataAsyncCollectionResultOfT(
                 _configurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerConfigurationData, PostgreSqlFlexibleServerConfigurationResource>(new ConfigurationsGetByServerCollectionResultOfT(
+            return new PageableWrapper<PostgreSqlFlexibleServerConfigurationData, PostgreSqlFlexibleServerConfigurationResource>(new PostgreSqlFlexibleServerConfigurationDataCollectionResultOfT(
                 _configurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

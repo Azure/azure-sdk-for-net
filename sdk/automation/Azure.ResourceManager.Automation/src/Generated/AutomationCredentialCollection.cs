@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationCredentialResource.ResourceType, out string automationCredentialApiVersion);
             _credentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationCredentialResource.ResourceType.Namespace, Diagnostics);
-            _credentialRestClient = new Credential(_credentialClientDiagnostics, Pipeline, Endpoint, automationCredentialApiVersion ?? "2024-10-23");
+            _credentialRestClient = new Credential(_credentialClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationCredentialApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationCredentialData, AutomationCredentialResource>(new CredentialGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationCredentialData, AutomationCredentialResource>(new AutomationCredentialDataAsyncCollectionResultOfT(
                 _credentialRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationCredentialData, AutomationCredentialResource>(new CredentialGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationCredentialData, AutomationCredentialResource>(new AutomationCredentialDataCollectionResultOfT(
                 _credentialRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

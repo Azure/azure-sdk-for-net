@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationList(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterConfigurationList(value ?? new ChangeTrackingList<ServiceBusNetworkSecurityPerimeterConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

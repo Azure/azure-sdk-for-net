@@ -28,6 +28,11 @@
     <PackageReference Include="OpenTelemetry.Exporter.Console" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
     <PackageReference Include="System.Linq.AsyncEnumerable" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\tests-shared\AiTestEnvironmentBootstrap.cs" Link="Shared\AiTestEnvironmentBootstrap.cs" />
   </ItemGroup>
 
   <ItemGroup>

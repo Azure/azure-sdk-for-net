@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementGatewayHostnameConfigurationResource.ResourceType, out string apiManagementGatewayHostnameConfigurationApiVersion);
             _gatewayHostnameConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementGatewayHostnameConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _gatewayHostnameConfigurationRestClient = new GatewayHostnameConfiguration(_gatewayHostnameConfigurationClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayHostnameConfigurationApiVersion ?? "2025-09-01-preview");
+            _gatewayHostnameConfigurationRestClient = new GatewayHostnameConfiguration(_gatewayHostnameConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGatewayHostnameConfigurationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGatewayHostnameConfigurationData, ApiManagementGatewayHostnameConfigurationResource>(new GatewayHostnameConfigurationGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementGatewayHostnameConfigurationData, ApiManagementGatewayHostnameConfigurationResource>(new ApiManagementGatewayHostnameConfigurationDataAsyncCollectionResultOfT(
                 _gatewayHostnameConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGatewayHostnameConfigurationData, ApiManagementGatewayHostnameConfigurationResource>(new GatewayHostnameConfigurationGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementGatewayHostnameConfigurationData, ApiManagementGatewayHostnameConfigurationResource>(new ApiManagementGatewayHostnameConfigurationDataCollectionResultOfT(
                 _gatewayHostnameConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

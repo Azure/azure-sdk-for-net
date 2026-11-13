@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceConnector.Models;
 
@@ -21,27 +20,19 @@ namespace Azure.ResourceManager.ResourceConnector
     [ModelReaderWriterBuildable(typeof(ApplianceEvent))]
     [ModelReaderWriterBuildable(typeof(ApplianceListCredentialResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceListKeysResult))]
-    [ModelReaderWriterBuildable(typeof(ApplianceListResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceNetworkProfile))]
-    [ModelReaderWriterBuildable(typeof(ApplianceProperties))]
-    [ModelReaderWriterBuildable(typeof(AppliancePropertiesInfrastructureConfig))]
     [ModelReaderWriterBuildable(typeof(ApplianceSshKey))]
     [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersion))]
     [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersionCatalogVersion))]
     [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersionCatalogVersionProperties))]
-    [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersionMetadata))]
     [ModelReaderWriterBuildable(typeof(ApplianceTelemetryConfigResult))]
     [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraph))]
     [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraphProperties))]
-    [ModelReaderWriterBuildable(typeof(DnsConfiguration))]
-    [ModelReaderWriterBuildable(typeof(GatewayConfiguration))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ProxyConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceData))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorAppliancePatch))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerResourceConnectorContext : ModelReaderWriterContext

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Cdn
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of LogAnalytics for mocking. </summary>
         protected LogAnalytics()
@@ -27,14 +28,16 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of LogAnalytics. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal LogAnalytics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal LogAnalytics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(LogAnalytics).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -62,7 +65,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
@@ -72,7 +79,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("groupBy", paramStr, true);
+                    }
                 }
             }
             if (continents != null && !(continents is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
@@ -107,6 +118,7 @@ namespace Azure.ResourceManager.Cdn
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -130,14 +142,22 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in rankings)
                 {
-                    uri.AppendQuery("rankings", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("rankings", paramStr, true);
+                    }
                 }
             }
             if (metrics != null && !(metrics is ChangeTrackingList<LogRankingMetric> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("maxRanking", TypeFormatters.ConvertToString(maxRanking), true);
@@ -154,6 +174,7 @@ namespace Azure.ResourceManager.Cdn
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -177,6 +198,7 @@ namespace Azure.ResourceManager.Cdn
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -200,6 +222,7 @@ namespace Azure.ResourceManager.Cdn
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -223,7 +246,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
@@ -233,27 +260,40 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in actions)
                 {
-                    uri.AppendQuery("actions", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("actions", paramStr, true);
+                    }
                 }
             }
             if (groupBy != null && !(groupBy is ChangeTrackingList<WafRankingGroupBy> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var @param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("groupBy", paramStr, true);
+                    }
                 }
             }
             if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var @param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("ruleTypes", paramStr, true);
+                    }
                 }
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -277,7 +317,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
@@ -287,27 +331,40 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in rankings)
                 {
-                    uri.AppendQuery("rankings", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("rankings", paramStr, true);
+                    }
                 }
             }
             if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var @param in actions)
                 {
-                    uri.AppendQuery("actions", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("actions", paramStr, true);
+                    }
                 }
             }
             if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var @param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("ruleTypes", paramStr, true);
+                    }
                 }
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using System.Text.Json;
 using System.ClientModel.Primitives;
+using System.Text.Json;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory

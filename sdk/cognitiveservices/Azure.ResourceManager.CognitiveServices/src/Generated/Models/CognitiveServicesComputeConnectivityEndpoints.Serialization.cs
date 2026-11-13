@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesComputeConnectivityEndpoints)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(SshPort))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string publicIpAddress = default;
+            string publicIPAddress = default;
             int? sshPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sshPort"u8))
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesComputeConnectivityEndpoints(publicIpAddress, sshPort, additionalBinaryDataProperties);
+            return new CognitiveServicesComputeConnectivityEndpoints(publicIPAddress, sshPort, additionalBinaryDataProperties);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption
         {
             TryGetApiVersion(ConsumptionBudgetResource.ResourceType, out string consumptionBudgetApiVersion);
             _budgetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ConsumptionBudgetResource.ResourceType.Namespace, Diagnostics);
-            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Endpoint, consumptionBudgetApiVersion ?? "2024-08-01");
+            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, consumptionBudgetApiVersion ?? "2024-08-01");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Consumption
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new BudgetsGetAllAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
+            return new AsyncPageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new ConsumptionBudgetDataAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Consumption
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new BudgetsGetAllCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
+            return new PageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new ConsumptionBudgetDataCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
         }
 
         /// <summary>

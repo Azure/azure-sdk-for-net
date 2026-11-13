@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementLoggerResource.ResourceType, out string apiManagementLoggerApiVersion);
             _loggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementLoggerResource.ResourceType.Namespace, Diagnostics);
-            _loggerRestClient = new Logger(_loggerClientDiagnostics, Pipeline, Endpoint, apiManagementLoggerApiVersion ?? "2025-09-01-preview");
+            _loggerRestClient = new Logger(_loggerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementLoggerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementLoggerData, ApiManagementLoggerResource>(new LoggerGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementLoggerData, ApiManagementLoggerResource>(new ApiManagementLoggerDataAsync0CollectionResultOfT(
                 _loggerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementLoggerData, ApiManagementLoggerResource>(new LoggerGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementLoggerData, ApiManagementLoggerResource>(new ApiManagementLoggerData0CollectionResultOfT(
                 _loggerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

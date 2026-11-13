@@ -95,12 +95,27 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("configuration_state"u8);
+                writer.WriteStringValue(ConfigurationState.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StateSource))
+            {
+                writer.WritePropertyName("state_source"u8);
+                writer.WriteStringValue(StateSource.Value.ToString());
+            }
             writer.WritePropertyName("versions"u8);
             writer.WriteObjectValue(Versions, options);
             if (Optional.IsDefined(AgentEndpoint))
             {
                 writer.WritePropertyName("agent_endpoint"u8);
                 writer.WriteObjectValue(AgentEndpoint, options);
+            }
+            if (Optional.IsDefined(DigitalWorkerType))
+            {
+                writer.WritePropertyName("digital_worker_type"u8);
+                writer.WriteStringValue(DigitalWorkerType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceIdentity))
             {
@@ -168,8 +183,11 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             string name = default;
             AgentState state = default;
+            AgentState configurationState = default;
+            AgentStateSource? stateSource = default;
             AgentObjectVersions versions = default;
             AgentEndpointConfiguration agentEndpoint = default;
+            DigitalWorkerType? digitalWorkerType = default;
             AgentIdentity instanceIdentity = default;
             AgentIdentity blueprint = default;
             AgentBlueprintReference blueprintReference = default;
@@ -197,6 +215,20 @@ namespace Azure.AI.Projects.Agents
                     state = new AgentState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("configuration_state"u8))
+                {
+                    configurationState = new AgentState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("state_source"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stateSource = new AgentStateSource(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("versions"u8))
                 {
                     versions = AgentObjectVersions.DeserializeAgentObjectVersions(prop.Value, options);
@@ -209,6 +241,15 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     agentEndpoint = AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("digital_worker_type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    digitalWorkerType = new DigitalWorkerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instance_identity"u8))
@@ -249,7 +290,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProjectsAgentRecord(
@@ -257,8 +298,11 @@ namespace Azure.AI.Projects.Agents
                 id,
                 name,
                 state,
+                configurationState,
+                stateSource,
                 versions,
                 agentEndpoint,
+                digitalWorkerType,
                 instanceIdentity,
                 blueprint,
                 blueprintReference,

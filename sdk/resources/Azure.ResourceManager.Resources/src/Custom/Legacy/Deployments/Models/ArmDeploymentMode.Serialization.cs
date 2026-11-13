@@ -1,0 +1,31 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.Resources.Models
+{
+    [Obsolete("Use Azure.ResourceManager.Resources.Deployments instead.", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static partial class ArmDeploymentModeExtensions
+    {
+        public static string ToSerialString(this ArmDeploymentMode value) => value switch
+        {
+            ArmDeploymentMode.Incremental => "Incremental",
+            ArmDeploymentMode.Complete => "Complete",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmDeploymentMode value.")
+        };
+
+        public static ArmDeploymentMode ToArmDeploymentMode(this string value)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Incremental"))
+                return ArmDeploymentMode.Incremental;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Complete"))
+                return ArmDeploymentMode.Complete;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmDeploymentMode value.");
+        }
+    }
+}

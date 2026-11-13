@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string serviceWorkspaceNotificationApiVersion);
             _workspaceNotificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _workspaceNotificationRestClient = new WorkspaceNotification(_workspaceNotificationClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
+            _workspaceNotificationRestClient = new WorkspaceNotification(_workspaceNotificationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
             _workspaceNotificationRecipientUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _workspaceNotificationRecipientUserRestClient = new WorkspaceNotificationRecipientUser(_workspaceNotificationRecipientUserClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
+            _workspaceNotificationRecipientUserRestClient = new WorkspaceNotificationRecipientUser(_workspaceNotificationRecipientUserClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
             _workspaceNotificationRecipientEmailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _workspaceNotificationRecipientEmailRestClient = new WorkspaceNotificationRecipientEmail(_workspaceNotificationRecipientEmailClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
+            _workspaceNotificationRecipientEmailRestClient = new WorkspaceNotificationRecipientEmail(_workspaceNotificationRecipientEmailClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientUserGetWorkspaceNotificationRecipientUsersByNotificationAsyncCollectionResultOfT(
+            return new RecipientUserContractAsyncCollectionResultOfT(
                 _workspaceNotificationRecipientUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientUserGetWorkspaceNotificationRecipientUsersByNotificationCollectionResultOfT(
+            return new RecipientUserContractCollectionResultOfT(
                 _workspaceNotificationRecipientUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientEmailGetWorkspaceNotificationRecipientEmailsByNotificationAsyncCollectionResultOfT(
+            return new RecipientEmailContractAsyncCollectionResultOfT(
                 _workspaceNotificationRecipientEmailRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientEmailGetWorkspaceNotificationRecipientEmailsByNotificationCollectionResultOfT(
+            return new RecipientEmailContractCollectionResultOfT(
                 _workspaceNotificationRecipientEmailRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

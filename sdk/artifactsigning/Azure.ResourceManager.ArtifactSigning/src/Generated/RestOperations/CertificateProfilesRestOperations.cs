@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ArtifactSigning
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of CertificateProfiles for mocking. </summary>
         protected CertificateProfiles()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// <summary> Initializes a new instance of CertificateProfiles. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal CertificateProfiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal CertificateProfiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(CertificateProfiles).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -85,6 +89,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -111,6 +116,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -133,6 +139,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -156,11 +163,12 @@ namespace Azure.ResourceManager.ArtifactSigning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateRevokeCertificateRequest(Guid subscriptionId, string resourceGroupName, string accountName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRevokeCertificatesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -172,7 +180,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             uri.AppendPath(accountName, true);
             uri.AppendPath("/certificateProfiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/revokeCertificate", false);
+            uri.AppendPath("/revokeCertificates", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -181,6 +189,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added a `RouteDirectionsBatchResult` model factory method to `MapsRoutingModelFactory` to support mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed

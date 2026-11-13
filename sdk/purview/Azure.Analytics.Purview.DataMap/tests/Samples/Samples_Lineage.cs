@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response<AtlasLineageInfo> response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response<AtlasLineageInfo> response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response response = client.GetNextPage("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response response = await client.GetNextPageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response<AtlasLineageInfo> response = client.GetNextPage("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response<AtlasLineageInfo> response = await client.GetNextPageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response response = client.GetByUniqueAttribute("azure_blob_path", "BOTH");
 
@@ -134,7 +134,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response response = await client.GetByUniqueAttributeAsync("azure_blob_path", "BOTH");
 
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("azure_blob_path", LineageDirection.Both);
         }
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+            DataMapLineage client = new DataMapClient(endpoint, credential).GetDataMapLineageClient();
 
             Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("azure_blob_path", LineageDirection.Both);
         }

@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(ResourceType, out string guestConfigurationVmAssignmentApiVersion);
             _guestConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReports(_guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReports(_guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentReportsGetReportsAsyncCollectionResultOfT(
+            return new GuestConfigurationAssignmentReportAsyncCollectionResultOfT(
                 _guestConfigurationAssignmentReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentReportsGetReportsCollectionResultOfT(
+            return new GuestConfigurationAssignmentReportCollectionResultOfT(
                 _guestConfigurationAssignmentReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

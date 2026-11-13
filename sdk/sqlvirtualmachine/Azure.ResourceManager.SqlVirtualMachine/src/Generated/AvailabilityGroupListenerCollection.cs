@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             TryGetApiVersion(AvailabilityGroupListenerResource.ResourceType, out string availabilityGroupListenerApiVersion);
             _availabilityGroupListenersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", AvailabilityGroupListenerResource.ResourceType.Namespace, Diagnostics);
-            _availabilityGroupListenersRestClient = new AvailabilityGroupListeners(_availabilityGroupListenersClientDiagnostics, Pipeline, Endpoint, availabilityGroupListenerApiVersion ?? "2023-10-01");
+            _availabilityGroupListenersRestClient = new AvailabilityGroupListeners(_availabilityGroupListenersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, availabilityGroupListenerApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenerDataAsyncCollectionResultOfT(
                 _availabilityGroupListenersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupCollectionResultOfT(
+            return new PageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenerDataCollectionResultOfT(
                 _availabilityGroupListenersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

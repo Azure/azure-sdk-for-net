@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabVmScheduleResource.ResourceType, out string devTestLabVmScheduleApiVersion);
             _devTestLabVmSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabVmScheduleResource.ResourceType.Namespace, Diagnostics);
-            _devTestLabVmSchedulesRestClient = new DevTestLabVmSchedules(_devTestLabVmSchedulesClientDiagnostics, Pipeline, Endpoint, devTestLabVmScheduleApiVersion ?? "2018-09-15");
+            _devTestLabVmSchedulesRestClient = new DevTestLabVmSchedules(_devTestLabVmSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVmScheduleApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabVmScheduleResource>(new DevTestLabVmSchedulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabVmScheduleResource>(new DevTestLabScheduleDataAsync3CollectionResultOfT(
                 _devTestLabVmSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabVmScheduleResource>(new DevTestLabVmSchedulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabVmScheduleResource>(new DevTestLabScheduleData3CollectionResultOfT(
                 _devTestLabVmSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

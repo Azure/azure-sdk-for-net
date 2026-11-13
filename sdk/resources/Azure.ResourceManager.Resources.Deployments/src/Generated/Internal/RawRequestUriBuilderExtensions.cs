@@ -5,11 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal static partial class RawRequestUriBuilderExtensions
     {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 string beforeParam = currentQuery.Substring(0, valueStartIndex);
                 string afterParam = currentQuery.Substring(valueEndIndex);
-                string newQuery = string.Concat(beforeParam, value, afterParam);
+                string newQuery = string.Concat(beforeParam, Uri.EscapeDataString(value), afterParam);
                 builder.Query = newQuery;
             }
             else

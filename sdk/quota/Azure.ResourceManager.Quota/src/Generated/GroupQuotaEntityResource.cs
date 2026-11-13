@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string groupQuotaEntityApiVersion);
             _groupQuotasEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
+            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GroupQuotaRequestStatusData, GroupQuotaRequestStatusResource>(new GroupQuotasEntitiesGetGroupQuotaLimitsRequestsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GroupQuotaRequestStatusData, GroupQuotaRequestStatusResource>(new GroupQuotaRequestStatusDataAsyncCollectionResultOfT(
                 _groupQuotasEntitiesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GroupQuotaRequestStatusData, GroupQuotaRequestStatusResource>(new GroupQuotasEntitiesGetGroupQuotaLimitsRequestsCollectionResultOfT(
+            return new PageableWrapper<GroupQuotaRequestStatusData, GroupQuotaRequestStatusResource>(new GroupQuotaRequestStatusDataCollectionResultOfT(
                 _groupQuotasEntitiesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new GroupQuotasEntitiesGetGroupQuotaUsagesAsyncCollectionResultOfT(
+            return new GroupQuotaResourceUsagesAsyncCollectionResultOfT(
                 _groupQuotasEntitiesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new GroupQuotasEntitiesGetGroupQuotaUsagesCollectionResultOfT(
+            return new GroupQuotaResourceUsagesCollectionResultOfT(
                 _groupQuotasEntitiesRestClient,
                 Id.Parent.Name,
                 Id.Name,

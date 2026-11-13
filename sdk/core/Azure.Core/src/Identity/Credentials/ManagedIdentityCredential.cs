@@ -21,6 +21,10 @@ namespace Azure.Identity
     /// environments that support managed identity. For end-to-end guidance, see <see href="https://learn.microsoft.com/dotnet/azure/sdk/authentication/user-assigned-managed-identity">user-assigned managed identity</see>
     /// or <see href="https://learn.microsoft.com/dotnet/azure/sdk/authentication/system-assigned-managed-identity">system-assigned managed identity</see>.
     /// </summary>
+    /// <remarks>
+    /// On Azure Arc-enabled servers with user-assigned managed identity support, select an attached identity by client ID, resource ID, or object ID
+    /// using <see cref="ManagedIdentityId"/>. System-assigned managed identities are also supported.
+    /// </remarks>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [UnsupportedOSPlatform("browser")]
     [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
@@ -142,7 +146,7 @@ namespace Azure.Identity
                 Pipeline = pipeline,
                 PreserveTransport = preserveTransport,
                 Options = options,
-                DisableMtlsProofOfPossession = ResolveDisableMtlsProofOfPossession(options)
+                EnableMtlsProofOfPossession = ResolveEnableMtlsProofOfPossession(options)
             };
         }
 
@@ -159,10 +163,12 @@ namespace Azure.Identity
                 pipeline,
                 preserveTransport);
 
-        private static bool ResolveDisableMtlsProofOfPossession(TokenCredentialOptions options)
+        private static bool ResolveEnableMtlsProofOfPossession(TokenCredentialOptions options)
         {
 #pragma warning disable AZID0004 // Internal usage of experimental mTLS proof-of-possession API
-            return options is ManagedIdentityCredentialOptions managedIdentityCredentialOptions && managedIdentityCredentialOptions.DisableMtlsProofOfPossession;
+            // mTLS proof-of-possession is enabled by default. Only an explicit
+            // ManagedIdentityCredentialOptions.EnableMtlsProofOfPossession = false opts out.
+            return options is not ManagedIdentityCredentialOptions managedIdentityCredentialOptions || managedIdentityCredentialOptions.EnableMtlsProofOfPossession;
 #pragma warning restore AZID0004
         }
 

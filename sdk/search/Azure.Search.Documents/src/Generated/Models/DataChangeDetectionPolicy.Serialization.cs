@@ -12,7 +12,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for data change detection policies. </summary>
+    /// <summary>
+    /// Base type for data change detection policies.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="HighWaterMarkChangeDetectionPolicy"/> and <see cref="SqlIntegratedChangeTrackingPolicy"/>.
+    /// </summary>
     public partial class DataChangeDetectionPolicy : IJsonModel<DataChangeDetectionPolicy>
     {
         /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/> for deserialization. </summary>

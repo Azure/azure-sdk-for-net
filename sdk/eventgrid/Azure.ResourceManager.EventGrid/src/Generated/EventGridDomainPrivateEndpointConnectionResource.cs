@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string eventGridDomainPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, eventGridDomainPrivateEndpointConnectionApiVersion ?? "2025-07-15-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainPrivateEndpointConnectionApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

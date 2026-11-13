@@ -12,7 +12,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Migration properties. </summary>
     internal partial class MigrationPropertiesForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -63,18 +62,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
-        [WirePath("sourceDbServerResourceId")]
-        public ResourceIdentifier SourceDbServerResourceId { get; set; }
-
-        /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
-        [WirePath("sourceDbServerFullyQualifiedDomainName")]
-        public string SourceDbServerFullyQualifiedDomainName { get; set; }
-
-        /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
-        [WirePath("targetDbServerFullyQualifiedDomainName")]
-        public string TargetDbServerFullyQualifiedDomainName { get; set; }
-
         /// <summary> Migration secret parameters. </summary>
         [WirePath("secretParameters")]
         public MigrationSecretParametersForPatch SecretParameters { get; set; }
@@ -82,10 +69,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Names of databases to migrate. </summary>
         [WirePath("dbsToMigrate")]
         public IList<string> DbsToMigrate { get; } = new ChangeTrackingList<string>();
-
-        /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
-        [WirePath("setupLogicalReplicationOnSourceDbIfNeeded")]
-        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
 
         /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         [WirePath("overwriteDbsInTarget")]

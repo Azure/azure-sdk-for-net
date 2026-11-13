@@ -25,11 +25,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the agent instance. </param>
         /// <param name="clientId"> The client ID of the agent instance. Also referred to as the instance ID. </param>
+        /// <param name="status"> The status of the agent identity. Present for both the agent instance identity and the agent blueprint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentIdentity(string principalId, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentIdentity(string principalId, string clientId, AgentIdentityStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             ClientId = clientId;
+            Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,5 +40,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The client ID of the agent instance. Also referred to as the instance ID. </summary>
         public string ClientId { get; }
+
+        /// <summary> The status of the agent identity. Present for both the agent instance identity and the agent blueprint. </summary>
+        public AgentIdentityStatus? Status { get; }
     }
 }

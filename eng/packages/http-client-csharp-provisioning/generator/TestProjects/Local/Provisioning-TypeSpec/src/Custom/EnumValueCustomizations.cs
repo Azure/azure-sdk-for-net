@@ -4,4 +4,10 @@
 using Microsoft.TypeSpec.Generator.Customizations;
 
 [assembly: CodeGenEnumValue("ConfigurationStoreSkuTier", "StandardS1", 7)]
-[assembly: CodeGenEnumValue("ConfigurationStoreSkuTier", "LegacyTier", 3, WireName = "legacy_tier")]
+[assembly: CodeGenEnumValue(
+    "ConfigurationStoreSkuTier",
+    "LegacyTier",
+    3,
+    WireName = "legacy_tier",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use StandardS1 instead.")]

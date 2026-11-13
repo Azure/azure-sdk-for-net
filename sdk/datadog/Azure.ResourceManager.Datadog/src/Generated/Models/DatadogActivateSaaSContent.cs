@@ -7,37 +7,42 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
+    /// <summary> SaaS resource details for Activate and Validate SaaS Resource. </summary>
     public partial class DatadogActivateSaaSContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSContent"/>. </summary>
-        /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
-        public DatadogActivateSaaSContent(Guid saaSGuid)
+        /// <param name="saaSResourceId"> SaaS resource id of marketplace saas subscription to be activated. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="saaSResourceId"/> is null. </exception>
+        public DatadogActivateSaaSContent(ResourceIdentifier saaSResourceId)
         {
-            SaaSGuid = saaSGuid;
+            Argument.AssertNotNull(saaSResourceId, nameof(saaSResourceId));
+
+            SaaSResourceId = saaSResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSContent"/>. </summary>
-        /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
+        /// <param name="saaSResourceId"> SaaS resource id of marketplace saas subscription to be activated. </param>
         /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
         /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogActivateSaaSContent(Guid saaSGuid, DatadogUserInfo userInfo, DatadogOrganizationProperties datadogOrganizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogActivateSaaSContent(ResourceIdentifier saaSResourceId, DatadogUserInfo userInfo, DatadogOrganizationProperties datadogOrganizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SaaSGuid = saaSGuid;
+            SaaSResourceId = saaSResourceId;
             UserInfo = userInfo;
             DatadogOrganizationProperties = datadogOrganizationProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> SaaS guid of marketplace saas subscription to be activated. </summary>
-        public Guid SaaSGuid { get; }
+        /// <summary> SaaS resource id of marketplace saas subscription to be activated. </summary>
+        public ResourceIdentifier SaaSResourceId { get; }
 
         /// <summary> User information of the person activating the SaaS resource. </summary>
         public DatadogUserInfo UserInfo { get; set; }

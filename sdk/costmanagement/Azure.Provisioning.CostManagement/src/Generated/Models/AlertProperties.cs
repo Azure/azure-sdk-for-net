@@ -31,7 +31,7 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the Definition. </summary>
+        /// <summary> Gets the Definition. </summary>
         public AlertPropertiesDefinition Definition
         {
             get
@@ -39,14 +39,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _definition;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _definition, value);
-            }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
@@ -54,14 +49,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _description;
             }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Source. </summary>
+        /// <summary> Gets the Source. </summary>
         public BicepValue<CostManagementAlertSource> Source
         {
             get
@@ -69,14 +59,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _source;
             }
-            set
-            {
-                Initialize();
-                _source.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Details. </summary>
+        /// <summary> Gets the Details. </summary>
         public AlertPropertiesDetails Details
         {
             get
@@ -84,14 +69,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _details;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _details, value);
-            }
         }
 
-        /// <summary> Gets or sets the CostEntityId. </summary>
+        /// <summary> Gets the CostEntityId. </summary>
         public BicepValue<string> CostEntityId
         {
             get
@@ -99,14 +79,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _costEntityId;
             }
-            set
-            {
-                Initialize();
-                _costEntityId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<CostManagementAlertStatus> Status
         {
             get
@@ -114,14 +89,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CreatedOn. </summary>
+        /// <summary> Gets the CreatedOn. </summary>
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -129,14 +99,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _createdOn;
             }
-            set
-            {
-                Initialize();
-                _createdOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CloseOn. </summary>
+        /// <summary> Gets the CloseOn. </summary>
         public BicepValue<DateTimeOffset> CloseOn
         {
             get
@@ -144,14 +109,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _closeOn;
             }
-            set
-            {
-                Initialize();
-                _closeOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ModifiedOn. </summary>
+        /// <summary> Gets the ModifiedOn. </summary>
         public BicepValue<DateTimeOffset> ModifiedOn
         {
             get
@@ -159,14 +119,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _modifiedOn;
             }
-            set
-            {
-                Initialize();
-                _modifiedOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StatusModificationUserName. </summary>
+        /// <summary> Gets the StatusModificationUserName. </summary>
         public BicepValue<string> StatusModificationUserName
         {
             get
@@ -174,25 +129,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _statusModificationUserName;
             }
-            set
-            {
-                Initialize();
-                _statusModificationUserName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StatusModifiedOn. </summary>
+        /// <summary> Gets the StatusModifiedOn. </summary>
         public BicepValue<DateTimeOffset> StatusModifiedOn
         {
             get
             {
                 Initialize();
                 return _statusModifiedOn;
-            }
-            set
-            {
-                Initialize();
-                _statusModifiedOn.Assign(value);
             }
         }
 
@@ -206,11 +151,11 @@ namespace Azure.Provisioning.CostManagement
             _details = DefineModelProperty<AlertPropertiesDetails>(nameof(Details), new string[] { "details" });
             _costEntityId = DefineProperty<string>(nameof(CostEntityId), new string[] { "costEntityId" });
             _status = DefineProperty<CostManagementAlertStatus>(nameof(Status), new string[] { "status" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" });
-            _closeOn = DefineProperty<DateTimeOffset>(nameof(CloseOn), new string[] { "closeTime" });
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modificationTime" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, format: "O");
+            _closeOn = DefineProperty<DateTimeOffset>(nameof(CloseOn), new string[] { "closeTime" }, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modificationTime" }, format: "O");
             _statusModificationUserName = DefineProperty<string>(nameof(StatusModificationUserName), new string[] { "statusModificationUserName" });
-            _statusModifiedOn = DefineProperty<DateTimeOffset>(nameof(StatusModifiedOn), new string[] { "statusModificationTime" });
+            _statusModifiedOn = DefineProperty<DateTimeOffset>(nameof(StatusModifiedOn), new string[] { "statusModificationTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

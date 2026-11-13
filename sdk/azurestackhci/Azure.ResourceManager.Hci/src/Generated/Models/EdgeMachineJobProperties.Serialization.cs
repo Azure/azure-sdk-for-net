@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// EdgeMachine Job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EdgeMachineRemoteSupportJobProperties"/>, <see cref="ProvisionOsJobProperties"/>, <see cref="DownloadOsJobProperties"/>, and <see cref="EdgeMachineCollectLogJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DownloadOSJobProperties"/>, <see cref="EdgeMachineCollectLogJobProperties"/>, <see cref="EdgeMachineRemoteSupportJobProperties"/>, and <see cref="ProvisionOSJobProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEdgeMachineJobProperties))]
     public abstract partial class EdgeMachineJobProperties : IJsonModel<EdgeMachineJobProperties>
@@ -100,15 +100,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "DownloadOs":
+                        return DownloadOSJobProperties.DeserializeDownloadOSJobProperties(element, options);
+                    case "CollectLog":
+                        return EdgeMachineCollectLogJobProperties.DeserializeEdgeMachineCollectLogJobProperties(element, options);
                     case "RemoteSupport":
                         return EdgeMachineRemoteSupportJobProperties.DeserializeEdgeMachineRemoteSupportJobProperties(element, options);
                     case "ProvisionOs":
-                        return ProvisionOsJobProperties.DeserializeProvisionOsJobProperties(element, options);
-                    case "DownloadOs":
-                        return DownloadOsJobProperties.DeserializeDownloadOsJobProperties(element, options);
-                    case "CollectLog":
-                        return EdgeMachineCollectLogJobProperties.DeserializeEdgeMachineCollectLogJobProperties(element, options);
+                        return ProvisionOSJobProperties.DeserializeProvisionOSJobProperties(element, options);
                 }
             }
             return UnknownEdgeMachineJobProperties.DeserializeUnknownEdgeMachineJobProperties(element, options);

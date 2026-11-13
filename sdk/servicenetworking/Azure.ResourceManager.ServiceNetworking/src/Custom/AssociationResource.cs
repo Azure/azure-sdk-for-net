@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             _associationAssociationsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string associationAssociationsInterfaceApiVersion);
-            _associationAssociationsInterfaceRestClient = new AssociationsInterface(_associationAssociationsInterfaceClientDiagnostics, Pipeline, Endpoint, associationAssociationsInterfaceApiVersion);
+            _associationAssociationsInterfaceRestClient = new AssociationsInterface(_associationAssociationsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, associationAssociationsInterfaceApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

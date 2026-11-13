@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.LastKeyRotationTimestamp;
+                return Properties is null ? default : Properties.LastKeyRotationOn;
             }
         }
 

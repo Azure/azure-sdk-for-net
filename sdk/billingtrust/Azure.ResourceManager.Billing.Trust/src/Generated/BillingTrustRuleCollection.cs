@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing.Trust
         {
             TryGetApiVersion(BillingTrustRuleResource.ResourceType, out string billingTrustRuleApiVersion);
             _rulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing.Trust", BillingTrustRuleResource.ResourceType.Namespace, Diagnostics);
-            _rulesRestClient = new Rules(_rulesClientDiagnostics, Pipeline, Endpoint, billingTrustRuleApiVersion ?? "2026-03-17-preview");
+            _rulesRestClient = new Rules(_rulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingTrustRuleApiVersion ?? "2026-03-17-preview");
             ValidateResourceId(id);
         }
 
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Billing.Trust
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new RulesGetAllAsyncCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
+            return new AsyncPageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new BillingTrustRuleDataAsyncCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Billing.Trust
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new RulesGetAllCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
+            return new PageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new BillingTrustRuleDataCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
         }
 
         /// <summary>

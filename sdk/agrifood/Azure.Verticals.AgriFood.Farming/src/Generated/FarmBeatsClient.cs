@@ -60,42 +60,42 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         private ApplicationData _cachedApplicationData;
-        private Attachments _cachedAttachments;
-        private Boundaries _cachedBoundaries;
+        private FarmingAttachments _cachedFarmingAttachments;
+        private FarmingBoundaries _cachedFarmingBoundaries;
         private CropProducts _cachedCropProducts;
-        private Crops _cachedCrops;
+        private FarmingCrops _cachedFarmingCrops;
         private DeviceDataModels _cachedDeviceDataModels;
-        private Devices _cachedDevices;
+        private FarmingDevices _cachedFarmingDevices;
         private FarmOperationsDataIngestion _cachedFarmOperationsDataIngestion;
-        private Farms _cachedFarms;
-        private Fields _cachedFields;
+        private FarmingFarms _cachedFarmingFarms;
+        private FarmingFields _cachedFarmingFields;
         private HarvestData _cachedHarvestData;
         private ImageProcessing _cachedImageProcessing;
         private InsightAttachments _cachedInsightAttachments;
-        private Insights _cachedInsights;
+        private FarmingInsights _cachedFarmingInsights;
         private ManagementZones _cachedManagementZones;
         private ModelInference _cachedModelInference;
         private NutrientAnalyses _cachedNutrientAnalyses;
         private OAuthProviders _cachedOAuthProviders;
         private FarmerOAuthTokens _cachedFarmerOAuthTokens;
-        private Parties _cachedParties;
+        private FarmingParties _cachedFarmingParties;
         private PlantingData _cachedPlantingData;
         private PlantTissueAnalyses _cachedPlantTissueAnalyses;
         private PrescriptionMaps _cachedPrescriptionMaps;
-        private Prescriptions _cachedPrescriptions;
-        private Scenes _cachedScenes;
+        private FarmingPrescriptions _cachedFarmingPrescriptions;
+        private FarmingScenes _cachedFarmingScenes;
         private SeasonalFields _cachedSeasonalFields;
-        private Seasons _cachedSeasons;
+        private FarmingSeasons _cachedFarmingSeasons;
         private SensorDataModels _cachedSensorDataModels;
         private SensorEvents _cachedSensorEvents;
         private SensorMappings _cachedSensorMappings;
         private SensorPartnerIntegrations _cachedSensorPartnerIntegrations;
-        private Sensors _cachedSensors;
+        private FarmingSensors _cachedFarmingSensors;
         private SolutionInference _cachedSolutionInference;
         private TillageData _cachedTillageData;
-        private Weather _cachedWeather;
+        private FarmingWeather _cachedFarmingWeather;
         private WeatherData _cachedWeatherData;
-        private Zones _cachedZones;
+        private FarmingZones _cachedFarmingZones;
 
         /// <summary> Initializes a new instance of ApplicationData. </summary>
         public virtual ApplicationData GetApplicationDataClient()
@@ -103,16 +103,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedApplicationData) ?? Interlocked.CompareExchange(ref _cachedApplicationData, new ApplicationData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedApplicationData;
         }
 
-        /// <summary> Initializes a new instance of Attachments. </summary>
-        public virtual Attachments GetAttachmentsClient()
+        /// <summary> Initializes a new instance of FarmingAttachments. </summary>
+        public virtual FarmingAttachments GetFarmingAttachmentsClient()
         {
-            return Volatile.Read(ref _cachedAttachments) ?? Interlocked.CompareExchange(ref _cachedAttachments, new Attachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedAttachments;
+            return Volatile.Read(ref _cachedFarmingAttachments) ?? Interlocked.CompareExchange(ref _cachedFarmingAttachments, new FarmingAttachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingAttachments;
         }
 
-        /// <summary> Initializes a new instance of Boundaries. </summary>
-        public virtual Boundaries GetBoundariesClient()
+        /// <summary> Initializes a new instance of FarmingBoundaries. </summary>
+        public virtual FarmingBoundaries GetFarmingBoundariesClient()
         {
-            return Volatile.Read(ref _cachedBoundaries) ?? Interlocked.CompareExchange(ref _cachedBoundaries, new Boundaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedBoundaries;
+            return Volatile.Read(ref _cachedFarmingBoundaries) ?? Interlocked.CompareExchange(ref _cachedFarmingBoundaries, new FarmingBoundaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingBoundaries;
         }
 
         /// <summary> Initializes a new instance of CropProducts. </summary>
@@ -121,10 +121,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedCropProducts) ?? Interlocked.CompareExchange(ref _cachedCropProducts, new CropProducts(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedCropProducts;
         }
 
-        /// <summary> Initializes a new instance of Crops. </summary>
-        public virtual Crops GetCropsClient()
+        /// <summary> Initializes a new instance of FarmingCrops. </summary>
+        public virtual FarmingCrops GetFarmingCropsClient()
         {
-            return Volatile.Read(ref _cachedCrops) ?? Interlocked.CompareExchange(ref _cachedCrops, new Crops(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedCrops;
+            return Volatile.Read(ref _cachedFarmingCrops) ?? Interlocked.CompareExchange(ref _cachedFarmingCrops, new FarmingCrops(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingCrops;
         }
 
         /// <summary> Initializes a new instance of DeviceDataModels. </summary>
@@ -133,10 +133,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedDeviceDataModels) ?? Interlocked.CompareExchange(ref _cachedDeviceDataModels, new DeviceDataModels(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedDeviceDataModels;
         }
 
-        /// <summary> Initializes a new instance of Devices. </summary>
-        public virtual Devices GetDevicesClient()
+        /// <summary> Initializes a new instance of FarmingDevices. </summary>
+        public virtual FarmingDevices GetFarmingDevicesClient()
         {
-            return Volatile.Read(ref _cachedDevices) ?? Interlocked.CompareExchange(ref _cachedDevices, new Devices(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedDevices;
+            return Volatile.Read(ref _cachedFarmingDevices) ?? Interlocked.CompareExchange(ref _cachedFarmingDevices, new FarmingDevices(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingDevices;
         }
 
         /// <summary> Initializes a new instance of FarmOperationsDataIngestion. </summary>
@@ -145,16 +145,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedFarmOperationsDataIngestion) ?? Interlocked.CompareExchange(ref _cachedFarmOperationsDataIngestion, new FarmOperationsDataIngestion(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmOperationsDataIngestion;
         }
 
-        /// <summary> Initializes a new instance of Farms. </summary>
-        public virtual Farms GetFarmsClient()
+        /// <summary> Initializes a new instance of FarmingFarms. </summary>
+        public virtual FarmingFarms GetFarmingFarmsClient()
         {
-            return Volatile.Read(ref _cachedFarms) ?? Interlocked.CompareExchange(ref _cachedFarms, new Farms(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarms;
+            return Volatile.Read(ref _cachedFarmingFarms) ?? Interlocked.CompareExchange(ref _cachedFarmingFarms, new FarmingFarms(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingFarms;
         }
 
-        /// <summary> Initializes a new instance of Fields. </summary>
-        public virtual Fields GetFieldsClient()
+        /// <summary> Initializes a new instance of FarmingFields. </summary>
+        public virtual FarmingFields GetFarmingFieldsClient()
         {
-            return Volatile.Read(ref _cachedFields) ?? Interlocked.CompareExchange(ref _cachedFields, new Fields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFields;
+            return Volatile.Read(ref _cachedFarmingFields) ?? Interlocked.CompareExchange(ref _cachedFarmingFields, new FarmingFields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingFields;
         }
 
         /// <summary> Initializes a new instance of HarvestData. </summary>
@@ -175,10 +175,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedInsightAttachments) ?? Interlocked.CompareExchange(ref _cachedInsightAttachments, new InsightAttachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedInsightAttachments;
         }
 
-        /// <summary> Initializes a new instance of Insights. </summary>
-        public virtual Insights GetInsightsClient()
+        /// <summary> Initializes a new instance of FarmingInsights. </summary>
+        public virtual FarmingInsights GetFarmingInsightsClient()
         {
-            return Volatile.Read(ref _cachedInsights) ?? Interlocked.CompareExchange(ref _cachedInsights, new Insights(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedInsights;
+            return Volatile.Read(ref _cachedFarmingInsights) ?? Interlocked.CompareExchange(ref _cachedFarmingInsights, new FarmingInsights(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingInsights;
         }
 
         /// <summary> Initializes a new instance of ManagementZones. </summary>
@@ -211,10 +211,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedFarmerOAuthTokens) ?? Interlocked.CompareExchange(ref _cachedFarmerOAuthTokens, new FarmerOAuthTokens(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmerOAuthTokens;
         }
 
-        /// <summary> Initializes a new instance of Parties. </summary>
-        public virtual Parties GetPartiesClient()
+        /// <summary> Initializes a new instance of FarmingParties. </summary>
+        public virtual FarmingParties GetFarmingPartiesClient()
         {
-            return Volatile.Read(ref _cachedParties) ?? Interlocked.CompareExchange(ref _cachedParties, new Parties(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedParties;
+            return Volatile.Read(ref _cachedFarmingParties) ?? Interlocked.CompareExchange(ref _cachedFarmingParties, new FarmingParties(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingParties;
         }
 
         /// <summary> Initializes a new instance of PlantingData. </summary>
@@ -235,16 +235,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedPrescriptionMaps) ?? Interlocked.CompareExchange(ref _cachedPrescriptionMaps, new PrescriptionMaps(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPrescriptionMaps;
         }
 
-        /// <summary> Initializes a new instance of Prescriptions. </summary>
-        public virtual Prescriptions GetPrescriptionsClient()
+        /// <summary> Initializes a new instance of FarmingPrescriptions. </summary>
+        public virtual FarmingPrescriptions GetFarmingPrescriptionsClient()
         {
-            return Volatile.Read(ref _cachedPrescriptions) ?? Interlocked.CompareExchange(ref _cachedPrescriptions, new Prescriptions(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPrescriptions;
+            return Volatile.Read(ref _cachedFarmingPrescriptions) ?? Interlocked.CompareExchange(ref _cachedFarmingPrescriptions, new FarmingPrescriptions(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingPrescriptions;
         }
 
-        /// <summary> Initializes a new instance of Scenes. </summary>
-        public virtual Scenes GetScenesClient()
+        /// <summary> Initializes a new instance of FarmingScenes. </summary>
+        public virtual FarmingScenes GetFarmingScenesClient()
         {
-            return Volatile.Read(ref _cachedScenes) ?? Interlocked.CompareExchange(ref _cachedScenes, new Scenes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedScenes;
+            return Volatile.Read(ref _cachedFarmingScenes) ?? Interlocked.CompareExchange(ref _cachedFarmingScenes, new FarmingScenes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingScenes;
         }
 
         /// <summary> Initializes a new instance of SeasonalFields. </summary>
@@ -253,10 +253,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedSeasonalFields) ?? Interlocked.CompareExchange(ref _cachedSeasonalFields, new SeasonalFields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSeasonalFields;
         }
 
-        /// <summary> Initializes a new instance of Seasons. </summary>
-        public virtual Seasons GetSeasonsClient()
+        /// <summary> Initializes a new instance of FarmingSeasons. </summary>
+        public virtual FarmingSeasons GetFarmingSeasonsClient()
         {
-            return Volatile.Read(ref _cachedSeasons) ?? Interlocked.CompareExchange(ref _cachedSeasons, new Seasons(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSeasons;
+            return Volatile.Read(ref _cachedFarmingSeasons) ?? Interlocked.CompareExchange(ref _cachedFarmingSeasons, new FarmingSeasons(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingSeasons;
         }
 
         /// <summary> Initializes a new instance of SensorDataModels. </summary>
@@ -283,10 +283,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedSensorPartnerIntegrations) ?? Interlocked.CompareExchange(ref _cachedSensorPartnerIntegrations, new SensorPartnerIntegrations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSensorPartnerIntegrations;
         }
 
-        /// <summary> Initializes a new instance of Sensors. </summary>
-        public virtual Sensors GetSensorsClient()
+        /// <summary> Initializes a new instance of FarmingSensors. </summary>
+        public virtual FarmingSensors GetFarmingSensorsClient()
         {
-            return Volatile.Read(ref _cachedSensors) ?? Interlocked.CompareExchange(ref _cachedSensors, new Sensors(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSensors;
+            return Volatile.Read(ref _cachedFarmingSensors) ?? Interlocked.CompareExchange(ref _cachedFarmingSensors, new FarmingSensors(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingSensors;
         }
 
         /// <summary> Initializes a new instance of SolutionInference. </summary>
@@ -301,10 +301,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedTillageData) ?? Interlocked.CompareExchange(ref _cachedTillageData, new TillageData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedTillageData;
         }
 
-        /// <summary> Initializes a new instance of Weather. </summary>
-        public virtual Weather GetWeatherClient()
+        /// <summary> Initializes a new instance of FarmingWeather. </summary>
+        public virtual FarmingWeather GetFarmingWeatherClient()
         {
-            return Volatile.Read(ref _cachedWeather) ?? Interlocked.CompareExchange(ref _cachedWeather, new Weather(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedWeather;
+            return Volatile.Read(ref _cachedFarmingWeather) ?? Interlocked.CompareExchange(ref _cachedFarmingWeather, new FarmingWeather(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingWeather;
         }
 
         /// <summary> Initializes a new instance of WeatherData. </summary>
@@ -313,10 +313,10 @@ namespace Azure.Verticals.AgriFood.Farming
             return Volatile.Read(ref _cachedWeatherData) ?? Interlocked.CompareExchange(ref _cachedWeatherData, new WeatherData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedWeatherData;
         }
 
-        /// <summary> Initializes a new instance of Zones. </summary>
-        public virtual Zones GetZonesClient()
+        /// <summary> Initializes a new instance of FarmingZones. </summary>
+        public virtual FarmingZones GetFarmingZonesClient()
         {
-            return Volatile.Read(ref _cachedZones) ?? Interlocked.CompareExchange(ref _cachedZones, new Zones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedZones;
+            return Volatile.Read(ref _cachedFarmingZones) ?? Interlocked.CompareExchange(ref _cachedFarmingZones, new FarmingZones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmingZones;
         }
     }
 }

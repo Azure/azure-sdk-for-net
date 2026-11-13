@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// EdgeMachine Job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EdgeMachineRemoteSupportJobProperties"/>, <see cref="ProvisionOsJobProperties"/>, <see cref="DownloadOsJobProperties"/>, and <see cref="EdgeMachineCollectLogJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DownloadOSJobProperties"/>, <see cref="EdgeMachineCollectLogJobProperties"/>, <see cref="EdgeMachineRemoteSupportJobProperties"/>, and <see cref="ProvisionOSJobProperties"/>.
     /// </summary>
     public abstract partial class EdgeMachineJobProperties
     {
@@ -33,19 +33,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startOn"> The UTC date and time at which the job started. </param>
-        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             DeploymentMode = deploymentMode;
             ProvisioningState = provisioningState;
             JobId = jobId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The UTC date and time at which the job started. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The UTC date and time at which the job completed. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Status of Edge device job. </summary>
         [WirePath("status")]

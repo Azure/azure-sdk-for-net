@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(CurrentUsagesBaseResource.ResourceType, out string currentUsagesBaseApiVersion);
             _currentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentUsagesBaseResource.ResourceType.Namespace, Diagnostics);
-            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
+            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllAsyncCollectionResultOfT(_currentUsagesBasesRestClient, Id.ToString(), context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
+            return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBaseDataAsyncCollectionResultOfT(_currentUsagesBasesRestClient, Id.ToString(), context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllCollectionResultOfT(_currentUsagesBasesRestClient, Id.ToString(), context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
+            return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBaseDataCollectionResultOfT(_currentUsagesBasesRestClient, Id.ToString(), context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistrySchemaResource.ResourceType, out string deviceRegistrySchemaApiVersion);
             _schemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaResource.ResourceType.Namespace, Diagnostics);
-            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaApiVersion ?? "2026-03-01-preview");
+            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistrySchemaApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new SchemasGetBySchemaRegistryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new DeviceRegistrySchemaDataAsyncCollectionResultOfT(
                 _schemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new SchemasGetBySchemaRegistryCollectionResultOfT(
+            return new PageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new DeviceRegistrySchemaDataCollectionResultOfT(
                 _schemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

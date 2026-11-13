@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingAssociatedTenantResource.ResourceType, out string billingAssociatedTenantApiVersion);
             _associatedTenantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingAssociatedTenantResource.ResourceType.Namespace, Diagnostics);
-            _associatedTenantsRestClient = new AssociatedTenants(_associatedTenantsClientDiagnostics, Pipeline, Endpoint, billingAssociatedTenantApiVersion ?? "2024-04-01");
+            _associatedTenantsRestClient = new AssociatedTenants(_associatedTenantsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAssociatedTenantApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new AssociatedTenantsGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new BillingAssociatedTenantDataAsyncCollectionResultOfT(
                 _associatedTenantsRestClient,
                 Id.Name,
                 includeRevoked,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new AssociatedTenantsGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new BillingAssociatedTenantDataCollectionResultOfT(
                 _associatedTenantsRestClient,
                 Id.Name,
                 includeRevoked,

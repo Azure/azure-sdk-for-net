@@ -59,7 +59,7 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _suspensionCode = DefineProperty<string>(nameof(SuspensionCode), new string[] { "suspensionCode" });
             _suspensionReason = DefineProperty<string>(nameof(SuspensionReason), new string[] { "suspensionReason" });
-            _suspensionOn = DefineProperty<DateTimeOffset>(nameof(SuspensionOn), new string[] { "suspensionTime" });
+            _suspensionOn = DefineProperty<DateTimeOffset>(nameof(SuspensionOn), new string[] { "suspensionTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

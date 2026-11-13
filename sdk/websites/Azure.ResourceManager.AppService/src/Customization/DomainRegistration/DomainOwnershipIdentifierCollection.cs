@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(DomainOwnershipIdentifierResource.ResourceType, out string domainOwnershipIdentifierDomainsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

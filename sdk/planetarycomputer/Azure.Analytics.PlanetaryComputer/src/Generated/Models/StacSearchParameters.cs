@@ -39,7 +39,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ids"> List of specific item IDs to return. </param>
         /// <param name="boundingBox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
         /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
         /// <param name="limit"> Maximum number of results to return. </param>
         /// <param name="conformanceClass">
         /// Conf
@@ -96,7 +106,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> GeoJSON geometry for spatial filtering. </summary>
         public GeoJsonGeometry Intersects { get; set; }
 
-        /// <summary> Temporal filter in RFC 3339 format, can be a single time or range. </summary>
+        /// <summary>
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </summary>
         public string Datetime { get; set; }
 
         /// <summary> Maximum number of results to return. </summary>

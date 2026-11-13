@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using Microsoft.Azure.Amqp.Framing;
 namespace Azure.Core.Amqp
 {
     /// <summary>
-    /// The body abstractions allow to optimize several use cases to make sure body memory is only converted when needed and as little as possible.
+    /// The body abstractions allow optimizing several use cases to make sure body memory is only converted when needed and as little as possible.
     /// </summary>
     internal abstract class MessageBody : IEnumerable<ReadOnlyMemory<byte>>
     {
@@ -32,7 +33,14 @@ namespace Azure.Core.Amqp
 
         public static MessageBody FromDataSegments(IEnumerable<Data> segments)
         {
-            return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
+            // AMQP library almost always returns List<Data> or Data[], and in many cases there is only a single segment.
+            // We can optimize for that case to avoid the list allocation and enumeration overhead.
+            if (segments is not IList<Data> { Count: 1 } single)
+            {
+                return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
+            }
+
+            return new EagerCopyingSingleSegmentMessageBody(GetDataAsMemory(single[0]));
         }
 
         protected abstract ReadOnlyMemory<byte> WrittenMemory { get; }
@@ -48,6 +56,14 @@ namespace Azure.Core.Amqp
         {
             return memory.WrittenMemory;
         }
+
+        private static ReadOnlyMemory<byte> GetDataAsMemory(Data data) =>
+            data.Value switch
+            {
+                byte[] bytes => (ReadOnlyMemory<byte>)bytes,
+                ArraySegment<byte> seg => seg,
+                _ => ReadOnlyMemory<byte>.Empty
+            };
 
         /// <summary>
         /// Wraps a single data segment into an enumerable like type without copying to optimize for the most commonly used
@@ -106,8 +122,36 @@ namespace Azure.Core.Amqp
         }
 
         /// <summary>
+        /// Eagerly copies the provided data segment into a single continuous buffer.
+        /// Important for the receive path to make sure the buffers managed by the underlying AMQP library can be released on dispose.
+        /// </summary>
+        private sealed class EagerCopyingSingleSegmentMessageBody : MessageBody
+        {
+            private readonly ArrayBufferWriter<byte> _writer;
+
+            internal EagerCopyingSingleSegmentMessageBody(ReadOnlyMemory<byte> segment)
+            {
+                _writer = segment.Length > 0
+                    ? new ArrayBufferWriter<byte>(segment.Length)
+                    : new ArrayBufferWriter<byte>();
+
+                if (segment.Length > 0)
+                {
+                    _writer.Write(segment.Span);
+                }
+            }
+
+            protected override ReadOnlyMemory<byte> WrittenMemory => _writer.WrittenMemory;
+
+            public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
+            {
+                yield return _writer.WrittenMemory;
+            }
+        }
+
+        /// <summary>
         /// Eagerly copies the provided data segments into a single continuous buffer while still keeping around a list of the individual copied segments.
-        /// Important for the receive path in order to make sure the buffers managed by the underlying AMQP library can be released on dispose.
+        /// Important for the receive path to make sure the buffers managed by the underlying AMQP library can be released on dispose.
         /// </summary>
         private sealed class EagerCopyingMessageBody : MessageBody
         {
@@ -144,12 +188,7 @@ namespace Azure.Core.Amqp
                     ReadOnlyMemory<byte> dataToAppend = segment switch
                     {
                         ReadOnlyMemory<byte> romSegment => romSegment,
-                        Data data => data.Value switch
-                        {
-                            byte[] byteArray => byteArray,
-                            ArraySegment<byte> arraySegment => arraySegment,
-                            _ => ReadOnlyMemory<byte>.Empty
-                        },
+                        Data data => GetDataAsMemory(data),
                         _ => ThrowArgumentOutOfRange(nameof(segment))
                     };
                     length += dataToAppend.Length;
@@ -168,10 +207,9 @@ namespace Azure.Core.Amqp
                 for (var i = 0; i < numberOfSegments; i++)
                 {
                     var dataToAppend = segments[i];
-                    var memory = refWriter.GetMemory(dataToAppend.Length);
-                    dataToAppend.CopyTo(memory);
-                    refWriter.Advance(dataToAppend.Length);
-                    segments[i] = memory.Slice(0, dataToAppend.Length);
+                    int writtenBefore = refWriter.WrittenCount;
+                    refWriter.Write(dataToAppend.Span);
+                    segments[i] = refWriter.WrittenMemory.Slice(writtenBefore, dataToAppend.Length);
                 }
             }
 

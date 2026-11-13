@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecuritySubAssessmentResource.ResourceType, out string securitySubAssessmentApiVersion);
             _subAssessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecuritySubAssessmentResource.ResourceType.Namespace, Diagnostics);
-            _subAssessmentsRestClient = new SubAssessments(_subAssessmentsClientDiagnostics, Pipeline, Endpoint, securitySubAssessmentApiVersion ?? "2019-01-01-preview");
+            _subAssessmentsRestClient = new SubAssessments(_subAssessmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securitySubAssessmentApiVersion ?? "2019-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SubAssessmentsListAsyncCollectionResultOfT(_subAssessmentsRestClient, Id.Parent.ToString(), Id.Name, context, "SecuritySubAssessmentCollection.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
+            return new AsyncPageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SecuritySubAssessmentDataAsyncCollectionResultOfT(_subAssessmentsRestClient, Id.Parent.ToString(), Id.Name, context, "SecuritySubAssessmentCollection.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SubAssessmentsListCollectionResultOfT(_subAssessmentsRestClient, Id.Parent.ToString(), Id.Name, context, "SecuritySubAssessmentCollection.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
+            return new PageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SecuritySubAssessmentDataCollectionResultOfT(_subAssessmentsRestClient, Id.Parent.ToString(), Id.Name, context, "SecuritySubAssessmentCollection.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Slis.Models;
 
@@ -20,13 +19,10 @@ namespace Azure.ResourceManager.Monitor.Slis
     [ModelReaderWriterBuildable(typeof(MonitorSliData))]
     [ModelReaderWriterBuildable(typeof(MonitorSliProperties))]
     [ModelReaderWriterBuildable(typeof(MonitorSliResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SliAmwAccount))]
     [ModelReaderWriterBuildable(typeof(SliBaseline))]
-    [ModelReaderWriterBuildable(typeof(SliBaselineProperties))]
     [ModelReaderWriterBuildable(typeof(SliCondition))]
     [ModelReaderWriterBuildable(typeof(SliExecutionState))]
-    [ModelReaderWriterBuildable(typeof(SliListResult))]
     [ModelReaderWriterBuildable(typeof(SliMetric))]
     [ModelReaderWriterBuildable(typeof(SliProperties))]
     [ModelReaderWriterBuildable(typeof(SliSignal))]

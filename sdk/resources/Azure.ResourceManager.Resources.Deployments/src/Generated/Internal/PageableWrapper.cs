@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal partial class PageableWrapper<T, U> : Pageable<U>
     {

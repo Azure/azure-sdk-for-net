@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotPublicCertificateResource.ResourceType, out string webSiteSlotPublicCertificateApiVersion);
             _publicCertificateOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotPublicCertificateResource.ResourceType.Namespace, Diagnostics);
-            _publicCertificateOperationGroupRestClient = new PublicCertificateOperationGroup(_publicCertificateOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotPublicCertificateApiVersion ?? "2026-03-15");
+            _publicCertificateOperationGroupRestClient = new PublicCertificateOperationGroup(_publicCertificateOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotPublicCertificateApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateOperationGroupGetPublicCertificatesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateDataAsyncCollectionResultOfT(
                 _publicCertificateOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateOperationGroupGetPublicCertificatesSlotCollectionResultOfT(
+            return new PageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateDataCollectionResultOfT(
                 _publicCertificateOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

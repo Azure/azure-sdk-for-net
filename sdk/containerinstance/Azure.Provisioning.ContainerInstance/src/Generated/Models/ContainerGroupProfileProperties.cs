@@ -359,9 +359,9 @@ namespace Azure.Provisioning.ContainerInstance
             _extensions = DefineListProperty<DeploymentExtensionSpec>(nameof(Extensions), new string[] { "extensions" });
             _imageRegistryCredentials = DefineListProperty<ContainerGroupImageRegistryCredential>(nameof(ImageRegistryCredentials), new string[] { "imageRegistryCredentials" });
             _restartPolicy = DefineProperty<ContainerGroupRestartPolicy>(nameof(RestartPolicy), new string[] { "restartPolicy" });
-            _shutdownGracePeriod = DefineProperty<DateTimeOffset>(nameof(ShutdownGracePeriod), new string[] { "shutdownGracePeriod" });
+            _shutdownGracePeriod = DefineProperty<DateTimeOffset>(nameof(ShutdownGracePeriod), new string[] { "shutdownGracePeriod" }, format: "O");
             _ipAddress = DefineModelProperty<ContainerGroupIPAddress>(nameof(IPAddress), new string[] { "ipAddress" });
-            _timeToLive = DefineProperty<DateTimeOffset>(nameof(TimeToLive), new string[] { "timeToLive" });
+            _timeToLive = DefineProperty<DateTimeOffset>(nameof(TimeToLive), new string[] { "timeToLive" }, format: "O");
             _osType = DefineProperty<ContainerInstanceOperatingSystemType>(nameof(OSType), new string[] { "osType" }, isRequired: true);
             _volumes = DefineListProperty<ContainerVolume>(nameof(Volumes), new string[] { "volumes" });
             _diagnostics = DefineModelProperty<ContainerGroupDiagnostics>(nameof(Diagnostics), new string[] { "diagnostics" });

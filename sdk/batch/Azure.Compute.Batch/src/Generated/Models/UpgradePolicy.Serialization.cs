@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
     public partial class UpgradePolicy : IJsonModel<UpgradePolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="UpgradePolicy"/> for deserialization. </summary>
-        internal UpgradePolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual UpgradePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -163,7 +158,7 @@ namespace Azure.Compute.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UpgradePolicy(mode, automaticOsUpgradePolicy, rollingUpgradePolicy, additionalBinaryDataProperties);

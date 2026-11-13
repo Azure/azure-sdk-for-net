@@ -204,24 +204,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
-        [WirePath("properties.linuxProfile")]
-        public ContainerServiceLinuxProfile LinuxProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinuxProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.LinuxProfile = value;
-            }
-        }
-
         /// <summary> The profile for Windows VMs in the Managed Cluster. </summary>
         [WirePath("properties.windowsProfile")]
         public ManagedClusterWindowsProfile WindowsProfile
@@ -362,7 +344,7 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </summary>
+        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. Although this property is available in a stable API version, cluster-wide FIPS remains a preview feature. Write requests whose resulting cluster state has this property set to true require the `Microsoft.ContainerService/EnableFIPSPreview` subscription feature registration. </summary>
         [WirePath("properties.enableFIPS")]
         public bool? IsFipsEnabled
         {
@@ -377,6 +359,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.IsFipsEnabled = value;
+            }
+        }
+
+        /// <summary> Whether to enable node hardening at the cluster level. When enabled, AKS applies hardened defaults for soft eviction thresholds, kube-reserved, and system-reserved on all Linux node pools in the cluster. Per-node-pool kubeletConfig settings take precedence over hardening defaults. On agent pools running Kubernetes 1.37 or later, node hardening is enabled by default and cannot be disabled; setting this field to false has no effect on those pools. </summary>
+        [WirePath("properties.enableNodeHardening")]
+        public bool? EnableNodeHardening
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableNodeHardening;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.EnableNodeHardening = value;
             }
         }
 
@@ -449,6 +449,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.AutoUpgradeProfile = value;
+            }
+        }
+
+        /// <summary> Settings for upgrading a cluster. </summary>
+        [WirePath("properties.upgradeSettings")]
+        public ClusterUpgradeSettings UpgradeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.UpgradeSettings = value;
             }
         }
 
@@ -824,24 +842,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> Settings for overrides. </summary>
-        [WirePath("properties.upgradeSettings.overrideSettings")]
-        public UpgradeOverrideSettings UpgradeOverrideSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpgradeOverrideSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.UpgradeOverrideSettings = value;
-            }
-        }
-
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("properties.metricsProfile.costAnalysis.enabled")]
         public bool? IsCostAnalysisEnabled
@@ -878,8 +878,44 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("properties.schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
+        /// <summary> Whether the Agent Sandbox core extension is enabled for the cluster. On cluster creation, the default is false. </summary>
+        [WirePath("properties.agentSandboxProfile.enabled")]
+        public bool? IsAgentSandboxProfileEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAgentSandboxProfileEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsAgentSandboxProfileEnabled = value;
+            }
+        }
+
+        /// <summary> Whether the Pod Snapshot Restore core extension is enabled for the managed cluster. </summary>
+        [WirePath("properties.podSnapshotProfile.enabled")]
+        public bool? IsPodSnapshotProfileEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPodSnapshotProfileEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsPodSnapshotProfileEnabled = value;
+            }
+        }
+
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
+        [WirePath("properties.schedulerProfile.upstream.schedulerConfigMode")]
         public SchedulerConfigMode? UpstreamSchedulerConfigMode
         {
             get
@@ -916,7 +952,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
         [WirePath("properties.nodeDisruptionProfile.nodeDisruptionPolicy")]
-        public NodeDisruptionPolicy? NodeDisruptionPolicy
+        public AgentPoolNodeDisruptionPolicy? NodeDisruptionPolicy
         {
             get
             {

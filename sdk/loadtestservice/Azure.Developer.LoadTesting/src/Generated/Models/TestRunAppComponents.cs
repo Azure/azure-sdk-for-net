@@ -17,17 +17,9 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/>. </summary>
-        /// <param name="components">
-        /// Azure resource collection { resource id (fully qualified resource Id e.g
-        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
-        /// : resource object } 
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="components"/> is null. </exception>
-        public TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components)
+        public TestRunAppComponents()
         {
-            Argument.AssertNotNull(components, nameof(components));
-
-            Components = components;
+            Components = new ChangeTrackingDictionary<string, LoadTestingAppComponent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TestRunAppComponents"/>. </summary>
@@ -37,18 +29,18 @@ namespace Azure.Developer.LoadTesting
         /// : resource object } 
         /// </param>
         /// <param name="testRunId"> Test run identifier. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components, string testRunId, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components, string testRunId, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Components = components;
             TestRunId = testRunId;
-            CreatedDateTime = createdDateTime;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
-            LastModifiedDateTime = lastModifiedDateTime;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -64,13 +56,13 @@ namespace Azure.Developer.LoadTesting
         public string TestRunId { get; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? CreatedDateTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
 
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? LastModifiedDateTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }

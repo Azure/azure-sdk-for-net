@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
         public VirtualMachinePublicIPAddressConfigurationProperties()
         {
-            IpTags = new ChangeTrackingList<VirtualMachineIpTag>();
+            IPTags = new ChangeTrackingList<VirtualMachineIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIpTag> ipTags, SubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, SubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DeleteOption = deleteOption;
             DnsSettings = dnsSettings;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineIpTag> IpTags { get; }
+        public IList<VirtualMachineIPTag> IPTags { get; }
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         internal SubResource PublicIPPrefix { get; set; }

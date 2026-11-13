@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 throw new FormatException($"The model {nameof(PrivateDnsRecordData)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>

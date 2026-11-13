@@ -7,6 +7,12 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class AzureAISearchToolResource
     {
+        /// <summary> Initializes a new instance of the <see cref="AzureAISearchToolResource"/> class. </summary>
+        /// <param name="indexConnectionId"> The connection identifier for the AI Search index. </param>
+        /// <param name="indexName"> The name of the AI Search index. </param>
+        /// <param name="topK"> The maximum number of results to return. </param>
+        /// <param name="filter"> A filter string for the search resource. </param>
+        /// <param name="queryType"> The query type to use for the search. </param>
         public AzureAISearchToolResource(
             string indexConnectionId,
             string indexName,

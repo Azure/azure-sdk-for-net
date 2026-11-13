@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class OfficePowerBiConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<OfficePowerBiConnectorDataTypesLogs>
+    internal partial class OfficePowerBiConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<OfficePowerBiConnectorDataTypesLogs>
     {
         /// <summary> Initializes a new instance of <see cref="OfficePowerBiConnectorDataTypesLogs"/> for deserialization. </summary>
         internal OfficePowerBiConnectorDataTypesLogs()
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OfficePowerBiConnectorDataTypesLogs(state, additionalBinaryDataProperties);

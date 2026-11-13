@@ -23,7 +23,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task DeleteAnalyzerAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingCreateSimpleAnalyzer
@@ -47,7 +47,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     ShouldReturnDetails = true
                 }
             };
-            analyzer.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            analyzer.Models["completion"] = "gpt-5.2";
+#else
+            analyzer.Models["completion"] = ModelProfile.CompletionModel;
+#endif
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -70,7 +74,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(analyzer.Config.ShouldReturnDetails, "ReturnDetails should be true");
             Assert.IsNotNull(analyzer.Models, "Models should not be null");
             Assert.IsTrue(analyzer.Models.ContainsKey("completion"), "Should have completion model");
-            Assert.AreEqual("gpt-4.1", analyzer.Models["completion"], "Completion model should be gpt-4.1");
+            Assert.AreEqual(ModelProfile.CompletionModel, analyzer.Models["completion"], "Completion model should match the configured model");
             Console.WriteLine("Analyzer object configured correctly");
 
             // Verify the analyzer was created successfully
@@ -117,8 +121,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 if (getResponse.Value.Models.ContainsKey("completion"))
                 {
-                    Assert.AreEqual("gpt-4.1", getResponse.Value.Models["completion"],
-                        "Completion model should be gpt-4.1");
+                    Assert.AreEqual(ModelProfile.CompletionModel, getResponse.Value.Models["completion"],
+                        "Completion model should match the configured model");
                     Console.WriteLine($"  completion: {getResponse.Value.Models["completion"]}");
                 }
             }

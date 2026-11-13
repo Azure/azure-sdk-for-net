@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteConfigApiVersion);
             _siteConfigResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _siteConfigResourcesRestClient = new SiteConfigResources(_siteConfigResourcesClientDiagnostics, Pipeline, Endpoint, webSiteConfigApiVersion ?? "2026-03-15");
+            _siteConfigResourcesRestClient = new SiteConfigResources(_siteConfigResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteConfigApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigResourcesGetConfigurationSnapshotInfoAsyncCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfoAsyncCollectionResultOfT(
                 _siteConfigResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigResourcesGetConfigurationSnapshotInfoCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfoCollectionResultOfT(
                 _siteConfigResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

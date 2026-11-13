@@ -108,15 +108,8 @@ public class BasicCdnTests
             resource endpoint 'Microsoft.Cdn/profiles/endpoints@2025-06-01' = {
               name: endpointName
               location: 'global'
+              parent: profile
               properties: {
-                origins: [
-                  {
-                    name: 'origin1'
-                    properties: {
-                      hostName: originUrl
-                    }
-                  }
-                ]
                 contentTypesToCompress: [
                   'application/javascript'
                   'application/json'
@@ -125,13 +118,20 @@ public class BasicCdnTests
                   'text/html'
                   'text/plain'
                 ]
-                originHostHeader: originUrl
                 isCompressionEnabled: true
                 isHttpAllowed: true
                 isHttpsAllowed: true
+                originHostHeader: originUrl
+                origins: [
+                  {
+                    name: 'origin1'
+                    properties: {
+                      hostName: originUrl
+                    }
+                  }
+                ]
                 queryStringCachingBehavior: 'IgnoreQueryString'
               }
-              parent: profile
             }
 
             output endpointHostName string = endpoint.properties.hostName
@@ -249,31 +249,32 @@ public class BasicCdnTests
             resource endpoint 'Microsoft.Cdn/profiles/afdEndpoints@2025-06-01' = {
               name: 'MyEndpoint'
               location: 'global'
+              parent: profile
               properties: {
                 enabledState: 'Enabled'
               }
-              parent: profile
             }
 
             resource originGroup 'Microsoft.Cdn/profiles/originGroups@2025-06-01' = {
               name: 'MyOriginGroup'
+              parent: profile
               properties: {
+                healthProbeSettings: {
+                  probeIntervalInSeconds: 100
+                  probePath: '/'
+                  probeProtocol: 'Http'
+                  probeRequestType: 'HEAD'
+                }
                 loadBalancingSettings: {
                   sampleSize: 4
                   successfulSamplesRequired: 3
                 }
-                healthProbeSettings: {
-                  probePath: '/'
-                  probeRequestType: 'HEAD'
-                  probeProtocol: 'Http'
-                  probeIntervalInSeconds: 100
-                }
               }
-              parent: profile
             }
 
             resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2025-06-01' = {
               name: 'MyOrigin'
+              parent: originGroup
               properties: {
                 hostName: originHostName
                 httpPort: 80
@@ -282,27 +283,26 @@ public class BasicCdnTests
                 priority: 1
                 weight: 1000
               }
-              parent: originGroup
             }
 
             resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2025-06-01' = {
               name: 'MyRoute'
+              parent: endpoint
               properties: {
+                forwardingProtocol: 'HttpsOnly'
+                httpsRedirect: 'Enabled'
+                linkToDefaultDomain: 'Enabled'
                 originGroup: {
                   id: originGroup.id
                 }
+                patternsToMatch: [
+                  '/*'
+                ]
                 supportedProtocols: [
                   'Http'
                   'Https'
                 ]
-                patternsToMatch: [
-                  '/*'
-                ]
-                forwardingProtocol: 'HttpsOnly'
-                linkToDefaultDomain: 'Enabled'
-                httpsRedirect: 'Enabled'
               }
-              parent: endpoint
             }
 
             output frontDoorEndpointHostName string = endpoint.properties.hostName

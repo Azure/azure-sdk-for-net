@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new RouteConfigurationOverrideActionProperties. </summary>
         public RouteConfigurationOverrideActionProperties()
         {
+            TypeName.Assign(DeliveryRuleActionParametersType.DeliveryRuleRouteConfigurationOverrideActionParameters);
         }
 
         /// <summary> Gets or sets the OriginGroupOverride. </summary>
@@ -52,7 +53,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleRouteConfigurationOverrideActionParameters");
             _originGroupOverride = DefineModelProperty<OriginGroupOverride>(nameof(OriginGroupOverride), new string[] { "originGroupOverride" });
             _cacheConfiguration = DefineModelProperty<CacheConfiguration>(nameof(CacheConfiguration), new string[] { "cacheConfiguration" });
             DefineAdditionalProperties();

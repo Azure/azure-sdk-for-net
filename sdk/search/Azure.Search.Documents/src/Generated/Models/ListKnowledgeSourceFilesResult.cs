@@ -26,14 +26,19 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeSourceFilesResult"/>. </summary>
         /// <param name="value"> The list of files. </param>
+        /// <param name="odataNextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListKnowledgeSourceFilesResult(IList<KnowledgeSourceFile> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListKnowledgeSourceFilesResult(IList<KnowledgeSourceFile> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
+            OdataNextLink = odataNextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of files. </summary>
         public IList<KnowledgeSourceFile> Value { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string OdataNextLink { get; }
     }
 }

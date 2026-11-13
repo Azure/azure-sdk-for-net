@@ -6,347 +6,118 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class ProactiveDetectionConfigurationsRestOperations
+    internal partial class ProactiveDetectionConfigurations
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of ProactiveDetectionConfigurationsRestOperations. </summary>
+        /// <summary> Initializes a new instance of ProactiveDetectionConfigurations for mocking. </summary>
+        protected ProactiveDetectionConfigurations()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ProactiveDetectionConfigurations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ProactiveDetectionConfigurationsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal ProactiveDetectionConfigurations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2015-05-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(ProactiveDetectionConfigurations).Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetProactiveDetectionConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/ProactiveDetectionConfigs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/ProactiveDetectionConfigs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a list of ProactiveDetection configurations of an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration>>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetProactiveDetectionConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string configurationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        List<ApplicationInsightsComponentProactiveDetectionConfiguration> array = new List<ApplicationInsightsComponentProactiveDetectionConfiguration>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(item));
-                        }
-                        value = array;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a list of ProactiveDetection configurations of an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration>> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        List<ApplicationInsightsComponentProactiveDetectionConfiguration> array = new List<ApplicationInsightsComponentProactiveDetectionConfiguration>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(item));
-                        }
-                        value = array;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string configurationId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/ProactiveDetectionConfigs/", false);
             uri.AppendPath(configurationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string configurationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/ProactiveDetectionConfigs/", false);
-            uri.AppendPath(configurationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get the ProactiveDetection configuration for this configuration id. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentProactiveDetectionConfiguration>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateProactiveDetectionConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string configurationId, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, configurationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the ProactiveDetection configuration for this configuration id. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentProactiveDetectionConfiguration> Get(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, configurationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/ProactiveDetectionConfigs/", false);
             uri.AppendPath(configurationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/ProactiveDetectionConfigs/", false);
-            uri.AppendPath(configurationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(proactiveDetectionProperties, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
-        }
-
-        /// <summary> Update the ProactiveDetection configuration for this configuration id. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="proactiveDetectionProperties"> Properties that need to be specified to update the ProactiveDetection configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="configurationId"/> or <paramref name="proactiveDetectionProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentProactiveDetectionConfiguration>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
-            Argument.AssertNotNull(proactiveDetectionProperties, nameof(proactiveDetectionProperties));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, configurationId, proactiveDetectionProperties);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update the ProactiveDetection configuration for this configuration id. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="proactiveDetectionProperties"> Properties that need to be specified to update the ProactiveDetection configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="configurationId"/> or <paramref name="proactiveDetectionProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentProactiveDetectionConfiguration> Update(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
-            Argument.AssertNotNull(proactiveDetectionProperties, nameof(proactiveDetectionProperties));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, configurationId, proactiveDetectionProperties);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

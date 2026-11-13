@@ -61,9 +61,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Description for the evaluation rule. </summary>
         public string Description { get; set; }
 
-        /// <summary> Definition of the evaluation rule action. </summary>
-        public EvaluationRuleAction Action { get; set; }
-
         /// <summary> Filter condition of the evaluation rule. </summary>
         public EvaluationRuleFilter Filter { get; set; }
 

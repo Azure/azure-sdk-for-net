@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="connectionState"> Current WiFi connection state. </param>
         /// <param name="username"> Username for enterprise WiFi authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WifiConfigurationReportedProperties(string ssid, AuthenticationType? authenticationType, EAPMethod? eapMethod, int? signalStrength, string lastSuccessfulConnectionTimestamp, ConnectionState? connectionState, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WifiConfigurationReportedProperties(string ssid, EdgeMachineWifiAuthenticationType? authenticationType, EapMethod? eapMethod, int? signalStrength, string lastSuccessfulConnectionTimestamp, EdgeMachineWifiConnectionState? connectionState, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ssid = ssid;
             AuthenticationType = authenticationType;
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> WiFi authentication type. </summary>
         [WirePath("authenticationType")]
-        public AuthenticationType? AuthenticationType { get; }
+        public EdgeMachineWifiAuthenticationType? AuthenticationType { get; }
 
         /// <summary> EAP method used for authentication. </summary>
         [WirePath("eapMethod")]
-        public EAPMethod? EapMethod { get; }
+        public EapMethod? EapMethod { get; }
 
         /// <summary> WiFi signal strength. </summary>
         [WirePath("signalStrength")]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Current WiFi connection state. </summary>
         [WirePath("connectionState")]
-        public ConnectionState? ConnectionState { get; }
+        public EdgeMachineWifiConnectionState? ConnectionState { get; }
 
         /// <summary> Username for enterprise WiFi authentication. </summary>
         [WirePath("username")]

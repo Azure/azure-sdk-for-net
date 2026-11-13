@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(HealthcareApisWorkspacePrivateEndpointConnectionResource.ResourceType, out string healthcareApisWorkspacePrivateEndpointConnectionApiVersion);
             _healthcareApisWorkspacePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspacePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _healthcareApisWorkspacePrivateEndpointConnectionsRestClient = new HealthcareApisWorkspacePrivateEndpointConnections(_healthcareApisWorkspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, healthcareApisWorkspacePrivateEndpointConnectionApiVersion ?? "2025-04-01-preview");
+            _healthcareApisWorkspacePrivateEndpointConnectionsRestClient = new HealthcareApisWorkspacePrivateEndpointConnections(_healthcareApisWorkspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspacePrivateEndpointConnectionApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisWorkspacePrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisPrivateEndpointConnectionDataAsync0CollectionResultOfT(
                 _healthcareApisWorkspacePrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisWorkspacePrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisPrivateEndpointConnectionData0CollectionResultOfT(
                 _healthcareApisWorkspacePrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

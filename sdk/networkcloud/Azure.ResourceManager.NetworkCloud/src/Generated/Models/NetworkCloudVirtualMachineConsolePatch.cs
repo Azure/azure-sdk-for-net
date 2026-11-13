@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ConsolePatchProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

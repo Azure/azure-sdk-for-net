@@ -225,7 +225,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcsRouterJobQueuedEventData(
@@ -234,11 +234,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 channelId,
                 additionalBinaryDataProperties,
                 queueId,
-                labels,
-                tags,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 priority,
-                attachedWorkerSelectors,
-                requestedWorkerSelectors);
+                attachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
+                requestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 
         internal partial class AcsRouterJobQueuedEventDataConverter : JsonConverter<AcsRouterJobQueuedEventData>

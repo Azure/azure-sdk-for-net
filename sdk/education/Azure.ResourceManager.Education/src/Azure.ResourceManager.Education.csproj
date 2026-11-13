@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Education.</Description>
+    <PackageId>Azure.ResourceManager.Education</PackageId>
+    <AssemblyTitle>Microsoft Azure Resource Manager client library for Microsoft.Education</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>azure;management;arm;resource manager;education</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>

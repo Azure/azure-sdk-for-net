@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterProjectPolicyResource.ResourceType, out string devCenterProjectPolicyApiVersion);
             _projectPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectPolicyResource.ResourceType.Namespace, Diagnostics);
-            _projectPoliciesRestClient = new ProjectPolicies(_projectPoliciesClientDiagnostics, Pipeline, Endpoint, devCenterProjectPolicyApiVersion ?? "2026-01-01-preview");
+            _projectPoliciesRestClient = new ProjectPolicies(_projectPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectPolicyApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new ProjectPoliciesGetByDevCenterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new DevCenterProjectPolicyDataAsyncCollectionResultOfT(
                 _projectPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new ProjectPoliciesGetByDevCenterCollectionResultOfT(
+            return new PageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new DevCenterProjectPolicyDataCollectionResultOfT(
                 _projectPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

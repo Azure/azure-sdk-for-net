@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceIpConfigurationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ContainerNetworkInterfaceIpConfigurationType);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ContainerNetworkInterfaceIpConfigurationPropertiesFormat properties = default;
+            ContainerNetworkInterfaceIPConfigurationPropertiesFormat properties = default;
             string name = default;
-            string @type = default;
+            string containerNetworkInterfaceIpConfigurationType = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ContainerNetworkInterfaceIpConfigurationPropertiesFormat.DeserializeContainerNetworkInterfaceIpConfigurationPropertiesFormat(prop.Value, options);
+                    properties = ContainerNetworkInterfaceIPConfigurationPropertiesFormat.DeserializeContainerNetworkInterfaceIPConfigurationPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    containerNetworkInterfaceIpConfigurationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerNetworkInterfaceIPConfiguration(properties, name, @type, eTag, additionalBinaryDataProperties);
+            return new ContainerNetworkInterfaceIPConfiguration(properties, name, containerNetworkInterfaceIpConfigurationType, eTag, additionalBinaryDataProperties);
         }
     }
 }

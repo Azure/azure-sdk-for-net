@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Quota
             _groupQuotaName = groupQuotaName;
             _resourceProviderName = resourceProviderName;
             _quotaAllocationRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaAllocationRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            _quotaAllocationRequestStatusesRestClient = new QuotaAllocationRequestStatuses(_quotaAllocationRequestStatusesClientDiagnostics, Pipeline, Endpoint, quotaAllocationRequestStatusApiVersion ?? "2025-09-01");
+            _quotaAllocationRequestStatusesRestClient = new QuotaAllocationRequestStatuses(_quotaAllocationRequestStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, quotaAllocationRequestStatusApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusDataAsyncCollectionResultOfT(
                 _quotaAllocationRequestStatusesRestClient,
                 Id.Parent.Name,
                 Guid.Parse(Id.Name),
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusesGetAllCollectionResultOfT(
+            return new PageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusDataCollectionResultOfT(
                 _quotaAllocationRequestStatusesRestClient,
                 Id.Parent.Name,
                 Guid.Parse(Id.Name),

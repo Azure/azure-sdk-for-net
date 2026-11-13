@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
+    /// <summary></summary>
     public partial class ApplicationInsightsWorkbookRevisionResource : IJsonModel<ApplicationInsightsWorkbookData>
     {
-        private static ApplicationInsightsWorkbookData s_dataDeserializationInstance;
-        private static ApplicationInsightsWorkbookData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApplicationInsightsWorkbookData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApplicationInsightsWorkbookData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApplicationInsightsWorkbookData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationInsightsWorkbookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWorkbookData>)Data).Write(writer, options);
 
-        ApplicationInsightsWorkbookData IJsonModel<ApplicationInsightsWorkbookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWorkbookData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsWorkbookData IJsonModel<ApplicationInsightsWorkbookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApplicationInsightsWorkbookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationInsightsWorkbookData>(Data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApplicationInsightsWorkbookData IPersistableModel<ApplicationInsightsWorkbookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWorkbookData>(data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
-        string IPersistableModel<ApplicationInsightsWorkbookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationInsightsWorkbookData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationInsightsWorkbookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

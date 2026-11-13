@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceProductResource.ResourceType, out string serviceWorkspaceProductApiVersion);
             _workspaceProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceProductResource.ResourceType.Namespace, Diagnostics);
-            _workspaceProductRestClient = new WorkspaceProduct(_workspaceProductClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceProductApiVersion ?? "2025-09-01-preview");
+            _workspaceProductRestClient = new WorkspaceProduct(_workspaceProductClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceProductApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementProductData, ServiceWorkspaceProductResource>(new WorkspaceProductGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementProductData, ServiceWorkspaceProductResource>(new ApiManagementProductDataAsyncCollectionResultOfT(
                 _workspaceProductRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementProductData, ServiceWorkspaceProductResource>(new WorkspaceProductGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementProductData, ServiceWorkspaceProductResource>(new ApiManagementProductDataCollectionResultOfT(
                 _workspaceProductRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

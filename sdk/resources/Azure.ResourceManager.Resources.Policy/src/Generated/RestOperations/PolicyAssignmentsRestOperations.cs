@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Resources.Policy
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of PolicyAssignments for mocking. </summary>
         protected PolicyAssignments()
@@ -25,14 +27,18 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <summary> Initializes a new instance of PolicyAssignments. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PolicyAssignments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal PolicyAssignments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
+            _userAgent = new TelemetryDetails(typeof(PolicyAssignments).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -55,6 +61,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -73,6 +80,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -93,6 +101,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -113,6 +122,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -125,10 +135,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -137,6 +144,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -149,14 +157,12 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -171,14 +177,12 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -193,14 +197,12 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -214,10 +216,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Authorization/policyAssignments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -234,6 +233,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -249,14 +249,12 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -268,10 +266,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Authorization/policyAssignments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -288,6 +283,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -303,14 +299,12 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -322,10 +316,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/policyAssignments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -342,6 +333,7 @@ namespace Azure.ResourceManager.Resources.Policy
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -357,14 +349,12 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Authorization/policyAssignments") ?? "2025-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="TeamInformation"/>. </summary>
         /// <param name="teamId"> Team ID. </param>
         /// <param name="primaryChannelUri"> The primary channel URL of the team. </param>
-        /// <param name="teamCreationTimeUtc"> The time the team was created. </param>
+        /// <param name="createdOn"> The time the team was created. </param>
         /// <param name="name"> The name of the team. </param>
         /// <param name="description"> The description of the team. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TeamInformation(string teamId, string primaryChannelUri, DateTimeOffset? teamCreationTimeUtc, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TeamInformation(string teamId, string primaryChannelUri, DateTimeOffset? createdOn, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TeamId = teamId;
             PrimaryChannelUri = primaryChannelUri;
-            TeamCreationTimeUtc = teamCreationTimeUtc;
+            CreatedOn = createdOn;
             Name = name;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The time the team was created. </summary>
         [WirePath("teamCreationTimeUtc")]
-        public DateTimeOffset? TeamCreationTimeUtc { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The name of the team. </summary>
         [WirePath("name")]

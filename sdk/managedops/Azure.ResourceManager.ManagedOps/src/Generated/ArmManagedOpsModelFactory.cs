@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedOps;
 using Azure.ResourceManager.Models;
@@ -19,6 +17,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
     public static partial class ArmManagedOpsModelFactory
     {
 
+        /// <summary> The Managed Operations resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -53,6 +52,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
                 default);
         }
 
+        /// <summary> Specifies the service plan for this resource. </summary>
         /// <param name="name"> Name of the SKU. </param>
         /// <param name="tier"> Pricing tier of the SKU. </param>
         /// <returns> A new <see cref="Models.ManagedOpsSku"/> instance for mocking. </returns>
@@ -98,6 +98,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
                 default);
         }
 
+        /// <summary> Change Tracking and Inventory service information. </summary>
         /// <param name="dcrId"> ID of Data Collection Rule (DCR) associated with this service. </param>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
         /// <returns> A new <see cref="Models.ManagedOpsChangeTrackingInformation"/> instance for mocking. </returns>
@@ -106,6 +107,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
             return new ManagedOpsChangeTrackingInformation(dcrId, enablementStatus, default);
         }
 
+        /// <summary> Azure Monitor Insights service information. </summary>
         /// <param name="dcrId"> ID of Data Collection Rule (DCR) associated with this service. </param>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
         /// <returns> A new <see cref="Models.ManagedOpsAzureMonitorInformation"/> instance for mocking. </returns>
@@ -121,6 +123,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
             return new ManagedOpPatch(managedOpUpdateDesiredConfiguration is null ? default : new ManagedOpUpdateProperties(managedOpUpdateDesiredConfiguration, default), default);
         }
 
+        /// <summary> Updatable parameters in the Desired configuration input. </summary>
         /// <param name="defenderForServers"> Desired enablement state of the Defender For Servers service. </param>
         /// <param name="defenderCspm"> Desired enablement state of the Defender Cloud Security Posture Management (CSPM) service. </param>
         /// <returns> A new <see cref="Models.ManagedOpsDesiredConfigurationPatch"/> instance for mocking. </returns>

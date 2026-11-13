@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Tests
 
             // 5.Delete
             var deleteAdmin = await collection.GetAsync(adminName);
-            await   deleteAdmin.Value.DeleteAsync(WaitUntil.Completed);
+            await deleteAdmin.Value.DeleteAsync(WaitUntil.Completed);
             list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

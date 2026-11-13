@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
     [CodeGenSerialization(nameof(IsEnabled), SerializationValueHook = nameof(SerializationIsEnabled), DeserializationValueHook = nameof(DeserializeIsEnabled))]
     public partial class LiveTraceConfiguration
     {
+        /// <summary> Indicates whether live trace is enabled. </summary>
+        [CodeGenMember("IsEnabled")]
+        [WirePath("enabled")]
+        public bool? IsEnabled { get; set; }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void SerializationIsEnabled(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

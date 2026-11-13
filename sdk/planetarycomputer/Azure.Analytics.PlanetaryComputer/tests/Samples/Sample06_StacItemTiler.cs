@@ -105,10 +105,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get available assets for a specific item
-            Response<IReadOnlyList<string>> response = await dataClient.GetAvailableAssetsAsync(
-                collectionId: collectionId,
-                itemId: itemId
-            );
+            Response<IReadOnlyList<string>> response = await dataClient.GetItemAvailableAssetsAsync(new GetItemAvailableAssetsOptions(collectionId, itemId));
 
             IReadOnlyList<string> assets = response.Value;
             Console.WriteLine($"Available assets for item '{itemId}':");
@@ -142,10 +139,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get bounding box for an item
-            Response<StacItemBounds> response = await dataClient.GetBoundsAsync(
-                collectionId: collectionId,
-                itemId: itemId
-            );
+            Response<StacItemBounds> response = await dataClient.GetItemBoundsAsync(new GetItemTilesetsOptions(collectionId, itemId));
 
             StacItemBounds boundsResult = response.Value;
             var bounds = boundsResult.Bounds;
@@ -176,17 +170,16 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get a preview image
-            Response<BinaryData> response = await dataClient.GetPreviewAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                format: TilerImageFormat.Png,
-                width: 512,
-                height: 512,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response response = await dataClient.GetItemPreviewAsync(new GetItemPreviewOptions(collectionId, itemId)
+            {
+                Format = TilerImageFormat.Png,
+                Width = 512,
+                Height = 512,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
 
-            byte[] imageBytes = response.Value.ToArray();
+            byte[] imageBytes = response.Content.ToArray();
             Console.WriteLine($"Preview image: {imageBytes.Length} bytes");
 
             // Save to file
@@ -217,11 +210,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get item metadata as GeoJSON
-            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetInfoGeoJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetItemInfoGeoJsonAsync(new GetItemInfoOptions(collectionId, itemId)
+            {
+                Assets = { "image" }
+            });
 
             TilerInfoGeoJsonFeature info = response.Value;
             Console.WriteLine("Item info retrieved successfully");
@@ -251,11 +243,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get statistics for an item's assets
-            Response<TilerStacItemStatistics> response = await dataClient.GetStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            Response<TilerStacItemStatistics> response = await dataClient.GetItemStatisticsAsync(new GetItemStatisticsOptions(collectionId, itemId)
+            {
+                Assets = { "image" }
+            });
 
             TilerStacItemStatistics statistics = response.Value;
             Console.WriteLine("Statistics retrieved successfully");
@@ -264,7 +255,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetAssetStatistics()
+        public async Task GetItemAssetStatistics()
         {
             #region Snippet:Sample06_GetAssetStatistics
             // Create a Planetary Computer client
@@ -285,11 +276,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get detailed statistics for each asset
-            Response<AssetStatisticsResponse> response = await dataClient.GetAssetStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            Response<AssetStatisticsResult> response = await dataClient.GetItemAssetStatisticsAsync(new GetItemAssetStatisticsOptions(collectionId, itemId)
+            {
+                Assets = { "image" }
+            });
 
             IReadOnlyDictionary<string, BinaryData> assetStatistics = response.Value.AdditionalProperties;
             Console.WriteLine($"Statistics for {assetStatistics.Count} assets");
@@ -298,7 +288,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetWmtsCapabilities()
+        public async Task GetItemWmtsCapabilitiesByTms()
         {
             #region Snippet:Sample06_GetWmtsCapabilities
             // Create a Planetary Computer client
@@ -319,19 +309,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get WMTS capabilities XML
-            Response<BinaryData> response = await dataClient.GetWmtsCapabilitiesAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: TilerImageFormat.Png,
-                tileScale: 1,
-                minZoom: 7,
-                maxZoom: 14,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response response = await dataClient.GetItemWmtsCapabilitiesByTmsAsync(new GetItemWmtsCapabilitiesByTmsOptions(collectionId, itemId, "WebMercatorQuad")
+            {
+                TileFormat = TilerImageFormat.Png,
+                TileScale = 1,
+                MinZoom = 7,
+                MaxZoom = 14,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
 
-            string xmlString = System.Text.Encoding.UTF8.GetString(response.Value.ToArray());
+            string xmlString = System.Text.Encoding.UTF8.GetString(response.Content.ToArray());
             Console.WriteLine($"WMTS Capabilities: {xmlString.Substring(0, 200)}...");
             #endregion
         }
@@ -371,20 +359,19 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 }
             };
             var geometry = new PolygonGeometry(coordinates);
-            var feature = new GeoJsonFeature(geometry, FeatureType.Feature);
+            var feature = new GeoJsonFeature(geometry, FeatureKind.Feature);
             feature.Properties.Add("description", BinaryData.FromString("\"Crop area\""));
 
             // Crop image by geometry
-            Response<BinaryData> response = await dataClient.CropGeoJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                format: "png",
-                body: feature,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response response = await dataClient.CropFeatureByFormatAsync(
+                feature,
+                new CropFeatureByFormatOptions(collectionId, itemId, "png")
+                {
+                    Assets = { "image" },
+                    AssetBandIndices = { "image|1,2,3" }
+                });
 
-            byte[] croppedImage = response.Value.ToArray();
+            byte[] croppedImage = response.Content.ToArray();
             Console.WriteLine($"Cropped image: {croppedImage.Length} bytes");
             #endregion
         }
@@ -424,22 +411,19 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 }
             };
             var geometry = new PolygonGeometry(coordinates);
-            var feature = new GeoJsonFeature(geometry, FeatureType.Feature);
+            var feature = new GeoJsonFeature(geometry, FeatureKind.Feature);
             feature.Properties.Add("description", BinaryData.FromString("\"Crop area\""));
 
             // Crop with specific dimensions
-            Response<BinaryData> response = await dataClient.CropGeoJsonWithDimensionsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                width: 256,
-                height: 256,
-                format: "png",
-                body: feature,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response response = await dataClient.CropFeatureWidthByHeightAsync(
+                feature,
+                new CropFeatureWidthByHeightOptions(collectionId, itemId, 256, 256, "png")
+                {
+                    Assets = { "image" },
+                    AssetBandIndices = { "image|1,2,3" }
+                });
 
-            byte[] croppedImage = response.Value.ToArray();
+            byte[] croppedImage = response.Content.ToArray();
             Console.WriteLine($"Cropped 256x256 image: {croppedImage.Length} bytes");
             #endregion
         }
@@ -479,16 +463,16 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 }
             };
             var geometry = new PolygonGeometry(coordinates);
-            var feature = new GeoJsonFeature(geometry, FeatureType.Feature);
+            var feature = new GeoJsonFeature(geometry, FeatureKind.Feature);
             feature.Properties.Add("description", BinaryData.FromString("\"Statistics area\""));
 
             // Get statistics for the area
-            Response<StacItemStatisticsGeoJson> response = await dataClient.GetGeoJsonStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                body: feature,
-                assets: new[] { "image" }
-            );
+            Response<StacItemStatisticsGeoJson> response = await dataClient.GetItemFeatureStatisticsAsync(
+                feature,
+                new GetItemFeatureStatisticsOptions(collectionId, itemId)
+                {
+                    Assets = { "image" }
+                });
 
             StacItemStatisticsGeoJson statistics = response.Value;
             Console.WriteLine("Statistics for area retrieved successfully");
@@ -518,26 +502,20 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get part of image by bounding box
-            Response<BinaryData> response = await dataClient.GetPartAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                minx: -84.3930f,
-                miny: 33.6798f,
-                maxx: -84.3670f,
-                maxy: 33.7058f,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
-                format: "png"
-            );
+            Response response = await dataClient.GetItemBboxCropAsync(new GetItemBboxCropOptions(collectionId, itemId, -84.3930f, 33.6798f, -84.3670f, 33.7058f, "png")
+            {
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
 
-            byte[] partImage = response.Value.ToArray();
+            byte[] partImage = response.Content.ToArray();
             Console.WriteLine($"Part image: {partImage.Length} bytes");
             #endregion
         }
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetPartWithDimensions()
+        public async Task GetItemBboxCropWithDimensions()
         {
             #region Snippet:Sample06_GetPartWithDimensions
             // Create a Planetary Computer client
@@ -558,21 +536,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get part with specific dimensions
-            Response<BinaryData> response = await dataClient.GetPartWithDimensionsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                minx: -84.3930f,
-                miny: 33.6798f,
-                maxx: -84.3670f,
-                maxy: 33.7058f,
-                width: 256,
-                height: 256,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
-                format: "png"
-            );
+            Response response = await dataClient.GetItemBboxCropWithDimensionsAsync(new GetItemBboxCropWithDimensionsOptions(collectionId, itemId, -84.3930f, 33.6798f, -84.3670f, 33.7058f, 256, 256, "png")
+            {
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
 
-            byte[] partImage = response.Value.ToArray();
+            byte[] partImage = response.Content.ToArray();
             Console.WriteLine($"Part image (256x256): {partImage.Length} bytes");
             #endregion
         }
@@ -600,13 +570,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get data at a specific point
-            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetPointAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                longitude: -84.3860f,
-                latitude: 33.6760f,
-                assets: new[] { "image" }
-            );
+            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(new GetItemPointOptions(collectionId, itemId, -84.3860f, 33.6760f)
+            {
+                Assets = { "image" }
+            });
 
             TilerCoreModelsResponsesPoint pointData = response.Value;
             Console.WriteLine("Point data retrieved successfully");
@@ -636,17 +603,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get TileJSON metadata
-            Response<TileJsonMetadata> response = await dataClient.GetTileJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: TilerImageFormat.Png,
-                tileScale: 1,
-                minZoom: 7,
-                maxZoom: 14,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response<TileJsonMetadata> response = await dataClient.GetItemTileJsonByTmsAsync(new GetItemTileJsonByTmsOptions(collectionId, itemId, "WebMercatorQuad")
+            {
+                TileFormat = TilerImageFormat.Png,
+                TileScale = 1,
+                MinZoom = 7,
+                MaxZoom = 14,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
 
             TileJsonMetadata tileJson = response.Value;
             Console.WriteLine($"TileJSON version: {tileJson.TileJson}");
@@ -656,7 +621,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetTile()
+        public async Task GetTileByScaleAndFormat()
         {
             #region Snippet:Sample06_GetTile
             // Create a Planetary Computer client
@@ -677,20 +642,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get a specific tile
-            Response<BinaryData> response = await dataClient.GetTileAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                z: 14,
-                x: 4349,
-                y: 6564,
-                scale: 1,
-                format: "png",
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response response = await dataClient.GetTileByScaleAndFormatAsync(new GetTileByScaleAndFormatOptions(collectionId, itemId, "WebMercatorQuad", 14, 4349, 6564, 1, "png")
+            {
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
 
-            byte[] tileImage = response.Value.ToArray();
+            byte[] tileImage = response.Content.ToArray();
             Console.WriteLine($"Tile image: {tileImage.Length} bytes");
             #endregion
         }
@@ -718,60 +676,44 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Step 1: Get available assets
-            Response<IReadOnlyList<string>> assetsResponse = await dataClient.GetAvailableAssetsAsync(
-                collectionId: collectionId,
-                itemId: itemId
-            );
+            Response<IReadOnlyList<string>> assetsResponse = await dataClient.GetItemAvailableAssetsAsync(new GetItemAvailableAssetsOptions(collectionId, itemId));
             Console.WriteLine($"Step 1: Found {assetsResponse.Value.Count} assets");
 
             // Step 2: Get item bounds
-            Response<StacItemBounds> boundsResponse = await dataClient.GetBoundsAsync(
-                collectionId: collectionId,
-                itemId: itemId
-            );
+            Response<StacItemBounds> boundsResponse = await dataClient.GetItemBoundsAsync(new GetItemTilesetsOptions(collectionId, itemId));
             var bounds = boundsResponse.Value.Bounds;
             Console.WriteLine($"Step 2: Bounds: [{bounds[0]}, {bounds[1]}, {bounds[2]}, {bounds[3]}]");
 
             // Step 3: Get a preview image
-            Response<BinaryData> previewResponse = await dataClient.GetPreviewAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                format: TilerImageFormat.Png,
-                width: 512,
-                height: 512,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
-            Console.WriteLine($"Step 3: Preview image: {previewResponse.Value.ToArray().Length} bytes");
+            Response previewResponse = await dataClient.GetItemPreviewAsync(new GetItemPreviewOptions(collectionId, itemId)
+            {
+                Format = TilerImageFormat.Png,
+                Width = 512,
+                Height = 512,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
+            Console.WriteLine($"Step 3: Preview image: {previewResponse.Content.ToArray().Length} bytes");
 
             // Step 4: Get TileJSON for mapping applications
-            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetTileJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: TilerImageFormat.Png,
-                tileScale: 1,
-                minZoom: 7,
-                maxZoom: 14,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetItemTileJsonByTmsAsync(new GetItemTileJsonByTmsOptions(collectionId, itemId, "WebMercatorQuad")
+            {
+                TileFormat = TilerImageFormat.Png,
+                TileScale = 1,
+                MinZoom = 7,
+                MaxZoom = 14,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
             Console.WriteLine($"Step 4: TileJSON URL pattern: {tileJsonResponse.Value.Tiles[0]}");
 
             // Step 5: Get a specific tile
-            Response<BinaryData> tileResponse = await dataClient.GetTileAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                z: 14,
-                x: 4349,
-                y: 6564,
-                scale: 1,
-                format: "png",
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
-            Console.WriteLine($"Step 5: Tile image: {tileResponse.Value.ToArray().Length} bytes");
+            Response tileResponse = await dataClient.GetTileByScaleAndFormatAsync(new GetTileByScaleAndFormatOptions(collectionId, itemId, "WebMercatorQuad", 14, 4349, 6564, 1, "png")
+            {
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
+            Console.WriteLine($"Step 5: Tile image: {tileResponse.Content.ToArray().Length} bytes");
             #endregion
         }
     }

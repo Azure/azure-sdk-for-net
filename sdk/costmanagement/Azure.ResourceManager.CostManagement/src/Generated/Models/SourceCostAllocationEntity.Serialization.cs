@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SourceCostAllocationEntity(resourceType, name, additionalBinaryDataProperties, values);
+            return new SourceCostAllocationEntity(resourceType, name, additionalBinaryDataProperties, values ?? new ChangeTrackingList<string>());
         }
     }
 }

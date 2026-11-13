@@ -34,10 +34,10 @@ namespace Azure.Security.KeyVault.Certificates.Models
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="preserveCertOrder"> Specifies whether the certificate chain preserves its original order. The default value is false, which sets the leaf certificate at index 0. </param>
         /// <param name="recoveryId"> The url of the recovery object, used to identify and recover the deleted certificate. </param>
-        /// <param name="scheduledPurgeDate"> The time when the certificate is scheduled to be purged, in UTC. </param>
-        /// <param name="deletedDate"> The time when the certificate was deleted, in UTC. </param>
+        /// <param name="scheduledPurgeOn"> The time when the certificate is scheduled to be purged, in UTC. </param>
+        /// <param name="deletedOn"> The time when the certificate was deleted, in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedCertificateBundle(string id, string kid, string sid, BinaryData x509Thumbprint, CertificatePolicyBundle policy, BinaryData cer, string contentType, CertificateAttributesBundle attributes, IDictionary<string, string> tags, bool? preserveCertOrder, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedCertificateBundle(string id, string kid, string sid, BinaryData x509Thumbprint, CertificatePolicyBundle policy, BinaryData cer, string contentType, CertificateAttributesBundle attributes, IDictionary<string, string> tags, bool? preserveCertOrder, string recoveryId, DateTimeOffset? scheduledPurgeOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kid = kid;
@@ -50,8 +50,8 @@ namespace Azure.Security.KeyVault.Certificates.Models
             Tags = tags;
             PreserveCertOrder = preserveCertOrder;
             RecoveryId = recoveryId;
-            ScheduledPurgeDate = scheduledPurgeDate;
-            DeletedDate = deletedDate;
+            ScheduledPurgeOn = scheduledPurgeOn;
+            DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -119,9 +119,9 @@ namespace Azure.Security.KeyVault.Certificates.Models
         public string RecoveryId { get; }
 
         /// <summary> The time when the certificate is scheduled to be purged, in UTC. </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; }
+        public DateTimeOffset? ScheduledPurgeOn { get; }
 
         /// <summary> The time when the certificate was deleted, in UTC. </summary>
-        public DateTimeOffset? DeletedDate { get; }
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

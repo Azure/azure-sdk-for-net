@@ -370,7 +370,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     foreach (var property in amqpCorrelationFilter.Properties)
                     {
-                        correlationFilter.ApplicationProperties.Add(property.Key.Key.ToString(), property.Value);
+                        var innerKey = property.Key.Key;
+                        correlationFilter.ApplicationProperties.Add(innerKey is AmqpSymbol symbol ? symbol.Value : innerKey.ToString(), property.Value);
                     }
 
                     filter = correlationFilter;

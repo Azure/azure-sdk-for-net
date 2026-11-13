@@ -16,18 +16,24 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="ActivityProtocolConfiguration"/>. </summary>
         public ActivityProtocolConfiguration()
         {
+            AccessBoundaries = new ChangeTrackingList<ActivityProtocolAccessBoundary>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityProtocolConfiguration"/>. </summary>
         /// <param name="enableM365PublicEndpoint"> Whether to enable the M365 public endpoint for the activity protocol. </param>
+        /// <param name="accessBoundaries"> The access boundaries for the activity protocol. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityProtocolConfiguration(bool? enableM365PublicEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivityProtocolConfiguration(bool? enableM365PublicEndpoint, IReadOnlyList<ActivityProtocolAccessBoundary> accessBoundaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableM365PublicEndpoint = enableM365PublicEndpoint;
+            AccessBoundaries = accessBoundaries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable the M365 public endpoint for the activity protocol. </summary>
         public bool? EnableM365PublicEndpoint { get; set; }
+
+        /// <summary> The access boundaries for the activity protocol. </summary>
+        public IReadOnlyList<ActivityProtocolAccessBoundary> AccessBoundaries { get; }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoDatabasePrincipalAssignmentResource.ResourceType, out string kustoDatabasePrincipalAssignmentApiVersion);
             _databasePrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDatabasePrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _databasePrincipalAssignmentsRestClient = new DatabasePrincipalAssignments(_databasePrincipalAssignmentsClientDiagnostics, Pipeline, Endpoint, kustoDatabasePrincipalAssignmentApiVersion ?? "2025-02-14");
+            _databasePrincipalAssignmentsRestClient = new DatabasePrincipalAssignments(_databasePrincipalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabasePrincipalAssignmentApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoDatabasePrincipalAssignmentData, KustoDatabasePrincipalAssignmentResource>(new DatabasePrincipalAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoDatabasePrincipalAssignmentData, KustoDatabasePrincipalAssignmentResource>(new KustoDatabasePrincipalAssignmentDataAsyncCollectionResultOfT(
                 _databasePrincipalAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoDatabasePrincipalAssignmentData, KustoDatabasePrincipalAssignmentResource>(new DatabasePrincipalAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<KustoDatabasePrincipalAssignmentData, KustoDatabasePrincipalAssignmentResource>(new KustoDatabasePrincipalAssignmentDataCollectionResultOfT(
                 _databasePrincipalAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

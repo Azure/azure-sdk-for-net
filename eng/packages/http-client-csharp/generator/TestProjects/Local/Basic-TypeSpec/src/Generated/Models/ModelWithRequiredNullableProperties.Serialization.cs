@@ -7,7 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 
 namespace BasicTypeSpec
@@ -30,7 +30,7 @@ namespace BasicTypeSpec
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeModelWithRequiredNullableProperties(document.RootElement, options);
+                        return DeserializeModelWithRequiredNullableProperties(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ModelWithRequiredNullableProperties)} does not support reading '{options.Format}' format.");
@@ -64,6 +64,14 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ModelWithRequiredNullableProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -78,48 +86,37 @@ namespace BasicTypeSpec
             {
                 throw new FormatException($"The model {nameof(ModelWithRequiredNullableProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RequiredNullablePrimitive))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Optional.IsDefined(RequiredNullablePrimitive) && !Patch.Contains("$.requiredNullablePrimitive"u8))
             {
                 writer.WritePropertyName("requiredNullablePrimitive"u8);
                 writer.WriteNumberValue(RequiredNullablePrimitive.Value);
             }
-            else
+            else if (!Patch.Contains("$.requiredNullablePrimitive"u8))
             {
                 writer.WriteNull("requiredNullablePrimitive"u8);
             }
-            if (Optional.IsDefined(RequiredExtensibleEnum))
+            if (Optional.IsDefined(RequiredExtensibleEnum) && !Patch.Contains("$.requiredExtensibleEnum"u8))
             {
                 writer.WritePropertyName("requiredExtensibleEnum"u8);
                 writer.WriteStringValue(RequiredExtensibleEnum.Value.ToString());
             }
-            else
+            else if (!Patch.Contains("$.requiredExtensibleEnum"u8))
             {
                 writer.WriteNull("requiredExtensibleEnum"u8);
             }
-            if (Optional.IsDefined(RequiredFixedEnum))
+            if (Optional.IsDefined(RequiredFixedEnum) && !Patch.Contains("$.requiredFixedEnum"u8))
             {
                 writer.WritePropertyName("requiredFixedEnum"u8);
                 writer.WriteStringValue(RequiredFixedEnum.Value.ToSerialString());
             }
-            else
+            else if (!Patch.Contains("$.requiredFixedEnum"u8))
             {
                 writer.WriteNull("requiredFixedEnum"u8);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -136,12 +133,13 @@ namespace BasicTypeSpec
                 throw new FormatException($"The model {nameof(ModelWithRequiredNullableProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeModelWithRequiredNullableProperties(document.RootElement, options);
+            return DeserializeModelWithRequiredNullableProperties(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ModelWithRequiredNullableProperties DeserializeModelWithRequiredNullableProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ModelWithRequiredNullableProperties DeserializeModelWithRequiredNullableProperties(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +148,9 @@ namespace BasicTypeSpec
             int? requiredNullablePrimitive = default;
             StringExtensibleEnum? requiredExtensibleEnum = default;
             StringFixedEnum? requiredFixedEnum = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("requiredNullablePrimitive"u8))
@@ -183,12 +183,9 @@ namespace BasicTypeSpec
                     requiredFixedEnum = prop.Value.GetString().ToStringFixedEnum();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
-            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties);
+            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, patch);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingDepartmentApiVersion);
             _departmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _departmentsRestClient = new Departments(_departmentsClientDiagnostics, Pipeline, Endpoint, billingDepartmentApiVersion ?? "2024-04-01");
+            _departmentsRestClient = new Departments(_departmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingDepartmentApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT(
+            return new BillingDepartmentResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _departmentsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingDepartmentsCheckAccessByDepartmentCollectionResultOfT(
+            return new BillingDepartmentResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _departmentsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new DepartmentsGetBillingPermissionsAsyncCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
+            return new BillingPermissionAsync2CollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new DepartmentsGetBillingPermissionsCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
+            return new BillingPermission2CollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
         }
 
         /// <summary> Gets a collection of BillingDepartmentRoleAssignments in the <see cref="BillingDepartmentResource"/>. </summary>

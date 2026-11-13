@@ -56,7 +56,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
+            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync, enclosingType);
             _parameterMapping = parameterMapping;
             _isAsync = isAsync;
             _restClientField = restClientInfo.RestClient;
@@ -118,14 +118,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ArrayResponseOperationMethodProvider singlePageListOperationMethodProvider)
         {
-            var methodProvider = new ScmMethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 singlePageListOperationMethodProvider._signature,
                 singlePageListOperationMethodProvider._bodyStatements,
                 singlePageListOperationMethodProvider._enclosingType,
                 ScmMethodKind.Convenience,
-                null,
-                singlePageListOperationMethodProvider._collectionResult,
-                singlePageListOperationMethodProvider._serviceMethod);
+                collectionDefinition: singlePageListOperationMethodProvider._collectionResult,
+                serviceMethod: singlePageListOperationMethodProvider._serviceMethod);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(
@@ -156,7 +155,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType, shouldApplyLroHandling: _serviceMethod.IsLongRunningOperation(), scopeParameter: _scopeParameter),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType, shouldApplyLroHandling: _serviceMethod.IsLongRunningOperation(), scopeParameter: _scopeParameter, methodName: _methodName),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -217,6 +216,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _itemType,
                 _isAsync,
                 constructorParams,
+                _enclosingType,
                 _methodName,  // Pass the actual method name for proper class naming
                 _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")
 

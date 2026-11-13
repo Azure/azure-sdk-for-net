@@ -6,6 +6,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
+// AZC0112: Azure.AI.OpenAI is granted InternalsVisibleTo by System.ClientModel and OpenAI and is the
+// intended caller of these members. The upstream types predate the [Friend] attribute the rule looks for.
+#pragma warning disable AZC0112
+
 #nullable enable
 
 namespace Azure.AI.OpenAI.VectorStores;

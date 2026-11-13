@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ResourceType, out string tenantResourceHealthEventApiVersion);
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
             _securityAdvisoryImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsyncCollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
+            return new ResourceHealthEventImpactedResourceDataAsync2CollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdCollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
+            return new ResourceHealthEventImpactedResourceData2CollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
         }
 
         /// <summary> Gets a collection of TenantResourceHealthEventImpactedResources in the <see cref="TenantResourceHealthEventResource"/>. </summary>

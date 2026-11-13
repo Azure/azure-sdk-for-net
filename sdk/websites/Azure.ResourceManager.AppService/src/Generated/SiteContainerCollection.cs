@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteContainerResource.ResourceType, out string siteContainerApiVersion);
             _siteContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteContainerResource.ResourceType.Namespace, Diagnostics);
-            _siteContainersRestClient = new SiteContainers(_siteContainersClientDiagnostics, Pipeline, Endpoint, siteContainerApiVersion ?? "2026-03-15");
+            _siteContainersRestClient = new SiteContainers(_siteContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteContainerApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteContainerData, SiteContainerResource>(new SiteContainersGetSiteContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteContainerData, SiteContainerResource>(new SiteContainerDataAsync0CollectionResultOfT(
                 _siteContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteContainerData, SiteContainerResource>(new SiteContainersGetSiteContainersCollectionResultOfT(
+            return new PageableWrapper<SiteContainerData, SiteContainerResource>(new SiteContainerData0CollectionResultOfT(
                 _siteContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

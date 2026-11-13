@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceSubscriptionResource.ResourceType, out string serviceWorkspaceSubscriptionApiVersion);
             _workspaceSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _workspaceSubscriptionRestClient = new WorkspaceSubscription(_workspaceSubscriptionClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceSubscriptionApiVersion ?? "2025-09-01-preview");
+            _workspaceSubscriptionRestClient = new WorkspaceSubscription(_workspaceSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceSubscriptionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionContractData, ServiceWorkspaceSubscriptionResource>(new WorkspaceSubscriptionGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SubscriptionContractData, ServiceWorkspaceSubscriptionResource>(new SubscriptionContractDataAsync0CollectionResultOfT(
                 _workspaceSubscriptionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionContractData, ServiceWorkspaceSubscriptionResource>(new WorkspaceSubscriptionGetAllCollectionResultOfT(
+            return new PageableWrapper<SubscriptionContractData, ServiceWorkspaceSubscriptionResource>(new SubscriptionContractData0CollectionResultOfT(
                 _workspaceSubscriptionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

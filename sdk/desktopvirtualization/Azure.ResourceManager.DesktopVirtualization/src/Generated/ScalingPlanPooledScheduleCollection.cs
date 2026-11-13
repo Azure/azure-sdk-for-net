@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ScalingPlanPooledScheduleResource.ResourceType, out string scalingPlanPooledScheduleApiVersion);
             _scalingPlanPooledSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlanPooledScheduleResource.ResourceType.Namespace, Diagnostics);
-            _scalingPlanPooledSchedulesRestClient = new ScalingPlanPooledSchedules(_scalingPlanPooledSchedulesClientDiagnostics, Pipeline, Endpoint, scalingPlanPooledScheduleApiVersion ?? "2026-03-01-preview");
+            _scalingPlanPooledSchedulesRestClient = new ScalingPlanPooledSchedules(_scalingPlanPooledSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scalingPlanPooledScheduleApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScalingPlanPooledScheduleData, ScalingPlanPooledScheduleResource>(new ScalingPlanPooledSchedulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScalingPlanPooledScheduleData, ScalingPlanPooledScheduleResource>(new ScalingPlanPooledScheduleDataAsyncCollectionResultOfT(
                 _scalingPlanPooledSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScalingPlanPooledScheduleData, ScalingPlanPooledScheduleResource>(new ScalingPlanPooledSchedulesGetAllCollectionResultOfT(
+            return new PageableWrapper<ScalingPlanPooledScheduleData, ScalingPlanPooledScheduleResource>(new ScalingPlanPooledScheduleDataCollectionResultOfT(
                 _scalingPlanPooledSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

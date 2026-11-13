@@ -33,15 +33,15 @@ namespace Azure.Messaging.ServiceBus
         public virtual string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
-        /// Indicates whether or not this <see cref="ServiceBusSessionReceiver"/> has been closed by the user, or whether the underlying
-        /// session link was closed due to either losing the session lock or having the link disconnected. If this is <c>true</c>, the
-        /// receiver cannot be used for any more operations. If this is <c>false</c>, it is still possible that the session lock has been lost
-        /// so it is important to still handle <see cref="ServiceBusException" /> with <see cref="ServiceBusException.Reason" /> equal to
+        /// Indicates whether or not this <see cref="ServiceBusSessionReceiver"/> is currently closed or closing, or whether the underlying
+        /// session link was closed due to either losing the session lock or having the link disconnected. The value may transition from
+        /// <c>true</c> to <c>false</c> if an in-progress close does not complete. If this is <c>false</c>, it is still possible that the
+        /// session lock has been lost so it is important to still handle <see cref="ServiceBusException" /> with <see cref="ServiceBusException.Reason" /> equal to
         /// <see cref="ServiceBusFailureReason.SessionLockLost"/>.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the session receiver was closed by the user or if the underlying link was closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the session receiver is closed or a close is in progress, or if the underlying link was closed; otherwise, <c>false</c>.
         /// </value>
         public override bool IsClosed => IsDisposed || InnerReceiver.IsSessionLinkClosed;
 
@@ -49,6 +49,33 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
         public virtual DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
+
+        /// <summary>
+        /// Gets a value indicating whether the session is locked exclusively by this receiver. This reports the mode the
+        /// session was established under, which is exclusive unless
+        /// <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set. A non-exclusive request the
+        /// endpoint declines throws when the session is accepted rather than falling back to an exclusive lock, so this
+        /// value always matches the mode that was requested.
+        /// </summary>
+        public virtual bool IsSessionExclusive => InnerReceiver.IsSessionExclusive;
+
+        /// <summary>
+        /// Gets the session lock token assigned by the service when the session is locked non-exclusively, or <c>null</c>
+        /// when the session is locked exclusively (the default). Another receiver can present this token through
+        /// <see cref="ServiceBusSessionReceiverOptions.SessionLockToken"/>, which takes it as a <see cref="Guid"/>, to
+        /// cooperatively take over the session.
+        /// </summary>
+        /// <remarks>
+        /// The token is assigned by the service when the session is acquired, or when this receiver takes over a session by
+        /// presenting an existing token, and this property reports that same value for the lifetime of this receiver. It is
+        /// not cleared when another receiver takes the session over, so a non-null value reports the token this receiver was
+        /// assigned rather than proof that this receiver still holds the session. A receiver that has been taken over
+        /// surfaces <see cref="ServiceBusFailureReason.SessionLockLost"/> on its next operation.
+        ///
+        /// <para>This token authorizes taking over the session lock for any caller with Listen rights on the entity, so treat
+        /// it as sensitive: do not log it, do not persist it unprotected, and transmit it only over a trusted channel.</para>
+        /// </remarks>
+        public virtual string SessionLockToken => InnerReceiver.SessionLockToken?.ToString();
 
         ///  <summary>
         ///  Creates a session receiver which can be used to interact with all messages with the same sessionId.
@@ -68,6 +95,22 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken,
             bool isProcessor = false)
         {
+            // Validation runs on every path that creates a session receiver, including when no options are supplied, so an
+            // invalid combination can never reach the transport. A null options instance carries the defaults, which are
+            // always valid, so it has nothing to reject.
+            if (options?.SessionLockToken != null)
+            {
+                if (!options.EnableNonExclusiveSession)
+                {
+                    throw new ArgumentException(Resources.SessionLockTokenRequiresNonExclusiveMode, nameof(options));
+                }
+
+                if (sessionId == null)
+                {
+                    throw new ArgumentException(Resources.SessionLockTokenRequiresSessionId, nameof(options));
+                }
+            }
+
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,

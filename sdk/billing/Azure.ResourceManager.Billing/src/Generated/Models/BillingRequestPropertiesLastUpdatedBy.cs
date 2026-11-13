@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The principal of the entity who last updated the request. </summary>
-    public partial class BillingRequestPropertiesLastUpdatedBy : BillingPrincipal
+    internal partial class BillingRequestPropertiesLastUpdatedBy : BillingPrincipal
     {
         /// <summary> Initializes a new instance of <see cref="BillingRequestPropertiesLastUpdatedBy"/>. </summary>
         public BillingRequestPropertiesLastUpdatedBy()

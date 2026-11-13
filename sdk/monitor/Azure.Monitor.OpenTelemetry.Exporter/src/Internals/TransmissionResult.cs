@@ -21,5 +21,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal int StatusCode { get; set; }
 
         internal int? ItemsAccepted { get; set; }
+
+        /// <summary>
+        /// Set when a partial success response was understood and its retryable items were either
+        /// re-persisted or confirmed absent. When false the caller must keep the original telemetry.
+        /// </summary>
+        internal bool PartialSuccessHandled { get; set; }
     }
 }

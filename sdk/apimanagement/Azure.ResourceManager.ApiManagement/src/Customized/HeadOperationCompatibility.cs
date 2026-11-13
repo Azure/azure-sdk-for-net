@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementContentItemResource.ResourceType, out string apiVersion);
             diagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementContentItemResource.ResourceType.Namespace, Diagnostics);
-            return new ContentItem(diagnostics, Pipeline, Endpoint, apiVersion ?? "2025-09-01-preview");
+            return new ContentItem(diagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiVersion ?? "2025-09-01-preview");
         }
     }
 }

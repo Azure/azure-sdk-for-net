@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Text.Json;
@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var response = await client.GetUnivariateClient().DetectUnivariateEntireSeriesAsync(request);
+            var response = await client.GetUnivariateDetectorClient().DetectUnivariateEntireSeriesAsync(request);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Assert.IsNotNull(result.GetProperty("expectedValues"));
@@ -54,7 +54,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.GetUnivariateClient().DetectUnivariateLastPointAsync(request);
+            var result = await client.GetUnivariateDetectorClient().DetectUnivariateLastPointAsync(request);
 
             Assert.IsNotNull(result.Value.ExpectedValue);
             Assert.IsNotNull(result.Value.IsAnomaly);
@@ -77,7 +77,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.StableTrendWindow = 10;
             request.Threshold = 0.5F;
             request.Period = 0;
-            var result = await client.GetUnivariateClient().DetectUnivariateChangePointAsync(request);
+            var result = await client.GetUnivariateDetectorClient().DetectUnivariateChangePointAsync(request);
 
             Assert.IsNotNull(result.Value.Period);
             Assert.IsNotNull(result.Value.IsChangePoint);
@@ -90,7 +90,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var client = CreateAnomalyDetectorClient();
 
             int model_number = 0;
-            await foreach (var multivariateModel in client.GetMultivariateClient().GetMultivariateModelsAsync())
+            await foreach (var multivariateModel in client.GetMultivariateDetectorClient().GetMultivariateModelsAsync())
             {
                 model_number++;
             }

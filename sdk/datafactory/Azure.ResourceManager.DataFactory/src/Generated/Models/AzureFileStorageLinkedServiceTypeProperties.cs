@@ -27,20 +27,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to logon the server. </param>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
         /// <param name="sasUri"> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
         /// <param name="snapshot"> The azure file share snapshot version. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="serviceEndpoint"> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFileStorageLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, DataFactoryElement<string> fileShare, DataFactoryElement<string> snapshot, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFileStorageLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret accountKey, DataFactoryElement<string> sasUri, DataFactoryKeyVaultSecret sasToken, DataFactoryElement<string> fileShare, DataFactoryElement<string> snapshot, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             UserId = userId;
             Password = password;
             ConnectionString = connectionString;
+            AccountKey = accountKey;
             SasUri = sasUri;
+            SasToken = sasToken;
             FileShare = fileShare;
             Snapshot = snapshot;
             EncryptedCredential = encryptedCredential;
@@ -61,8 +65,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
 
+        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
+        public DataFactoryKeyVaultSecret AccountKey { get; set; }
+
         /// <summary> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> SasUri { get; set; }
+
+        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
+        public DataFactoryKeyVaultSecret SasToken { get; set; }
 
         /// <summary> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FileShare { get; set; }

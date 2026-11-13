@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteBase64StringValue(Value.ToArray(), "U");
+                writer.WriteBase64StringValue(Value, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BackupCertificateResult(value, additionalBinaryDataProperties);

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiIssueCommentResource.ResourceType, out string apiIssueCommentApiVersion);
             _apiIssueCommentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiIssueCommentResource.ResourceType.Namespace, Diagnostics);
-            _apiIssueCommentRestClient = new ApiIssueComment(_apiIssueCommentClientDiagnostics, Pipeline, Endpoint, apiIssueCommentApiVersion ?? "2025-09-01-preview");
+            _apiIssueCommentRestClient = new ApiIssueComment(_apiIssueCommentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiIssueCommentApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentDataAsyncCollectionResultOfT(
                 _apiIssueCommentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiIssueCommentData, ApiIssueCommentResource>(new ApiIssueCommentDataCollectionResultOfT(
                 _apiIssueCommentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

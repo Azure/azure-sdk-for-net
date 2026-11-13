@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,9 +44,7 @@ public class Sample_Skills_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         #endregion
         DeleteSkillMaybe(skillsClient, "roll-dice");
@@ -127,9 +124,7 @@ public class Sample_Skills_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "roll-dice");
         DeleteSkillMaybe(skillsClient, "simpleSkill");

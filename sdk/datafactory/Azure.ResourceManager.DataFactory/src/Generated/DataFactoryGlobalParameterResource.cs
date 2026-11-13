@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(ResourceType, out string dataFactoryGlobalParameterApiVersion);
             _globalParametersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _globalParametersRestClient = new GlobalParameters(_globalParametersClientDiagnostics, Pipeline, Endpoint, dataFactoryGlobalParameterApiVersion ?? "2018-06-01");
+            _globalParametersRestClient = new GlobalParameters(_globalParametersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryGlobalParameterApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

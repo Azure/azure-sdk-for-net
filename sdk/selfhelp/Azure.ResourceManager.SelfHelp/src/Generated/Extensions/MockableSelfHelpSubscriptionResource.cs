@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
 
         private ClientDiagnostics DiscoverySolutionNLPClientDiagnostics => _discoverySolutionNLPClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiscoverySolutionNLP DiscoverySolutionNLPRestClient => _discoverySolutionNLPRestClient ??= new DiscoverySolutionNLP(DiscoverySolutionNLPClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
+        private DiscoverySolutionNLP DiscoverySolutionNLPRestClient => _discoverySolutionNLPRestClient ??= new DiscoverySolutionNLP(DiscoverySolutionNLPClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-01-preview");
 
         /// <summary>
         /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionNLPDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
+            return new SolutionNlpMetadataAsyncCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionNLPDiscoverSolutionsNlpCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
+            return new SolutionNlpMetadataCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
         }
     }
 }

@@ -156,7 +156,8 @@ namespace Azure.Core
                 "Server",
                 "Transfer-Encoding",
                 "User-Agent",
-                "WWW-Authenticate" // OAuth Challenge header.
+                "WWW-Authenticate", // OAuth Challenge header.
+                "azure-deprecating"
             ];
         }
 

@@ -5,15 +5,17 @@
 
 using System.ComponentModel;
 using System.Net;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy IP address aliases whose casing/type differs from TypeSpec naming.
     public partial class MachineLearningComputeSystemService
     {
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11696 is fixed.
         /// <summary> Public IP address. </summary>
+        [CodeGenMember("PublicIpAddress")]
         [WirePath("publicIpAddress")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string PublicIPAddress => PublicIpAddress;
+        public string PublicIPAddress { get; }
     }
 }

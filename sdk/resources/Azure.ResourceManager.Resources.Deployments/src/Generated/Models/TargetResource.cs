@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Target resource. </summary>
     public partial class TargetResource
@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
         internal TargetResource()
         {
+            SymbolicNamePath = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
@@ -32,8 +33,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
+        /// <param name="symbolicNamePath"> The symbolic name path to the resource in the deployment template, including nested deployment(s) and extension if applicable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IList<string> symbolicNamePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ResourceName = resourceName;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
             Identifiers = identifiers;
             ApiVersion = apiVersion;
             SymbolicName = symbolicName;
+            SymbolicNamePath = symbolicNamePath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -97,5 +100,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The symbolic name of the resource as defined in the deployment template. </summary>
         [WirePath("symbolicName")]
         public string SymbolicName { get; }
+
+        /// <summary> The symbolic name path to the resource in the deployment template, including nested deployment(s) and extension if applicable. </summary>
+        [WirePath("symbolicNamePath")]
+        public IList<string> SymbolicNamePath { get; }
     }
 }

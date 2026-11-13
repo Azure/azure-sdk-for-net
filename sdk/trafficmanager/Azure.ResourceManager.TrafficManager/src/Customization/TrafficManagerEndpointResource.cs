@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerEndpointApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, trafficManagerEndpointApiVersion ?? "2022-04-01");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerEndpointApiVersion ?? "2022-04-01");
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>

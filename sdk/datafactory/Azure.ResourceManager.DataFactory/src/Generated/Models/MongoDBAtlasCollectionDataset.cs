@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The MongoDB Atlas database dataset. </summary>
     public partial class MongoDBAtlasCollectionDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
+        public MongoDBAtlasCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base("MongoDbAtlasCollection", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(collection, nameof(collection));
+
+            TypeProperties = new MongoDBAtlasCollectionDatasetTypeProperties(collection);
+        }
+
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
@@ -25,13 +38,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> MongoDB Atlas database dataset properties. </param>
-        internal MongoDBAtlasCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, MongoDbAtlasCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal MongoDBAtlasCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, MongoDBAtlasCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> MongoDB Atlas database dataset properties. </summary>
-        internal MongoDbAtlasCollectionDatasetTypeProperties TypeProperties { get; set; }
+        internal MongoDBAtlasCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Collection
@@ -44,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new MongoDbAtlasCollectionDatasetTypeProperties();
+                    TypeProperties = new MongoDBAtlasCollectionDatasetTypeProperties();
                 }
                 TypeProperties.Collection = value;
             }

@@ -286,8 +286,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 SimulateNetworkFailure(client);
 
-                var numMessagesDeleted = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow.AddSeconds(5));
-                Assert.AreEqual(numMessagesDeleted, 1);
+                var result = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow.AddSeconds(5));
+                Assert.AreEqual(1, result.DeletedCount);
             }
         }
 
@@ -1301,7 +1301,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1329,7 +1329,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1357,7 +1357,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1394,7 +1394,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Because of the contract, we cannot assume that all eligible
                 // messages were deleted.  We know only that the count of deleted
                 // messages is less than or equal to the count of messages sent.
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
 
                 // We cannot know what is left in the queue, so scan forward until we peek
                 // the last message.
@@ -1434,8 +1434,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.NotZero(numMessagesDeleted.DeletedCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
             }
         }
 
@@ -1457,8 +1457,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(ServiceBusReceiver.MaxDeleteMessageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.NotZero(numMessagesDeleted.DeletedCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
             }
         }
 
@@ -1480,8 +1480,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(1); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount - 5, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount - 5);
+                Assert.NotZero(numMessagesDeleted.DeletedCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount - 5);
 
                 await client.DisposeAsync();
 

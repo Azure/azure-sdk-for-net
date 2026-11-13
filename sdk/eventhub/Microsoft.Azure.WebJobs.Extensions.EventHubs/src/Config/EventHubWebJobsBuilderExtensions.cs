@@ -16,8 +16,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.Hosting
 {
+    /// <summary>
+    /// Extension methods for registering the Event Hubs extension with an <see cref="IWebJobsBuilder"/>.
+    /// </summary>
     public static class EventHubWebJobsBuilderExtensions
     {
+        /// <summary>
+        /// Adds the Event Hubs extension to the provided <see cref="IWebJobsBuilder"/>.
+        /// </summary>
+        /// <param name="builder">The builder to add the extension to.</param>
+        /// <returns>The <paramref name="builder"/> so that additional calls can be chained.</returns>
         public static IWebJobsBuilder AddEventHubs(this IWebJobsBuilder builder)
         {
             if (builder == null)
@@ -29,6 +37,12 @@ namespace Microsoft.Extensions.Hosting
             return builder;
         }
 
+        /// <summary>
+        /// Adds the Event Hubs extension to the provided <see cref="IWebJobsBuilder"/>.
+        /// </summary>
+        /// <param name="builder">The builder to add the extension to.</param>
+        /// <param name="configure">A delegate used to configure the <see cref="EventHubOptions"/>.</param>
+        /// <returns>The <paramref name="builder"/> so that additional calls can be chained.</returns>
         public static IWebJobsBuilder AddEventHubs(this IWebJobsBuilder builder, Action<EventHubOptions> configure)
         {
             if (builder == null)

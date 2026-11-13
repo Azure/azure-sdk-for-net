@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(TenantSupportTicketResource.ResourceType, out string tenantSupportTicketApiVersion);
             _tenantSupportTicketClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", TenantSupportTicketResource.ResourceType.Namespace, Diagnostics);
-            _tenantSupportTicketRestClient = new TenantSupportTicket(_tenantSupportTicketClientDiagnostics, Pipeline, Endpoint, tenantSupportTicketApiVersion ?? "2025-06-01-preview");
+            _tenantSupportTicketRestClient = new TenantSupportTicket(_tenantSupportTicketClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantSupportTicketApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportTicketData, TenantSupportTicketResource>(new TenantSupportTicketGetAllAsyncCollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
+            return new AsyncPageableWrapper<SupportTicketData, TenantSupportTicketResource>(new SupportTicketDataAsync0CollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportTicketData, TenantSupportTicketResource>(new TenantSupportTicketGetAllCollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
+            return new PageableWrapper<SupportTicketData, TenantSupportTicketResource>(new SupportTicketData0CollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementBackendResource.ResourceType, out string apiManagementBackendApiVersion);
             _backendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementBackendResource.ResourceType.Namespace, Diagnostics);
-            _backendRestClient = new Backend(_backendClientDiagnostics, Pipeline, Endpoint, apiManagementBackendApiVersion ?? "2025-09-01-preview");
+            _backendRestClient = new Backend(_backendClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementBackendApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementBackendData, ApiManagementBackendResource>(new BackendGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementBackendData, ApiManagementBackendResource>(new ApiManagementBackendDataAsync0CollectionResultOfT(
                 _backendRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementBackendData, ApiManagementBackendResource>(new BackendGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementBackendData, ApiManagementBackendResource>(new ApiManagementBackendData0CollectionResultOfT(
                 _backendRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

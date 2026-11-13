@@ -17,7 +17,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// Update properties that extend base properties - this is the key pattern.
     /// The base type has a nested complex object (nestedConfig) that gets flattened.
     /// </summary>
-    public partial class IssueTestUpdateProperties : IssueTestBaseProperties, IJsonModel<IssueTestUpdateProperties>
+    internal partial class IssueTestUpdateProperties : IssueTestBaseProperties, IJsonModel<IssueTestUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -143,7 +143,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IssueTestUpdateProperties(displayName, nestedConfig, status, additionalBinaryDataProperties, updateOnlyValue);

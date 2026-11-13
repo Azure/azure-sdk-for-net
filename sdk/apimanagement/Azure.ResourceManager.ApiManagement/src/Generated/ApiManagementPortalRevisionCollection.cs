@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementPortalRevisionResource.ResourceType, out string apiManagementPortalRevisionApiVersion);
             _portalRevisionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementPortalRevisionResource.ResourceType.Namespace, Diagnostics);
-            _portalRevisionRestClient = new PortalRevision(_portalRevisionClientDiagnostics, Pipeline, Endpoint, apiManagementPortalRevisionApiVersion ?? "2025-09-01-preview");
+            _portalRevisionRestClient = new PortalRevision(_portalRevisionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPortalRevisionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementPortalRevisionData, ApiManagementPortalRevisionResource>(new PortalRevisionGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementPortalRevisionData, ApiManagementPortalRevisionResource>(new ApiManagementPortalRevisionDataAsyncCollectionResultOfT(
                 _portalRevisionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementPortalRevisionData, ApiManagementPortalRevisionResource>(new PortalRevisionGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementPortalRevisionData, ApiManagementPortalRevisionResource>(new ApiManagementPortalRevisionDataCollectionResultOfT(
                 _portalRevisionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

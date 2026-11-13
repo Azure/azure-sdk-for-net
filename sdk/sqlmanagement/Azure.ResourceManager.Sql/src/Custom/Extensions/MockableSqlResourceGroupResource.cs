@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             return new AsyncPageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             return new PageableWrapper<LongTermRetentionBackupData, SubscriptionLongTermRetentionBackupResource>(
-                GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken),
+                GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionBackupResource(Client, data));
         }
 
@@ -173,41 +173,41 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// Lists the long term retention backups for a given location.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
-            => GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+            => GetLongTermRetentionBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
-            => GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+            => GetLongTermRetentionBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-            return GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetLongTermRetentionBackupsWithResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-            return GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetLongTermRetentionBackupsWithResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             return GetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// Lists the long term retention backups for a given managed instance.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             return GetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
             => GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, null, null, null, cancellationToken);
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState, CancellationToken cancellationToken)
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
             => GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, null, null, null, cancellationToken);
 
         /// <summary>

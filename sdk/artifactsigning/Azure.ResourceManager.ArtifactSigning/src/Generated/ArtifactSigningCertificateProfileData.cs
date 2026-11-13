@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             get
             {
-                return Properties is null ? default : Properties.CertificateProfileType;
+                return Properties is null ? (CertificateProfileType?)default : Properties.CertificateProfileType;
             }
             set
             {
@@ -159,6 +159,23 @@ namespace Azure.ResourceManager.ArtifactSigning
                     Properties = new CertificateProfileProperties();
                 }
                 Properties.IdentityValidationId = value;
+            }
+        }
+
+        /// <summary> Indicates whether the resource is intended for a specific usage scenario. </summary>
+        public string ProgramType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProgramType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.ProgramType = value;
             }
         }
 

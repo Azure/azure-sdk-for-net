@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResolverContractResource.ResourceType, out string resolverContractApiVersion);
             _graphQLApiResolverClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResolverContractResource.ResourceType.Namespace, Diagnostics);
-            _graphQLApiResolverRestClient = new GraphQLApiResolver(_graphQLApiResolverClientDiagnostics, Pipeline, Endpoint, resolverContractApiVersion ?? "2025-09-01-preview");
+            _graphQLApiResolverRestClient = new GraphQLApiResolver(_graphQLApiResolverClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resolverContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResolverContractData, ResolverContractResource>(new GraphQLApiResolverGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResolverContractData, ResolverContractResource>(new ResolverContractDataAsyncCollectionResultOfT(
                 _graphQLApiResolverRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResolverContractData, ResolverContractResource>(new GraphQLApiResolverGetByApiCollectionResultOfT(
+            return new PageableWrapper<ResolverContractData, ResolverContractResource>(new ResolverContractDataCollectionResultOfT(
                 _graphQLApiResolverRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

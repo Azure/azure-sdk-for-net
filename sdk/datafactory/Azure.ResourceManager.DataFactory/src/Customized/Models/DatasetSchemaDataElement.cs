@@ -4,8 +4,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Expressions.DataFactory;
@@ -24,12 +24,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [JsonConverter(typeof(DatasetSchemaDataElement.DatasetSchemaDataElementConverter))]
     public partial class DatasetSchemaDataElement
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetSchemaDataElement"/>. </summary>
-        public DatasetSchemaDataElement()
-        {
-            _additionalBinaryDataProperties = new global::Azure.ResourceManager.DataFactory.ChangeTrackingDictionary<string, BinaryData>();
-        }
-
         /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
         [CodeGenMember("SchemaColumnName")]
         public DataFactoryElement<string> SchemaColumnName { get; set; }

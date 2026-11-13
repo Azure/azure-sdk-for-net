@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryDatasetResource.ResourceType, out string dataFactoryDatasetApiVersion);
             _datasetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryDatasetResource.ResourceType.Namespace, Diagnostics);
-            _datasetsRestClient = new Datasets(_datasetsClientDiagnostics, Pipeline, Endpoint, dataFactoryDatasetApiVersion ?? "2018-06-01");
+            _datasetsRestClient = new Datasets(_datasetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryDatasetApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryDatasetData, DataFactoryDatasetResource>(new DatasetsGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryDatasetData, DataFactoryDatasetResource>(new DataFactoryDatasetDataAsyncCollectionResultOfT(
                 _datasetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryDatasetData, DataFactoryDatasetResource>(new DatasetsGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryDatasetData, DataFactoryDatasetResource>(new DataFactoryDatasetDataCollectionResultOfT(
                 _datasetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

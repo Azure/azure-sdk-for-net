@@ -66,6 +66,35 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies behavior of the <see cref="MessageBody" /> when a single
+        ///   <see cref="Data" /> segment is specified and copying is eager.
+        /// </summary>
+        ///
+        [Test]
+        public void ManagesSingleAmqpDataSegmentByCopyingEagerly()
+        {
+            var segment = new byte[] { 1, 2, 3 };
+
+            var message = new AmqpMessageBody(MessageBody.FromDataSegments(new[]
+            {
+                new Data { Value = new ArraySegment<byte>(segment) }
+            }));
+
+            // Mutate the original buffer to prove the message body made a copy.
+            segment[0] = 9;
+
+            message.TryGetData(out var body);
+
+            var firstSegment = body.ElementAt(0);
+            var fromReadOnlyMemorySegments = (ReadOnlyMemory<byte>)MessageBody.FromReadOnlyMemorySegments(body);
+            var convertedASecondTime = (ReadOnlyMemory<byte>)MessageBody.FromReadOnlyMemorySegments(body);
+
+            Assert.That(firstSegment.ToArray(), Is.EquivalentTo(new byte[] { 1, 2, 3 }), "The segment content should match the original values.");
+            Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EquivalentTo(new byte[] { 1, 2, 3 }), "The unified segments should match the original values.");
+            Assert.That(convertedASecondTime, Is.EqualTo(fromReadOnlyMemorySegments), "The unified segments should match when converted a second time.");
+        }
+
+        /// <summary>
         ///   Verifies behavior of the <see cref="MessageBody" /> when multiple
         ///   <see cref="Data" /> segments are specified and copying is eager.
         /// </summary>
@@ -83,6 +112,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 new Data { Value = new ArraySegment<byte>(secondSegment) }
             }));
 
+            // Mutate the original buffers to prove the message body made copies.
+            firstSegment[0] = 9;
+            secondSegment[0] = 9;
+
             message.TryGetData(out var body);
 
             var firstSegmentBeforeConversion = body.ElementAt(0);
@@ -92,10 +125,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstSegmentAfterConversion = body.ElementAt(0);
             var secondSegmentAfterConversion = body.ElementAt(1);
 
-            Assert.That(firstSegmentBeforeConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match before conversion.");
-            Assert.That(secondSegmentBeforeConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match before conversion.");
-            Assert.That(firstSegmentAfterConversion, Is.Not.EqualTo(firstSegment), "The first segment should not match after conversion.");
-            Assert.That(secondSegmentAfterConversion, Is.Not.EqualTo(secondSegment), "The second segment should not match after conversion.");
+            Assert.That(firstSegmentBeforeConversion.ToArray(), Is.EquivalentTo(new byte[] { 1, 2, 3 }), "The first segment should match the original values before conversion.");
+            Assert.That(secondSegmentBeforeConversion.ToArray(), Is.EquivalentTo(new byte[] { 4, 5, 6 }), "The second segment should match the original values before conversion.");
+            Assert.That(firstSegmentAfterConversion.ToArray(), Is.EquivalentTo(new byte[] { 1, 2, 3 }), "The first segment should match the original values after conversion.");
+            Assert.That(secondSegmentAfterConversion.ToArray(), Is.EquivalentTo(new byte[] { 4, 5, 6 }), "The second segment should match the original values after conversion.");
             Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EquivalentTo(allSegmentsArray), "The unified segments should match.");
             Assert.That(convertedASecondTime, Is.EqualTo(fromReadOnlyMemorySegments), "The unified segments should match when converted a second time.");
         }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(NetworkFeatureResource.ResourceType, out string networkFeatureApiVersion);
             _networkFeaturesSlotOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", NetworkFeatureResource.ResourceType.Namespace, Diagnostics);
-            _networkFeaturesSlotOperationGroupRestClient = new NetworkFeaturesSlotOperationGroup(_networkFeaturesSlotOperationGroupClientDiagnostics, Pipeline, Endpoint, networkFeatureApiVersion ?? "2026-03-15");
+            _networkFeaturesSlotOperationGroupRestClient = new NetworkFeaturesSlotOperationGroup(_networkFeaturesSlotOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFeatureApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

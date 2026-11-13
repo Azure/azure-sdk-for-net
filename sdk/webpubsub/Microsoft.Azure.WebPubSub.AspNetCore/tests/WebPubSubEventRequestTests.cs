@@ -173,8 +173,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.AreEqual(TestUri.Host, connectRequest.ConnectionContext.Origin);
         }
 
-        [TestCase(Constants.Events.JoinedGroupEvent, typeof(JoinedGroupEventRequest))]
-        [TestCase(Constants.Events.LeftGroupEvent, typeof(LeftGroupEventRequest))]
+        [TestCase(Constants.Events.JoinedGroupEvent, typeof(GroupJoinedEventRequest))]
+        [TestCase(Constants.Events.LeftGroupEvent, typeof(GroupLeftEventRequest))]
         public async Task TestParseGroupEventRequest(string eventName, Type expectedType)
         {
             var body = "{\"group\":\"mygroup\"}";
@@ -185,8 +185,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.AreEqual(expectedType, request.GetType());
             var group = request switch
             {
-                JoinedGroupEventRequest joined => joined.Group,
-                LeftGroupEventRequest left => left.Group,
+                GroupJoinedEventRequest joined => joined.Group,
+                GroupLeftEventRequest left => left.Group,
                 _ => null
             };
             Assert.AreEqual("mygroup", group);

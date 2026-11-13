@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ForecastFilter(@and ?? new ChangeTrackingList<ForecastFilter>(), @or ?? new ChangeTrackingList<ForecastFilter>(), dimensions, tags, additionalBinaryDataProperties);

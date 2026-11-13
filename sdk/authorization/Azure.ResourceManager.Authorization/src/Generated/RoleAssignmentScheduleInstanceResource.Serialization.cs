@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Authorization
 {
+    /// <summary></summary>
     public partial class RoleAssignmentScheduleInstanceResource : IJsonModel<RoleAssignmentScheduleInstanceData>
     {
-        private static RoleAssignmentScheduleInstanceData s_dataDeserializationInstance;
-        private static RoleAssignmentScheduleInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RoleAssignmentScheduleInstanceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RoleAssignmentScheduleInstanceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RoleAssignmentScheduleInstanceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoleAssignmentScheduleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentScheduleInstanceData>)Data).Write(writer, options);
 
-        RoleAssignmentScheduleInstanceData IJsonModel<RoleAssignmentScheduleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentScheduleInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleAssignmentScheduleInstanceData IJsonModel<RoleAssignmentScheduleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RoleAssignmentScheduleInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleAssignmentScheduleInstanceData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RoleAssignmentScheduleInstanceData IPersistableModel<RoleAssignmentScheduleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleAssignmentScheduleInstanceData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<RoleAssignmentScheduleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleAssignmentScheduleInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoleAssignmentScheduleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

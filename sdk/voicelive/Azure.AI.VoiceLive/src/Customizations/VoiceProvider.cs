@@ -23,7 +23,10 @@ namespace Azure.AI.VoiceLive
                     case "azure-custom":
                     case "azure-standard":
                     case "azure-personal":
+                    case "avatar-voice-sync":
                         return AzureVoice.DeserializeAzureVoice(element, options);
+                    case "azure-realtime-native":
+                        return AzureRealtimeNativeVoice.DeserializeAzureRealtimeNativeVoice(element, options);
                     default:
                         return null;
                 }

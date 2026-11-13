@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteConfigAppsettingResource.ResourceType, out string siteConfigAppsettingApiVersion);
             _appSettingKeyVaultReferenceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigAppsettingResource.ResourceType.Namespace, Diagnostics);
-            _appSettingKeyVaultReferenceRestClient = new AppSettingKeyVaultReference(_appSettingKeyVaultReferenceClientDiagnostics, Pipeline, Endpoint, siteConfigAppsettingApiVersion ?? "2026-03-15");
+            _appSettingKeyVaultReferenceRestClient = new AppSettingKeyVaultReference(_appSettingKeyVaultReferenceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteConfigAppsettingApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, SiteConfigAppsettingResource>(new AppSettingKeyVaultReferenceGetAppSettingsKeyVaultReferencesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, SiteConfigAppsettingResource>(new ApiKeyVaultReferenceDataAsync1CollectionResultOfT(
                 _appSettingKeyVaultReferenceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiKeyVaultReferenceData, SiteConfigAppsettingResource>(new AppSettingKeyVaultReferenceGetAppSettingsKeyVaultReferencesCollectionResultOfT(
+            return new PageableWrapper<ApiKeyVaultReferenceData, SiteConfigAppsettingResource>(new ApiKeyVaultReferenceData1CollectionResultOfT(
                 _appSettingKeyVaultReferenceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

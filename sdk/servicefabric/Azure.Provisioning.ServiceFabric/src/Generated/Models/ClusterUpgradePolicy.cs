@@ -169,12 +169,12 @@ namespace Azure.Provisioning.ServiceFabric
         {
             base.DefineProvisionableProperties();
             _forceRestart = DefineProperty<bool>(nameof(ForceRestart), new string[] { "forceRestart" });
-            _upgradeReplicaSetCheckTimeout = DefineProperty<TimeSpan>(nameof(UpgradeReplicaSetCheckTimeout), new string[] { "upgradeReplicaSetCheckTimeout" }, isRequired: true);
-            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" }, isRequired: true);
-            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" }, isRequired: true);
-            _healthCheckRetryTimeout = DefineProperty<TimeSpan>(nameof(HealthCheckRetryTimeout), new string[] { "healthCheckRetryTimeout" }, isRequired: true);
-            _upgradeTimeout = DefineProperty<TimeSpan>(nameof(UpgradeTimeout), new string[] { "upgradeTimeout" }, isRequired: true);
-            _upgradeDomainTimeout = DefineProperty<TimeSpan>(nameof(UpgradeDomainTimeout), new string[] { "upgradeDomainTimeout" }, isRequired: true);
+            _upgradeReplicaSetCheckTimeout = DefineProperty<TimeSpan>(nameof(UpgradeReplicaSetCheckTimeout), new string[] { "upgradeReplicaSetCheckTimeout" }, isRequired: true, format: "P");
+            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" }, isRequired: true, format: "c");
+            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" }, isRequired: true, format: "c");
+            _healthCheckRetryTimeout = DefineProperty<TimeSpan>(nameof(HealthCheckRetryTimeout), new string[] { "healthCheckRetryTimeout" }, isRequired: true, format: "c");
+            _upgradeTimeout = DefineProperty<TimeSpan>(nameof(UpgradeTimeout), new string[] { "upgradeTimeout" }, isRequired: true, format: "c");
+            _upgradeDomainTimeout = DefineProperty<TimeSpan>(nameof(UpgradeDomainTimeout), new string[] { "upgradeDomainTimeout" }, isRequired: true, format: "c");
             _healthPolicy = DefineModelProperty<ClusterHealthPolicy>(nameof(HealthPolicy), new string[] { "healthPolicy" }, isRequired: true);
             _deltaHealthPolicy = DefineModelProperty<ClusterUpgradeDeltaHealthPolicy>(nameof(DeltaHealthPolicy), new string[] { "deltaHealthPolicy" });
             DefineAdditionalProperties();

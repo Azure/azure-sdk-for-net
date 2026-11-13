@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(GitHubOwnerResource.ResourceType, out string gitHubOwnerApiVersion);
             _gitHubOwnersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitHubOwnerResource.ResourceType.Namespace, Diagnostics);
-            _gitHubOwnersRestClient = new GitHubOwners(_gitHubOwnersClientDiagnostics, Pipeline, Endpoint, gitHubOwnerApiVersion ?? "2025-11-01-preview");
+            _gitHubOwnersRestClient = new GitHubOwners(_gitHubOwnersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitHubOwnerApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnerDataAsyncCollectionResultOfT(
                 _gitHubOwnersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnersGetAllCollectionResultOfT(
+            return new PageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnerDataCollectionResultOfT(
                 _gitHubOwnersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

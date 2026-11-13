@@ -35,6 +35,15 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             return new ComputeLimitGuestSubscriptionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TrustedHostSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TrustedHostSubscriptionResource"/> object. </returns>
+        public virtual TrustedHostSubscriptionResource GetTrustedHostSubscriptionResource(ResourceIdentifier id)
+        {
+            TrustedHostSubscriptionResource.ValidateResourceId(id);
+            return new TrustedHostSubscriptionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ComputeLimitSharedLimitResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ComputeLimitSharedLimitResource"/> object. </returns>

@@ -1,6 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,37 +15,64 @@ using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
-    internal class MockTransmitter : ITransmitter
+    internal partial class MockTransmitter : ITransmitter
     {
         public readonly IList<TelemetryItem> TelemetryItems;
 
-        public string InstrumentationKey => "00000000-0000-0000-0000-000000000000";
+        public string InstrumentationKey { get; }
+        public ExportResult Result { get; set; } = ExportResult.Success;
+        public int DisposeCallCount { get; private set; }
 
-        public MockTransmitter(IList<TelemetryItem> telemetryItems)
+        public MockTransmitter(IList<TelemetryItem> telemetryItems, string instrumentationKey = "00000000-0000-0000-0000-000000000000")
         {
             this.TelemetryItems = telemetryItems;
+            InstrumentationKey = instrumentationKey;
         }
 
         public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             lock (this.TelemetryItems)
             {
+                TrackAsyncCallCount++;
+
                 foreach (var telemetryItem in telemetryItems)
                 {
                     this.TelemetryItems.Add(telemetryItem);
                 }
             }
 
-            return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
+            return new ValueTask<ExportResult>(Task.FromResult(Result));
         }
+
+        public int TrackAsyncCallCount { get; private set; }
 
         public ValueTask TransmitFromStorage(long maxFileToTransmit, bool async, CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();
         }
 
+        public IDisposable BeginPersistOnlyScope()
+        {
+            PersistOnlyScopeCount++;
+            return new NoopScope();
+        }
+
+        public void DrainStorage(int waitMilliseconds) => DrainStorageCallCount++;
+
+        public int PersistOnlyScopeCount { get; private set; }
+
+        public int DrainStorageCallCount { get; private set; }
+
         public void Dispose()
         {
+            DisposeCallCount++;
+        }
+
+        private sealed class NoopScope : IDisposable
+        {
+            public void Dispose()
+            {
+            }
         }
     }
 }

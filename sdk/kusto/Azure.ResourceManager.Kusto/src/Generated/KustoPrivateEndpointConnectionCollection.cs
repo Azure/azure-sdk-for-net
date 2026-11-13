@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoPrivateEndpointConnectionResource.ResourceType, out string kustoPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, kustoPrivateEndpointConnectionApiVersion ?? "2025-02-14");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoPrivateEndpointConnectionApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoPrivateEndpointConnectionData, KustoPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoPrivateEndpointConnectionData, KustoPrivateEndpointConnectionResource>(new KustoPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoPrivateEndpointConnectionData, KustoPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<KustoPrivateEndpointConnectionData, KustoPrivateEndpointConnectionResource>(new KustoPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

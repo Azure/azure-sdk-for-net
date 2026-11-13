@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WorkflowRunActionScopeRepetitionResource.ResourceType, out string workflowRunActionScopeRepetitionApiVersion);
             _workflowRunActionScopeRepetitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunActionScopeRepetitionResource.ResourceType.Namespace, Diagnostics);
-            _workflowRunActionScopeRepetitionsRestClient = new WorkflowRunActionScopeRepetitions(_workflowRunActionScopeRepetitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionScopeRepetitionApiVersion ?? "2026-03-15");
+            _workflowRunActionScopeRepetitionsRestClient = new WorkflowRunActionScopeRepetitions(_workflowRunActionScopeRepetitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workflowRunActionScopeRepetitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowRunActionRepetitionDefinitionData, WorkflowRunActionScopeRepetitionResource>(new WorkflowRunActionScopeRepetitionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowRunActionRepetitionDefinitionData, WorkflowRunActionScopeRepetitionResource>(new WorkflowRunActionRepetitionDefinitionDataAsync0CollectionResultOfT(
                 _workflowRunActionScopeRepetitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowRunActionRepetitionDefinitionData, WorkflowRunActionScopeRepetitionResource>(new WorkflowRunActionScopeRepetitionsGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkflowRunActionRepetitionDefinitionData, WorkflowRunActionScopeRepetitionResource>(new WorkflowRunActionRepetitionDefinitionData0CollectionResultOfT(
                 _workflowRunActionScopeRepetitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

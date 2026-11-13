@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Microsoft Azure CosmosDB (SQL API) Collection dataset. </summary>
     public partial class CosmosDBSqlApiCollectionDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlApiCollectionDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
+        public CosmosDBSqlApiCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base("CosmosDbSqlApiCollection", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(collectionName, nameof(collectionName));
+
+            TypeProperties = new CosmosDBSqlApiCollectionDatasetTypeProperties(collectionName);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlApiCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
@@ -25,13 +38,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> CosmosDB (SQL API) Collection dataset properties. </param>
-        internal CosmosDBSqlApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, CosmosDbSqlApiCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDBSqlApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, CosmosDBSqlApiCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> CosmosDB (SQL API) Collection dataset properties. </summary>
-        internal CosmosDbSqlApiCollectionDatasetTypeProperties TypeProperties { get; set; }
+        internal CosmosDBSqlApiCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CollectionName
@@ -44,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new CosmosDbSqlApiCollectionDatasetTypeProperties();
+                    TypeProperties = new CosmosDBSqlApiCollectionDatasetTypeProperties();
                 }
                 TypeProperties.CollectionName = value;
             }

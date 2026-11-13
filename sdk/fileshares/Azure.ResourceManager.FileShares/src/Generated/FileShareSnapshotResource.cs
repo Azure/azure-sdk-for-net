@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(ResourceType, out string fileShareSnapshotApiVersion);
             _fileShareSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", ResourceType.Namespace, Diagnostics);
-            _fileShareSnapshotsRestClient = new FileShareSnapshots(_fileShareSnapshotsClientDiagnostics, Pipeline, Endpoint, fileShareSnapshotApiVersion ?? "2026-06-01");
+            _fileShareSnapshotsRestClient = new FileShareSnapshots(_fileShareSnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileShareSnapshotApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

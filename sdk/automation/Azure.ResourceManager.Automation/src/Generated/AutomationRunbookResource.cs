@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -60,13 +61,13 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationRunbookApiVersion);
             _runbookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             _testJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _testJobRestClient = new TestJob(_testJobClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _testJobRestClient = new TestJob(_testJobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             _runbookDraftClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _runbookDraftRestClient = new RunbookDraft(_runbookDraftClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _runbookDraftRestClient = new RunbookDraft(_runbookDraftClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             _testJobStreamsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _testJobStreamsRestClient = new TestJobStreams(_testJobStreamsClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _testJobStreamsRestClient = new TestJobStreams(_testJobStreamsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -639,7 +640,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new TestJobStreamsGetTestJobStreamsAsyncCollectionResultOfT(
+            return new AutomationJobStreamAsync0CollectionResultOfT(
                 _testJobStreamsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -680,7 +681,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new TestJobStreamsGetTestJobStreamsCollectionResultOfT(
+            return new AutomationJobStream0CollectionResultOfT(
                 _testJobStreamsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1755,10 +1756,9 @@ namespace Azure.ResourceManager.Automation
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1798,10 +1798,9 @@ namespace Azure.ResourceManager.Automation
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

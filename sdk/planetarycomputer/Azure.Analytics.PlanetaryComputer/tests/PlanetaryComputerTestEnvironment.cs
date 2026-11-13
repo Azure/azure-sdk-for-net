@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.PlanetaryComputer.Tests
 {
@@ -11,6 +13,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// </summary>
     public class PlanetaryComputerTestEnvironment : TestEnvironment
     {
+        // Use AzureCliCredential for local recording (matches Python/JS/Java behavior)
+        protected override TokenCredential CreateDeveloperCredential() => new AzureCliCredential();
         /// <summary>
         /// Gets the Planetary Computer service endpoint URL.
         /// Marked as secret to prevent real endpoint from being stored in recordings.

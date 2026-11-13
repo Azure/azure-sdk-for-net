@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of Fleets for mocking. </summary>
         protected Fleets()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <summary> Initializes a new instance of Fleets. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Fleets(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Fleets(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(Fleets).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -51,14 +54,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -73,14 +74,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -101,14 +100,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
@@ -129,14 +126,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
@@ -153,14 +148,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -176,14 +169,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-02-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -195,10 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
             if (maxCount != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
@@ -211,6 +199,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -226,14 +215,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-02-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -249,14 +236,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
             uri.AppendPath("/listCredentials", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

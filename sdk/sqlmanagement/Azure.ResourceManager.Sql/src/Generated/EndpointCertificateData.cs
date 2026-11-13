@@ -58,5 +58,19 @@ namespace Azure.ResourceManager.Sql
                 Properties.PublicBlob = value;
             }
         }
+
+        /// <summary> Trusted root certificates required to validate the instance certificate. </summary>
+        [WirePath("properties.trustedRootCertificates")]
+        public IReadOnlyList<EndpointTrustedRootCertificateInfo> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointCertificateProperties();
+                }
+                return Properties.TrustedRootCertificates;
+            }
+        }
     }
 }

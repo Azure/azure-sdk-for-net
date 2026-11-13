@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotPrivateEndpointConnectionResource.ResourceType, out string siteSlotPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionSlotOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionSlotOperationGroupRestClient = new PrivateEndpointConnectionSlotOperationGroup(_privateEndpointConnectionSlotOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotPrivateEndpointConnectionApiVersion ?? "2026-03-15");
+            _privateEndpointConnectionSlotOperationGroupRestClient = new PrivateEndpointConnectionSlotOperationGroup(_privateEndpointConnectionSlotOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotPrivateEndpointConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SiteSlotPrivateEndpointConnectionResource>(new PrivateEndpointConnectionSlotOperationGroupGetPrivateEndpointConnectionListSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SiteSlotPrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceDataAsync1CollectionResultOfT(
                 _privateEndpointConnectionSlotOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SiteSlotPrivateEndpointConnectionResource>(new PrivateEndpointConnectionSlotOperationGroupGetPrivateEndpointConnectionListSlotCollectionResultOfT(
+            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SiteSlotPrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceData1CollectionResultOfT(
                 _privateEndpointConnectionSlotOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

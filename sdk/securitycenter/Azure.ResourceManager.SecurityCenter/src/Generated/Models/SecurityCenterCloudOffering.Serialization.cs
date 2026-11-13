@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security offering details
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CspmMonitorAwsOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="DefenderForServersGcpOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorDockerHubOffering"/>, <see cref="DefenderForContainersDockerHubOffering"/>, <see cref="DefenderCspmDockerHubOffering"/>, <see cref="CspmMonitorJFrogOffering"/>, <see cref="DefenderForContainersJFrogOffering"/>, and <see cref="DefenderCspmJFrogOffering"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorDockerHubOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorJFrogOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmDockerHubOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderCspmJFrogOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersDockerHubOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForContainersJFrogOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForServersAwsOffering"/>, and <see cref="DefenderForServersGcpOffering"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityCenterCloudOffering))]
     public abstract partial class SecurityCenterCloudOffering : IJsonModel<SecurityCenterCloudOffering>
@@ -132,42 +132,42 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     case "CspmMonitorAws":
                         return CspmMonitorAwsOffering.DeserializeCspmMonitorAwsOffering(element, options);
-                    case "DefenderForContainersAws":
-                        return DefenderForContainersAwsOffering.DeserializeDefenderForContainersAwsOffering(element, options);
-                    case "DefenderForServersAws":
-                        return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element, options);
-                    case "DefenderForDatabasesAws":
-                        return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element, options);
-                    case "CspmMonitorGcp":
-                        return CspmMonitorGcpOffering.DeserializeCspmMonitorGcpOffering(element, options);
-                    case "DefenderForServersGcp":
-                        return DefenderForServersGcpOffering.DeserializeDefenderForServersGcpOffering(element, options);
-                    case "DefenderForDatabasesGcp":
-                        return DefenderForDatabasesGcpOffering.DeserializeDefenderForDatabasesGcpOffering(element, options);
-                    case "DefenderForContainersGcp":
-                        return DefenderForContainersGcpOffering.DeserializeDefenderForContainersGcpOffering(element, options);
-                    case "CspmMonitorGithub":
-                        return CspmMonitorGithubOffering.DeserializeCspmMonitorGithubOffering(element, options);
                     case "CspmMonitorAzureDevOps":
                         return CspmMonitorAzureDevOpsOffering.DeserializeCspmMonitorAzureDevOpsOffering(element, options);
-                    case "DefenderCspmAws":
-                        return DefenderCspmAwsOffering.DeserializeDefenderCspmAwsOffering(element, options);
-                    case "DefenderCspmGcp":
-                        return DefenderCspmGcpOffering.DeserializeDefenderCspmGcpOffering(element, options);
-                    case "CspmMonitorGitLab":
-                        return CspmMonitorGitLabOffering.DeserializeCspmMonitorGitLabOffering(element, options);
                     case "CspmMonitorDockerHub":
                         return CspmMonitorDockerHubOffering.DeserializeCspmMonitorDockerHubOffering(element, options);
-                    case "DefenderForContainersDockerHub":
-                        return DefenderForContainersDockerHubOffering.DeserializeDefenderForContainersDockerHubOffering(element, options);
-                    case "DefenderCspmDockerHub":
-                        return DefenderCspmDockerHubOffering.DeserializeDefenderCspmDockerHubOffering(element, options);
+                    case "CspmMonitorGcp":
+                        return CspmMonitorGcpOffering.DeserializeCspmMonitorGcpOffering(element, options);
+                    case "CspmMonitorGitLab":
+                        return CspmMonitorGitLabOffering.DeserializeCspmMonitorGitLabOffering(element, options);
+                    case "CspmMonitorGithub":
+                        return CspmMonitorGithubOffering.DeserializeCspmMonitorGithubOffering(element, options);
                     case "CspmMonitorJFrog":
                         return CspmMonitorJFrogOffering.DeserializeCspmMonitorJFrogOffering(element, options);
-                    case "DefenderForContainersJFrog":
-                        return DefenderForContainersJFrogOffering.DeserializeDefenderForContainersJFrogOffering(element, options);
+                    case "DefenderCspmAws":
+                        return DefenderCspmAwsOffering.DeserializeDefenderCspmAwsOffering(element, options);
+                    case "DefenderCspmDockerHub":
+                        return DefenderCspmDockerHubOffering.DeserializeDefenderCspmDockerHubOffering(element, options);
+                    case "DefenderCspmGcp":
+                        return DefenderCspmGcpOffering.DeserializeDefenderCspmGcpOffering(element, options);
                     case "DefenderCspmJFrog":
                         return DefenderCspmJFrogOffering.DeserializeDefenderCspmJFrogOffering(element, options);
+                    case "DefenderForContainersAws":
+                        return DefenderForContainersAwsOffering.DeserializeDefenderForContainersAwsOffering(element, options);
+                    case "DefenderForContainersDockerHub":
+                        return DefenderForContainersDockerHubOffering.DeserializeDefenderForContainersDockerHubOffering(element, options);
+                    case "DefenderForContainersGcp":
+                        return DefenderForContainersGcpOffering.DeserializeDefenderForContainersGcpOffering(element, options);
+                    case "DefenderForContainersJFrog":
+                        return DefenderForContainersJFrogOffering.DeserializeDefenderForContainersJFrogOffering(element, options);
+                    case "DefenderForDatabasesAws":
+                        return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element, options);
+                    case "DefenderForDatabasesGcp":
+                        return DefenderForDatabasesGcpOffering.DeserializeDefenderForDatabasesGcpOffering(element, options);
+                    case "DefenderForServersAws":
+                        return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element, options);
+                    case "DefenderForServersGcp":
+                        return DefenderForServersGcpOffering.DeserializeDefenderForServersGcpOffering(element, options);
                 }
             }
             return UnknownSecurityCenterCloudOffering.DeserializeUnknownSecurityCenterCloudOffering(element, options);

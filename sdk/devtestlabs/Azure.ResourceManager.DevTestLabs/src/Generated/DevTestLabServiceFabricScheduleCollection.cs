@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabServiceFabricScheduleResource.ResourceType, out string devTestLabServiceFabricScheduleApiVersion);
             _devTestLabServiceFabricSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabServiceFabricScheduleResource.ResourceType.Namespace, Diagnostics);
-            _devTestLabServiceFabricSchedulesRestClient = new DevTestLabServiceFabricSchedules(_devTestLabServiceFabricSchedulesClientDiagnostics, Pipeline, Endpoint, devTestLabServiceFabricScheduleApiVersion ?? "2018-09-15");
+            _devTestLabServiceFabricSchedulesRestClient = new DevTestLabServiceFabricSchedules(_devTestLabServiceFabricSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabServiceFabricScheduleApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabScheduleDataAsync2CollectionResultOfT(
                 _devTestLabServiceFabricSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabServiceFabricSchedulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabScheduleData2CollectionResultOfT(
                 _devTestLabServiceFabricSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

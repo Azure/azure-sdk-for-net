@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterEnvironmentTypeResource.ResourceType, out string devCenterEnvironmentTypeApiVersion);
             _environmentTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterEnvironmentTypeResource.ResourceType.Namespace, Diagnostics);
-            _environmentTypesRestClient = new EnvironmentTypes(_environmentTypesClientDiagnostics, Pipeline, Endpoint, devCenterEnvironmentTypeApiVersion ?? "2026-01-01-preview");
+            _environmentTypesRestClient = new EnvironmentTypes(_environmentTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterEnvironmentTypeApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new EnvironmentTypesGetByDevCenterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new DevCenterEnvironmentTypeDataAsyncCollectionResultOfT(
                 _environmentTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new EnvironmentTypesGetByDevCenterCollectionResultOfT(
+            return new PageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new DevCenterEnvironmentTypeDataCollectionResultOfT(
                 _environmentTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ElasticMonitoredSubscriptionResource.ResourceType, out string elasticMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitoredSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, elasticMonitoredSubscriptionApiVersion ?? "2025-06-01");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitoredSubscriptionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new ElasticMonitoredSubscriptionDataAsyncCollectionResultOfT(
                 _monitoredSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ElasticMonitoredSubscriptionData, ElasticMonitoredSubscriptionResource>(new ElasticMonitoredSubscriptionDataCollectionResultOfT(
                 _monitoredSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

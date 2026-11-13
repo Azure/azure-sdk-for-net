@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(ResourceType, out string healthcareApisServicePrivateEndpointConnectionApiVersion);
             _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            _healthcareApisServicePrivateEndpointConnectionsRestClient = new HealthcareApisServicePrivateEndpointConnections(_healthcareApisServicePrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, healthcareApisServicePrivateEndpointConnectionApiVersion ?? "2025-04-01-preview");
+            _healthcareApisServicePrivateEndpointConnectionsRestClient = new HealthcareApisServicePrivateEndpointConnections(_healthcareApisServicePrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisServicePrivateEndpointConnectionApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 

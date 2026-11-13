@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(VirtualEndpointResource.ResourceType, out string virtualEndpointResourceApiVersion);
             _virtualEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", VirtualEndpointResource.ResourceType.Namespace, Diagnostics);
-            _virtualEndpointsRestClient = new VirtualEndpoints(_virtualEndpointsClientDiagnostics, Pipeline, Endpoint, virtualEndpointResourceApiVersion ?? "2026-04-01-preview");
+            _virtualEndpointsRestClient = new VirtualEndpoints(_virtualEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEndpointResourceApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointResourceDataAsyncCollectionResultOfT(
                 _virtualEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerCollectionResultOfT(
+            return new PageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointResourceDataCollectionResultOfT(
                 _virtualEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

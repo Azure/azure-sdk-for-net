@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IspCustomerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(IspCustomerResource.ResourceType, out string ispCustomerApiVersion);
             _ispCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
-            _ispCustomersRestClient = new IspCustomers(_ispCustomersClientDiagnostics, Pipeline, Endpoint, ispCustomerApiVersion ?? "2024-11-30-preview");
+            _ispCustomersRestClient = new IspCustomers(_ispCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConnectedCache/ispCustomers", out string ispCustomersApiVersionOverride) ? ispCustomersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupAsyncCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IspCustomerCollection.GetAll"), data => new IspCustomerResource(Client, data));
+            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomerDataAsyncCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IspCustomerCollection.GetAll"), data => new IspCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IspCustomerCollection.GetAll"), data => new IspCustomerResource(Client, data));
+            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomerDataCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IspCustomerCollection.GetAll"), data => new IspCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

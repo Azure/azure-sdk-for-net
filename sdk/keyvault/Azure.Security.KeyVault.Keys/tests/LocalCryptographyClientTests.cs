@@ -319,6 +319,26 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 #endregion
 
+        #region SecureWrapKey / SecureUnwrapKey
+        [Test]
+        public void SecureWrapKeyNotSupportedOnLocalClient()
+        {
+            JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: new[] { KeyOperation.WrapKey });
+            CryptographyClient client = CreateClient<CryptographyClient>(jwk);
+
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SecureWrapKeyAsync(SecureKeyWrapAlgorithm.RsaOaep256));
+        }
+
+        [Test]
+        public void SecureUnwrapKeyNotSupportedOnLocalClient()
+        {
+            JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: new[] { KeyOperation.UnwrapKey });
+            CryptographyClient client = CreateClient<CryptographyClient>(jwk);
+
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SecureUnwrapKeyAsync(SecureKeyWrapAlgorithm.RsaOaep256, new byte[] { 0, 1, 2, 3 }, "attestation"));
+        }
+        #endregion
+
         #region WrapKey / UnwrapKey
         [Test]
         public void WrapKeyOperationNotSupported()

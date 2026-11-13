@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationVariableResource.ResourceType, out string automationVariableApiVersion);
             _variableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationVariableResource.ResourceType.Namespace, Diagnostics);
-            _variableRestClient = new Variable(_variableClientDiagnostics, Pipeline, Endpoint, automationVariableApiVersion ?? "2024-10-23");
+            _variableRestClient = new Variable(_variableClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationVariableApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationVariableData, AutomationVariableResource>(new VariableGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationVariableData, AutomationVariableResource>(new AutomationVariableDataAsyncCollectionResultOfT(
                 _variableRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationVariableData, AutomationVariableResource>(new VariableGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationVariableData, AutomationVariableResource>(new AutomationVariableDataCollectionResultOfT(
                 _variableRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -12,9 +12,13 @@ namespace Azure.AI.OpenAI;
 
 #pragma warning disable CS0618
 
+/// <summary> Provides extension methods for Azure-specific file operations, including status conversion and file upload with expiration options. </summary>
 [Experimental("AOAI001")]
 public static partial class AzureFileExtensions
 {
+    /// <summary> Converts an <see cref="AzureOpenAIFileStatus"/> to the corresponding <see cref="FileStatus"/> value. </summary>
+    /// <param name="azureStatus"> The Azure-specific file status to convert. </param>
+    /// <returns> The equivalent <see cref="FileStatus"/> value. </returns>
     [Experimental("AOAI001")]
     public static FileStatus ToFileStatus(this AzureOpenAIFileStatus azureStatus)
     {
@@ -27,6 +31,10 @@ public static partial class AzureFileExtensions
         };
     }
 
+    /// <summary> Converts a <see cref="FileStatus"/> to the corresponding <see cref="AzureOpenAIFileStatus"/> value. </summary>
+    /// <param name="fileStatus"> The file status to convert. </param>
+    /// <returns> The equivalent <see cref="AzureOpenAIFileStatus"/> value. </returns>
+    /// <exception cref="ArgumentOutOfRangeException"> Thrown when the file status does not correspond to a known Azure status. </exception>
     [Experimental("AOAI001")]
     public static AzureOpenAIFileStatus ToAzureOpenAIFileStatus(this FileStatus fileStatus)
     {
@@ -56,6 +64,14 @@ public static partial class AzureFileExtensions
         throw new ArgumentOutOfRangeException(nameof(fileStatus), (int)fileStatus, "Unknown AzureOpenAIFileStatus value.");
     }
 
+    /// <summary> Uploads a file from a stream to Azure OpenAI with expiration options. </summary>
+    /// <param name="client"> The <see cref="OpenAIFileClient"/> to use for the upload. </param>
+    /// <param name="file"> The stream containing the file content to upload. </param>
+    /// <param name="filename"> The name of the file. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="expirationOptions"> The expiration configuration for the uploaded file. </param>
+    /// <param name="cancellationToken"> A token to cancel the operation. </param>
+    /// <returns> A <see cref="ClientResult{T}"/> containing the uploaded <see cref="OpenAIFile"/>. </returns>
     [Experimental("AOAI001")]
     public static async Task<ClientResult<OpenAIFile>> UploadFileAsync(
         this OpenAIFileClient client,
@@ -83,6 +99,14 @@ public static partial class AzureFileExtensions
         return AzureFileClient.GetAzureFileResult(result);
     }
 
+    /// <summary> Uploads a file from a stream to Azure OpenAI with expiration options. </summary>
+    /// <param name="client"> The <see cref="OpenAIFileClient"/> to use for the upload. </param>
+    /// <param name="file"> The stream containing the file content to upload. </param>
+    /// <param name="filename"> The name of the file. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="expirationOptions"> The expiration configuration for the uploaded file. </param>
+    /// <param name="cancellationToken"> A token to cancel the operation. </param>
+    /// <returns> A <see cref="ClientResult{T}"/> containing the uploaded <see cref="OpenAIFile"/>. </returns>
     [Experimental("AOAI001")]
     public static ClientResult<OpenAIFile> UploadFile(
         this OpenAIFileClient client,
@@ -110,6 +134,14 @@ public static partial class AzureFileExtensions
         return AzureFileClient.GetAzureFileResult(result);
     }
 
+    /// <summary> Uploads a file from binary data to Azure OpenAI with expiration options. </summary>
+    /// <param name="client"> The <see cref="OpenAIFileClient"/> to use for the upload. </param>
+    /// <param name="file"> The binary data containing the file content to upload. </param>
+    /// <param name="filename"> The name of the file. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="expirationOptions"> The expiration configuration for the uploaded file. </param>
+    /// <param name="cancellationToken"> A token to cancel the operation. </param>
+    /// <returns> A <see cref="ClientResult{T}"/> containing the uploaded <see cref="OpenAIFile"/>. </returns>
     [Experimental("AOAI001")]
     public static Task<ClientResult<OpenAIFile>> UploadFileAsync(
         this OpenAIFileClient client,
@@ -120,6 +152,14 @@ public static partial class AzureFileExtensions
         CancellationToken cancellationToken = default)
             => client.UploadFileAsync(file.ToStream(), filename, purpose, expirationOptions, cancellationToken);
 
+    /// <summary> Uploads a file from binary data to Azure OpenAI with expiration options. </summary>
+    /// <param name="client"> The <see cref="OpenAIFileClient"/> to use for the upload. </param>
+    /// <param name="file"> The binary data containing the file content to upload. </param>
+    /// <param name="filename"> The name of the file. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="expirationOptions"> The expiration configuration for the uploaded file. </param>
+    /// <param name="cancellationToken"> A token to cancel the operation. </param>
+    /// <returns> A <see cref="ClientResult{T}"/> containing the uploaded <see cref="OpenAIFile"/>. </returns>
     [Experimental("AOAI001")]
     public static ClientResult<OpenAIFile> UploadFile(
         this OpenAIFileClient client,
@@ -130,6 +170,13 @@ public static partial class AzureFileExtensions
         CancellationToken cancellationToken = default)
             => client.UploadFile(file.ToStream(), filename, purpose, expirationOptions, cancellationToken);
 
+    /// <summary> Uploads a file from a file path to Azure OpenAI with expiration options. </summary>
+    /// <param name="client"> The <see cref="OpenAIFileClient"/> to use for the upload. </param>
+    /// <param name="filePath"> The path to the file to upload. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="expirationOptions"> The expiration configuration for the uploaded file. </param>
+    /// <param name="cancellationToken"> A token to cancel the operation. </param>
+    /// <returns> A <see cref="ClientResult{T}"/> containing the uploaded <see cref="OpenAIFile"/>. </returns>
     [Experimental("AOAI001")]
     public static Task<ClientResult<OpenAIFile>> UploadFileAsync(
         this OpenAIFileClient client,
@@ -139,6 +186,13 @@ public static partial class AzureFileExtensions
         CancellationToken cancellationToken = default)
             => client.UploadFileAsync(File.OpenRead(filePath), filePath, purpose, expirationOptions, cancellationToken);
 
+    /// <summary> Uploads a file from a file path to Azure OpenAI with expiration options. </summary>
+    /// <param name="client"> The <see cref="OpenAIFileClient"/> to use for the upload. </param>
+    /// <param name="filePath"> The path to the file to upload. </param>
+    /// <param name="purpose"> The intended purpose of the file. </param>
+    /// <param name="expirationOptions"> The expiration configuration for the uploaded file. </param>
+    /// <param name="cancellationToken"> A token to cancel the operation. </param>
+    /// <returns> A <see cref="ClientResult{T}"/> containing the uploaded <see cref="OpenAIFile"/>. </returns>
     [Experimental("AOAI001")]
     public static ClientResult<OpenAIFile> UploadFile(
         this OpenAIFileClient client,

@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DatasetReference)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name, _nameIsDefined))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name"u8);
+                }
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id, _idIsDefined))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNull("id"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,13 +140,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool nameIsDefined = false;
             string name = default;
+            bool idIsDefined = false;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
                 {
+                    nameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         name = null;
@@ -143,6 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("id"u8))
                 {
+                    idIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         id = null;
@@ -153,10 +171,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatasetReference(name, id, additionalBinaryDataProperties);
+            return new DatasetReference(name, id, additionalBinaryDataProperties)
+            {
+                _nameIsDefined = nameIsDefined,
+                _idIsDefined = idIsDefined
+            };
         }
     }
 }

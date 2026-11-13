@@ -152,10 +152,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Kind);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -209,7 +209,7 @@ namespace Azure.Analytics.PlanetaryComputer
             string stacVersion = default;
             IList<Uri> conformsTo = default;
             IList<StacLink> links = default;
-            string @type = default;
+            string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -306,12 +306,12 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StacLandingPage(
@@ -323,9 +323,9 @@ namespace Azure.Analytics.PlanetaryComputer
                 description,
                 title,
                 stacVersion,
-                conformsTo,
-                links,
-                @type,
+                conformsTo ?? new ChangeTrackingList<Uri>(),
+                links ?? new ChangeTrackingList<StacLink>(),
+                kind,
                 additionalBinaryDataProperties);
         }
     }

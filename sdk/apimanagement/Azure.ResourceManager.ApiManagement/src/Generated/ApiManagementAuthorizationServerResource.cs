@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementAuthorizationServerApiVersion);
             _authorizationServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _authorizationServerRestClient = new AuthorizationServer(_authorizationServerClientDiagnostics, Pipeline, Endpoint, apiManagementAuthorizationServerApiVersion ?? "2025-09-01-preview");
+            _authorizationServerRestClient = new AuthorizationServer(_authorizationServerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementAuthorizationServerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

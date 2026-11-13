@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBGraphResource.ResourceType, out string cosmosDBGraphApiVersion);
             _graphResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBGraphResource.ResourceType.Namespace, Diagnostics);
-            _graphResourcesRestClient = new GraphResources(_graphResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBGraphApiVersion ?? "2026-04-01-preview");
+            _graphResourcesRestClient = new GraphResources(_graphResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBGraphApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBGraphData, CosmosDBGraphResource>(new GraphResourcesGetGraphsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBGraphData, CosmosDBGraphResource>(new CosmosDBGraphDataAsyncCollectionResultOfT(
                 _graphResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBGraphData, CosmosDBGraphResource>(new GraphResourcesGetGraphsCollectionResultOfT(
+            return new PageableWrapper<CosmosDBGraphData, CosmosDBGraphResource>(new CosmosDBGraphDataCollectionResultOfT(
                 _graphResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

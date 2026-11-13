@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (SignalRIPRule item in IpRules)
+                foreach (SignalRIPRule item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SignalRNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<SignalRPrivateEndpointAcl>(), ipRules ?? new ChangeTrackingList<SignalRIPRule>(), additionalBinaryDataProperties);

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterImageResource.ResourceType, out string devCenterImageApiVersion);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, devCenterImageApiVersion ?? "2026-01-01-preview");
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterImageApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterImageData, DevCenterImageResource>(new ImagesGetByGalleryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterImageData, DevCenterImageResource>(new DevCenterImageDataAsyncCollectionResultOfT(
                 _imagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterImageData, DevCenterImageResource>(new ImagesGetByGalleryCollectionResultOfT(
+            return new PageableWrapper<DevCenterImageData, DevCenterImageResource>(new DevCenterImageDataCollectionResultOfT(
                 _imagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

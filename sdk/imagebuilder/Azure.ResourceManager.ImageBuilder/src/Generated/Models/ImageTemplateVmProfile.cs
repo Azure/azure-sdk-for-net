@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         internal ImageTemplateVmProfile(string vmSize, int? osDiskSizeGB, IList<string> userAssignedIdentities, ImageBuilderVirtualNetworkConfig vnetConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
-            OsDiskSizeGB = osDiskSizeGB;
+            OSDiskSizeGB = osDiskSizeGB;
             UserAssignedIdentities = userAssignedIdentities;
             VnetConfig = vnetConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public string VmSize { get; set; }
 
         /// <summary> Size of the OS disk in GB. Omit or specify 0 to use Azure's default OS disk size. </summary>
-        public int? OsDiskSizeGB { get; set; }
+        public int? OSDiskSizeGB { get; set; }
 
         /// <summary> Optional array of resource IDs of user assigned managed identities to be configured on the build VM and validation VM. This may include the identity of the image template. </summary>
         public IList<string> UserAssignedIdentities { get; }

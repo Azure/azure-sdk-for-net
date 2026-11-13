@@ -36,34 +36,33 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
 
         private ClientDiagnostics AzureMonitorWorkspacesClientDiagnostics => _azureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-10-03");
+        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/accounts", out string apiVersion) ? apiVersion : "2026-09-03-preview");
 
         /// <summary>
-        /// Lists all Azure Monitor Workspaces in the specified subscription
+        /// Gets the trace association at the scope.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AzureMonitorWorkspaces_ListBySubscription. </description>
+        /// <description> TraceAssociationsAtSubscription_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TraceAssociationAtSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
+        public virtual TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscription()
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionAsyncCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
+            return new TraceAssociationAtSubscriptionResource(Client, Id.AppendProviderResource("Microsoft.Monitor", "traceAssociations", "default"));
         }
 
         /// <summary>
@@ -79,7 +78,35 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspacesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new MonitorWorkspaceDataAsync0CollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all Azure Monitor Workspaces in the specified subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorWorkspaces_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
+            return new PageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new MonitorWorkspaceData0CollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
         }
     }
 }

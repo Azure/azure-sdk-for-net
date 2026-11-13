@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Ip entity properties. </param>
-        internal SecurityInsightsIPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpEntityProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
+        internal SecurityInsightsIPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPEntityProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Ip entity properties. </summary>
         [WirePath("properties")]
-        internal IpEntityProperties Properties { get; set; }
+        internal IPEntityProperties Properties { get; set; }
 
         /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
         [WirePath("properties.additionalData")]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpEntityProperties();
+                    Properties = new IPEntityProperties();
                 }
                 return Properties.AdditionalData;
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpEntityProperties();
+                    Properties = new IPEntityProperties();
                 }
                 return Properties.ThreatIntelligence;
             }

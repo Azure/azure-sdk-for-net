@@ -1,6 +1,6 @@
 # Sample using Agents with Toolbox and a search for a tool in Azure.AI.Extensions.OpenAI.
 
-In this example, we are demonstrating how to use Toolbox MCP server.
+In this example, we are demonstrating how to use Toolbox MCP server with `ToolSearchToolboxTool`.
 
 1. First, we need to create project client and read in the environment variables that will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_ToolSearch
@@ -18,7 +18,7 @@ Synchronous sample:
 MCPToolboxTool mcp = new(serverLabel: "api-specs")
 {
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
 CodeInterpreterToolboxTool codeInterpreter = new()
 {
@@ -26,7 +26,7 @@ CodeInterpreterToolboxTool codeInterpreter = new()
         CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
     )
 };
-ToolboxSearchPreviewToolboxTool searchTool = new()
+ToolSearchToolboxTool searchTool = new()
 {
     Name = "ToolBoxSearch",
     Description = "Search for the toolboxes"
@@ -43,7 +43,7 @@ Asynchronous sample:
 MCPToolboxTool mcp = new(serverLabel: "api-specs")
 {
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
 CodeInterpreterToolboxTool codeInterpreter = new()
 {
@@ -51,7 +51,7 @@ CodeInterpreterToolboxTool codeInterpreter = new()
         CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
     )
 };
-ToolboxSearchPreviewToolboxTool searchTool = new()
+ToolSearchToolboxTool searchTool = new()
 {
     Name = "ToolBoxSearch",
     Description = "Search for the toolboxes"

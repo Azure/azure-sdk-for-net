@@ -7,18 +7,18 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The PathLeaseAction. </summary>
+    /// <summary> The lease action for Path_Lease. </summary>
     public enum PathLeaseAction
     {
-        /// <summary> acquire. </summary>
+        /// <summary> Acquire a new lease. </summary>
         Acquire,
-        /// <summary> break. </summary>
+        /// <summary> Break an existing lease. </summary>
         Break,
-        /// <summary> change. </summary>
+        /// <summary> Change the lease ID of an active lease. </summary>
         Change,
-        /// <summary> renew. </summary>
+        /// <summary> Renew an existing lease. </summary>
         Renew,
-        /// <summary> release. </summary>
+        /// <summary> Release a lease. </summary>
         Release
     }
 }

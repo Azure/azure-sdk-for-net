@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
-    /// <summary>
-    /// A class representing the SapDiscoveryServerInstance data model.
-    /// Define the Server Instance resource.
-    /// </summary>
+    /// <summary> Define the Server Instance resource. </summary>
     public partial class SapDiscoveryServerInstanceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoveryServerInstanceData"/>. </summary>
         public SapDiscoveryServerInstanceData()
@@ -57,63 +25,109 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         }
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoveryServerInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serverName"> This is the Virtual Machine Name of the SAP system. Add all the virtual machines attached to an SAP system which you wish to migrate to Azure. Keeping this not equal to ID as for single tier all InstanceTypes would be on same server, leading to multiple resources with same servername. </param>
-        /// <param name="sapInstanceType"> Defines the type SAP instance on this server instance. </param>
-        /// <param name="instanceSid"> This is the Instance SID for ASCS/AP/DB instance.  An SAP system with HANA database for example could have a different SID for database Instance than that of ASCS instance. </param>
-        /// <param name="sapProduct"> This is the SAP Application Component; e.g. SAP S/4HANA 2022, SAP ERP ENHANCE PACKAGE. </param>
-        /// <param name="sapProductVersion"> Provide the product version of the SAP product. </param>
-        /// <param name="operatingSystem"> This is Operating System on which the host server is running. </param>
-        /// <param name="configurationData"> Configuration data for this server instance. </param>
-        /// <param name="performanceData">
-        /// Configuration data for this server instance.
-        /// Please note <see cref="PerformanceDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExcelPerformanceDetail"/> and <see cref="NativePerformanceDetail"/>.
-        /// </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapDiscoveryServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, SapInstanceType? sapInstanceType, string instanceSid, string sapProduct, string sapProductVersion, SapDiscoveryOperatingSystem? operatingSystem, ConfigurationDetail configurationData, PerformanceDetail performanceData, SapDiscoveryProvisioningState? provisioningState, SapMigrateError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapDiscoveryServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerInstanceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ServerName = serverName;
-            SapInstanceType = sapInstanceType;
-            InstanceSid = instanceSid;
-            SapProduct = sapProduct;
-            SapProductVersion = sapProductVersion;
-            OperatingSystem = operatingSystem;
-            ConfigurationData = configurationData;
-            PerformanceData = performanceData;
-            ProvisioningState = provisioningState;
-            Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal ServerInstanceProperties Properties { get; set; }
+
         /// <summary> This is the Virtual Machine Name of the SAP system. Add all the virtual machines attached to an SAP system which you wish to migrate to Azure. Keeping this not equal to ID as for single tier all InstanceTypes would be on same server, leading to multiple resources with same servername. </summary>
-        public string ServerName { get; }
+        public string ServerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerName;
+            }
+        }
+
         /// <summary> Defines the type SAP instance on this server instance. </summary>
-        public SapInstanceType? SapInstanceType { get; }
+        public SapInstanceType? SapInstanceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SapInstanceType;
+            }
+        }
+
         /// <summary> This is the Instance SID for ASCS/AP/DB instance.  An SAP system with HANA database for example could have a different SID for database Instance than that of ASCS instance. </summary>
-        public string InstanceSid { get; }
+        public string InstanceSid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceSid;
+            }
+        }
+
         /// <summary> This is the SAP Application Component; e.g. SAP S/4HANA 2022, SAP ERP ENHANCE PACKAGE. </summary>
-        public string SapProduct { get; }
+        public string SapProduct
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SapProduct;
+            }
+        }
+
         /// <summary> Provide the product version of the SAP product. </summary>
-        public string SapProductVersion { get; }
+        public string SapProductVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SapProductVersion;
+            }
+        }
+
         /// <summary> This is Operating System on which the host server is running. </summary>
-        public SapDiscoveryOperatingSystem? OperatingSystem { get; }
+        public SapDiscoveryOperatingSystem? OperatingSystem
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperatingSystem;
+            }
+        }
+
         /// <summary> Configuration data for this server instance. </summary>
-        public ConfigurationDetail ConfigurationData { get; }
-        /// <summary>
-        /// Configuration data for this server instance.
-        /// Please note <see cref="PerformanceDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExcelPerformanceDetail"/> and <see cref="NativePerformanceDetail"/>.
-        /// </summary>
-        public PerformanceDetail PerformanceData { get; }
+        public ConfigurationDetail ConfigurationData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationData;
+            }
+        }
+
+        /// <summary> Configuration data for this server instance. </summary>
+        public PerformanceDetail PerformanceData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PerformanceData;
+            }
+        }
+
         /// <summary> Defines the provisioning states. </summary>
-        public SapDiscoveryProvisioningState? ProvisioningState { get; }
+        public SapDiscoveryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Defines the errors related to SAP Instance resource. </summary>
-        public SapMigrateError Errors { get; }
+        public SapMigrateError Errors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Errors;
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(PostgreSqlFlexibleServersPrivateEndpointConnectionResource.ResourceType, out string postgreSqlFlexibleServersPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServersPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServersPrivateEndpointConnectionApiVersion ?? "2026-04-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServersPrivateEndpointConnectionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServersPrivateEndpointConnectionData, PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServersPrivateEndpointConnectionData, PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(new PostgreSqlFlexibleServersPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServersPrivateEndpointConnectionData, PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerCollectionResultOfT(
+            return new PageableWrapper<PostgreSqlFlexibleServersPrivateEndpointConnectionData, PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(new PostgreSqlFlexibleServersPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

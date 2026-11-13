@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, cosmosDBPrivateEndpointConnectionApiVersion ?? "2026-04-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBPrivateEndpointConnectionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

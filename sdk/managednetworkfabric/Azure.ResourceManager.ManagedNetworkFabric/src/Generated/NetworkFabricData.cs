@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
         /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
         /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
-        /// <param name="iPv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
         /// <param name="terminalServerSettings"> Network and credentials configuration currently applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="iPv4Prefix"/>, <paramref name="terminalServerSettings"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
-        public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string iPv4Prefix, long fabricAsn, NetworkFabricTerminalServerConfiguration terminalServerSettings, ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="ipv4Prefix"/>, <paramref name="terminalServerSettings"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
+        public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricAsn, NetworkFabricTerminalServerConfiguration terminalServerSettings, ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base(location)
         {
             Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
             Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
-            Argument.AssertNotNull(iPv4Prefix, nameof(iPv4Prefix));
+            Argument.AssertNotNull(ipv4Prefix, nameof(ipv4Prefix));
             Argument.AssertNotNull(terminalServerSettings, nameof(terminalServerSettings));
             Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 networkFabricSku,
                 networkFabricControllerId,
                 serverCountPerRack,
-                iPv4Prefix,
+                ipv4Prefix,
                 fabricAsn,
                 terminalServerSettings,
                 managementNetworkConfiguration);

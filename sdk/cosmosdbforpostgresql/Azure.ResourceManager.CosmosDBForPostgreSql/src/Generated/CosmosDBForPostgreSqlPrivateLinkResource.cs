@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(ResourceType, out string cosmosDBForPostgreSqlPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlPrivateLinkResourceApiVersion ?? "2023-03-02-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlPrivateLinkResourceApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 

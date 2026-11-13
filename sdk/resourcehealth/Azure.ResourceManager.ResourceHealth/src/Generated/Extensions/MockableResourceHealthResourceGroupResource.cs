@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         /// <summary>
         /// Lists the current availability status for all the resources in the resource group.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesByResourceGroupAsyncCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusAsync1CollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatus1CollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

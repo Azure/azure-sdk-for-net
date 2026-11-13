@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationsImageResource.ResourceType, out string disconnectedOperationsImageApiVersion);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsImageApiVersion ?? "2026-03-15");
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationsImageApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationsImageData, DisconnectedOperationsImageResource>(new ImagesGetByDisconnectedOperationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DisconnectedOperationsImageData, DisconnectedOperationsImageResource>(new DisconnectedOperationsImageDataAsyncCollectionResultOfT(
                 _imagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationsImageData, DisconnectedOperationsImageResource>(new ImagesGetByDisconnectedOperationCollectionResultOfT(
+            return new PageableWrapper<DisconnectedOperationsImageData, DisconnectedOperationsImageResource>(new DisconnectedOperationsImageDataCollectionResultOfT(
                 _imagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

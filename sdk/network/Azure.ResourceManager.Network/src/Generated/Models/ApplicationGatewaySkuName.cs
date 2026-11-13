@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Network.Models
         private const string WAFV2Value = "WAF_v2";
         /// <summary> Basic. </summary>
         private const string BasicValue = "Basic";
+        /// <summary> Basic tier Application Gateway. </summary>
+        private const string BasicV2Value = "Basic_v2";
+        /// <summary> Basic tier Application Gateway with WAF enabled. </summary>
+        private const string BasicWAFV2Value = "Basic_WAF_v2";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySkuName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -65,6 +69,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Basic. </summary>
         public static ApplicationGatewaySkuName Basic { get; } = new ApplicationGatewaySkuName(BasicValue);
+
+        /// <summary> Basic tier Application Gateway. </summary>
+        public static ApplicationGatewaySkuName BasicV2 { get; } = new ApplicationGatewaySkuName(BasicV2Value);
+
+        /// <summary> Basic tier Application Gateway with WAF enabled. </summary>
+        public static ApplicationGatewaySkuName BasicWAFV2 { get; } = new ApplicationGatewaySkuName(BasicWAFV2Value);
 
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

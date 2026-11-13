@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoManagedPrivateEndpointResource.ResourceType, out string kustoManagedPrivateEndpointApiVersion);
             _managedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoManagedPrivateEndpointResource.ResourceType.Namespace, Diagnostics);
-            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Endpoint, kustoManagedPrivateEndpointApiVersion ?? "2025-02-14");
+            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoManagedPrivateEndpointApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new ManagedPrivateEndpointsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointDataAsyncCollectionResultOfT(
                 _managedPrivateEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new ManagedPrivateEndpointsGetAllCollectionResultOfT(
+            return new PageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointDataCollectionResultOfT(
                 _managedPrivateEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

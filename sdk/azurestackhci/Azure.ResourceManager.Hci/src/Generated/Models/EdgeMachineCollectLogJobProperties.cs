@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Hci.Models
     public partial class EdgeMachineCollectLogJobProperties : EdgeMachineJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="EdgeMachineCollectLogJobProperties"/>. </summary>
-        /// <param name="collectionStartOn"> From date for log collection. </param>
-        /// <param name="collectionEndOn"> To date for log collection. </param>
-        public EdgeMachineCollectLogJobProperties(DateTimeOffset collectionStartOn, DateTimeOffset collectionEndOn) : base(EdgeMachineJobType.CollectLog)
+        /// <param name="collectionStartsOn"> From date for log collection. </param>
+        /// <param name="collectionEndsOn"> To date for log collection. </param>
+        public EdgeMachineCollectLogJobProperties(DateTimeOffset collectionStartsOn, DateTimeOffset collectionEndsOn) : base(EdgeMachineJobType.CollectLog)
         {
-            CollectionStartOn = collectionStartOn;
-            CollectionEndOn = collectionEndOn;
+            CollectionStartsOn = collectionStartsOn;
+            CollectionEndsOn = collectionEndsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeMachineCollectLogJobProperties"/>. </summary>
@@ -29,30 +29,30 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startOn"> The UTC date and time at which the job started. </param>
-        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="collectionStartOn"> From date for log collection. </param>
-        /// <param name="collectionEndOn"> To date for log collection. </param>
+        /// <param name="collectionStartsOn"> From date for log collection. </param>
+        /// <param name="collectionEndsOn"> To date for log collection. </param>
         /// <param name="lastLogGeneratedOn"> To date for log collection. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal EdgeMachineCollectLogJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset collectionStartOn, DateTimeOffset collectionEndOn, DateTimeOffset? lastLogGeneratedOn, EdgeMachineCollectLogJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, additionalBinaryDataProperties)
+        internal EdgeMachineCollectLogJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset collectionStartsOn, DateTimeOffset collectionEndsOn, DateTimeOffset? lastLogGeneratedOn, EdgeMachineCollectLogJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, error, additionalBinaryDataProperties)
         {
-            CollectionStartOn = collectionStartOn;
-            CollectionEndOn = collectionEndOn;
+            CollectionStartsOn = collectionStartsOn;
+            CollectionEndsOn = collectionEndsOn;
             LastLogGeneratedOn = lastLogGeneratedOn;
             ReportedProperties = reportedProperties;
         }
 
         /// <summary> From date for log collection. </summary>
         [WirePath("fromDate")]
-        public DateTimeOffset CollectionStartOn { get; set; }
+        public DateTimeOffset CollectionStartsOn { get; set; }
 
         /// <summary> To date for log collection. </summary>
         [WirePath("toDate")]
-        public DateTimeOffset CollectionEndOn { get; set; }
+        public DateTimeOffset CollectionEndsOn { get; set; }
 
         /// <summary> To date for log collection. </summary>
         [WirePath("lastLogGenerated")]

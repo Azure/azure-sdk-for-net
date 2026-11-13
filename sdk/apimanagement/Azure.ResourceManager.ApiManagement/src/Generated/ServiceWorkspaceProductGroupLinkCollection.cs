@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceProductGroupLinkResource.ResourceType, out string serviceWorkspaceProductGroupLinkApiVersion);
             _workspaceProductGroupLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceProductGroupLinkResource.ResourceType.Namespace, Diagnostics);
-            _workspaceProductGroupLinkRestClient = new WorkspaceProductGroupLink(_workspaceProductGroupLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceProductGroupLinkApiVersion ?? "2025-09-01-preview");
+            _workspaceProductGroupLinkRestClient = new WorkspaceProductGroupLink(_workspaceProductGroupLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceProductGroupLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProductGroupLinkContractData, ServiceWorkspaceProductGroupLinkResource>(new WorkspaceProductGroupLinkGetByProductAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProductGroupLinkContractData, ServiceWorkspaceProductGroupLinkResource>(new ProductGroupLinkContractDataAsyncCollectionResultOfT(
                 _workspaceProductGroupLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProductGroupLinkContractData, ServiceWorkspaceProductGroupLinkResource>(new WorkspaceProductGroupLinkGetByProductCollectionResultOfT(
+            return new PageableWrapper<ProductGroupLinkContractData, ServiceWorkspaceProductGroupLinkResource>(new ProductGroupLinkContractDataCollectionResultOfT(
                 _workspaceProductGroupLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

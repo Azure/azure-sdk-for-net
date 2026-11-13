@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new A2AAddDisksContent(instanceType, additionalBinaryDataProperties, vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(), vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>());

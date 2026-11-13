@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementNotificationResource.ResourceType, out string apiManagementNotificationApiVersion);
             _notificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementNotificationResource.ResourceType.Namespace, Diagnostics);
-            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
+            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementNotificationData, ApiManagementNotificationResource>(new NotificationGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementNotificationData, ApiManagementNotificationResource>(new ApiManagementNotificationDataAsync0CollectionResultOfT(
                 _notificationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementNotificationData, ApiManagementNotificationResource>(new NotificationGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementNotificationData, ApiManagementNotificationResource>(new ApiManagementNotificationData0CollectionResultOfT(
                 _notificationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

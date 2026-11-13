@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         internal NetworkCloudAccessBridgeEndpoint(string fqdn, string ipv4Address, string ipv6Address, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fqdn = fqdn;
-            Ipv4Address = ipv4Address;
-            Ipv6Address = ipv6Address;
+            IPv4Address = ipv4Address;
+            IPv6Address = ipv6Address;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string Fqdn { get; }
 
         /// <summary> The IPv4 address associated with the endpoint. </summary>
-        public string Ipv4Address { get; }
+        public string IPv4Address { get; }
 
         /// <summary> The IPv6 address associated with the endpoint. </summary>
-        public string Ipv6Address { get; }
+        public string IPv6Address { get; }
 
         /// <summary> The name that identifies the type of endpoint (for example VIP or host). </summary>
         public string Name { get; }

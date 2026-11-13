@@ -93,8 +93,8 @@ namespace Azure.Provisioning.KeyVault
             base.DefineProvisionableProperties();
             _managedHsmId = DefineProperty<ResourceIdentifier>(nameof(ManagedHsmId), new string[] { "mhsmId" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionDate" }, isOutput: true);
-            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true);
+            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionDate" }, isOutput: true, format: "O");
+            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true, format: "O");
             _purgeProtectionEnabled = DefineProperty<bool>(nameof(PurgeProtectionEnabled), new string[] { "purgeProtectionEnabled" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
             DefineAdditionalProperties();

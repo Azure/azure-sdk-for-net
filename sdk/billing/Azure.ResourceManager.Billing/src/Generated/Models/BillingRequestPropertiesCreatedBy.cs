@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The principal of the entity who created the request. </summary>
-    public partial class BillingRequestPropertiesCreatedBy : BillingPrincipal
+    internal partial class BillingRequestPropertiesCreatedBy : BillingPrincipal
     {
         /// <summary> Initializes a new instance of <see cref="BillingRequestPropertiesCreatedBy"/>. </summary>
         public BillingRequestPropertiesCreatedBy()

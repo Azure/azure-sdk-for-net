@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> Alert rule template. </summary>
+    /// <summary>
+    /// Alert rule template.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="NrtAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/>, <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, and <see cref="ThreatIntelligenceAlertRuleTemplate"/>.
+    /// </summary>
     public partial class SecurityInsightsAlertRuleTemplateData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

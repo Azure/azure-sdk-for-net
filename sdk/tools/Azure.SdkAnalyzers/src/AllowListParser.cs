@@ -15,6 +15,13 @@ namespace Azure.SdkAnalyzers
     {
         private const string NoWarnPrefix = "nowarn:";
 
+        /// <summary>
+        /// Scope keyword (case-insensitive) that targets source-generator output (<c>*.g.cs</c>)
+        /// instead of a symbol DocId. Used as <c>nowarn:CODE SourceGenerated</c>. Note this covers
+        /// only compile-time <c>.g.cs</c> files, not the checked-in <c>Generated/</c> folder.
+        /// </summary>
+        internal const string SourceGeneratedScopeKeyword = "SourceGenerated";
+
         public static IReadOnlyList<AllowListEntry> Parse(string text)
         {
             var results = new List<AllowListEntry>();
@@ -93,16 +100,26 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
-            string target = NormalizeTarget(targetPart);
-            if (targetPart != null && target == null)
+            if (targetPart == null)
             {
-                // Target supplied but not a valid DocId — reject the line so the
-                // author isn't left with a silent no-op (MSBuild would also skip
+                return new AllowListEntry(code, null, AllowListScopeKind.WholeAssembly, lineNumber);
+            }
+
+            if (string.Equals(targetPart, SourceGeneratedScopeKeyword, StringComparison.OrdinalIgnoreCase))
+            {
+                return new AllowListEntry(code, null, AllowListScopeKind.SourceGenerated, lineNumber);
+            }
+
+            string target = NormalizeTarget(targetPart);
+            if (target == null)
+            {
+                // Target supplied but not a recognized DocId or scope keyword — reject the
+                // line so the author isn't left with a silent no-op (MSBuild would also skip
                 // this line, since it still contains a space).
                 return null;
             }
 
-            return new AllowListEntry(code, target, lineNumber);
+            return new AllowListEntry(code, target, AllowListScopeKind.Symbol, lineNumber);
         }
 
         /// <summary>

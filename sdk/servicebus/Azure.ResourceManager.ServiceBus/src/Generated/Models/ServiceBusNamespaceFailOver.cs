@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </summary>
         [WirePath("properties.force")]
-        public bool? Force
+        public bool? IsForced
         {
             get
             {
-                return Properties is null ? default : Properties.Force;
+                return Properties is null ? default : Properties.IsForced;
             }
             set
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     Properties = new ServiceBusFailOverDetail();
                 }
-                Properties.Force = value;
+                Properties.IsForced = value;
             }
         }
     }

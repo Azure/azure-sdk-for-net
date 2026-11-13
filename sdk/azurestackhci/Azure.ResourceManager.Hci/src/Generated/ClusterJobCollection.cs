@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ClusterJobResource.ResourceType, out string clusterJobApiVersion);
             _clusterJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ClusterJobResource.ResourceType.Namespace, Diagnostics);
-            _clusterJobsRestClient = new ClusterJobs(_clusterJobsClientDiagnostics, Pipeline, Endpoint, clusterJobApiVersion ?? "2026-05-01-preview");
+            _clusterJobsRestClient = new ClusterJobs(_clusterJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, clusterJobApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobDataAsyncCollectionResultOfT(
                 _clusterJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobsGetAllCollectionResultOfT(
+            return new PageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobDataCollectionResultOfT(
                 _clusterJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

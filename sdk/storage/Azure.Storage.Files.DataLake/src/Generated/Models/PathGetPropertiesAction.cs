@@ -7,12 +7,12 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The PathGetPropertiesAction. </summary>
+    /// <summary> The action for Path_GetProperties. </summary>
     public enum PathGetPropertiesAction
     {
-        /// <summary> getAccessControl. </summary>
+        /// <summary> Get access control list. </summary>
         GetAccessControl,
-        /// <summary> getStatus. </summary>
+        /// <summary> Get status. </summary>
         GetStatus
     }
 }

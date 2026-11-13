@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceApiOperationPolicyResource.ResourceType, out string serviceWorkspaceApiOperationPolicyApiVersion);
             _workspaceApiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiOperationPolicyResource.ResourceType.Namespace, Diagnostics);
-            _workspaceApiOperationPolicyRestClient = new WorkspaceApiOperationPolicy(_workspaceApiOperationPolicyClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiOperationPolicyApiVersion ?? "2025-09-01-preview");
+            _workspaceApiOperationPolicyRestClient = new WorkspaceApiOperationPolicy(_workspaceApiOperationPolicyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceApiOperationPolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyContractData, ServiceWorkspaceApiOperationPolicyResource>(new WorkspaceApiOperationPolicyGetByOperationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyContractData, ServiceWorkspaceApiOperationPolicyResource>(new PolicyContractDataAsync0CollectionResultOfT(
                 _workspaceApiOperationPolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyContractData, ServiceWorkspaceApiOperationPolicyResource>(new WorkspaceApiOperationPolicyGetByOperationCollectionResultOfT(
+            return new PageableWrapper<PolicyContractData, ServiceWorkspaceApiOperationPolicyResource>(new PolicyContractData0CollectionResultOfT(
                 _workspaceApiOperationPolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

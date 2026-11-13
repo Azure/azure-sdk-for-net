@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistrySchemaVersionResource.ResourceType, out string deviceRegistrySchemaVersionApiVersion);
             _schemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaVersionResource.ResourceType.Namespace, Diagnostics);
-            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaVersionApiVersion ?? "2026-03-01-preview");
+            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistrySchemaVersionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistrySchemaVersionData, DeviceRegistrySchemaVersionResource>(new SchemaVersionsGetBySchemaAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DeviceRegistrySchemaVersionData, DeviceRegistrySchemaVersionResource>(new DeviceRegistrySchemaVersionDataAsyncCollectionResultOfT(
                 _schemaVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistrySchemaVersionData, DeviceRegistrySchemaVersionResource>(new SchemaVersionsGetBySchemaCollectionResultOfT(
+            return new PageableWrapper<DeviceRegistrySchemaVersionData, DeviceRegistrySchemaVersionResource>(new DeviceRegistrySchemaVersionDataCollectionResultOfT(
                 _schemaVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

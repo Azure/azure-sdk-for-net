@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             TryGetApiVersion(HDInsightPrivateEndpointConnectionResource.ResourceType, out string hdInsightPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, hdInsightPrivateEndpointConnectionApiVersion ?? "2025-01-15-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightPrivateEndpointConnectionApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByClusterCollectionResultOfT(
+            return new PageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

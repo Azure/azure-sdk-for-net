@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, cdnEndpointApiVersion ?? "2025-09-01-preview");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnEndpointApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -435,7 +436,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new EndpointsGetResourceUsagesAsyncCollectionResultOfT(
+            return new CdnUsageAsync0CollectionResultOfT(
                 _endpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -458,7 +459,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -474,7 +475,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new EndpointsGetResourceUsagesCollectionResultOfT(
+            return new CdnUsage0CollectionResultOfT(
                 _endpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -497,7 +498,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -550,7 +551,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -603,7 +604,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -656,7 +657,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -709,7 +710,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -764,7 +765,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -819,7 +820,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -874,7 +875,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -929,7 +930,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -981,7 +982,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1130,10 +1131,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1173,10 +1173,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Job to provide remote support to the device. </summary>
         private const string RemoteSupportValue = "RemoteSupport";
         /// <summary> Job to provision operating system in the device. </summary>
-        private const string ProvisionOsValue = "ProvisionOs";
+        private const string ProvisionOSValue = "ProvisionOs";
         /// <summary> Job to download OS packages on to the device. </summary>
-        private const string DownloadOsValue = "DownloadOs";
+        private const string DownloadOSValue = "DownloadOs";
 
         /// <summary> Initializes a new instance of <see cref="EdgeMachineJobType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Hci.Models
         public static EdgeMachineJobType RemoteSupport { get; } = new EdgeMachineJobType(RemoteSupportValue);
 
         /// <summary> Job to provision operating system in the device. </summary>
-        public static EdgeMachineJobType ProvisionOs { get; } = new EdgeMachineJobType(ProvisionOsValue);
+        public static EdgeMachineJobType ProvisionOS { get; } = new EdgeMachineJobType(ProvisionOSValue);
 
         /// <summary> Job to download OS packages on to the device. </summary>
-        public static EdgeMachineJobType DownloadOs { get; } = new EdgeMachineJobType(DownloadOsValue);
+        public static EdgeMachineJobType DownloadOS { get; } = new EdgeMachineJobType(DownloadOSValue);
 
         /// <summary> Determines if two <see cref="EdgeMachineJobType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

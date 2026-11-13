@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityWorkspaceSettingResource.ResourceType, out string securityWorkspaceSettingApiVersion);
             _workspaceSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityWorkspaceSettingResource.ResourceType.Namespace, Diagnostics);
-            _workspaceSettingsRestClient = new WorkspaceSettings(_workspaceSettingsClientDiagnostics, Pipeline, Endpoint, securityWorkspaceSettingApiVersion ?? "2017-08-01-preview");
+            _workspaceSettingsRestClient = new WorkspaceSettings(_workspaceSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityWorkspaceSettingApiVersion ?? "2017-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityWorkspaceSettingData, SecurityWorkspaceSettingResource>(new WorkspaceSettingsGetAllAsyncCollectionResultOfT(_workspaceSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityWorkspaceSettingCollection.GetAll"), data => new SecurityWorkspaceSettingResource(Client, data));
+            return new AsyncPageableWrapper<SecurityWorkspaceSettingData, SecurityWorkspaceSettingResource>(new SecurityWorkspaceSettingDataAsyncCollectionResultOfT(_workspaceSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityWorkspaceSettingCollection.GetAll"), data => new SecurityWorkspaceSettingResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityWorkspaceSettingData, SecurityWorkspaceSettingResource>(new WorkspaceSettingsGetAllCollectionResultOfT(_workspaceSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityWorkspaceSettingCollection.GetAll"), data => new SecurityWorkspaceSettingResource(Client, data));
+            return new PageableWrapper<SecurityWorkspaceSettingData, SecurityWorkspaceSettingResource>(new SecurityWorkspaceSettingDataCollectionResultOfT(_workspaceSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityWorkspaceSettingCollection.GetAll"), data => new SecurityWorkspaceSettingResource(Client, data));
         }
 
         /// <summary>

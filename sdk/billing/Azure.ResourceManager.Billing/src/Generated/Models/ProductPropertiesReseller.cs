@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </summary>
-    public partial class ProductPropertiesReseller : CreatedSubscriptionReseller
+    internal partial class ProductPropertiesReseller : CreatedSubscriptionReseller
     {
         /// <summary> Initializes a new instance of <see cref="ProductPropertiesReseller"/>. </summary>
         public ProductPropertiesReseller()

@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("agentReinstallAttemptToVersion"u8);
                 writer.WriteStringValue(AgentReinstallAttemptToVersion);
             }
-            if (Optional.IsDefined(OsFamilyName))
+            if (Optional.IsDefined(OSFamilyName))
             {
                 writer.WritePropertyName("osFamilyName"u8);
-                writer.WriteStringValue(OsFamilyName);
+                writer.WriteStringValue(OSFamilyName);
             }
             if (Optional.IsDefined(DistroName))
             {
@@ -440,6 +440,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
+            if (Optional.IsDefined(RecoveryConfidentialDataDiskEncryptionIdentity))
+            {
+                writer.WritePropertyName("recoveryConfidentialDataDiskEncryptionIdentity"u8);
+                writer.WriteStringValue(RecoveryConfidentialDataDiskEncryptionIdentity);
             }
         }
 
@@ -538,6 +543,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             long? autoAgentUpgradeRetryCount = default;
             bool? isAgentUpgradeRetryThresholdExhausted = default;
             int? platformFaultDomain = default;
+            ResourceIdentifier recoveryConfidentialDataDiskEncryptionIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("instanceType"u8))
@@ -1086,9 +1092,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     platformFaultDomain = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("recoveryConfidentialDataDiskEncryptionIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryConfidentialDataDiskEncryptionIdentity = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new A2AReplicationDetails(
@@ -1161,7 +1176,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 isAgentUpgradeInProgress,
                 autoAgentUpgradeRetryCount,
                 isAgentUpgradeRetryThresholdExhausted,
-                platformFaultDomain);
+                platformFaultDomain,
+                recoveryConfidentialDataDiskEncryptionIdentity);
         }
     }
 }

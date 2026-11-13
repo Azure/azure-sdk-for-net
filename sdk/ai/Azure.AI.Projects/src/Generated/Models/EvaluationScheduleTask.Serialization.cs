@@ -155,12 +155,12 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("evalRun"u8))
                 {
-                    evalRun = BinaryData.FromString(prop.Value.GetRawText());
+                    evalRun = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EvaluationScheduleTask(@type, configuration ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, evalId, evalRun);

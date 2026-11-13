@@ -9,6 +9,7 @@ namespace Azure.AI.Agents.Persistent
         public string IndexConnectionId { get; }
         /// <summary> The name of an index in an IndexResource attached to this agent. </summary>
         public string IndexName { get; }
+        /// <summary> Gets the maximum number of results to return from the search index. </summary>
         public int? TopK { get; }
         /// <summary> filter string for search resource. </summary>
         public string Filter { get; }

@@ -1,0 +1,6 @@
+directory: specification/containerservice/resource-manager/Microsoft.ContainerService/preparedimagespecification
+commit: c269608b4125389acd3c8472d99a2760dd0bfebe
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

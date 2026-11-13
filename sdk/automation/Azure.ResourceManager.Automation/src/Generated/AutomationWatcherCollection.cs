@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationWatcherResource.ResourceType, out string automationWatcherApiVersion);
             _watcherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationWatcherResource.ResourceType.Namespace, Diagnostics);
-            _watcherRestClient = new Watcher(_watcherClientDiagnostics, Pipeline, Endpoint, automationWatcherApiVersion ?? "2024-10-23");
+            _watcherRestClient = new Watcher(_watcherClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationWatcherApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new WatcherGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new AutomationWatcherDataAsyncCollectionResultOfT(
                 _watcherRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new WatcherGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new AutomationWatcherDataCollectionResultOfT(
                 _watcherRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

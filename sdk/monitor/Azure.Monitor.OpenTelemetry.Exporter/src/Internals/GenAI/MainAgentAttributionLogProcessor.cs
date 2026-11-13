@@ -22,6 +22,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
             MainAgentId,
             MainAgentVersion,
             MainAgentConversationId,
+            GenAiFoundryProjectId,
+            GenAiAzureAiProjectId,
         };
 
         public override void OnEnd(LogRecord logRecord)

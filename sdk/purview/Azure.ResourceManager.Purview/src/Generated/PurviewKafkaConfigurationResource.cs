@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(ResourceType, out string purviewKafkaConfigurationApiVersion);
             _kafkaConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
-            _kafkaConfigurationsRestClient = new KafkaConfigurations(_kafkaConfigurationsClientDiagnostics, Pipeline, Endpoint, purviewKafkaConfigurationApiVersion ?? "2024-04-01-preview");
+            _kafkaConfigurationsRestClient = new KafkaConfigurations(_kafkaConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewKafkaConfigurationApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

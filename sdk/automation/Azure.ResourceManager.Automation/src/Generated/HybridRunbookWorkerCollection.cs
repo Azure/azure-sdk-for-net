@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(HybridRunbookWorkerResource.ResourceType, out string hybridRunbookWorkerApiVersion);
             _hybridRunbookWorkersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", HybridRunbookWorkerResource.ResourceType.Namespace, Diagnostics);
-            _hybridRunbookWorkersRestClient = new HybridRunbookWorkers(_hybridRunbookWorkersClientDiagnostics, Pipeline, Endpoint, hybridRunbookWorkerApiVersion ?? "2024-10-23");
+            _hybridRunbookWorkersRestClient = new HybridRunbookWorkers(_hybridRunbookWorkersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridRunbookWorkerApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridRunbookWorkerData, HybridRunbookWorkerResource>(new HybridRunbookWorkersGetByHybridRunbookWorkerGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridRunbookWorkerData, HybridRunbookWorkerResource>(new HybridRunbookWorkerDataAsyncCollectionResultOfT(
                 _hybridRunbookWorkersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridRunbookWorkerData, HybridRunbookWorkerResource>(new HybridRunbookWorkersGetByHybridRunbookWorkerGroupCollectionResultOfT(
+            return new PageableWrapper<HybridRunbookWorkerData, HybridRunbookWorkerResource>(new HybridRunbookWorkerDataCollectionResultOfT(
                 _hybridRunbookWorkersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceApiSchemaResource.ResourceType, out string serviceWorkspaceApiSchemaApiVersion);
             _workspaceApiSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiSchemaResource.ResourceType.Namespace, Diagnostics);
-            _workspaceApiSchemaRestClient = new WorkspaceApiSchema(_workspaceApiSchemaClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiSchemaApiVersion ?? "2025-09-01-preview");
+            _workspaceApiSchemaRestClient = new WorkspaceApiSchema(_workspaceApiSchemaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceApiSchemaApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new WorkspaceApiSchemaGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new ApiSchemaDataAsyncCollectionResultOfT(
                 _workspaceApiSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new WorkspaceApiSchemaGetByApiCollectionResultOfT(
+            return new PageableWrapper<ApiSchemaData, ServiceWorkspaceApiSchemaResource>(new ApiSchemaDataCollectionResultOfT(
                 _workspaceApiSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

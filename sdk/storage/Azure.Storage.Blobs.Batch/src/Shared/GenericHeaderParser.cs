@@ -10,6 +10,7 @@ using System;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal sealed class GenericHeaderParser<T> : BaseHeaderParser<T>
     {
         internal delegate int GetParsedValueLengthDelegate(StringSegment value, int startIndex, out T parsedValue);

@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -75,29 +76,35 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBAccountApiVersion);
             _databaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseAccountsRestClient = new DatabaseAccounts(
+                _databaseAccountsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                cosmosDBAccountApiVersion ?? "2026-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRestClient = new CollectionPartition(_collectionPartitionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionPartitionRestClient = new CollectionPartition(_collectionPartitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _collectionPartitionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegion(_collectionPartitionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegion(_collectionPartitionRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _collectionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionRegionRestClient = new CollectionRegion(_collectionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionRegionRestClient = new CollectionRegion(_collectionRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _databaseAccountRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegion(_databaseAccountRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseAccountRegionRestClient = new DatabaseAccountRegion(_databaseAccountRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _partitionKeyRangeIdClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeId(_partitionKeyRangeIdClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeId(_partitionKeyRangeIdClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _partitionKeyRangeIdRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegion(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegion(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _percentileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileRestClient = new Percentile(_percentileClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _percentileRestClient = new Percentile(_percentileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _percentileSourceTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -485,7 +492,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetMetricDefinitionsCollectionsAsyncCollectionResultOfT(
+            return new CosmosDBMetricDefinitionAsync0CollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -532,7 +539,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetMetricDefinitionsCollectionsCollectionResultOfT(
+            return new CosmosDBMetricDefinition0CollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -581,7 +588,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetMetricsCollectionsAsyncCollectionResultOfT(
+            return new CosmosDBBaseMetricAsync0CollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -631,7 +638,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetMetricsCollectionsCollectionResultOfT(
+            return new CosmosDBBaseMetric0CollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -680,7 +687,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetUsagesCollectionsAsyncCollectionResultOfT(
+            return new CosmosDBBaseUsageAsync0CollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -729,7 +736,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionGetUsagesCollectionsCollectionResultOfT(
+            return new CosmosDBBaseUsage0CollectionResultOfT(
                 _collectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -779,7 +786,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetMetricsCollectionPartitionsAsyncCollectionResultOfT(
+            return new PartitionMetricAsyncCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -829,7 +836,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetMetricsCollectionPartitionsCollectionResultOfT(
+            return new PartitionMetricCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -878,7 +885,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetUsagesCollectionPartitionsAsyncCollectionResultOfT(
+            return new PartitionUsageAsyncCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -927,7 +934,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionGetUsagesCollectionPartitionsCollectionResultOfT(
+            return new PartitionUsageCollectionResultOfT(
                 _collectionPartitionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -979,7 +986,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionRegionGetMetricsCollectionPartitionRegionsAsyncCollectionResultOfT(
+            return new PartitionMetricAsync0CollectionResultOfT(
                 _collectionPartitionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1032,7 +1039,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionPartitionRegionGetMetricsCollectionPartitionRegionsCollectionResultOfT(
+            return new PartitionMetric0CollectionResultOfT(
                 _collectionPartitionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1085,7 +1092,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionRegionGetMetricsCollectionRegionsAsyncCollectionResultOfT(
+            return new CosmosDBBaseMetricAsync1CollectionResultOfT(
                 _collectionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1138,7 +1145,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CollectionRegionGetMetricsCollectionRegionsCollectionResultOfT(
+            return new CosmosDBBaseMetric1CollectionResultOfT(
                 _collectionRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1187,7 +1194,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountRegionGetMetricsDatabaseAccountRegionsAsyncCollectionResultOfT(
+            return new CosmosDBBaseMetricAsync2CollectionResultOfT(
                 _databaseAccountRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1234,7 +1241,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountRegionGetMetricsDatabaseAccountRegionsCollectionResultOfT(
+            return new CosmosDBBaseMetric2CollectionResultOfT(
                 _databaseAccountRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1279,7 +1286,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetMetricDefinitionsDatabasesAsyncCollectionResultOfT(
+            return new CosmosDBMetricDefinitionAsync1CollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1323,7 +1330,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetMetricDefinitionsDatabasesCollectionResultOfT(
+            return new CosmosDBMetricDefinition1CollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1369,7 +1376,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetMetricsDatabasesAsyncCollectionResultOfT(
+            return new CosmosDBBaseMetricAsync3CollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1416,7 +1423,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetMetricsDatabasesCollectionResultOfT(
+            return new CosmosDBBaseMetric3CollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1462,7 +1469,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetUsagesDatabasesAsyncCollectionResultOfT(
+            return new CosmosDBBaseUsageAsync1CollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1508,7 +1515,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseGetUsagesDatabasesCollectionResultOfT(
+            return new CosmosDBBaseUsage1CollectionResultOfT(
                 _databaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1750,7 +1757,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetMetricDefinitionsAsyncCollectionResultOfT(
+            return new CosmosDBMetricDefinitionAsyncCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1788,7 +1795,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetMetricDefinitionsCollectionResultOfT(
+            return new CosmosDBMetricDefinitionCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1831,7 +1838,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetMetricsAsyncCollectionResultOfT(
+            return new CosmosDBBaseMetricAsyncCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1875,7 +1882,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetMetricsCollectionResultOfT(
+            return new CosmosDBBaseMetricCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2011,7 +2018,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetUsagesAsyncCollectionResultOfT(
+            return new CosmosDBBaseUsageAsyncCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2051,7 +2058,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseAccountsGetUsagesCollectionResultOfT(
+            return new CosmosDBBaseUsageCollectionResultOfT(
                 _databaseAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2313,7 +2320,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdGetMetricsPartitionKeyRangeIdsAsyncCollectionResultOfT(
+            return new PartitionMetricAsync1CollectionResultOfT(
                 _partitionKeyRangeIdRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2366,7 +2373,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdGetMetricsPartitionKeyRangeIdsCollectionResultOfT(
+            return new PartitionMetric1CollectionResultOfT(
                 _partitionKeyRangeIdRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2421,7 +2428,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdRegionGetMetricsPartitionKeyRangeIdRegionsAsyncCollectionResultOfT(
+            return new PartitionMetricAsync2CollectionResultOfT(
                 _partitionKeyRangeIdRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2477,7 +2484,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PartitionKeyRangeIdRegionGetMetricsPartitionKeyRangeIdRegionsCollectionResultOfT(
+            return new PartitionMetric2CollectionResultOfT(
                 _partitionKeyRangeIdRegionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2525,7 +2532,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileGetMetricsPercentilesAsyncCollectionResultOfT(
+            return new CosmosDBPercentileMetricAsyncCollectionResultOfT(
                 _percentileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2569,7 +2576,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileGetMetricsPercentilesCollectionResultOfT(
+            return new CosmosDBPercentileMetricCollectionResultOfT(
                 _percentileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2617,7 +2624,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileSourceTargetGetMetricsPercentileSourceTargetsAsyncCollectionResultOfT(
+            return new CosmosDBPercentileMetricAsync0CollectionResultOfT(
                 _percentileSourceTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2667,7 +2674,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileSourceTargetGetMetricsPercentileSourceTargetsCollectionResultOfT(
+            return new CosmosDBPercentileMetric0CollectionResultOfT(
                 _percentileSourceTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2715,7 +2722,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileTargetGetMetricsPercentileTargetsAsyncCollectionResultOfT(
+            return new CosmosDBPercentileMetricAsync1CollectionResultOfT(
                 _percentileTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2762,7 +2769,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PercentileTargetGetMetricsPercentileTargetsCollectionResultOfT(
+            return new CosmosDBPercentileMetric1CollectionResultOfT(
                 _percentileTargetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2989,10 +2996,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -3032,10 +3038,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

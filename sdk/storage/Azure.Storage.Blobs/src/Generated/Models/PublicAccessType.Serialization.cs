@@ -11,17 +11,25 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class PublicAccessTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PublicAccessType value) => value switch
         {
-            PublicAccessType.BlobContainer => "container",
             PublicAccessType.Blob => "blob",
+            PublicAccessType.BlobContainer => "container",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccessType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PublicAccessType ToPublicAccessType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "container")) return PublicAccessType.BlobContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blob")) return PublicAccessType.Blob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blob"))
+            {
+                return PublicAccessType.Blob;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "container"))
+            {
+                return PublicAccessType.BlobContainer;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccessType value.");
         }
     }

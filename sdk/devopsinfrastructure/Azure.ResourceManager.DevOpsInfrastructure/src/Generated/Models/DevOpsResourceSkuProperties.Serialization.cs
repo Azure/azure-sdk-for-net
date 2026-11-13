@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DevOpsResourceSkuProperties(
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 tier,
                 size,
                 family,
-                locations,
-                locationInfo,
-                capabilities,
-                restrictions,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<ResourceSkuLocationInfo>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(),
                 additionalBinaryDataProperties);
         }
     }

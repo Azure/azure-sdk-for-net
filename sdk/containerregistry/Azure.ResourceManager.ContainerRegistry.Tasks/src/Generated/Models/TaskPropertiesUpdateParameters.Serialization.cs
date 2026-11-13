@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             AgentProperties agentConfiguration = default;
             string agentPoolName = default;
             int? timeoutInSeconds = default;
-            TaskStepUpdateContent step = default;
+            ContainerRegistryTaskStepUpdateContent step = default;
             ContainerRegistryTaskTriggerUpdateContent trigger = default;
             ContainerRegistryTaskCredentials credentials = default;
             string logTemplate = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    step = TaskStepUpdateContent.DeserializeTaskStepUpdateContent(prop.Value, options);
+                    step = ContainerRegistryTaskStepUpdateContent.DeserializeContainerRegistryTaskStepUpdateContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trigger"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TaskPropertiesUpdateParameters(

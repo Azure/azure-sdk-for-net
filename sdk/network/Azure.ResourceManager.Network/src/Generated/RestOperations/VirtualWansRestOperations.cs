@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Network
     internal partial class VirtualWans
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of VirtualWans for mocking. </summary>
         protected VirtualWans()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualWans. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal VirtualWans(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal VirtualWans(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
+            _userAgent = new TelemetryDetails(typeof(VirtualWans).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string virtualWanName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,20 +53,18 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
-            uri.AppendPath(virtualWANName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendPath(virtualWanName, true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string virtualWanName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -72,15 +73,13 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
-            uri.AppendPath(virtualWANName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendPath(virtualWanName, true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -97,14 +96,12 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -121,14 +118,12 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -141,14 +136,12 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -164,14 +157,12 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -183,14 +174,12 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -206,14 +195,12 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -229,19 +216,17 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
             uri.AppendPath("/supportedSecurityProviders", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGenerateVirtualWanVpnServerConfigurationVpnProfileRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -252,14 +237,12 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
             uri.AppendPath("/generateVpnProfile", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

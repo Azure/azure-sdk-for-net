@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             return jitNetworkAccessPolicy.Value;
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task CreateOrUpdate()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateJitNetworkAccessPolicyResource(jitNetworkAccessPolicy, jitNetworkAccessPolicyName);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Exist()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsTrue(flag);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Get()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateJitNetworkAccessPolicyResource(jitNetworkAccessPolicy, jitNetworkAccessPolicyName);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAll()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateJitNetworkAccessPolicyResource(list.First(item => item.Data.Name == jitNetworkAccessPolicyName), jitNetworkAccessPolicyName);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Delete()
         {
             string jitNetworkAccessPolicyName = Recording.GenerateAssetName("jit");

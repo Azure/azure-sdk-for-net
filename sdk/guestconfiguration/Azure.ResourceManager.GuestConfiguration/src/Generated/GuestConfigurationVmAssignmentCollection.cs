@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(GuestConfigurationVmAssignmentResource.ResourceType, out string guestConfigurationVmAssignmentApiVersion);
             _guestConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsGetAllForVirtualMachineAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentDataAsyncCollectionResultOfT(
                 _guestConfigurationAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsGetAllForVirtualMachineCollectionResultOfT(
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentDataCollectionResultOfT(
                 _guestConfigurationAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

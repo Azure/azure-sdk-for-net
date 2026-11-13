@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securityOperatorApiVersion);
             _securityOperatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _securityOperatorsRestClient = new SecurityOperators(_securityOperatorsClientDiagnostics, Pipeline, Endpoint, securityOperatorApiVersion ?? "2023-01-01-preview");
+            _securityOperatorsRestClient = new SecurityOperators(_securityOperatorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityOperatorApiVersion ?? "2023-01-01-preview");
             ValidateResourceId(id);
         }
 

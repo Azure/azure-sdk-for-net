@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure Data Lake Storage Gen2 storage. </summary>
     public partial class AzureBlobFSDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public AzureBlobFSDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("AzureBlobFSFile", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

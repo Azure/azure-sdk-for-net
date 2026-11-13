@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.AlertsManagement": "2025-05-25-preview"
+  }
+}

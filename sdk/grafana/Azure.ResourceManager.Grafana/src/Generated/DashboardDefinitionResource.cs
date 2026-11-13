@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ResourceType, out string dashboardDefinitionApiVersion);
             _dashboardDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            _dashboardDefinitionsRestClient = new DashboardDefinitions(_dashboardDefinitionsClientDiagnostics, Pipeline, Endpoint, dashboardDefinitionApiVersion ?? "2025-09-01-preview");
+            _dashboardDefinitionsRestClient = new DashboardDefinitions(_dashboardDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dashboardDefinitionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

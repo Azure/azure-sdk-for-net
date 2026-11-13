@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(ResourceType, out string privateStoreApiVersion);
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreFetchAllMarketplaceSubscriptionsAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), nextPageToken, context, "PrivateStoreResource.FetchAllMarketplaceSubscriptions");
+            return new MarketplaceSubscriptionAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), nextPageToken, context, "PrivateStoreResource.FetchAllMarketplaceSubscriptions");
         }
 
         /// <summary>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreFetchAllMarketplaceSubscriptionsCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), nextPageToken, context, "PrivateStoreResource.FetchAllMarketplaceSubscriptions");
+            return new MarketplaceSubscriptionCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), nextPageToken, context, "PrivateStoreResource.FetchAllMarketplaceSubscriptions");
         }
 
         /// <summary>
@@ -1357,7 +1357,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreQueryOffersAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "PrivateStoreResource.QueryOffers");
+            return new PrivateStoreOfferResultAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "PrivateStoreResource.QueryOffers");
         }
 
         /// <summary>
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreQueryOffersCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "PrivateStoreResource.QueryOffers");
+            return new PrivateStoreOfferResultCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "PrivateStoreResource.QueryOffers");
         }
 
         /// <summary>
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreQueryUserOffersAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), QueryUserOffersContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserOffers");
+            return new PrivateStoreOfferResultAsync0CollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), QueryUserOffersContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserOffers");
         }
 
         /// <summary>
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreQueryUserOffersCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), QueryUserOffersContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserOffers");
+            return new PrivateStoreOfferResult0CollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), QueryUserOffersContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserOffers");
         }
 
         /// <summary>
@@ -1488,7 +1488,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceClientQueryUserRulesAsyncCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Name), QueryUserRulesContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserRules");
+            return new MarketplaceRuleAsyncCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Name), QueryUserRulesContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserRules");
         }
 
         /// <summary>
@@ -1521,7 +1521,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceClientQueryUserRulesCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Name), QueryUserRulesContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserRules");
+            return new MarketplaceRuleCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Name), QueryUserRulesContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserRules");
         }
 
         /// <summary>

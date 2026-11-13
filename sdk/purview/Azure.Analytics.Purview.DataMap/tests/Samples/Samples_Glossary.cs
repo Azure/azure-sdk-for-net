@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.BatchGet(1, 0, "ASC", null, null);
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.BatchGetAsync(1, 0, "ASC", null, null);
 
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossary>> response = client.BatchGet();
         }
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossary>> response = await client.BatchGetAsync();
         }
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossary body = new AtlasGlossary
             {
@@ -134,7 +134,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossary body = new AtlasGlossary
             {
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -186,7 +186,7 @@ glossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -219,7 +219,7 @@ glossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryCategory>> response = client.CreateCategories(new AtlasGlossaryCategory[]
             {
@@ -248,7 +248,7 @@ GlossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryCategory>> response = await client.CreateCategoriesAsync(new AtlasGlossaryCategory[]
             {
@@ -277,7 +277,7 @@ GlossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -306,7 +306,7 @@ termGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -335,7 +335,7 @@ termGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
@@ -358,7 +358,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
@@ -381,7 +381,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetCategory("ed7458f0-9463-48a5-b5c6-4f785fb34e12", null);
 
@@ -395,7 +395,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetCategoryAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12", null);
 
@@ -409,7 +409,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryCategory> response = client.GetCategory("ed7458f0-9463-48a5-b5c6-4f785fb34e12");
         }
@@ -420,7 +420,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryCategory> response = await client.GetCategoryAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12");
         }
@@ -431,7 +431,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -476,7 +476,7 @@ categoryGuid = "0d6766f6-f4b6-435b-bda2-d3edc358998e",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -521,7 +521,7 @@ categoryGuid = "0d6766f6-f4b6-435b-bda2-d3edc358998e",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
@@ -557,7 +557,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
@@ -593,7 +593,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.DeleteCategory("0e391355-252a-e5f3-ac18-5a3602df7616");
 
@@ -606,7 +606,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.DeleteCategoryAsync("0e391355-252a-e5f3-ac18-5a3602df7616");
 
@@ -619,7 +619,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -637,7 +637,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -655,7 +655,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryCategory> response = client.PartialUpdateCategory("3243ea0a-9492-47e1-392e-a84e64980af9", new Dictionary<string, string>
             {
@@ -669,7 +669,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryCategory> response = await client.PartialUpdateCategoryAsync("3243ea0a-9492-47e1-392e-a84e64980af9", new Dictionary<string, string>
             {
@@ -683,7 +683,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetRelatedCategories("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
@@ -697,7 +697,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetRelatedCategoriesAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
@@ -711,7 +711,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> response = client.GetRelatedCategories("ed7458f0-9463-48a5-b5c6-4f785fb34e12");
         }
@@ -722,7 +722,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> response = await client.GetRelatedCategoriesAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12");
         }
@@ -733,7 +733,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetCategoryTerms("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
@@ -747,7 +747,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetCategoryTermsAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
@@ -761,7 +761,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedTermHeader>> response = client.GetCategoryTerms("ed7458f0-9463-48a5-b5c6-4f785fb34e12");
         }
@@ -772,7 +772,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedTermHeader>> response = await client.GetCategoryTermsAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12");
         }
@@ -783,7 +783,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -836,7 +836,7 @@ info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -889,7 +889,7 @@ info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
@@ -936,7 +936,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
@@ -983,7 +983,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1019,7 +1019,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1055,7 +1055,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
@@ -1088,7 +1088,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
@@ -1121,7 +1121,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null);
 
@@ -1135,7 +1135,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null);
 
@@ -1149,7 +1149,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryTerm> response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea");
         }
@@ -1160,7 +1160,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryTerm> response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea");
         }
@@ -1171,7 +1171,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea", null);
 
@@ -1185,7 +1185,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null);
 
@@ -1199,7 +1199,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryTerm> response = client.GetTerm("54688d39-b298-4104-9e80-f2a16f44aaea");
         }
@@ -1210,7 +1210,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryTerm> response = await client.GetTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea");
         }
@@ -1221,7 +1221,7 @@ Info = "Example Steward info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1280,7 +1280,7 @@ termGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1339,7 +1339,7 @@ termGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
@@ -1384,7 +1384,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
@@ -1429,7 +1429,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.DeleteTerm("b0942506-2d7d-1f45-d286-c29ca9e7f2ef");
 
@@ -1442,7 +1442,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.DeleteTermAsync("b0942506-2d7d-1f45-d286-c29ca9e7f2ef");
 
@@ -1455,7 +1455,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1473,7 +1473,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1491,7 +1491,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryTerm> response = client.PartialUpdateTerm("54688d39-b298-4104-9e80-f2a16f44aaea", new Dictionary<string, string>
             {
@@ -1505,7 +1505,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryTerm> response = await client.PartialUpdateTermAsync("54688d39-b298-4104-9e80-f2a16f44aaea", new Dictionary<string, string>
             {
@@ -1519,7 +1519,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -1576,7 +1576,7 @@ url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -1633,7 +1633,7 @@ url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryTerm>> response = client.CreateTerms(new AtlasGlossaryTerm[]
             {
@@ -1680,7 +1680,7 @@ Url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryTerm>> response = await client.CreateTermsAsync(new AtlasGlossaryTerm[]
             {
@@ -1727,7 +1727,7 @@ Url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetEntitiesAssignedWithTerm("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4", -1, 0, "ASC", null);
 
@@ -1741,7 +1741,7 @@ Url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetEntitiesAssignedWithTermAsync("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4", -1, 0, "ASC", null);
 
@@ -1755,7 +1755,7 @@ Url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedObjectId>> response = client.GetEntitiesAssignedWithTerm("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4");
         }
@@ -1766,7 +1766,7 @@ Url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedObjectId>> response = await client.GetEntitiesAssignedWithTermAsync("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4");
         }
@@ -1777,7 +1777,7 @@ Url = "Example Url",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -1807,7 +1807,7 @@ source = "ExampleSource",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -1837,7 +1837,7 @@ source = "ExampleSource",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.AssignTermToEntities("8a7f65ec-6429-0b9b-3734-ec57bf1e34c2", new AtlasRelatedObjectId[]
             {
@@ -1864,7 +1864,7 @@ Attributes =
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.AssignTermToEntitiesAsync("8a7f65ec-6429-0b9b-3734-ec57bf1e34c2", new AtlasRelatedObjectId[]
             {
@@ -1891,7 +1891,7 @@ Attributes =
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -1912,7 +1912,7 @@ relationshipGuid = "624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -1933,7 +1933,7 @@ relationshipGuid = "624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.DeleteTermAssignmentFromEntities("8a7f65ec-6429-0b9b-3734-ec57bf1e34c2", new AtlasRelatedObjectId[]
             {
@@ -1951,7 +1951,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.DeleteTermAssignmentFromEntitiesAsync("8a7f65ec-6429-0b9b-3734-ec57bf1e34c2", new AtlasRelatedObjectId[]
             {
@@ -1969,7 +1969,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetRelatedTerms("54688d39-b298-4104-9e80-f2a16f44aaea", -1, 0, "ASC", null);
 
@@ -1983,7 +1983,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetRelatedTermsAsync("54688d39-b298-4104-9e80-f2a16f44aaea", -1, 0, "ASC", null);
 
@@ -1997,7 +1997,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> response = client.GetRelatedTerms("54688d39-b298-4104-9e80-f2a16f44aaea");
         }
@@ -2008,7 +2008,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> response = await client.GetRelatedTermsAsync("54688d39-b298-4104-9e80-f2a16f44aaea");
         }
@@ -2019,7 +2019,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetGlossary("47029611-67a1-42d5-8766-90eb904f7f22", null);
 
@@ -2033,7 +2033,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetGlossaryAsync("47029611-67a1-42d5-8766-90eb904f7f22", null);
 
@@ -2047,7 +2047,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossary> response = client.GetGlossary("47029611-67a1-42d5-8766-90eb904f7f22");
         }
@@ -2058,7 +2058,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossary> response = await client.GetGlossaryAsync("47029611-67a1-42d5-8766-90eb904f7f22");
         }
@@ -2069,7 +2069,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2132,7 +2132,7 @@ displayText = "ExampleCategory2",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2195,7 +2195,7 @@ displayText = "ExampleCategory2",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossary body = new AtlasGlossary
             {
@@ -2246,7 +2246,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             AtlasGlossary body = new AtlasGlossary
             {
@@ -2297,7 +2297,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.Delete("c0c54153-13d1-1608-13af-43457cdffe75");
 
@@ -2310,7 +2310,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.DeleteAsync("c0c54153-13d1-1608-13af-43457cdffe75");
 
@@ -2323,7 +2323,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetCategories("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2337,7 +2337,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetCategoriesAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2351,7 +2351,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryCategory>> response = client.GetCategories("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2362,7 +2362,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryCategory>> response = await client.GetCategoriesAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2373,7 +2373,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetCategoriesHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2387,7 +2387,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetCategoriesHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2401,7 +2401,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedCategoryHeader>> response = client.GetCategoriesHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2412,7 +2412,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedCategoryHeader>> response = await client.GetCategoriesHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2423,7 +2423,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetDetailed("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null);
 
@@ -2437,7 +2437,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetDetailedAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null);
 
@@ -2451,7 +2451,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryExtInfo> response = client.GetDetailed("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2462,7 +2462,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossaryExtInfo> response = await client.GetDetailedAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2473,7 +2473,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2491,7 +2491,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2509,7 +2509,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossary> response = client.PartialUpdate("c018ddaf-7c21-4b37-a838-dae5f110c3d8", new Dictionary<string, string>
             {
@@ -2523,7 +2523,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<AtlasGlossary> response = await client.PartialUpdateAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", new Dictionary<string, string>
             {
@@ -2537,7 +2537,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetTerms("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2551,7 +2551,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetTermsAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2565,7 +2565,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryTerm>> response = client.GetTerms("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2576,7 +2576,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasGlossaryTerm>> response = await client.GetTermsAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2587,7 +2587,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = client.GetTermHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2601,7 +2601,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response response = await client.GetTermHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
@@ -2615,7 +2615,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedTermHeader>> response = client.GetTermHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }
@@ -2626,7 +2626,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
+            DataMapGlossary client = new DataMapClient(endpoint, credential).GetDataMapGlossaryClient();
 
             Response<IReadOnlyList<AtlasRelatedTermHeader>> response = await client.GetTermHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8");
         }

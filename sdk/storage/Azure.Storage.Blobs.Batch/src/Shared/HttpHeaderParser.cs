@@ -14,6 +14,7 @@ using System.Globalization;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal abstract class HttpHeaderParser<T>
     {
         private bool _supportsMultipleValues;

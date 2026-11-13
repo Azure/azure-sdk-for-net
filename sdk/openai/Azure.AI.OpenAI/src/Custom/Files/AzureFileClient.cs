@@ -8,6 +8,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using OpenAI.Files;
 
+// AZC0112: Azure.AI.OpenAI is granted InternalsVisibleTo by System.ClientModel and OpenAI and is the
+// intended caller of these members. The upstream types predate the [Friend] attribute the rule looks for.
+#pragma warning disable AZC0112
+
 namespace Azure.AI.OpenAI.Files;
 
 /// <summary>

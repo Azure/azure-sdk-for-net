@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeJobResource.ResourceType, out string edgeJobApiVersion);
             _jobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeJobResource.ResourceType.Namespace, Diagnostics);
-            _jobsRestClient = new Jobs(_jobsClientDiagnostics, Pipeline, Endpoint, edgeJobApiVersion ?? "2025-06-01");
+            _jobsRestClient = new Jobs(_jobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeJobApiVersion ?? "2025-06-01");
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetAsyncCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
+            return new AsyncPageableWrapper<EdgeJobData, EdgeJobResource>(new EdgeJobDataAsyncCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
+            return new PageableWrapper<EdgeJobData, EdgeJobResource>(new EdgeJobDataCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>

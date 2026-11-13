@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string workflowRunActionRepetitionApiVersion);
             _workflowRunActionRepetitionDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _workflowRunActionRepetitionDefinitionsRestClient = new WorkflowRunActionRepetitionDefinitions(_workflowRunActionRepetitionDefinitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionRepetitionApiVersion ?? "2026-03-15");
+            _workflowRunActionRepetitionDefinitionsRestClient = new WorkflowRunActionRepetitionDefinitions(_workflowRunActionRepetitionDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workflowRunActionRepetitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkflowRunActionRepetitionDefinitionsGetExpressionTracesAsyncCollectionResultOfT(
+            return new WorkflowExpressionRootAsync0CollectionResultOfT(
                 _workflowRunActionRepetitionDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkflowRunActionRepetitionDefinitionsGetExpressionTracesCollectionResultOfT(
+            return new WorkflowExpressionRoot0CollectionResultOfT(
                 _workflowRunActionRepetitionDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

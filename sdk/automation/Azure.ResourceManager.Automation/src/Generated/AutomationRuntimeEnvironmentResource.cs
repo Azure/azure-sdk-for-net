@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationRuntimeEnvironmentApiVersion);
             _runtimeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _runtimeEnvironmentsRestClient = new RuntimeEnvironments(_runtimeEnvironmentsClientDiagnostics, Pipeline, Endpoint, automationRuntimeEnvironmentApiVersion ?? "2024-10-23");
+            _runtimeEnvironmentsRestClient = new RuntimeEnvironments(_runtimeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRuntimeEnvironmentApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

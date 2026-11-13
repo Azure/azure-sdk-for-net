@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(GrafanaIntegrationFabricResource.ResourceType, out string grafanaIntegrationFabricApiVersion);
             _integrationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", GrafanaIntegrationFabricResource.ResourceType.Namespace, Diagnostics);
-            _integrationFabricsRestClient = new IntegrationFabrics(_integrationFabricsClientDiagnostics, Pipeline, Endpoint, grafanaIntegrationFabricApiVersion ?? "2025-09-01-preview");
+            _integrationFabricsRestClient = new IntegrationFabrics(_integrationFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaIntegrationFabricApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricDataAsyncCollectionResultOfT(
                 _integrationFabricsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllCollectionResultOfT(
+            return new PageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricDataCollectionResultOfT(
                 _integrationFabricsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

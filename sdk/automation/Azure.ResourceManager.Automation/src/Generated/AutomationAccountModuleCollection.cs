@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationAccountModuleResource.ResourceType, out string automationAccountModuleApiVersion);
             _moduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationAccountModuleResource.ResourceType.Namespace, Diagnostics);
-            _moduleRestClient = new Module(_moduleClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _moduleRestClient = new Module(_moduleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationModuleData, AutomationAccountModuleResource>(new ModuleGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationModuleData, AutomationAccountModuleResource>(new AutomationModuleDataAsync1CollectionResultOfT(
                 _moduleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationModuleData, AutomationAccountModuleResource>(new ModuleGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationModuleData, AutomationAccountModuleResource>(new AutomationModuleData1CollectionResultOfT(
                 _moduleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

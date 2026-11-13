@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics AlertRuleIncidentsClientDiagnostics => _alertRuleIncidentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AlertRuleIncidents AlertRuleIncidentsRestClient => _alertRuleIncidentsRestClient ??= new AlertRuleIncidents(AlertRuleIncidentsClientDiagnostics, Pipeline, Endpoint, "2016-03-01");
+        private AlertRuleIncidents AlertRuleIncidentsRestClient => _alertRuleIncidentsRestClient ??= new AlertRuleIncidents(AlertRuleIncidentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2016-03-01");
 
         /// <summary> Gets a collection of DataCollectionEndpoints in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DataCollectionEndpoints and their operations over a DataCollectionEndpointResource. </returns>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleIncidentsGetByAlertRuleAsyncCollectionResultOfT(
+            return new MonitorIncidentAsyncCollectionResultOfT(
                 AlertRuleIncidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleIncidentsGetByAlertRuleCollectionResultOfT(
+            return new MonitorIncidentCollectionResultOfT(
                 AlertRuleIncidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

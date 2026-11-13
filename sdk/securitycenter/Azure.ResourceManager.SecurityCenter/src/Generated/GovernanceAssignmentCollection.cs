@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(GovernanceAssignmentResource.ResourceType, out string governanceAssignmentApiVersion);
             _governanceAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GovernanceAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _governanceAssignmentsRestClient = new GovernanceAssignments(_governanceAssignmentsClientDiagnostics, Pipeline, Endpoint, governanceAssignmentApiVersion ?? "2022-01-01-preview");
+            _governanceAssignmentsRestClient = new GovernanceAssignments(_governanceAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, governanceAssignmentApiVersion ?? "2022-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentsGetAllAsyncCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentDataAsyncCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentsGetAllCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
+            return new PageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentDataCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
         }
 
         /// <summary>

@@ -85,10 +85,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SharedAccessSignatureToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(Expiration))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiration"u8);
-                writer.WriteStringValue(Expiration.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             Uri containerUri = default;
             string sharedAccessSignatureToken = default;
-            DateTimeOffset? expiration = default;
+            DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,15 +154,15 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    expiration = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedAccessSignatureTokenConnection(containerUri, sharedAccessSignatureToken, expiration, additionalBinaryDataProperties);
+            return new SharedAccessSignatureTokenConnection(containerUri, sharedAccessSignatureToken, expiresOn, additionalBinaryDataProperties);
         }
     }
 }

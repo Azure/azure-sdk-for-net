@@ -37,13 +37,15 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             await _client.DeleteMetricAsync(metricId); // make sure it doesn't exist
 
-            var metricDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                "New Test Metric",
-                "A metric created for testing purposes",
-                ["Test"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("TestEvent"));
+            var metricDefinition = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "New Test Metric",
+                Description = "A metric created for testing purposes",
+                Categories = { "Test" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new EventCountMetricDefinition("TestEvent"),
+            };
 
             Response<ExperimentMetric> response = await _client.CreateMetricAsync(metricId, metricDefinition);
 
@@ -68,13 +70,15 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
                 Assert.That(deleteException.Status, Is.EqualTo(StatusCodes.Status404NotFound));
             }
 
-            var metricDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                "If-None-Match Test Metric",
-                "A metric created with If-None-Match header",
-                ["Test", "Conditional"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("ConditionalCreateEvent"));
+            var metricDefinition = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "If-None-Match Test Metric",
+                Description = "A metric created with If-None-Match header",
+                Categories = { "Test", "Conditional" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new EventCountMetricDefinition("ConditionalCreateEvent"),
+            };
 
             Response<ExperimentMetric> response = await _client.CreateMetricAsync(metricId, metricDefinition);
 
@@ -119,13 +123,15 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         {
             string metricId = "test_metric_invalid";
 
-            var invalidDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                displayName: "", // missing required value
-                description: "", // missing required value
-                categories: ["Test"],
-                DesiredDirection.Increase,
-                definition: new EventCountMetricDefinition("EventName"));
+            var invalidDefinition = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "", // missing required value
+                Description = "", // missing required value
+                Categories = { "Test" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new EventCountMetricDefinition("EventName"),
+            };
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -251,13 +257,15 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         [RecordedTest]
         public async Task ValidateExperimentMetricValid()
         {
-            var validDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                "Valid Metric",
-                "A valid metric for validation testing",
-                ["Test", "Validation"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("ValidationEvent"));
+            var validDefinition = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "Valid Metric",
+                Description = "A valid metric for validation testing",
+                Categories = { "Test", "Validation" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new EventCountMetricDefinition("ValidationEvent"),
+            };
 
             Response<ExperimentMetricValidationResult> response = await _client.ValidateMetricAsync(validDefinition);
             ExperimentMetricValidationResult result = response.Value;
@@ -278,16 +286,18 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         [RecordedTest]
         public async Task ValidateExperimentMetricInvalid()
         {
-            var invalidDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                "Invalid Metric",
-                "An invalid metric for validation testing",
-                ["Test"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("ValidationEvent")
+            var invalidDefinition = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "Invalid Metric",
+                Description = "An invalid metric for validation testing",
+                Categories = { "Test" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new EventCountMetricDefinition("ValidationEvent")
                 {
                     Event = { Filter = "this is not a valid filter expression." }
-                });
+                },
+            };
 
             Response<ExperimentMetricValidationResult> response = await _client.ValidateMetricAsync(invalidDefinition);
             ExperimentMetricValidationResult result = response.Value;
@@ -473,13 +483,15 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         private async Task<ExperimentMetric> SetupTestMetricAsync(string metricId, LifecycleStage lifecycle = default)
         {
             var currentTest = TestContext.CurrentContext.Test;
-            var metricDefinition = new ExperimentMetric(
-                lifecycle == default ? LifecycleStage.Active : lifecycle,
-                displayName: $"Test Metric {currentTest.Name}",
-                description: $"A metric created for testing purposes ({currentTest.FullName})",
-                ["Test"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("TestEvent"));
+            var metricDefinition = new ExperimentMetric
+            {
+                Lifecycle = lifecycle == default ? LifecycleStage.Active : lifecycle,
+                DisplayName = $"Test Metric {currentTest.Name}",
+                Description = $"A metric created for testing purposes ({currentTest.FullName})",
+                Categories = { "Test" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new EventCountMetricDefinition("TestEvent"),
+            };
 
             Response<ExperimentMetric> response = await _client.CreateOrUpdateMetricAsync(metricId, metricDefinition);
 

@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="relationshipGuid"> The GUID of the relationship. </param>
         /// <param name="relationshipStatus"> The enum of relationship status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelatedObjectId(string guid, string typeName, IDictionary<string, BinaryData> uniqueAttributes, string displayText, EntityStatus? entityStatus, string relationshipType, AtlasStruct relationshipAttributes, Guid? relationshipGuid, StatusAtlasRelationship? relationshipStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasRelatedObjectId(string guid, string typeName, IDictionary<string, BinaryData> uniqueAttributes, string displayText, DataMapEntityStatus? entityStatus, string relationshipType, AtlasStruct relationshipAttributes, Guid? relationshipGuid, StatusAtlasRelationship? relationshipStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             TypeName = typeName;
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </summary>
-        public EntityStatus? EntityStatus { get; set; }
+        public DataMapEntityStatus? EntityStatus { get; set; }
 
         /// <summary> Relationship type. </summary>
         public string RelationshipType { get; set; }

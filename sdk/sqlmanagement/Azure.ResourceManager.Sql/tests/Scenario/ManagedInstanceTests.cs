@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Sql.Tests
         }
 
         [Test]
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task ManagedInstanceApiTests()
         {
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately
             // 1.CreateOrUpdate
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName,vnetName,DefaultLocation,_resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, DefaultLocation, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
             Assert.AreEqual(managedInstanceName, managedInstance.Data.Name);
             Assert.AreEqual("westus2", managedInstance.Data.Location.ToString());

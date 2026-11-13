@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteDiagnosticResource.ResourceType, out string siteDiagnosticApiVersion);
             _diagnosticCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            _diagnosticCategoriesRestClient = new DiagnosticCategories(_diagnosticCategoriesClientDiagnostics, Pipeline, Endpoint, siteDiagnosticApiVersion ?? "2026-03-15");
+            _diagnosticCategoriesRestClient = new DiagnosticCategories(_diagnosticCategoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteDiagnosticApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiagnosticCategoryData, SiteDiagnosticResource>(new DiagnosticCategoriesGetSiteDiagnosticCategoriesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiagnosticCategoryData, SiteDiagnosticResource>(new DiagnosticCategoryDataAsync0CollectionResultOfT(
                 _diagnosticCategoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiagnosticCategoryData, SiteDiagnosticResource>(new DiagnosticCategoriesGetSiteDiagnosticCategoriesCollectionResultOfT(
+            return new PageableWrapper<DiagnosticCategoryData, SiteDiagnosticResource>(new DiagnosticCategoryData0CollectionResultOfT(
                 _diagnosticCategoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -613,7 +613,7 @@ namespace Azure.Analytics.Purview.DataMap
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     templateName = array;
@@ -734,7 +734,7 @@ namespace Azure.Analytics.Purview.DataMap
                                 }
                                 else
                                 {
-                                    dictionary0.Add(prop1.Name, BinaryData.FromString(prop1.Value.GetRawText()));
+                                    dictionary0.Add(prop1.Name, prop1.Value.GetUtf8Bytes());
                                 }
                             }
                             dictionary.Add(prop0.Name, dictionary0);
@@ -967,7 +967,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AtlasGlossaryTerm(

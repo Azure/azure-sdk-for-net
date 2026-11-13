@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DicomServiceCollection(value, nextLink, additionalBinaryDataProperties);
+            return new DicomServiceCollection(value ?? new ChangeTrackingList<DicomServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

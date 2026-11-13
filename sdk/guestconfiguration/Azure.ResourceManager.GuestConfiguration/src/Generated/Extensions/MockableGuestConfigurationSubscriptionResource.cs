@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
 
         private ClientDiagnostics GuestConfigurationAssignmentsClientDiagnostics => _guestConfigurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GuestConfigurationAssignments GuestConfigurationAssignmentsRestClient => _guestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignments(GuestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-04-05");
+        private GuestConfigurationAssignments GuestConfigurationAssignmentsRestClient => _guestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignments(GuestConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-05");
 
         /// <summary>
         /// List all guest configuration assignments for a subscription.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
+            return new GuestConfigurationAssignmentDataAsync0CollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
+            return new GuestConfigurationAssignmentData0CollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
         }
     }
 }

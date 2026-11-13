@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             TryGetApiVersion(WorkflowVersionResource.ResourceType, out string workflowVersionApiVersion);
             _workflowName = workflowName;
             _workflowVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowVersionResource.ResourceType.Namespace, Diagnostics);
-            _workflowVersionsRestClient = new WorkflowVersions(_workflowVersionsClientDiagnostics, Pipeline, Endpoint, workflowVersionApiVersion ?? "2026-03-15");
+            _workflowVersionsRestClient = new WorkflowVersions(_workflowVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workflowVersionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowVersionData, WorkflowVersionResource>(new WorkflowVersionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowVersionData, WorkflowVersionResource>(new WorkflowVersionDataAsyncCollectionResultOfT(
                 _workflowVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowVersionData, WorkflowVersionResource>(new WorkflowVersionsGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkflowVersionData, WorkflowVersionResource>(new WorkflowVersionDataCollectionResultOfT(
                 _workflowVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

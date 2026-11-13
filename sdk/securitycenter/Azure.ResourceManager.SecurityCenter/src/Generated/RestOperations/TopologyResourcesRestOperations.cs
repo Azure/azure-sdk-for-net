@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.SecurityCenter
     internal partial class TopologyResources
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of TopologyResources for mocking. </summary>
         protected TopologyResources()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of TopologyResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal TopologyResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal TopologyResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
+            _userAgent = new TelemetryDetails(typeof(TopologyResources).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -53,14 +56,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/topologies/", false);
             uri.AppendPath(topologyResourceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/topologies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -74,14 +75,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/topologies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/topologies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -97,14 +96,12 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/topologies") ?? "2020-01-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

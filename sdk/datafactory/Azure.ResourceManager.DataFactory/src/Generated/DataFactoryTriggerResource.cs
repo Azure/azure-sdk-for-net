@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(ResourceType, out string dataFactoryTriggerApiVersion);
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
+            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
             _triggerRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _triggerRunsRestClient = new TriggerRuns(_triggerRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
+            _triggerRunsRestClient = new TriggerRuns(_triggerRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(SavingsPlanOrderModelResource.ResourceType, out string savingsPlanOrderModelApiVersion);
             _savingsPlanOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", SavingsPlanOrderModelResource.ResourceType.Namespace, Diagnostics);
-            _savingsPlanOrdersRestClient = new SavingsPlanOrders(_savingsPlanOrdersClientDiagnostics, Pipeline, Endpoint, savingsPlanOrderModelApiVersion ?? "2024-04-01");
+            _savingsPlanOrdersRestClient = new SavingsPlanOrders(_savingsPlanOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, savingsPlanOrderModelApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrdersGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrderModelDataAsyncCollectionResultOfT(
                 _savingsPlanOrdersRestClient,
                 Id.Name,
                 filter,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrdersGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrderModelDataCollectionResultOfT(
                 _savingsPlanOrdersRestClient,
                 Id.Name,
                 filter,

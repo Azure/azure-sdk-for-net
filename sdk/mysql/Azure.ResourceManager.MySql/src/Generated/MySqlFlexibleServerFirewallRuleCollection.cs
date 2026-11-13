@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(MySqlFlexibleServerFirewallRuleResource.ResourceType, out string mySqlFlexibleServerFirewallRuleApiVersion);
             _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerFirewallRuleApiVersion ?? "2024-12-30");
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerFirewallRuleApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new FirewallRulesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new MySqlFlexibleServerFirewallRuleDataAsyncCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new FirewallRulesGetByServerCollectionResultOfT(
+            return new PageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new MySqlFlexibleServerFirewallRuleDataCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

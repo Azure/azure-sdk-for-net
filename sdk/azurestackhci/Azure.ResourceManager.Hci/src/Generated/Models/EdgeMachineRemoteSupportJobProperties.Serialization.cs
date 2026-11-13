@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WritePropertyName("accessLevel"u8);
             writer.WriteStringValue(AccessLevel.ToString());
             writer.WritePropertyName("expirationTimestamp"u8);
-            writer.WriteStringValue(ExpireOn, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             HciJobStatus? status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RemoteSupportAccessLevel accessLevel = default;
-            DateTimeOffset expireOn = default;
+            DateTimeOffset expiresOn = default;
             RemoteSupportType @type = default;
             EdgeMachineRemoteSupportJobReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("expirationTimestamp"u8))
                 {
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EdgeMachineRemoteSupportJobProperties(
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 status,
                 error,
                 additionalBinaryDataProperties,
                 accessLevel,
-                expireOn,
+                expiresOn,
                 @type,
                 reportedProperties);
         }

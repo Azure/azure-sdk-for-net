@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get the update summary. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Response<UpdateSummaryResource> Get(CancellationToken cancellationToken)
+        public virtual new Response<UpdateSummaryResource> Get(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get the update summary. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<Response<UpdateSummaryResource>> GetAsync(CancellationToken cancellationToken)
+        public virtual new async Task<Response<UpdateSummaryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update summary data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<UpdateSummaryResource> CreateOrUpdate(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<UpdateSummaryResource> CreateOrUpdate(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update summary data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<UpdateSummaryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<UpdateSummaryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }

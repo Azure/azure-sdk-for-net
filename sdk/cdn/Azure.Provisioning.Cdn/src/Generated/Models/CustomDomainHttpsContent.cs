@@ -12,16 +12,27 @@ namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// The JSON object that contains the properties to secure a custom domain.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnManagedHttpsContent"/> and <see cref="UserManagedHttpsContent"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CdnManagedHttpsContent"/> and <see cref="UserManagedHttpsContent"/>.
     /// </summary>
     public partial class CustomDomainHttpsContent : ProvisionableConstruct
     {
+        private BicepValue<CertificateSource> _certificateSource;
         private BicepValue<SecureDeliveryProtocolType> _protocolType;
         private BicepValue<CdnMinimumTlsVersion> _minimumTlsVersion;
 
         /// <summary> Creates a new CustomDomainHttpsContent. </summary>
         public CustomDomainHttpsContent()
         {
+        }
+
+        /// <summary> Defines the source of the SSL certificate. </summary>
+        internal BicepValue<CertificateSource> CertificateSource
+        {
+            get
+            {
+                Initialize();
+                return _certificateSource;
+            }
         }
 
         /// <summary> Gets or sets the ProtocolType. </summary>
@@ -58,6 +69,7 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _certificateSource = DefineProperty<CertificateSource>(nameof(CertificateSource), new string[] { "certificateSource" }, isRequired: true);
             _protocolType = DefineProperty<SecureDeliveryProtocolType>(nameof(ProtocolType), new string[] { "protocolType" }, isRequired: true);
             _minimumTlsVersion = DefineProperty<CdnMinimumTlsVersion>(nameof(MinimumTlsVersion), new string[] { "minimumTlsVersion" });
             DefineAdditionalProperties();

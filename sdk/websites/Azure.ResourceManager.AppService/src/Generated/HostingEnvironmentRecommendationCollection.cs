@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(HostingEnvironmentRecommendationResource.ResourceType, out string hostingEnvironmentRecommendationApiVersion);
             _recommendationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _recommendationRulesRestClient = new RecommendationRules(_recommendationRulesClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentRecommendationApiVersion ?? "2026-03-15");
+            _recommendationRulesRestClient = new RecommendationRules(_recommendationRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentRecommendationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

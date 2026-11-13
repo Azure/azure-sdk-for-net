@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(PeerAsnResource.ResourceType, out string peerAsnApiVersion);
             _peerAsnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeerAsnResource.ResourceType.Namespace, Diagnostics);
-            _peerAsnsRestClient = new PeerAsns(_peerAsnsClientDiagnostics, Pipeline, Endpoint, peerAsnApiVersion ?? "2025-05-01");
+            _peerAsnsRestClient = new PeerAsns(_peerAsnsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peerAsnApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnsGetBySubscriptionAsyncCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context, "PeerAsnCollection.GetAll"), data => new PeerAsnResource(Client, data));
+            return new AsyncPageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnDataAsyncCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context, "PeerAsnCollection.GetAll"), data => new PeerAsnResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnsGetBySubscriptionCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context, "PeerAsnCollection.GetAll"), data => new PeerAsnResource(Client, data));
+            return new PageableWrapper<PeerAsnData, PeerAsnResource>(new PeerAsnDataCollectionResultOfT(_peerAsnsRestClient, Id.SubscriptionId, context, "PeerAsnCollection.GetAll"), data => new PeerAsnResource(Client, data));
         }
 
         /// <summary>

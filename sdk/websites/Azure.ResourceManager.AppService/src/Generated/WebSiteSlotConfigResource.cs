@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteSlotConfigApiVersion);
             _siteConfigSlotResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _siteConfigSlotResourceOperationGroupRestClient = new SiteConfigSlotResourceOperationGroup(_siteConfigSlotResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotConfigApiVersion ?? "2026-03-15");
+            _siteConfigSlotResourceOperationGroupRestClient = new SiteConfigSlotResourceOperationGroup(_siteConfigSlotResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigSlotResourceOperationGroupGetConfigurationSnapshotInfoSlotAsyncCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfoAsync0CollectionResultOfT(
                 _siteConfigSlotResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigSlotResourceOperationGroupGetConfigurationSnapshotInfoSlotCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfo0CollectionResultOfT(
                 _siteConfigSlotResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -1,14 +1,20 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0 (2026-11-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Updated to support API version `2026-06-01`.
 
 ### Other Changes
+
+- Retained `ExtensionConfigPropertyType`, `ArmDeploymentExtensionConfigItem.ExtensionConfigPropertyType`, and the existing model factory signature for compatibility with SDK version `1.0.0`, although API version `2026-06-01` no longer defines the extension configuration `type` property.
+
+## 1.0.0 (2026-08-25)
+
+### Features Added
+
+This is the first stable release of ARM deployments library, api-version 2025-04-01.
 
 ## 1.0.0-beta.1 (2026-06-30)
 

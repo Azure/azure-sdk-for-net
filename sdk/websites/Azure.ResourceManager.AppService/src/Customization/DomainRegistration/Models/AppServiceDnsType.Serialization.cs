@@ -21,8 +21,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceDnsType ToAppServiceDnsType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureDns")) return AppServiceDnsType.AzureDns;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DefaultDomainRegistrarDns")) return AppServiceDnsType.DefaultDomainRegistrarDns;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureDns"))
+                return AppServiceDnsType.AzureDns;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DefaultDomainRegistrarDns"))
+                return AppServiceDnsType.DefaultDomainRegistrarDns;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceDnsType value.");
         }
     }

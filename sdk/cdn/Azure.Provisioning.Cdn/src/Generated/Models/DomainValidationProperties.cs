@@ -47,7 +47,7 @@ namespace Azure.Provisioning.Cdn
         {
             base.DefineProvisionableProperties();
             _validationToken = DefineProperty<string>(nameof(ValidationToken), new string[] { "validationToken" }, isOutput: true);
-            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true);
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

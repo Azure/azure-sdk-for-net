@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciProvisioningDetails"/>. </summary>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osProfile"/> is null. </exception>
-        public HciProvisioningDetails(OsProvisionProfile osProfile)
+        public HciProvisioningDetails(OSProvisionProfile osProfile)
         {
             Argument.AssertNotNull(osProfile, nameof(osProfile));
 
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             UserDetails = new ChangeTrackingList<HciUserDetails>();
         }
 
@@ -32,16 +32,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="osProfile"> Operating system profile. </param>
         /// <param name="userDetails"> User configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciProvisioningDetails(OsProvisionProfile osProfile, IList<HciUserDetails> userDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciProvisioningDetails(OSProvisionProfile osProfile, IList<HciUserDetails> userDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             UserDetails = userDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operating system profile. </summary>
         [WirePath("osProfile")]
-        public OsProvisionProfile OsProfile { get; set; }
+        public OSProvisionProfile OSProfile { get; set; }
 
         /// <summary> User configuration. </summary>
         [WirePath("userDetails")]

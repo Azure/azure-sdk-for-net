@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                 throw new FormatException($"The model {nameof(HciProvisioningDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue(OsProfile, options);
+            writer.WriteObjectValue(OSProfile, options);
             if (Optional.IsCollectionDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            OsProvisionProfile osProfile = default;
+            OSProvisionProfile osProfile = default;
             IList<HciUserDetails> userDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("osProfile"u8))
                 {
-                    osProfile = OsProvisionProfile.DeserializeOsProvisionProfile(prop.Value, options);
+                    osProfile = OSProvisionProfile.DeserializeOSProvisionProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userDetails"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciProvisioningDetails(osProfile, userDetails ?? new ChangeTrackingList<HciUserDetails>(), additionalBinaryDataProperties);

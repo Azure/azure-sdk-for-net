@@ -15,18 +15,33 @@ Trigger phrases: "analyze CI failures", "fix CI", "why is CI failing", "help wit
 
 The user must provide a **PR number**, **PR URL**, or **pipeline build ID**. If not provided, ask the user.
 
+An automatic caller also supplies the immutable **PR head SHA**, **check run ID**, and **completion timestamp**. Analyze that completion only, not a newer run. Check-run events do not expose `run_attempt`; a changed completion timestamp distinguishes another attempt when the provider reuses its check ID. Follow the caller's safe-output and duplicate-prevention contract instead of posting directly.
+
 ## Workflow
 
 ### 1. Gather information
 
 - Fetch PR details, check statuses, changed files, and workflow runs using GitHub MCP tools.
+- When a caller supplies a completion identity, verify the PR is still open, non-draft, and at that head, and that the check still identifies the same completed failure. Stop without commenting if it is superseded. Retrieve errors from that run/attempt only; other current check statuses are context, not evidence for its diagnosis.
 - Extract **service directory** and **package name** from changed file paths (`sdk/<service>/<package>/`).
-- If a pipeline build ID is available (often in auto-generated PR descriptions), use `azure-sdk-mcp-azsdk_analyze_pipeline` for deeper log analysis.
-- For failed GitHub Actions jobs, use `github-mcp-server-get_job_logs` with `return_content: true` to get logs.
+- Identify the CI provider from each failed check URL before fetching logs:
+  - For an Azure DevOps URL (`dev.azure.com`), extract the `buildId`. Use `azure-sdk-mcp:azsdk_analyze_pipeline` when available.
+  - If that tool is unavailable, query the public Azure DevOps timeline API with `curl`:
+    `https://dev.azure.com/<organization>/<project>/_apis/build/builds/<buildId>/timeline?api-version=7.1`.
+    Inspect `issues` on failed task records first. If the issues are insufficient, fetch the failed record's `log.url`.
+  - For a GitHub Actions URL, use `github-mcp-server-get_job_logs` with `return_content: true`.
+- Do **not** use GitHub Actions job-log tools for Azure DevOps checks; their job IDs and run IDs are unrelated.
 
 ### 2. Identify failures
 
 Classify each failure using the CI check mapping and log symptom patterns below. Also inspect the PR's code directly (e.g., read generated files for compile errors, check for missing scaffolding files).
+
+Diagnosis must be based on the failed task's actual error text:
+
+- Quote the decisive error and name the affected file or project.
+- Do not infer the root cause from the check name, because `Build`/`Pack` jobs also run changelog verification, package validation, and ApiCompat.
+- Do not call a failure transient or flaky unless the logs contain infrastructure evidence (for example, an agent disconnect, timeout, service outage, or network failure). A documentation-only last commit does not establish flakiness because packaging validates files such as `CHANGELOG.md`.
+- If logs cannot be retrieved, state that the root cause is **unconfirmed** and provide the failed task link. Do not substitute a guessed compilation or ApiCompat diagnosis.
 
 ### 3. Post a comment
 
@@ -36,7 +51,7 @@ Compose a GitHub comment with:
 - **Per-failure sections**: Specific to THIS PR — include actual error messages, affected files, and concrete fix commands with `<service>`/`<package>` filled in
 - **Quick fix command** at the end if applicable
 
-Before posting, check existing comments for `## 🔍 CI Failure Analysis` to avoid duplicates.
+Before posting, check existing bot comments for the **same PR/head/CI run/completed attempt**, not just the `## 🔍 CI Failure Analysis` header. An older report must not suppress analysis of a new failure. Preserve the caller's exact completion marker when provided; the standalone workflow adds and verifies its marker deterministically at publication.
 
 ## CI Check Name → Failure Mapping
 
@@ -47,7 +62,7 @@ These are the Azure DevOps and GitHub checks that run on SDK PRs. The check name
 | `Build Analyze PRBatch` | Umbrella: code generation, API export, snippets, spelling, CPM, build + pack | `eng/scripts/CodeChecks.ps1` |
 | `Verify Generated Code` | Generated code matches what the generator produces | `eng/scripts/CodeChecks.ps1` |
 | `Validate CPM Compliance` | Central Package Management policy | `eng/scripts/Validate-CpmCompliance.ps1` |
-| `Build` / `Pack` | Compilation + NuGet packaging (ApiCompat runs during pack only) | `dotnet pack` |
+| `Build` / `Pack` | Compilation + package validation, including changelog verification and ApiCompat | `dotnet pack` |
 | `Analyze` | Samples, READMEs, snippets compile | `eng/scripts/Build-Snippets.ps1` |
 | `check-spelling` | Spell-checking changed files | `cspell` via `eng/common/scripts/check-spelling-in-changed-files.ps1` |
 | `verify-links` | Markdown link validation | `eng/common/scripts/Verify-Links.ps1` |
@@ -64,6 +79,8 @@ These are exact strings/patterns to search for in CI logs. They are specific to 
 | `error CS####:` | C# compilation error | Build failure — inspect the specific error code |
 | `Build FAILED` | Compilation failure | Build failure |
 | `MembersMustExist` / `TypesMustExist` | ApiCompat breaking change (only surfaces in `dotnet pack`) | API compatibility |
+| `changelog entry has the following sections with no content` | Release-dated changelog contains empty template sections | Changelog validation |
+| `ChangeLog verification failed` / `Verify-ChangeLog.ps1` | Changelog format or content validation failed; use the preceding error for the exact issue | Changelog validation |
 | `ManagePackageVersionsCentrally` / `VersionOverride` | CPM policy violation | CPM compliance |
 | `cspell` unknown words | Spelling error in code or API surface | Spelling |
 | `Spell check failed` | Spelling error in API surface files | Spelling |
@@ -74,6 +91,8 @@ These are exact strings/patterns to search for in CI logs. They are specific to 
 ## New Package Checklist
 
 For PRs that introduce a **new SDK package** (all files are `added`, no prior version exists), also check for these commonly missing scaffolding files:
+
+Use this checklist only to explain a CI failure, not as an independent code review or a source of unrelated findings.
 
 - `CHANGELOG.md`
 - `README.md`

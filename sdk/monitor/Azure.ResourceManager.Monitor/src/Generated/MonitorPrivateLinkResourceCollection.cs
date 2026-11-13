@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(MonitorPrivateLinkResource.ResourceType, out string monitorPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkResourceApiVersion ?? "2023-06-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorPrivateLinkResourceApiVersion ?? "2023-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorPrivateLinkResourceData, MonitorPrivateLinkResource>(new PrivateLinkResourcesGetAllPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MonitorPrivateLinkResourceData, MonitorPrivateLinkResource>(new MonitorPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorPrivateLinkResourceData, MonitorPrivateLinkResource>(new PrivateLinkResourcesGetAllPrivateLinkResourcesCollectionResultOfT(
+            return new PageableWrapper<MonitorPrivateLinkResourceData, MonitorPrivateLinkResource>(new MonitorPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

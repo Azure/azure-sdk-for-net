@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -579,9 +579,27 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                LayoutAwareRouting = options.LayoutAwareRouting
             };
         }
+
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
+        internal static BlobGetLayoutOptions ToBlobGetLayoutOptions(this DataLakeFileGetLayoutOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobGetLayoutOptions
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+            };
+        }
+        */
 
         internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
         {
@@ -594,7 +612,9 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+                // LayoutEndpoint = options.LayoutEndpoint
             };
         }
 
@@ -608,14 +628,113 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                LayoutAwareRouting = options.LayoutAwareRouting
             };
         }
 
-        internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
+        internal static DataLakeFileLayoutEndpoint ToDataLakeFileLayoutEndpoint(this BlobLayoutEndpoint item)
+        {
+            if (item == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutEndpoint
+            {
+                Index = item.Index,
+                Value = item.Value
+            };
+        }
+
+        internal static DataLakeFileLayoutRange ToDataLakeFileLayoutRange(this BlobLayoutRange item)
+        {
+            if (item == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutRange
+            {
+                Start = item.Start,
+                End = item.End,
+                EndpointIndex = item.EndpointIndex
+            };
+        }
+
+        internal static DataLakeFileLayoutInfo ToDataLakeFileLayoutInfo(this BlobLayoutInfo blobLayoutInfo)
+        {
+            if (blobLayoutInfo == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutInfo
+            {
+                Endpoints = blobLayoutInfo.Endpoints?.Select(e => e.ToDataLakeFileLayoutEndpoint()).ToList(),
+                Ranges = blobLayoutInfo.Ranges?.Select(r => r.ToDataLakeFileLayoutRange()).ToList(),
+                LastModifiedOn = blobLayoutInfo.LastModifiedOn,
+                CreatedOn = blobLayoutInfo.CreatedOn,
+                Metadata = blobLayoutInfo.Metadata,
+                CopyCompletedOn = blobLayoutInfo.CopyCompletedOn,
+                CopyStatusDescription = blobLayoutInfo.CopyStatusDescription,
+                CopyId = blobLayoutInfo.CopyId,
+                CopyProgress = blobLayoutInfo.CopyProgress,
+                CopySource = blobLayoutInfo.CopySource,
+                CopyStatus = blobLayoutInfo.BlobCopyStatus.HasValue
+                    ? (Models.CopyStatus?)(Models.CopyStatus)blobLayoutInfo.BlobCopyStatus.Value
+                    : null,
+                IsIncrementalCopy = blobLayoutInfo.IsIncrementalCopy,
+                LeaseDuration = (DataLakeLeaseDuration)blobLayoutInfo.LeaseDuration,
+                LeaseState = (DataLakeLeaseState)blobLayoutInfo.LeaseState,
+                LeaseStatus = (DataLakeLeaseStatus)blobLayoutInfo.LeaseStatus,
+                ContentLength = blobLayoutInfo.ContentLength,
+                ContentType = blobLayoutInfo.ContentType,
+                ETag = blobLayoutInfo.ETag,
+                ContentHash = blobLayoutInfo.ContentHash,
+                ContentEncoding = blobLayoutInfo.ContentEncoding,
+                ContentDisposition = blobLayoutInfo.ContentDisposition,
+                ContentLanguage = blobLayoutInfo.ContentLanguage,
+                CacheControl = blobLayoutInfo.CacheControl,
+                AcceptRanges = blobLayoutInfo.AcceptRanges,
+                IsServerEncrypted = blobLayoutInfo.IsServerEncrypted,
+                EncryptionKeySha256 = blobLayoutInfo.EncryptionKeySha256,
+                EncryptionScope = blobLayoutInfo.EncryptionScope,
+                AccessTier = blobLayoutInfo.AccessTier,
+                AccessTierInferred = blobLayoutInfo.AccessTierInferred,
+                SmartAccessTier = blobLayoutInfo.SmartAccessTier,
+                ArchiveStatus = blobLayoutInfo.ArchiveStatus,
+                AccessTierChangedOn = blobLayoutInfo.AccessTierChangedOn,
+                ExpiresOn = blobLayoutInfo.ExpiresOn,
+                FileContentLength = blobLayoutInfo.BlobContentLength,
+                FileContentType = blobLayoutInfo.BlobContentType,
+                FileContentEncoding = blobLayoutInfo.BlobContentEncoding,
+                FileContentMD5 = blobLayoutInfo.BlobContentMD5,
+                FileCreatedOn = blobLayoutInfo.BlobCreatedOn
+            };
+        }
+        */
+
+        internal const string ContinuationHeader = "x-ms-continuation";
+        private const string LastModifiedHeader = "Last-Modified";
+        private const string OwnerHeader = "x-ms-owner";
+        private const string GroupHeader = "x-ms-group";
+        private const string PermissionsHeader = "x-ms-permissions";
+        private const string AclHeader = "x-ms-acl";
+        internal const string ResourceTypeHeader = "x-ms-resource-type";
+        private const string CreationTimeHeader = "x-ms-creation-time";
+        private const string ExpiryTimeHeader = "x-ms-expiry-time";
+        private const string EncryptionKeySha256Header = "x-ms-encryption-key-sha256";
+        private const string ServerEncryptedHeader = "x-ms-server-encrypted";
+        private const string EncryptionScopeHeader = "x-ms-encryption-scope";
+        private const string EncryptionContextHeader = "x-ms-encryption-context";
+
+        internal static PathSegment ToPathSegment(this Response<PathList> response)
             => new PathSegment
             {
-                Continuation = response.Headers.Continuation,
+                Continuation = response.GetRawResponse().Headers.TryGetValue(ContinuationHeader, out string continuation) ? continuation : null,
                 Paths = response.Value.ToPathItems()
             };
 
@@ -641,7 +760,7 @@ namespace Azure.Storage.Files.DataLake
                 Name = path.Name,
                 IsDirectory = path.IsDirectory != null && bool.Parse(path.IsDirectory),
                 LastModified = path.LastModified.GetValueOrDefault(),
-                ETag = new ETag(path.Etag),
+                ETag = new ETag(path.ETag),
                 ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
                 Owner = path.Owner,
                 Group = path.Group,
@@ -681,62 +800,41 @@ namespace Azure.Storage.Files.DataLake
             return default;
         }
 
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
+        internal static PathInfo ToPathInfo(this Response response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etagValue) ? new ETag(etagValue) : default,
+                LastModified = (response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModified) ? lastModified : null).GetValueOrDefault()
             };
 
-        internal static PathAccessControl ToPathAccessControl(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+        internal static PathAccessControl ToPathAccessControl(this Response response)
             => new PathAccessControl
             {
-                Owner = response.Headers.Owner,
-                Group = response.Headers.Group,
-                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
-                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Headers.ACL)
+                Owner = response.Headers.TryGetValue(OwnerHeader, out string owner) ? owner : null,
+                Group = response.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
+                Permissions = response.Headers.TryGetValue(PermissionsHeader, out string permissions) ? PathPermissions.ParseSymbolicPermissions(permissions) : null,
+                AccessControlList = response.Headers.TryGetValue(AclHeader, out string acl) ? PathAccessControlExtensions.ParseAccessControlList(acl) : null
             };
 
-        internal static PathSystemProperties ToPathSystemProperties(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+        internal static PathSystemProperties ToPathSystemProperties(this Response response)
             => new PathSystemProperties
             {
-                CreatedOn = response.Headers.CreationTime,
-                LastModifiedOn = response.Headers.LastModified,
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                ContentLength = response.Headers.ContentLength,
-                IsDirectory = response.Headers.ResourceType == Constants.DataLake.DirectoryResourceType,
-                IsServerEncrypted = response.Headers.IsServerEncrypted,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                ExpiresOn = response.Headers.ExpiresOn,
-                EncryptionScope = response.Headers.EncryptionScope,
-                EncryptionContext = response.Headers.EncryptionContext,
-                Owner = response.Headers.Owner,
-                Group = response.Headers.Group,
-                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
+                CreatedOn = response.Headers.TryGetValue(CreationTimeHeader, out DateTimeOffset? creationTime) ? creationTime : null,
+                LastModifiedOn = response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModifiedTime) ? lastModifiedTime : null,
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etag) ? new ETag(etag) : default,
+                ContentLength = response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength : null,
+                IsDirectory = response.Headers.TryGetValue(ResourceTypeHeader, out string resourceType) && resourceType == Constants.DataLake.DirectoryResourceType,
+                IsServerEncrypted = response.Headers.TryGetValue(ServerEncryptedHeader, out bool? isServerEncrypted) ? isServerEncrypted : null,
+                EncryptionKeySha256 = response.Headers.TryGetValue(EncryptionKeySha256Header, out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                ExpiresOn = response.Headers.TryGetValue(ExpiryTimeHeader, out DateTimeOffset? expiresOn) ? expiresOn : null,
+                EncryptionScope = response.Headers.TryGetValue(EncryptionScopeHeader, out string encryptionScope) ? encryptionScope : null,
+                EncryptionContext = response.Headers.TryGetValue(EncryptionContextHeader, out string encryptionContext) ? encryptionContext : null,
+                Owner = response.Headers.TryGetValue(OwnerHeader, out string sysOwner) ? sysOwner : null,
+                Group = response.Headers.TryGetValue(GroupHeader, out string sysGroup) ? sysGroup : null,
+                Permissions = response.Headers.TryGetValue(PermissionsHeader, out string sysPermissions) ? PathPermissions.ParseSymbolicPermissions(sysPermissions) : null,
             };
 
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
-            => new PathInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
-            => new PathInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
-            => new PathInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-
-        internal static PathDeletedSegment ToPathDeletedSegment(this ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> response)
+        internal static PathDeletedSegment ToPathDeletedSegment(this Response<ListBlobsHierarchySegmentResult> response)
         {
             if (response == null)
             {
@@ -763,7 +861,7 @@ namespace Azure.Storage.Files.DataLake
                 {
                     Path = blobItemInternal.Name,
                     DeletionId = blobItemInternal.DeletionId,
-                    DeletedOn = blobItemInternal.Properties.DeletedTime,
+                    DeletedOn = blobItemInternal.Properties.DeletedOn,
                     RemainingRetentionDays = blobItemInternal.Properties.RemainingRetentionDays
                 }
             };

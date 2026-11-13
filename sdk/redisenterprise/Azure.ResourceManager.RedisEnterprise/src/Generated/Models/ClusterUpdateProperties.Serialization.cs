@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(ClusterUpdateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess, _publicNetworkAccessIsDefined))
             {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                if (PublicNetworkAccess != null)
+                {
+                    writer.WritePropertyName("publicNetworkAccess"u8);
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkAccess"u8);
+                }
             }
         }
 
@@ -111,6 +118,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
             ClusterPropertiesEncryption encryption = default;
             MaintenanceConfiguration maintenanceConfiguration = default;
+            IList<RedisEnterpriseFirewallRule> firewallRules = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseRedundancyMode? redundancyMode = default;
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
             string migratedEndpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool publicNetworkAccessIsDefined = false;
             RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,6 +165,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         continue;
                     }
                     maintenanceConfiguration = MaintenanceConfiguration.DeserializeMaintenanceConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("firewallRules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RedisEnterpriseFirewallRule> array = new List<RedisEnterpriseFirewallRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RedisEnterpriseFirewallRule.DeserializeRedisEnterpriseFirewallRule(item, options));
+                    }
+                    firewallRules = array;
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
@@ -216,6 +239,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
                 {
+                    publicNetworkAccessIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         publicNetworkAccess = null;
@@ -226,7 +250,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ClusterUpdateProperties(
@@ -234,6 +258,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 minimumTlsVersion,
                 encryption,
                 maintenanceConfiguration,
+                firewallRules ?? new ChangeTrackingList<RedisEnterpriseFirewallRule>(),
                 hostName,
                 provisioningState,
                 redundancyMode,
@@ -242,7 +267,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
                 migratedEndpoint,
                 additionalBinaryDataProperties,
-                publicNetworkAccess);
+                publicNetworkAccess)
+            {
+                _publicNetworkAccessIsDefined = publicNetworkAccessIsDefined
+            };
         }
     }
 }

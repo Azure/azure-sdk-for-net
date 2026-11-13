@@ -44,7 +44,7 @@ public class BasicMonitorTests
                 infra.Add(emailName);
 
                 ActionGroup emailActionGroup =
-                    new(nameof(emailActionGroup), ActionGroup.ResourceVersions.V2023_01_01)
+                    new(nameof(emailActionGroup), ActionGroup.ResourceVersions.V2024_10_01_PREVIEW)
                     {
                         Location = new AzureLocation("global"),
                         GroupShortName = "string",
@@ -62,7 +62,7 @@ public class BasicMonitorTests
                 infra.Add(emailActionGroup);
 
                 ActivityLogAlert alert =
-                    new(nameof(alert), ActivityLogAlert.ResourceVersions.V2020_10_01)
+                    new(nameof(alert), ActivityLogAlert.ResourceVersions.V2023_01_01_PREVIEW)
                     {
                         Name = alertName,
                         Location = new AzureLocation("global"),
@@ -110,23 +110,23 @@ public class BasicMonitorTests
             @description('Specify the email address name where the alerts are sent to.')
             param emailName string = 'Example'
 
-            resource emailActionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
+            resource emailActionGroup 'Microsoft.Insights/actionGroups@2024-10-01-preview' = {
               name: take('emailactiongroup${uniqueString(resourceGroup().id)}', 24)
               location: 'global'
               properties: {
                 emailReceivers: [
                   {
-                    name: emailName
                     emailAddress: emailAddress
+                    name: emailName
                     useCommonAlertSchema: true
                   }
                 ]
-                groupShortName: 'string'
                 enabled: true
+                groupShortName: 'string'
               }
             }
 
-            resource alert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
+            resource alert 'Microsoft.Insights/activityLogAlerts@2023-01-01-preview' = {
               name: alertName
               location: 'global'
               properties: {
@@ -140,8 +140,8 @@ public class BasicMonitorTests
                 condition: {
                   allOf: [
                     {
-                      field: 'category'
                       equals: 'ResourceHealth'
+                      field: 'category'
                     }
                   ]
                 }

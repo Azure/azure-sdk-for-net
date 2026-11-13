@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(ResourceType, out string dataFactoryIntegrationRuntimeApiVersion);
             _integrationRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _integrationRuntimesRestClient = new IntegrationRuntimes(_integrationRuntimesClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
+            _integrationRuntimesRestClient = new IntegrationRuntimes(_integrationRuntimesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _integrationRuntimeRestClient = new IntegrationRuntime(_integrationRuntimeClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
+            _integrationRuntimeRestClient = new IntegrationRuntime(_integrationRuntimeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _integrationRuntimeNodesRestClient = new IntegrationRuntimeNodes(_integrationRuntimeNodesClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
+            _integrationRuntimeNodesRestClient = new IntegrationRuntimeNodes(_integrationRuntimeNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _integrationRuntimeResourcesRestClient = new IntegrationRuntimeResources(_integrationRuntimeResourcesClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
+            _integrationRuntimeResourcesRestClient = new IntegrationRuntimeResources(_integrationRuntimeResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeObjectMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _integrationRuntimeObjectMetadataRestClient = new IntegrationRuntimeObjectMetadata(_integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
+            _integrationRuntimeObjectMetadataRestClient = new IntegrationRuntimeObjectMetadata(_integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -1480,7 +1480,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetAllIntegrationRuntimeObjectMetadataAsyncCollectionResultOfT(
+            return new SsisObjectMetadataAsyncCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1521,7 +1521,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetAllIntegrationRuntimeObjectMetadataCollectionResultOfT(
+            return new SsisObjectMetadataCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1657,7 +1657,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetOutboundNetworkDependenciesAsyncCollectionResultOfT(
+            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointAsyncCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1696,7 +1696,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetOutboundNetworkDependenciesCollectionResultOfT(
+            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

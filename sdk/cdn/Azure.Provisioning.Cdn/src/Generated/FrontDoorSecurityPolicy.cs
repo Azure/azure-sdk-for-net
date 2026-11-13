@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Cdn
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CdnSecurityPolicyProperties _securityPolicyProperties;
-        private ResourceReference<CdnProfile> _parent;
+        private ProvisioningResourceReference<CdnProfile> _parent;
 
         /// <summary> Creates a new FrontDoorSecurityPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -93,6 +93,32 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<FrontDoorProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (SecurityPolicyProperties is null)
+                {
+                    SecurityPolicyProperties = new CdnSecurityPolicyProperties();
+                }
+                return SecurityPolicyProperties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the DeploymentStatus. </summary>
+        public BicepValue<FrontDoorDeploymentStatus> DeploymentStatus
+        {
+            get
+            {
+                if (SecurityPolicyProperties is null)
+                {
+                    SecurityPolicyProperties = new CdnSecurityPolicyProperties();
+                }
+                return SecurityPolicyProperties.DeploymentStatus;
+            }
+        }
+
         /// <summary> Gets the ProfileName. </summary>
         public BicepValue<string> ProfileName
         {
@@ -123,32 +149,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<FrontDoorProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (SecurityPolicyProperties is null)
-                {
-                    SecurityPolicyProperties = new CdnSecurityPolicyProperties();
-                }
-                return SecurityPolicyProperties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the DeploymentStatus. </summary>
-        public BicepValue<FrontDoorDeploymentStatus> DeploymentStatus
-        {
-            get
-            {
-                if (SecurityPolicyProperties is null)
-                {
-                    SecurityPolicyProperties = new CdnSecurityPolicyProperties();
-                }
-                return SecurityPolicyProperties.DeploymentStatus;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FrontDoorSecurityPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _securityPolicyProperties = DefineModelProperty<CdnSecurityPolicyProperties>(nameof(SecurityPolicyProperties), new string[] { "properties" });
-            _parent = DefineResource<CdnProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<CdnProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

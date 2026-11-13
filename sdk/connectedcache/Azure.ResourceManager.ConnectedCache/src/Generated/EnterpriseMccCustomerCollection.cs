@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EnterpriseMccCustomerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EnterpriseMccCustomerResource.ResourceType, out string enterpriseMccCustomerApiVersion);
             _enterpriseMccCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
-            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Endpoint, enterpriseMccCustomerApiVersion ?? "2024-11-30-preview");
+            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConnectedCache/enterpriseMccCustomers", out string enterpriseMccCustomersApiVersionOverride) ? enterpriseMccCustomersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupAsyncCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
+            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomerDataAsyncCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
+            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomerDataCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

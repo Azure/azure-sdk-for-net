@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(InformationProtectionPolicyResource.ResourceType, out string informationProtectionPolicyApiVersion);
             _informationProtectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", InformationProtectionPolicyResource.ResourceType.Namespace, Diagnostics);
-            _informationProtectionPoliciesRestClient = new InformationProtectionPolicies(_informationProtectionPoliciesClientDiagnostics, Pipeline, Endpoint, informationProtectionPolicyApiVersion ?? "2017-08-01-preview");
+            _informationProtectionPoliciesRestClient = new InformationProtectionPolicies(_informationProtectionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, informationProtectionPolicyApiVersion ?? "2017-08-01-preview");
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPoliciesGetAllAsyncCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
+            return new AsyncPageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPolicyDataAsyncCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPoliciesGetAllCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
+            return new PageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPolicyDataCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
         }
 
         /// <summary>

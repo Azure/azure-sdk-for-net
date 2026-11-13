@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> IP Extended Community patchable properties. </param>
-        internal NetworkFabricIPExtendedCommunityPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpExtendedCommunityPatchProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricIPExtendedCommunityPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPExtendedCommunityPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> IP Extended Community patchable properties. </summary>
-        internal IpExtendedCommunityPatchProperties Properties { get; set; }
+        internal IPExtendedCommunityPatchProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpExtendedCommunityPatchProperties();
+                    Properties = new IPExtendedCommunityPatchProperties();
                 }
                 Properties.Annotation = value;
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpExtendedCommunityPatchProperties();
+                    Properties = new IPExtendedCommunityPatchProperties();
                 }
                 return Properties.IPExtendedCommunityRules;
             }

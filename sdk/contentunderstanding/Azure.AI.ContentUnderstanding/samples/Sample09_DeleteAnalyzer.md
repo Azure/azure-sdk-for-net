@@ -50,7 +50,7 @@ var analyzer = new ContentAnalyzer
         ShouldReturnDetails = true
     }
 };
-analyzer.Models["completion"] = "gpt-4.1";
+analyzer.Models["completion"] = "gpt-5.2";
 
 await client.CreateAnalyzerAsync(
     WaitUntil.Completed,

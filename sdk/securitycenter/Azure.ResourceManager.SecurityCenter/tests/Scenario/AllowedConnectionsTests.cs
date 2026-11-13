@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             }
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Get()
         {
             var allowedConnection = await _resourceGroup.GetAllowedConnectionAsync(AzureLocation.CentralUS, SecurityCenterConnectionType.Internal);
             ValidateAllowedConnections(allowedConnection);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAll()
         {
             var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();

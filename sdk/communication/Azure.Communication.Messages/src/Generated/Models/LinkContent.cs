@@ -17,7 +17,7 @@ namespace Azure.Communication.Messages
         /// <param name="title"> Title of the url content. </param>
         /// <param name="uri"> The url in the content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="uri"/> is null. </exception>
-        public LinkContent(string title, Uri uri) : base(MessageContentKind.Url)
+        public LinkContent(string title, Uri uri) : base(MessageContentKind.Uri)
         {
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(uri, nameof(uri));

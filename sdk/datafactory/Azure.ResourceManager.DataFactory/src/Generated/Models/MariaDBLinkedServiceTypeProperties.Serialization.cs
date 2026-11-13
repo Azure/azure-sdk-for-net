@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue<DataFactoryElement<int>>(UseSystemTrustStore, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> database = default;
             DataFactoryElement<int> sslMode = default;
             DataFactoryElement<int> useSystemTrustStore = default;
+            DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    driverVersion = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    driverVersion = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("connectionString"u8))
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("server"u8))
@@ -197,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    server = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    server = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -206,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    port = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    port = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("username"u8))
@@ -220,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    database = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    database = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sslMode"u8))
@@ -229,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sslMode = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    sslMode = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useSystemTrustStore"u8))
@@ -238,7 +244,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    useSystemTrustStore = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    useSystemTrustStore = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -248,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MariaDBLinkedServiceTypeProperties(
@@ -260,6 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 database,
                 sslMode,
                 useSystemTrustStore,
+                password,
                 encryptedCredential,
                 additionalBinaryDataProperties);
         }

@@ -89,6 +89,102 @@ namespace Azure.AI.Projects.Agents
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
+        /// [Protocol Method] Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GenerateAgent(BinaryContent content, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GenerateAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateGenerateAgentRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GenerateAgentAsync(BinaryContent content, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GenerateAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateGenerateAgentRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// </summary>
+        /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(BinaryData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = GenerateAgent(BinaryContent.Create(body), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// </summary>
+        /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(BinaryData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = await GenerateAgentAsync(BinaryContent.Create(body), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// [Protocol Method] Applies a merge-patch update to the specified agent endpoint configuration.
         /// <list type="bullet">
         /// <item>
@@ -147,82 +243,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
-        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
-        /// `x-ms-code-zip-sha256` header for integrity and dedup.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
-        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
-        /// `x-ms-code-zip-sha256` header for integrity and dedup.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Creates a new agent version from code. Uploads the code zip and creates a new version
         /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
         /// `x-ms-code-zip-sha256` header for integrity and dedup.
@@ -234,7 +254,7 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"></param>
+        /// <param name="content"> The content multipart request content. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
@@ -257,7 +277,7 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"></param>
+        /// <param name="content"> The content multipart request content. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]

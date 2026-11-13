@@ -37,60 +37,14 @@ parameters:
     default: '$(Build.SourcesDirectory)'
 
 steps:
-  - pwsh: |
-      $artifactsDirectory = "$(Build.ArtifactStagingDirectory)/llm-artifacts"
-      New-Item $artifactsDirectory -ItemType Directory -Force | Out-Null
-
-      $searchFolder = "${{ parameters.SearchFolder }}"
-      $patterns = "${{ parameters.TestResultsGlob }}".Split(",", [StringSplitOptions]::RemoveEmptyEntries) `
-        | ForEach-Object { $_.Trim() } | Where-Object { $_ }
-
-      $testResultsFiles = @(Get-ChildItem -Path $searchFolder -Include $patterns -Recurse -File -ErrorAction SilentlyContinue)
-
-      Write-Host "================="
-      Write-Host "Found $($testResultsFiles.Count) test result file(s) under '$searchFolder' matching: $($patterns -join ', ')"
-      $testResultsFiles | ForEach-Object { Write-Host $_.FullName }
-      Write-Host "================="
-
-      $stagedCount = 0
-      foreach ($testResultsFile in $testResultsFiles)
-      {
-        $fileFullName = $testResultsFile.FullName
-
-        # Build a unique, traceable artifact name from the file's location. Prefer the path
-        # relative to the language repo's "sdk" directory, for example:
-        #   <sources>/sdk/template/Azure.Template/tests/TestResults/net8.0.trx
-        #     -> template-Azure.Template-tests-TestResults-net8.0.trx
-        #   <sources>/sdk/storage/report.xml
-        #     -> storage-report.xml
-        # Fall back to a sources-relative path for repos without an "sdk" directory.
-        if ($fileFullName -match "[\\/]sdk[\\/]")
-        {
-          $relativePath = ($fileFullName -split "[\\/]sdk[\\/]", 2)[-1]
-        }
-        else
-        {
-          $relativePath = [System.IO.Path]::GetRelativePath("$(Build.SourcesDirectory)", $fileFullName)
-        }
-        $fileName = $relativePath -replace "^[\\/]+", "" -replace "[\\/]+", "-"
-
-        $destination = "$artifactsDirectory/$fileName"
-        Move-Item -Path $fileFullName -Destination $destination -ErrorAction Continue
-        if (Test-Path -Path $destination)
-        {
-          $stagedCount++
-        }
-      }
-
-      # Only signal an upload when test result files were actually staged.
-      if ($stagedCount -gt 0)
-      {
-        Write-Host "Staged $stagedCount test result file(s) into '$artifactsDirectory'."
-        Write-Host "##vso[task.setvariable variable=uploadLlmArtifacts]true"
-      }
-      else
-      {
-        Write-Host "No test result files were staged; skipping llm-artifacts upload."
-      }
+  - task: PowerShell@2
+    inputs:
+      pwsh: true
+      filePath: eng/common/scripts/Copy-TestResultsToLlmStaging.ps1
+      arguments: >
+        -ArtifactStagingDirectory $(Build.ArtifactStagingDirectory)
+        -SearchFolder ${{ parameters.SearchFolder }}
+        -TestResultsGlob ${{ parameters.TestResultsGlob }}
+        -SourcesDirectory $(Build.SourcesDirectory)
     condition: succeededOrFailed()
     displayName: Copy test result files to llm artifacts staging directory

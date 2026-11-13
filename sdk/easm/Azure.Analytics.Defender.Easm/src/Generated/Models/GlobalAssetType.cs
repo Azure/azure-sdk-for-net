@@ -27,9 +27,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> domain. </summary>
         private const string DomainValue = "domain";
         /// <summary> ip address. </summary>
-        private const string IpAddressValue = "ipAddress";
+        private const string IPAddressValue = "ipAddress";
         /// <summary> ip block. </summary>
-        private const string IpBlockValue = "ipBlock";
+        private const string IPBlockValue = "ipBlock";
         /// <summary> autonomous system number. </summary>
         private const string AsValue = "as";
         /// <summary> contact. </summary>
@@ -66,10 +66,10 @@ namespace Azure.Analytics.Defender.Easm
         public static GlobalAssetType Domain { get; } = new GlobalAssetType(DomainValue);
 
         /// <summary> ip address. </summary>
-        public static GlobalAssetType IpAddress { get; } = new GlobalAssetType(IpAddressValue);
+        public static GlobalAssetType IPAddress { get; } = new GlobalAssetType(IPAddressValue);
 
         /// <summary> ip block. </summary>
-        public static GlobalAssetType IpBlock { get; } = new GlobalAssetType(IpBlockValue);
+        public static GlobalAssetType IPBlock { get; } = new GlobalAssetType(IPBlockValue);
 
         /// <summary> autonomous system number. </summary>
         public static GlobalAssetType As { get; } = new GlobalAssetType(AsValue);

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="BatchProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Details of the provisioning issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BatchProvisioningIssue(string name, BatchProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Name of the issue. </summary>
         public string Name { get; }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Details of the provisioning issue. </summary>
         public BatchProvisioningIssueProperties Properties { get; }
     }
 }

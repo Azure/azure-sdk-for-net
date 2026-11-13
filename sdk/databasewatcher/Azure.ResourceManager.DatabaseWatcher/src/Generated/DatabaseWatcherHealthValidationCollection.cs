@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(DatabaseWatcherHealthValidationResource.ResourceType, out string databaseWatcherHealthValidationApiVersion);
             _healthValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherHealthValidationResource.ResourceType.Namespace, Diagnostics);
-            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
+            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new DatabaseWatcherHealthValidationDataAsyncCollectionResultOfT(
                 _healthValidationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentCollectionResultOfT(
+            return new PageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new DatabaseWatcherHealthValidationDataCollectionResultOfT(
                 _healthValidationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

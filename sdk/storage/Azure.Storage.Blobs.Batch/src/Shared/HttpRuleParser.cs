@@ -15,6 +15,7 @@ using System.Text;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal static class HttpRuleParser
     {
         private static readonly bool[] TokenChars = CreateTokenChars();

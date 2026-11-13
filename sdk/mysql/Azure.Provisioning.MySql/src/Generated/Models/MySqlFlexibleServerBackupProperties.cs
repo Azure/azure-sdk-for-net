@@ -86,7 +86,7 @@ namespace Azure.Provisioning.MySql
             _backupRetentionDays = DefineProperty<int>(nameof(BackupRetentionDays), new string[] { "backupRetentionDays" });
             _backupIntervalHours = DefineProperty<int>(nameof(BackupIntervalHours), new string[] { "backupIntervalHours" });
             _geoRedundantBackup = DefineProperty<MySqlFlexibleServerEnableStatusEnum>(nameof(GeoRedundantBackup), new string[] { "geoRedundantBackup" });
-            _earliestRestoreOn = DefineProperty<DateTimeOffset>(nameof(EarliestRestoreOn), new string[] { "earliestRestoreDate" }, isOutput: true);
+            _earliestRestoreOn = DefineProperty<DateTimeOffset>(nameof(EarliestRestoreOn), new string[] { "earliestRestoreDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

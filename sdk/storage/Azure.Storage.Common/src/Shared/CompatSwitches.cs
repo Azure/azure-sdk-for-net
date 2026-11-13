@@ -21,5 +21,10 @@ namespace Azure.Storage
 
         public static bool UseLegacyDefaultConcurrency => _useLegacyDefaultConcurrency
             ??= AppContextSwitchHelper.GetConfigValue(Constants.UseLegacyDefaultConcurrencySwitchName, Constants.UseLegacyDefaultConcurrencyEnvVar);
+
+        private static bool? _cseV2AllowMisorderedAuthRegions;
+
+        public static bool CseV2AllowMisorderedAuthRegions => _cseV2AllowMisorderedAuthRegions
+            ??= AppContextSwitchHelper.GetConfigValue(Constants.CseV2AllowMisorderedAuthRegionsSwitchName, Constants.CseV2AllowMisorderedAuthRegionsEnvVar);
     }
 }

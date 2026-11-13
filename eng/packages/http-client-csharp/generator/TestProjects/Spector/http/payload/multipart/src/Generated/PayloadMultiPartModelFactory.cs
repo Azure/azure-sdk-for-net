@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -18,52 +17,52 @@ namespace Payload.MultiPart
     public static partial class PayloadMultiPartModelFactory
     {
         [Experimental("SCME0004")]
-        public static MultiPartRequest MultiPartRequest(string id = default, FileBinaryContent profileImage = default) => throw null;
+        public static MultiPartContent MultiPartContent(string id = default, FileBinaryContent profileImage = default) => throw null;
 
         [Experimental("SCME0004")]
         public static MultiPartRequestWithWireName MultiPartRequestWithWireName(string identifier = default, FileBinaryContent image = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static MultiPartOptionalRequest MultiPartOptionalRequest(string id = default, FileBinaryContent profileImage = default) => throw null;
+        public static MultiPartOptionalContent MultiPartOptionalContent(string id = default, FileBinaryContent profileImage = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static ComplexPartsRequest ComplexPartsRequest(string id = default, Address address = default, FileBinaryContent profileImage = default, IEnumerable<FileBinaryContent> pictures = default) => throw null;
+        public static ComplexPartsContent ComplexPartsContent(string id = default, Address address = default, FileBinaryContent profileImage = default, IEnumerable<FileBinaryContent> pictures = default) => throw null;
 
         public static Address Address(string city = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static JsonPartRequest JsonPartRequest(Address address = default, FileBinaryContent profileImage = default) => throw null;
+        public static JsonPartContent JsonPartContent(Address address = default, FileBinaryContent profileImage = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static BinaryArrayPartsRequest BinaryArrayPartsRequest(string id = default, IEnumerable<FileBinaryContent> pictures = default) => throw null;
+        public static BinaryArrayPartsContent BinaryArrayPartsContent(string id = default, IEnumerable<FileBinaryContent> pictures = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static MultiBinaryPartsRequest MultiBinaryPartsRequest(FileBinaryContent profileImage = default, FileBinaryContent picture = default) => throw null;
+        public static MultiBinaryPartsContent MultiBinaryPartsContent(FileBinaryContent profileImage = default, FileBinaryContent picture = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static AnonymousModelRequest AnonymousModelRequest(FileBinaryContent profileImage = default) => throw null;
+        public static AnonymousModelContent AnonymousModelContent(FileBinaryContent profileImage = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static ComplexHttpPartsModelRequest ComplexHttpPartsModelRequest(string id = default, Address address = default, FileBinaryContent profileImage = default, IEnumerable<Address> previousAddresses = default, IEnumerable<FileBinaryContent> pictures = default) => throw null;
+        public static ComplexHttpPartsModelContent ComplexHttpPartsModelContent(string id = default, Address address = default, FileBinaryContent profileImage = default, IEnumerable<Address> previousAddresses = default, IEnumerable<FileBinaryContent> pictures = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static UploadFileSpecificContentTypeRequest UploadFileSpecificContentTypeRequest(FileBinaryContent @file = default) => throw null;
+        public static UploadFileSpecificContentTypeContent UploadFileSpecificContentTypeContent(FileBinaryContent @file = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static UploadFileRequiredFilenameRequest UploadFileRequiredFilenameRequest(FileBinaryContent @file = default) => throw null;
+        public static UploadFileRequiredFilenameContent UploadFileRequiredFilenameContent(FileBinaryContent @file = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static UploadFileArrayRequest UploadFileArrayRequest(IEnumerable<FileBinaryContent> files = default) => throw null;
+        public static UploadFileArrayContent UploadFileArrayContent(IEnumerable<FileBinaryContent> files = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static FileWithHttpPartSpecificContentTypeRequest FileWithHttpPartSpecificContentTypeRequest(FileBinaryContent profileImage = default) => throw null;
+        public static FileWithHttpPartSpecificContentTypeContent FileWithHttpPartSpecificContentTypeContent(FileBinaryContent profileImage = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static FileWithHttpPartRequiredContentTypeRequest FileWithHttpPartRequiredContentTypeRequest(FileBinaryContent profileImage = default) => throw null;
+        public static FileWithHttpPartRequiredContentTypeContent FileWithHttpPartRequiredContentTypeContent(FileBinaryContent profileImage = default) => throw null;
 
         [Experimental("SCME0004")]
-        public static FileWithHttpPartOptionalContentTypeRequest FileWithHttpPartOptionalContentTypeRequest(FileBinaryContent profileImage = default) => throw null;
+        public static FileWithHttpPartOptionalContentTypeContent FileWithHttpPartOptionalContentTypeContent(FileBinaryContent profileImage = default) => throw null;
 
-        public static FloatRequest FloatRequest(double temperature = default) => throw null;
+        public static FloatContent FloatContent(double temperature = default) => throw null;
     }
 }

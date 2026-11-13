@@ -24,7 +24,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
 BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
-    searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+    searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -41,7 +41,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
 BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
-    searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+    searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

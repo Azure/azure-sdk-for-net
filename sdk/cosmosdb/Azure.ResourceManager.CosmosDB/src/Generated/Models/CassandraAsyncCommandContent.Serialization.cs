@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    arguments = BinaryData.FromString(prop.Value.GetRawText());
+                    arguments = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("host"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CassandraAsyncCommandContent(

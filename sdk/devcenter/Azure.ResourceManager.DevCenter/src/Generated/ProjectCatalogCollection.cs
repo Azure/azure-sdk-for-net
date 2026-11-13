@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ProjectCatalogResource.ResourceType, out string projectCatalogApiVersion);
             _projectCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectCatalogResource.ResourceType.Namespace, Diagnostics);
-            _projectCatalogsRestClient = new ProjectCatalogs(_projectCatalogsClientDiagnostics, Pipeline, Endpoint, projectCatalogApiVersion ?? "2026-01-01-preview");
+            _projectCatalogsRestClient = new ProjectCatalogs(_projectCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterCatalogData, ProjectCatalogResource>(new ProjectCatalogsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterCatalogData, ProjectCatalogResource>(new DevCenterCatalogDataAsync0CollectionResultOfT(
                 _projectCatalogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterCatalogData, ProjectCatalogResource>(new ProjectCatalogsGetAllCollectionResultOfT(
+            return new PageableWrapper<DevCenterCatalogData, ProjectCatalogResource>(new DevCenterCatalogData0CollectionResultOfT(
                 _projectCatalogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

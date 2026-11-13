@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoAttachedDatabaseConfigurationResource.ResourceType, out string kustoAttachedDatabaseConfigurationApiVersion);
             _attachedDatabaseConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoAttachedDatabaseConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _attachedDatabaseConfigurationsRestClient = new AttachedDatabaseConfigurations(_attachedDatabaseConfigurationsClientDiagnostics, Pipeline, Endpoint, kustoAttachedDatabaseConfigurationApiVersion ?? "2025-02-14");
+            _attachedDatabaseConfigurationsRestClient = new AttachedDatabaseConfigurations(_attachedDatabaseConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoAttachedDatabaseConfigurationApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoAttachedDatabaseConfigurationData, KustoAttachedDatabaseConfigurationResource>(new AttachedDatabaseConfigurationsGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoAttachedDatabaseConfigurationData, KustoAttachedDatabaseConfigurationResource>(new KustoAttachedDatabaseConfigurationDataAsyncCollectionResultOfT(
                 _attachedDatabaseConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoAttachedDatabaseConfigurationData, KustoAttachedDatabaseConfigurationResource>(new AttachedDatabaseConfigurationsGetByClusterCollectionResultOfT(
+            return new PageableWrapper<KustoAttachedDatabaseConfigurationData, KustoAttachedDatabaseConfigurationResource>(new KustoAttachedDatabaseConfigurationDataCollectionResultOfT(
                 _attachedDatabaseConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

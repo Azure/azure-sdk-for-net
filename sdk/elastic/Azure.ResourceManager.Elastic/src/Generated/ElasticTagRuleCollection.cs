@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ElasticTagRuleResource.ResourceType, out string elasticTagRuleApiVersion);
             _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticTagRuleResource.ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, elasticTagRuleApiVersion ?? "2025-06-01");
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticTagRuleApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new ElasticTagRuleDataAsyncCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new ElasticTagRuleDataCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

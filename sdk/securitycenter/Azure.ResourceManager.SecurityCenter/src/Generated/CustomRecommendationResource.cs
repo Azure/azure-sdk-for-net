@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string customRecommendationApiVersion);
             _customRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _customRecommendationsRestClient = new CustomRecommendations(_customRecommendationsClientDiagnostics, Pipeline, Endpoint, customRecommendationApiVersion ?? "2024-08-01");
+            _customRecommendationsRestClient = new CustomRecommendations(_customRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customRecommendationApiVersion ?? "2024-08-01");
             ValidateResourceId(id);
         }
 

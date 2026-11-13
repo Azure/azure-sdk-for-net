@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct Severity : IEquatable<Severity>
     {
         private readonly string _value;
+        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         private const string WarningValue = "Warning";
+        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="Severity"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _value = value;
         }
 
-        /// <summary> Gets the Warning. </summary>
+        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         public static Severity Warning { get; } = new Severity(WarningValue);
 
-        /// <summary> Gets the Error. </summary>
+        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         public static Severity Error { get; } = new Severity(ErrorValue);
 
         /// <summary> Determines if two <see cref="Severity"/> values are the same. </summary>

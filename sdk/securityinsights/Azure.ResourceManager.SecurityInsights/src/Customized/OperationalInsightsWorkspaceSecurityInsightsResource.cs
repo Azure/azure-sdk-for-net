@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.SecurityInsights
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("OperationalInsightsWorkspaceSecurityInsightsResource is no longer supported. Use the equivalent extension methods on ArmClient in Azure.ResourceManager.SecurityInsights.SecurityInsightsExtensions instead.", false)]
-        public virtual Task<Response<EnrichmentIpGeodata>> GetGeodataByIPAsync(EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual Task<Response<EnrichmentIPGeodata>> GetGeodataByIPAsync(EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
             => throw new NotSupportedException(NotSupportedPrefix + "Call ArmClient.GetGeodataByIpAsync(workspaceResourceIdentifier, enrichmentType, content, cancellationToken) instead.");
 
         /// <summary>
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.SecurityInsights
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("OperationalInsightsWorkspaceSecurityInsightsResource is no longer supported. Use the equivalent extension methods on ArmClient in Azure.ResourceManager.SecurityInsights.SecurityInsightsExtensions instead.", false)]
-        public virtual Response<EnrichmentIpGeodata> GetGeodataByIP(EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EnrichmentIPGeodata> GetGeodataByIP(EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
             => throw new NotSupportedException(NotSupportedPrefix + "Call ArmClient.GetGeodataByIp(workspaceResourceIdentifier, enrichmentType, content, cancellationToken) instead.");
 
         /// <summary>

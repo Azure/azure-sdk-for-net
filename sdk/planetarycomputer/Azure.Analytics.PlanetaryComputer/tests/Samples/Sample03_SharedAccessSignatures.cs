@@ -99,8 +99,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a collection and its thumbnail asset
             string collectionId = "naip";
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
 
             // Get the thumbnail asset HREF
             StacAsset thumbnailAsset = collection.Assets["thumbnail"];
@@ -108,7 +108,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Console.WriteLine($"Original HREF: {originalHref}");
 
             // Sign the HREF with SAS token
-            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(originalHref);
+            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(originalHref);
             SharedAccessSignatureSignedLink signedLink = signResponse.Value;
 
             Console.WriteLine($"Signed HREF: {signedLink.Href}");
@@ -141,12 +141,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a collection thumbnail
             string collectionId = "naip";
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
             Uri thumbnailHref = new Uri(collection.Assets["thumbnail"].Href);
 
             // Get signed HREF
-            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(thumbnailHref);
+            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(thumbnailHref);
             Uri signedHref = signResponse.Value.Href;
 
             // Download the asset using the signed HREF
@@ -216,8 +216,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Step 1: Get a collection
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
             Console.WriteLine($"Retrieved collection: {collection.Id}");
 
             // Step 2: Extract asset HREFs that need signing
@@ -231,7 +231,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 Console.WriteLine($"Original HREF: {assetHref}");
 
                 // Step 3: Sign the HREF
-                Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(assetHref);
+                Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(assetHref);
                 Uri signedHref = signResponse.Value.Href;
                 Console.WriteLine($"Signed HREF: {signedHref}");
 
@@ -323,7 +323,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Uri itemAssetHref = new Uri("https://naipblobs.blob.core.windows.net/naip/v002/example.tif");
 
             // Sign the item asset HREF
-            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(itemAssetHref);
+            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(itemAssetHref);
             Uri signedHref = signResponse.Value.Href;
 
             Console.WriteLine($"Original asset HREF: {itemAssetHref}");

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(SphereDeviceResource.ResourceType, out string sphereDeviceApiVersion);
             _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereDeviceResource.ResourceType.Namespace, Diagnostics);
-            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Endpoint, sphereDeviceApiVersion ?? "2024-04-01");
+            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereDeviceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereDeviceData, SphereDeviceResource>(new DevicesGetByDeviceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SphereDeviceData, SphereDeviceResource>(new SphereDeviceDataAsyncCollectionResultOfT(
                 _devicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereDeviceData, SphereDeviceResource>(new DevicesGetByDeviceGroupCollectionResultOfT(
+            return new PageableWrapper<SphereDeviceData, SphereDeviceResource>(new SphereDeviceDataCollectionResultOfT(
                 _devicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

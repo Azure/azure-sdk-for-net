@@ -31,7 +31,8 @@
     <Compile Include="
       $(SystemClientModelSource)\ClientDiagnostics.cs;
       $(SystemClientModelSource)\DiagnosticScope.cs;
-      $(SystemClientModelSource)\DiagnosticScopeFactory.cs;">
+      $(SystemClientModelSource)\DiagnosticScopeFactory.cs;
+      $(SystemClientModelSource)\OperationResultHelpers.cs;">
       <LinkBase>Shared/SystemClientModel</LinkBase>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

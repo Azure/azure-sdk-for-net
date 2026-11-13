@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationAccountPython2PackageResource.ResourceType, out string automationAccountPython2PackageApiVersion);
             _automationAccountPython2PackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationAccountPython2PackageResource.ResourceType.Namespace, Diagnostics);
-            _automationAccountPython2PackageRestClient = new AutomationAccountPython2Package(_automationAccountPython2PackageClientDiagnostics, Pipeline, Endpoint, automationAccountPython2PackageApiVersion ?? "2024-10-23");
+            _automationAccountPython2PackageRestClient = new AutomationAccountPython2Package(_automationAccountPython2PackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountPython2PackageApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationModuleData, AutomationAccountPython2PackageResource>(new AutomationAccountPython2PackageGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationModuleData, AutomationAccountPython2PackageResource>(new AutomationModuleDataAsyncCollectionResultOfT(
                 _automationAccountPython2PackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationModuleData, AutomationAccountPython2PackageResource>(new AutomationAccountPython2PackageGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationModuleData, AutomationAccountPython2PackageResource>(new AutomationModuleDataCollectionResultOfT(
                 _automationAccountPython2PackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

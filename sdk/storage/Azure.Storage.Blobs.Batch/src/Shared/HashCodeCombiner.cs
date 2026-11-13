@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal struct HashCodeCombiner
     {
         private long _combinedHash64;

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Reservations
         {
             TryGetApiVersion(ResourceType, out string quotaRequestDetailApiVersion);
             _quotaRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailApiVersion ?? "2020-10-25");
+            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, quotaRequestDetailApiVersion ?? "2020-10-25");
             ValidateResourceId(id);
         }
 

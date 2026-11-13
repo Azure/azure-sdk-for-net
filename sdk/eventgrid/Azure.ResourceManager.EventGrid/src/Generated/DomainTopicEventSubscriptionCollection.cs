@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(DomainTopicEventSubscriptionResource.ResourceType, out string domainTopicEventSubscriptionApiVersion);
             _domainTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", DomainTopicEventSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _domainTopicEventSubscriptionsRestClient = new DomainTopicEventSubscriptions(_domainTopicEventSubscriptionsClientDiagnostics, Pipeline, Endpoint, domainTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
+            _domainTopicEventSubscriptionsRestClient = new DomainTopicEventSubscriptions(_domainTopicEventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridSubscriptionData, DomainTopicEventSubscriptionResource>(new DomainTopicEventSubscriptionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridSubscriptionData, DomainTopicEventSubscriptionResource>(new EventGridSubscriptionDataAsync6CollectionResultOfT(
                 _domainTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridSubscriptionData, DomainTopicEventSubscriptionResource>(new DomainTopicEventSubscriptionsGetAllCollectionResultOfT(
+            return new PageableWrapper<EventGridSubscriptionData, DomainTopicEventSubscriptionResource>(new EventGridSubscriptionData6CollectionResultOfT(
                 _domainTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

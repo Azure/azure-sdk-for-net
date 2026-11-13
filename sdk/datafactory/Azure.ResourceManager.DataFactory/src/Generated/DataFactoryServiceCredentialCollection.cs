@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryServiceCredentialResource.ResourceType, out string dataFactoryServiceCredentialApiVersion);
             _credentialOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryServiceCredentialResource.ResourceType.Namespace, Diagnostics);
-            _credentialOperationsRestClient = new CredentialOperations(_credentialOperationsClientDiagnostics, Pipeline, Endpoint, dataFactoryServiceCredentialApiVersion ?? "2018-06-01");
+            _credentialOperationsRestClient = new CredentialOperations(_credentialOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryServiceCredentialApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryServiceCredentialData, DataFactoryServiceCredentialResource>(new CredentialOperationsGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryServiceCredentialData, DataFactoryServiceCredentialResource>(new DataFactoryServiceCredentialDataAsyncCollectionResultOfT(
                 _credentialOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryServiceCredentialData, DataFactoryServiceCredentialResource>(new CredentialOperationsGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryServiceCredentialData, DataFactoryServiceCredentialResource>(new DataFactoryServiceCredentialDataCollectionResultOfT(
                 _credentialOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

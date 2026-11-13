@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Hci.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeMachineResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string edgeMachineApiVersion);
             _edgeMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeMachinesRestClient = new EdgeMachines(_edgeMachinesClientDiagnostics, Pipeline, Endpoint, edgeMachineApiVersion ?? "2026-05-01-preview");
+            _edgeMachinesRestClient = new EdgeMachines(_edgeMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/edgeMachines", out string edgeMachinesApiVersionOverride) ? edgeMachinesApiVersionOverride : "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -406,6 +406,206 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// Trigger an on-demand refresh of applicable updates for the edge machine.
+        /// Creates or updates the default EdgeMachineUpdate child resource with the latest set of applicable updates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}/refreshApplicableUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_RefreshApplicableUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RefreshApplicableUpdatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _edgeMachinesClientDiagnostics.CreateScope("EdgeMachineResource.RefreshApplicableUpdates");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeMachinesRestClient.CreateRefreshApplicableUpdatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HciArmOperation operation = new HciArmOperation(_edgeMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger an on-demand refresh of applicable updates for the edge machine.
+        /// Creates or updates the default EdgeMachineUpdate child resource with the latest set of applicable updates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}/refreshApplicableUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_RefreshApplicableUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RefreshApplicableUpdates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _edgeMachinesClientDiagnostics.CreateScope("EdgeMachineResource.RefreshApplicableUpdates");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeMachinesRestClient.CreateRefreshApplicableUpdatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HciArmOperation operation = new HciArmOperation(_edgeMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger an on-demand sync of edge machine security settings from Guest Configuration.
+        /// Creates the default security settings child resource if it does not already exist.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}/refreshSecuritySettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_RefreshSecuritySettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RefreshSecuritySettingsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _edgeMachinesClientDiagnostics.CreateScope("EdgeMachineResource.RefreshSecuritySettings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeMachinesRestClient.CreateRefreshSecuritySettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HciArmOperation operation = new HciArmOperation(_edgeMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger an on-demand sync of edge machine security settings from Guest Configuration.
+        /// Creates the default security settings child resource if it does not already exist.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}/refreshSecuritySettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_RefreshSecuritySettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RefreshSecuritySettings(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _edgeMachinesClientDiagnostics.CreateScope("EdgeMachineResource.RefreshSecuritySettings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeMachinesRestClient.CreateRefreshSecuritySettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HciArmOperation operation = new HciArmOperation(_edgeMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// A long-running resource action to validate the edge machine.
         /// <list type="bullet">
         /// <item>
@@ -418,7 +618,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -477,7 +677,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -633,10 +833,9 @@ namespace Azure.ResourceManager.Hci
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -676,10 +875,9 @@ namespace Azure.ResourceManager.Hci
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -830,72 +1028,6 @@ namespace Azure.ResourceManager.Hci
             return GetEdgeMachineJobs().Get(jobsName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EdgeMachineUpdates in the <see cref="EdgeMachineResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeMachineUpdates and their operations over a EdgeMachineUpdateResource. </returns>
-        public virtual EdgeMachineUpdateCollection GetEdgeMachineUpdates()
-        {
-            return GetCachedClient(client => new EdgeMachineUpdateCollection(client, Id));
-        }
-
-        /// <summary> Get EdgeMachine update. </summary>
-        /// <param name="default"> Name of EdgeMachine update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeMachineUpdateResource>> GetEdgeMachineUpdateAsync(string @default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
-            return await GetEdgeMachineUpdates().GetAsync(@default, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get EdgeMachine update. </summary>
-        /// <param name="default"> Name of EdgeMachine update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeMachineUpdateResource> GetEdgeMachineUpdate(string @default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
-            return GetEdgeMachineUpdates().Get(@default, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EdgeMachineGpus in the <see cref="EdgeMachineResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeMachineGpus and their operations over a EdgeMachineGpuResource. </returns>
-        public virtual EdgeMachineGpuCollection GetEdgeMachineGpus()
-        {
-            return GetCachedClient(client => new EdgeMachineGpuCollection(client, Id));
-        }
-
-        /// <summary> Get a specific GPU on an Edge Machine. </summary>
-        /// <param name="gpuName"> The name of the EdgeMachineGpu. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gpuName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gpuName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeMachineGpuResource>> GetEdgeMachineGpuAsync(string gpuName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(gpuName, nameof(gpuName));
-
-            return await GetEdgeMachineGpus().GetAsync(gpuName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a specific GPU on an Edge Machine. </summary>
-        /// <param name="gpuName"> The name of the EdgeMachineGpu. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gpuName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gpuName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeMachineGpuResource> GetEdgeMachineGpu(string gpuName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(gpuName, nameof(gpuName));
-
-            return GetEdgeMachineGpus().Get(gpuName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of EdgeMachineNetworkAdapters in the <see cref="EdgeMachineResource"/>. </summary>
         /// <returns> An object representing collection of EdgeMachineNetworkAdapters and their operations over a EdgeMachineNetworkAdapterResource. </returns>
         public virtual EdgeMachineNetworkAdapterCollection GetEdgeMachineNetworkAdapters()
@@ -993,6 +1125,72 @@ namespace Azure.ResourceManager.Hci
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             return GetEdgeMachineVolumes().Get(volumeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachineSecuritySettings in the <see cref="EdgeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachineSecuritySettings and their operations over a EdgeMachineSecuritySettingsResource. </returns>
+        public virtual EdgeMachineSecuritySettingsCollection GetAllEdgeMachineSecuritySettings()
+        {
+            return GetCachedClient(client => new EdgeMachineSecuritySettingsCollection(client, Id));
+        }
+
+        /// <summary> Get an EdgeMachineSecuritySettings. </summary>
+        /// <param name="securitySettingsName"> Name of the security settings resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineSecuritySettingsResource>> GetEdgeMachineSecuritySettingsAsync(string securitySettingsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
+
+            return await GetAllEdgeMachineSecuritySettings().GetAsync(securitySettingsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get an EdgeMachineSecuritySettings. </summary>
+        /// <param name="securitySettingsName"> Name of the security settings resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineSecuritySettingsResource> GetEdgeMachineSecuritySettings(string securitySettingsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
+
+            return GetAllEdgeMachineSecuritySettings().Get(securitySettingsName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachineDeploymentSettings in the <see cref="EdgeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachineDeploymentSettings and their operations over a EdgeMachineDeploymentSettingResource. </returns>
+        public virtual EdgeMachineDeploymentSettingCollection GetEdgeMachineDeploymentSettings()
+        {
+            return GetCachedClient(client => new EdgeMachineDeploymentSettingCollection(client, Id));
+        }
+
+        /// <summary> Get an Edge Machine Deployment Setting. </summary>
+        /// <param name="deploymentSettingName"> Name of Edge Machine Deployment Setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineDeploymentSettingResource>> GetEdgeMachineDeploymentSettingAsync(string deploymentSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentSettingName, nameof(deploymentSettingName));
+
+            return await GetEdgeMachineDeploymentSettings().GetAsync(deploymentSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get an Edge Machine Deployment Setting. </summary>
+        /// <param name="deploymentSettingName"> Name of Edge Machine Deployment Setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineDeploymentSettingResource> GetEdgeMachineDeploymentSetting(string deploymentSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentSettingName, nameof(deploymentSettingName));
+
+            return GetEdgeMachineDeploymentSettings().Get(deploymentSettingName, cancellationToken);
         }
     }
 }

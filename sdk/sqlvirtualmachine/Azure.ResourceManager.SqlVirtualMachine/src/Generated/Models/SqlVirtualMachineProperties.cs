@@ -12,7 +12,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    /// <summary> The SQL virtual machine properties. </summary>
     internal partial class SqlVirtualMachineProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -131,8 +130,5 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Virtual Machine Identity details used for Sql IaaS extension configurations. </summary>
         public SqlVmIdentity VirtualMachineIdentitySettings { get; set; }
-
-        /// <summary> Operating System of the current SQL Virtual Machine. </summary>
-        public SqlVmOsType? OsType { get; }
     }
 }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -105,6 +106,7 @@ namespace Azure.AI.Projects.Agents
         public ProjectsAgentDefinition Definition { get; }
 
         /// <summary> Whether this agent version is a draft (candidate) rather than a release. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. Defaults to false. </summary>
+        [Experimental("AAIP001")]
         public bool? Draft { get; }
 
         /// <summary> The provisioning status of the agent version. Defaults to 'active' for non-hosted agents. For hosted agents, reflects infrastructure readiness. </summary>

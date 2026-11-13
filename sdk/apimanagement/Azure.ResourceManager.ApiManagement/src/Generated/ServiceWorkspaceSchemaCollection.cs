@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceSchemaResource.ResourceType, out string serviceWorkspaceSchemaApiVersion);
             _workspaceGlobalSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceSchemaResource.ResourceType.Namespace, Diagnostics);
-            _workspaceGlobalSchemaRestClient = new WorkspaceGlobalSchema(_workspaceGlobalSchemaClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceSchemaApiVersion ?? "2025-09-01-preview");
+            _workspaceGlobalSchemaRestClient = new WorkspaceGlobalSchema(_workspaceGlobalSchemaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceSchemaApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new WorkspaceGlobalSchemaGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new ApiManagementGlobalSchemaDataAsyncCollectionResultOfT(
                 _workspaceGlobalSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new WorkspaceGlobalSchemaGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new ApiManagementGlobalSchemaDataCollectionResultOfT(
                 _workspaceGlobalSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

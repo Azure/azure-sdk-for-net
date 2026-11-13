@@ -10,13 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Azure realtime native voice configuration. These voices are natively
-    /// supported by the `azure-realtime` model and offer higher quality speech
-    /// synthesis than standard Azure voices. Only valid when using the
-    /// `azure-realtime` model.
-    /// </summary>
-    public partial class AzureRealtimeNativeVoice
+    internal partial class AzureRealtimeNativeVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -29,18 +23,18 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureRealtimeNativeVoice"/>. </summary>
-        /// <param name="type"> The type of the voice. </param>
+        /// <param name="kind"> The type of the voice. </param>
         /// <param name="name"> The name of the Azure realtime native voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureRealtimeNativeVoice(string @type, AzureRealtimeNativeVoiceName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureRealtimeNativeVoice(string kind, AzureRealtimeNativeVoiceName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the voice. </summary>
-        public string Type { get; } = "azure-realtime-native";
+        public string Kind { get; } = "azure-realtime-native";
 
         /// <summary> The name of the Azure realtime native voice. </summary>
         public AzureRealtimeNativeVoiceName Name { get; set; }

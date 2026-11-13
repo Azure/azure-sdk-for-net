@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     public class PrivateEndpointConnectionCollectionTests : AppConfigurationClientBase
     {
         private ResourceGroupResource ResGroup { get; set; }
@@ -67,6 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         }
 
         [Test]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task CreateOrUpdateTest()
         {
             // Only support update
@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         }
 
         [Test]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetTest()
         {
             await Prepare();
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         }
 
         [Test]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAllTest()
         {
             string configurationStoreName1 = Recording.GenerateAssetName("testapp-");

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(EventHubsNamespaceAuthorizationRuleResource.ResourceType, out string eventHubsNamespaceAuthorizationRuleApiVersion);
             _eventHubsNamespaceAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _eventHubsNamespaceAuthorizationRuleRestClient = new EventHubsNamespaceAuthorizationRule(_eventHubsNamespaceAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceAuthorizationRuleApiVersion ?? "2025-05-01-preview");
+            _eventHubsNamespaceAuthorizationRuleRestClient = new EventHubsNamespaceAuthorizationRule(_eventHubsNamespaceAuthorizationRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsNamespaceAuthorizationRuleApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsAuthorizationRuleDataAsync0CollectionResultOfT(
                 _eventHubsNamespaceAuthorizationRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubsNamespaceAuthorizationRuleResource>(new EventHubsAuthorizationRuleData0CollectionResultOfT(
                 _eventHubsNamespaceAuthorizationRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

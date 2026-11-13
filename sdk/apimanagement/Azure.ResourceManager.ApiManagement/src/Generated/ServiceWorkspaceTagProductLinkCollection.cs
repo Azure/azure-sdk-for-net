@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceTagProductLinkResource.ResourceType, out string serviceWorkspaceTagProductLinkApiVersion);
             _workspaceTagProductLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagProductLinkResource.ResourceType.Namespace, Diagnostics);
-            _workspaceTagProductLinkRestClient = new WorkspaceTagProductLink(_workspaceTagProductLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagProductLinkApiVersion ?? "2025-09-01-preview");
+            _workspaceTagProductLinkRestClient = new WorkspaceTagProductLink(_workspaceTagProductLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceTagProductLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new WorkspaceTagProductLinkGetByProductAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new TagProductLinkContractDataAsync0CollectionResultOfT(
                 _workspaceTagProductLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new WorkspaceTagProductLinkGetByProductCollectionResultOfT(
+            return new PageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new TagProductLinkContractData0CollectionResultOfT(
                 _workspaceTagProductLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

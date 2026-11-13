@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -134,15 +135,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile, options);
             }
-            if (Optional.IsDefined(BastionProfile))
+            if (Optional.IsDefined(ClusterApiConnectivityProfile))
             {
-                writer.WritePropertyName("bastionProfile"u8);
-                writer.WriteObjectValue(BastionProfile, options);
+                writer.WritePropertyName("clusterAPIConnectivityProfile"u8);
+                writer.WriteObjectValue(ClusterApiConnectivityProfile, options);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
                 writer.WriteObjectValue(NatGatewayProfile, options);
+            }
+            if (Optional.IsDefined(NatGatewayId))
+            {
+                writer.WritePropertyName("natGatewayId"u8);
+                writer.WriteStringValue(NatGatewayId);
             }
             if (Optional.IsDefined(StaticEgressGatewayProfile))
             {
@@ -253,13 +259,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOutboundType? outboundType = default;
             ContainerServiceLoadBalancerSku? loadBalancerSku = default;
             ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
-            ManagedClusterBastionProfile bastionProfile = default;
+            ClusterApiConnectivityProfile clusterApiConnectivityProfile = default;
             ManagedClusterNatGatewayProfile natGatewayProfile = default;
+            ResourceIdentifier natGatewayId = default;
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
             IList<ContainerServiceIPFamily> networkIPFamilies = default;
-            PodLinkLocalAccess? podLinkLocalAccess = default;
+            AgentPoolPodLinkLocalAccess? podLinkLocalAccess = default;
             ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -360,13 +367,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("bastionProfile"u8))
+                if (prop.NameEquals("clusterAPIConnectivityProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bastionProfile = ManagedClusterBastionProfile.DeserializeManagedClusterBastionProfile(prop.Value, options);
+                    clusterApiConnectivityProfile = ClusterApiConnectivityProfile.DeserializeClusterApiConnectivityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("natGatewayProfile"u8))
@@ -376,6 +383,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("natGatewayId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    natGatewayId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("staticEgressGatewayProfile"u8))
@@ -449,7 +465,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    podLinkLocalAccess = new PodLinkLocalAccess(prop.Value.GetString());
+                    podLinkLocalAccess = new AgentPoolPodLinkLocalAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kubeProxyConfig"u8))
@@ -463,7 +479,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerServiceNetworkProfile(
@@ -479,8 +495,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 outboundType,
                 loadBalancerSku,
                 loadBalancerProfile,
-                bastionProfile,
+                clusterApiConnectivityProfile,
                 natGatewayProfile,
+                natGatewayId,
                 staticEgressGatewayProfile,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),

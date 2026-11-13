@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the VPN site link connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VpnSiteLinkConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnSiteLinkConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VpnSiteLinkConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, VpnSiteLinkConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -269,6 +270,34 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> List of ingress NatRules. </summary>
+        [WirePath("properties.ingressNatRules")]
+        public IList<WritableSubResource> IngressNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkConnectionProperties();
+                }
+                return Properties.IngressNatRules;
+            }
+        }
+
+        /// <summary> List of egress NatRules. </summary>
+        [WirePath("properties.egressNatRules")]
+        public IList<WritableSubResource> EgressNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkConnectionProperties();
+                }
+                return Properties.EgressNatRules;
             }
         }
 

@@ -11,9 +11,12 @@ namespace ClientModel.Tests.Collections;
 
 public class MockStreamedResponse : PipelineResponse
 {
+    private Stream? _contentStream;
+
     public MockStreamedResponse(string content)
     {
         Content = BinaryData.FromString(content);
+        _contentStream = Content.ToStream();
     }
 
     public override int Status => 200;
@@ -22,8 +25,8 @@ public class MockStreamedResponse : PipelineResponse
 
     public override Stream? ContentStream
     {
-        get => null;
-        set => throw new NotImplementedException();
+        get => _contentStream;
+        set => _contentStream = value;
     }
 
     public override BinaryData Content { get; }
@@ -41,6 +44,8 @@ public class MockStreamedResponse : PipelineResponse
 
     public override void Dispose()
     {
+        _contentStream?.Dispose();
+        _contentStream = null;
         IsDisposed = true;
     }
 }

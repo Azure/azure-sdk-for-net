@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSiteDatabaseConnectionResource.ResourceType, out string staticSiteDatabaseConnectionApiVersion);
             _databaseConnectionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteDatabaseConnectionResource.ResourceType.Namespace, Diagnostics);
-            _databaseConnectionOperationGroupRestClient = new DatabaseConnectionOperationGroup(_databaseConnectionOperationGroupClientDiagnostics, Pipeline, Endpoint, staticSiteDatabaseConnectionApiVersion ?? "2026-03-15");
+            _databaseConnectionOperationGroupRestClient = new DatabaseConnectionOperationGroup(_databaseConnectionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteDatabaseConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteDatabaseConnectionResource>(new DatabaseConnectionOperationGroupGetDatabaseConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteDatabaseConnectionResource>(new StaticSiteDatabaseConnectionDataAsync1CollectionResultOfT(
                 _databaseConnectionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteDatabaseConnectionResource>(new DatabaseConnectionOperationGroupGetDatabaseConnectionsCollectionResultOfT(
+            return new PageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteDatabaseConnectionResource>(new StaticSiteDatabaseConnectionData1CollectionResultOfT(
                 _databaseConnectionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     {
                         continue;
                     }
-                    customProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    customProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApiCenterEnvironmentProperties(

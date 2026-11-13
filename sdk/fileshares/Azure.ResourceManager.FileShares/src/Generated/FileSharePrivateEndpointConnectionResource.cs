@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(ResourceType, out string fileSharePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, fileSharePrivateEndpointConnectionApiVersion ?? "2026-06-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileSharePrivateEndpointConnectionApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

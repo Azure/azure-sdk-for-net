@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevHub
         {
             TryGetApiVersion(ResourceType, out string devHubTemplateApiVersion);
             _templateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", ResourceType.Namespace, Diagnostics);
-            _templateRestClient = new Template(_templateClientDiagnostics, Pipeline, Endpoint, devHubTemplateApiVersion ?? "2025-03-01-preview");
+            _templateRestClient = new Template(_templateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devHubTemplateApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

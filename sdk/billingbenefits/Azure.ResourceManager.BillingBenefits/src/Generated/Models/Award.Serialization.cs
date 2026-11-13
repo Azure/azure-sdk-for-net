@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("credit"u8);
                 writer.WriteObjectValue(Credit, options);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startAt"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 return null;
             }
             BillingBenefitsCommitment credit = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             ResourceIdentifier resourceId = default;
             string systemId = default;
             float? balanceVersion = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endAt"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
@@ -223,13 +223,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new Award(
                 credit,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 resourceId,
                 systemId,
                 balanceVersion,

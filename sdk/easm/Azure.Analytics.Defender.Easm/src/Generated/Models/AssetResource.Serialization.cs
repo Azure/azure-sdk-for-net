@@ -14,7 +14,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The items in the current page of results.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IpAddressAssetResource"/>, <see cref="IpBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IPAddressAssetResource"/>, <see cref="IPBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAssetResource))]
     public abstract partial class AssetResource : IJsonModel<AssetResource>
@@ -111,15 +111,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid.Value);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedDate))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedDate"u8);
-                writer.WriteStringValue(UpdatedDate.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(State))
             {
@@ -226,9 +226,9 @@ namespace Azure.Analytics.Defender.Easm
                     case "host":
                         return HostAssetResource.DeserializeHostAssetResource(element, options);
                     case "ipAddress":
-                        return IpAddressAssetResource.DeserializeIpAddressAssetResource(element, options);
+                        return IPAddressAssetResource.DeserializeIPAddressAssetResource(element, options);
                     case "ipBlock":
-                        return IpBlockAssetResource.DeserializeIpBlockAssetResource(element, options);
+                        return IPBlockAssetResource.DeserializeIPBlockAssetResource(element, options);
                     case "page":
                         return PageAssetResource.DeserializePageAssetResource(element, options);
                     case "sslCert":

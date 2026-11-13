@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="allowASOverride"> Enable Or Disable state. </param>
         /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
         /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        /// <param name="iPv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
-        /// <param name="iPv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
-        /// <param name="iPv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
-        /// <param name="iPv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
         /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
         /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
         /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
-        internal BgpConfiguration(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> iPv4ListenRangePrefixes, IList<string> iPv6ListenRangePrefixes, IList<NeighborAddress> iPv4NeighborAddress, IList<NeighborAddress> iPv6NeighborAddress, InternalNetworkBmpProperties bmpConfiguration, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession) : base(annotation, additionalBinaryDataProperties)
+        internal BgpConfiguration(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddress> ipv4NeighborAddress, IList<NeighborAddress> ipv6NeighborAddress, InternalNetworkBmpProperties bmpConfiguration, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession) : base(annotation, additionalBinaryDataProperties)
         {
             BfdConfiguration = bfdConfiguration;
             DefaultRouteOriginate = defaultRouteOriginate;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AllowASOverride = allowASOverride;
             FabricAsn = fabricAsn;
             PeerAsn = peerAsn;
-            IPv4ListenRangePrefixes = iPv4ListenRangePrefixes;
-            IPv6ListenRangePrefixes = iPv6ListenRangePrefixes;
-            IPv4NeighborAddress = iPv4NeighborAddress;
-            IPv6NeighborAddress = iPv6NeighborAddress;
+            IPv4ListenRangePrefixes = ipv4ListenRangePrefixes;
+            IPv6ListenRangePrefixes = ipv6ListenRangePrefixes;
+            IPv4NeighborAddress = ipv4NeighborAddress;
+            IPv6NeighborAddress = ipv6NeighborAddress;
             BmpConfiguration = bmpConfiguration;
             V4OverV6BgpSession = v4OverV6BgpSession;
             V6OverV4BgpSession = v6OverV4BgpSession;

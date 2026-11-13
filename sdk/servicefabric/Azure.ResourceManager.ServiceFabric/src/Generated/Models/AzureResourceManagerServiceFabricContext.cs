@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
 
@@ -19,14 +18,6 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ApplicationDeltaHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationMetricDescription))]
-    [ModelReaderWriterBuildable(typeof(ApplicationResourceList))]
-    [ModelReaderWriterBuildable(typeof(ApplicationResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(ApplicationResourceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ApplicationTypeResourceList))]
-    [ModelReaderWriterBuildable(typeof(ApplicationTypeResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionResourceList))]
-    [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionsCleanupPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ArmApplicationHealthPolicy))]
@@ -36,16 +27,12 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ClusterCertificateDescription))]
     [ModelReaderWriterBuildable(typeof(ClusterClientCertificateCommonName))]
     [ModelReaderWriterBuildable(typeof(ClusterClientCertificateThumbprint))]
-    [ModelReaderWriterBuildable(typeof(ClusterCodeVersionsListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterCodeVersionsResult))]
     [ModelReaderWriterBuildable(typeof(ClusterEndpointRangeDescription))]
     [ModelReaderWriterBuildable(typeof(ClusterHealthPolicy))]
-    [ModelReaderWriterBuildable(typeof(ClusterListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterNodeTypeDescription))]
     [ModelReaderWriterBuildable(typeof(ClusterNotification))]
     [ModelReaderWriterBuildable(typeof(ClusterNotificationTarget))]
-    [ModelReaderWriterBuildable(typeof(ClusterProperties))]
-    [ModelReaderWriterBuildable(typeof(ClusterPropertiesUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(ClusterServerCertificateCommonName))]
     [ModelReaderWriterBuildable(typeof(ClusterServerCertificateCommonNames))]
     [ModelReaderWriterBuildable(typeof(ClusterUpgradeDeltaHealthPolicy))]
@@ -55,7 +42,6 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NamedPartitionSchemeDescription))]
     [ModelReaderWriterBuildable(typeof(PartitionSchemeDescription))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceCorrelationDescription))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricApplicationData))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricApplicationPatch))]
@@ -74,7 +60,6 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ServiceFabricVmSizeResourceData))]
     [ModelReaderWriterBuildable(typeof(ServiceLoadMetricDescription))]
     [ModelReaderWriterBuildable(typeof(ServicePlacementPolicyDescription))]
-    [ModelReaderWriterBuildable(typeof(ServiceResourceList))]
     [ModelReaderWriterBuildable(typeof(ServiceResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceResourcePropertiesBase))]
     [ModelReaderWriterBuildable(typeof(ServiceResourceUpdateProperties))]
@@ -89,15 +74,9 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(StatelessServiceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UniformInt64RangePartitionSchemeDescription))]
-    [ModelReaderWriterBuildable(typeof(UnknownPartitionSchemeDescription))]
-    [ModelReaderWriterBuildable(typeof(UnknownServicePlacementPolicyDescription))]
-    [ModelReaderWriterBuildable(typeof(UnknownServiceResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownServiceResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionPathResult))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionsDescription))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VMSize))]
-    [ModelReaderWriterBuildable(typeof(VMSizesResult))]
     public partial class AzureResourceManagerServiceFabricContext : ModelReaderWriterContext
     {
     }

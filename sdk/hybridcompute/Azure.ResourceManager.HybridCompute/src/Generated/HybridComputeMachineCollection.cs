@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridComputeMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HybridComputeMachineResource.ResourceType, out string hybridComputeMachineApiVersion);
             _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
-            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
+            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/machines", out string machinesApiVersionOverride) ? machinesApiVersionOverride : "2026-07-15");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, HybridComputeMachineData.ToRequestContent(data), expand, context);
+                HttpMessage message = _machinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, HybridComputeMachineData.ToRequestContent(data), expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, HybridComputeMachineData.ToRequestContent(data), expand, context);
+                HttpMessage message = _machinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, HybridComputeMachineData.ToRequestContent(data), expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, context);
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, context);
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +279,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,9 +292,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new MachinesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new HybridComputeMachineDataAsyncCollectionResultOfT(
                 _machinesRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 expand,
                 context,
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,9 +327,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new MachinesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new HybridComputeMachineDataCollectionResultOfT(
                 _machinesRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 expand,
                 context,
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, context);
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeMachineData> response = default;
@@ -408,7 +407,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,7 +428,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, context);
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeMachineData> response = default;
@@ -466,7 +465,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -487,7 +486,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, context);
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeMachineData> response = default;
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,7 +548,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, context);
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, machineName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeMachineData> response = default;

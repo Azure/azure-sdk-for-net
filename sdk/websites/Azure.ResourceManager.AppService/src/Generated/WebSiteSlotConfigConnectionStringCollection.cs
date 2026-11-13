@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotConfigConnectionStringResource.ResourceType, out string webSiteSlotConfigConnectionStringApiVersion);
             _siteConnectionStringKeyVaultReferenceSlotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotConfigConnectionStringResource.ResourceType.Namespace, Diagnostics);
-            _siteConnectionStringKeyVaultReferenceSlotRestClient = new SiteConnectionStringKeyVaultReferenceSlot(_siteConnectionStringKeyVaultReferenceSlotClientDiagnostics, Pipeline, Endpoint, webSiteSlotConfigConnectionStringApiVersion ?? "2026-03-15");
+            _siteConnectionStringKeyVaultReferenceSlotRestClient = new SiteConnectionStringKeyVaultReferenceSlot(_siteConnectionStringKeyVaultReferenceSlotClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigConnectionStringApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigConnectionStringResource>(new SiteConnectionStringKeyVaultReferenceSlotGetSiteConnectionStringKeyVaultReferencesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigConnectionStringResource>(new ApiKeyVaultReferenceDataAsync0CollectionResultOfT(
                 _siteConnectionStringKeyVaultReferenceSlotRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigConnectionStringResource>(new SiteConnectionStringKeyVaultReferenceSlotGetSiteConnectionStringKeyVaultReferencesSlotCollectionResultOfT(
+            return new PageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigConnectionStringResource>(new ApiKeyVaultReferenceData0CollectionResultOfT(
                 _siteConnectionStringKeyVaultReferenceSlotRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

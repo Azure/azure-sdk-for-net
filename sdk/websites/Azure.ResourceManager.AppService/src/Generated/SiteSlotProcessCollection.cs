@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotProcessResource.ResourceType, out string siteSlotProcessApiVersion);
             _processSlotOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotProcessResource.ResourceType.Namespace, Diagnostics);
-            _processSlotOperationGroupRestClient = new ProcessSlotOperationGroup(_processSlotOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotProcessApiVersion ?? "2026-03-15");
+            _processSlotOperationGroupRestClient = new ProcessSlotOperationGroup(_processSlotOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotProcessApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProcessInfoData, SiteSlotProcessResource>(new ProcessSlotOperationGroupGetProcessesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProcessInfoData, SiteSlotProcessResource>(new ProcessInfoDataAsyncCollectionResultOfT(
                 _processSlotOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProcessInfoData, SiteSlotProcessResource>(new ProcessSlotOperationGroupGetProcessesSlotCollectionResultOfT(
+            return new PageableWrapper<ProcessInfoData, SiteSlotProcessResource>(new ProcessInfoDataCollectionResultOfT(
                 _processSlotOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

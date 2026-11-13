@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string topicTypeApiVersion);
             _topicTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _topicTypesRestClient = new TopicTypes(_topicTypesClientDiagnostics, Pipeline, Endpoint, topicTypeApiVersion ?? "2025-07-15-preview");
+            _topicTypesRestClient = new TopicTypes(_topicTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topicTypeApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new TopicTypesGetEventTypesAsyncCollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
+            return new EventTypeUnderTopicAsync0CollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new TopicTypesGetEventTypesCollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
+            return new EventTypeUnderTopic0CollectionResultOfT(_topicTypesRestClient, Id.Name, context, "TopicTypeResource.GetEventTypes");
         }
     }
 }

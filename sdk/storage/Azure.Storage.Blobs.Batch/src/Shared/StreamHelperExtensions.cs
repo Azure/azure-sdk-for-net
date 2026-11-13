@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Http
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal static class StreamHelperExtensions
     {
         private const int _maxReadBufferSize = 1024 * 4;

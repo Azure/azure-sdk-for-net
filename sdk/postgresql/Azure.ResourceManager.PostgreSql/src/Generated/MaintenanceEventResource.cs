@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string maintenanceEventApiVersion);
             _maintenanceEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Endpoint, maintenanceEventApiVersion ?? "2026-04-01-preview");
+            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceEventApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

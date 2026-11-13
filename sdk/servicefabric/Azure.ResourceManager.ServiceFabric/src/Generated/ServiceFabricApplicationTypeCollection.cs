@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             TryGetApiVersion(ServiceFabricApplicationTypeResource.ResourceType, out string serviceFabricApplicationTypeApiVersion);
             _applicationTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricApplicationTypeResource.ResourceType.Namespace, Diagnostics);
-            _applicationTypesRestClient = new ApplicationTypes(_applicationTypesClientDiagnostics, Pipeline, Endpoint, serviceFabricApplicationTypeApiVersion ?? "2026-03-01-preview");
+            _applicationTypesRestClient = new ApplicationTypes(_applicationTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricApplicationTypeApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ApplicationTypesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ServiceFabricApplicationTypeDataAsyncCollectionResultOfT(
                 _applicationTypesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ApplicationTypesGetAllCollectionResultOfT(
+            return new PageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ServiceFabricApplicationTypeDataCollectionResultOfT(
                 _applicationTypesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

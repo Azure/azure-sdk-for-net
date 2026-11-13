@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             TryGetApiVersion(HDInsightPrivateLinkResource.ResourceType, out string hdInsightPrivateLinkResourceApiVersion);
             _hdInsightPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _hdInsightPrivateLinkResourcesRestClient = new HDInsightPrivateLinkResources(_hdInsightPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hdInsightPrivateLinkResourceApiVersion ?? "2025-01-15-preview");
+            _hdInsightPrivateLinkResourcesRestClient = new HDInsightPrivateLinkResources(_hdInsightPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightPrivateLinkResourceApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightPrivateLinkResourceData, HDInsightPrivateLinkResource>(new HDInsightPrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HDInsightPrivateLinkResourceData, HDInsightPrivateLinkResource>(new HDInsightPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _hdInsightPrivateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightPrivateLinkResourceData, HDInsightPrivateLinkResource>(new HDInsightPrivateLinkResourcesGetByClusterCollectionResultOfT(
+            return new PageableWrapper<HDInsightPrivateLinkResourceData, HDInsightPrivateLinkResource>(new HDInsightPrivateLinkResourceDataCollectionResultOfT(
                 _hdInsightPrivateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

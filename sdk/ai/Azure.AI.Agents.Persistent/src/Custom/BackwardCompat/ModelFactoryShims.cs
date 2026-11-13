@@ -14,6 +14,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
+    /// <summary> Backward-compatibility model factory that delegates to <see cref="AgentsPersistentModelFactory"/>. </summary>
     public static partial class PersistentAgentsModelFactory
     {
         // ── Methods with IDENTICAL parameter types ────────────────────────────

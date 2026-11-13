@@ -153,6 +153,28 @@ internal partial class PipelineMessageLogger
         }
     }
 
+    public void LogResponseContentBlock(string requestId, int blockNumber, byte[] content, int offset, int count, Encoding? textEncoding)
+    {
+        if (_logger is not null)
+        {
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
+                if (textEncoding != null)
+                {
+                    ResponseContentTextBlock(_logger, requestId, blockNumber, textEncoding.GetString(content, offset, count));
+                }
+                else
+                {
+                    ResponseContentBlock(_logger, requestId, blockNumber, ToExactSizedArray(content, offset, count));
+                }
+            }
+        }
+        else
+        {
+            ClientModelEventSource.Log.ResponseContentBlock(requestId, blockNumber, content, offset, count, textEncoding);
+        }
+    }
+
     [LoggerMessage(LoggingEventIds.ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ResponseContentBlock")]
     private static partial void ResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
 
@@ -229,6 +251,47 @@ internal partial class PipelineMessageLogger
         {
             ClientModelEventSource.Log.ErrorResponseContentBlock(requestId, blockNumber, content, textEncoding);
         }
+    }
+
+    public void LogErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, int offset, int count, Encoding? textEncoding)
+    {
+        if (_logger is not null)
+        {
+            if (_logger.IsEnabled(LogLevel.Information))
+            {
+                if (textEncoding != null)
+                {
+                    ErrorResponseContentTextBlock(_logger, requestId, blockNumber, textEncoding.GetString(content, offset, count));
+                }
+                else
+                {
+                    ErrorResponseContentBlock(_logger, requestId, blockNumber, ToExactSizedArray(content, offset, count));
+                }
+            }
+        }
+        else
+        {
+            ClientModelEventSource.Log.ErrorResponseContentBlock(requestId, blockNumber, content, offset, count, textEncoding);
+        }
+    }
+
+    /// <summary>
+    /// Copies a slice of <paramref name="content"/> into an array whose length is exactly
+    /// <paramref name="count"/>. The <c>byte[]</c> log values are rendered in full, so passing the
+    /// caller's buffer directly would publish the bytes past the payload — which, for a pooled
+    /// buffer, is unrelated in-process content.
+    /// See https://github.com/Azure/azure-sdk-for-net/issues/61399.
+    /// </summary>
+    private static byte[] ToExactSizedArray(byte[] content, int offset, int count)
+    {
+        if (offset == 0 && content.Length == count)
+        {
+            return content;
+        }
+
+        byte[] bytes = new byte[count];
+        Array.Copy(content, offset, bytes, 0, count);
+        return bytes;
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentBlock")]

@@ -13,7 +13,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> Subvolume Information properties. </summary>
+    /// <summary>
+    /// Subvolume Information properties
+    /// Deprecated. This resource type will be removed in a future API version.
+    /// </summary>
     public partial class NetAppSubvolumeInfoData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

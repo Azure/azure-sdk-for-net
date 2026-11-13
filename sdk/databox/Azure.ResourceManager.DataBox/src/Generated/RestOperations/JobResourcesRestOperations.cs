@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DataBox
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of JobResources for mocking. </summary>
         protected JobResources()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> Initializes a new instance of JobResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal JobResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal JobResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(JobResources).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -51,10 +54,7 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.DataBox
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -77,14 +78,12 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -101,14 +100,12 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
@@ -129,14 +126,12 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -149,10 +144,7 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBox/jobs", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -161,6 +153,7 @@ namespace Azure.ResourceManager.DataBox
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -176,14 +169,12 @@ namespace Azure.ResourceManager.DataBox
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -195,10 +186,7 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.DataBox/jobs", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -207,6 +195,7 @@ namespace Azure.ResourceManager.DataBox
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -222,14 +211,12 @@ namespace Azure.ResourceManager.DataBox
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -245,14 +232,12 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/bookShipmentPickUp", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -270,14 +255,12 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/cancel", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -294,14 +277,12 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/listCredentials", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -317,14 +298,12 @@ namespace Azure.ResourceManager.DataBox
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -340,14 +319,12 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/markDevicesShipped", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

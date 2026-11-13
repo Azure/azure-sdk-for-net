@@ -108,7 +108,7 @@ namespace Azure.Provisioning.Cdn
             _mode = DefineProperty<PolicyMode>(nameof(Mode), new string[] { "mode" });
             _defaultRedirectUri = DefineProperty<Uri>(nameof(DefaultRedirectUri), new string[] { "defaultRedirectUrl" });
             _defaultCustomBlockResponseStatusCode = DefineProperty<PolicySettingsDefaultCustomBlockResponseStatusCode>(nameof(DefaultCustomBlockResponseStatusCode), new string[] { "defaultCustomBlockResponseStatusCode" });
-            _defaultCustomBlockResponseBody = DefineProperty<BinaryData>(nameof(DefaultCustomBlockResponseBody), new string[] { "defaultCustomBlockResponseBody" });
+            _defaultCustomBlockResponseBody = DefineProperty<BinaryData>(nameof(DefaultCustomBlockResponseBody), new string[] { "defaultCustomBlockResponseBody" }, format: "base64");
             DefineAdditionalProperties();
         }
 

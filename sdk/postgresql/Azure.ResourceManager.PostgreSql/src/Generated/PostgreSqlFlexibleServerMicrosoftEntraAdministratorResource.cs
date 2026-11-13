@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerMicrosoftEntraAdministratorApiVersion);
             _administratorsMicrosoftEntraClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _administratorsMicrosoftEntraRestClient = new AdministratorsMicrosoftEntra(_administratorsMicrosoftEntraClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerMicrosoftEntraAdministratorApiVersion ?? "2026-04-01-preview");
+            _administratorsMicrosoftEntraRestClient = new AdministratorsMicrosoftEntra(_administratorsMicrosoftEntraClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerMicrosoftEntraAdministratorApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

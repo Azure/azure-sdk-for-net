@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="operationDetails"> operation status details for edge machine. </param>
         /// <param name="lastSyncedOn"> Last time data updated to service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, LifecycleDetails lifecycleDetails, ResourceIdentifier arcGatewayResourceId, HciSiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, HciProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<HciOperationDetail> operationDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, EdgeMachineLifecycleDetails lifecycleDetails, ResourceIdentifier arcGatewayResourceId, HciSiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, HciProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<HciOperationDetail> operationDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EdgeMachineKind = edgeMachineKind;
             ProvisioningState = provisioningState;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Lifecycle details of the resource. </summary>
         [WirePath("lifecycleDetails")]
-        public LifecycleDetails LifecycleDetails { get; }
+        public EdgeMachineLifecycleDetails LifecycleDetails { get; }
 
         /// <summary> Link to Arc Gateway ARM resource Id. </summary>
         [WirePath("arcGatewayResourceId")]

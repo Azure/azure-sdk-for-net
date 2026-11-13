@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ContainerServiceFleetManagedNamespaceResource.ResourceType, out string containerServiceFleetManagedNamespaceApiVersion);
             _fleetManagedNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetManagedNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-03-02-preview");
+            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new ContainerServiceFleetManagedNamespaceDataAsyncCollectionResultOfT(
                 _fleetManagedNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new ContainerServiceFleetManagedNamespaceDataCollectionResultOfT(
                 _fleetManagedNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

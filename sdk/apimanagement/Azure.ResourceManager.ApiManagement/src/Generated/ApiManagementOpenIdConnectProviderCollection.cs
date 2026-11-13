@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementOpenIdConnectProviderResource.ResourceType, out string apiManagementOpenIdConnectProviderApiVersion);
             _openIdConnectProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementOpenIdConnectProviderResource.ResourceType.Namespace, Diagnostics);
-            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Endpoint, apiManagementOpenIdConnectProviderApiVersion ?? "2025-09-01-preview");
+            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementOpenIdConnectProviderApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new OpenIdConnectProviderGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new ApiManagementOpenIdConnectProviderDataAsyncCollectionResultOfT(
                 _openIdConnectProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new OpenIdConnectProviderGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new ApiManagementOpenIdConnectProviderDataCollectionResultOfT(
                 _openIdConnectProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

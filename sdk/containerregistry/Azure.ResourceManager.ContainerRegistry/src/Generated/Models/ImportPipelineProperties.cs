@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
-            Options = new ChangeTrackingList<PipelineOption>();
+            Options = new ChangeTrackingList<ContainerRegistryPipelineOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportPipelineProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The list of all options configured for the pipeline. </param>
         /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportPipelineProperties(ContainerRegistryImportPipelineSourceProperties source, PipelineTriggerProperties trigger, IList<PipelineOption> options, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportPipelineProperties(ContainerRegistryImportPipelineSourceProperties source, PipelineTriggerProperties trigger, IList<ContainerRegistryPipelineOption> options, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Trigger = trigger;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of all options configured for the pipeline. </summary>
         [WirePath("options")]
-        public IList<PipelineOption> Options { get; } = new ChangeTrackingList<PipelineOption>();
+        public IList<ContainerRegistryPipelineOption> Options { get; } = new ChangeTrackingList<ContainerRegistryPipelineOption>();
 
         /// <summary> The provisioning state of the pipeline at the time the operation was called. </summary>
         [WirePath("provisioningState")]

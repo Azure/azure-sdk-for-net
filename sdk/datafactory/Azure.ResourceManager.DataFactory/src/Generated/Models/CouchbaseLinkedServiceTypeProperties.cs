@@ -24,17 +24,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="CouchbaseLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="credString"> The Azure key vault secret reference of credString in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CouchbaseLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CouchbaseLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret credString, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
+            CredString = credString;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
+
+        /// <summary> The Azure key vault secret reference of credString in connection string. </summary>
+        public DataFactoryKeyVaultSecret CredString { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

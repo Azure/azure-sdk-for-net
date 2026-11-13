@@ -91,8 +91,8 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _count = DefineProperty<int>(nameof(Count), new string[] { "count" }, isOutput: true);
-            _firstTimestamp = DefineProperty<DateTimeOffset>(nameof(FirstTimestamp), new string[] { "firstTimestamp" }, isOutput: true);
-            _lastTimestamp = DefineProperty<DateTimeOffset>(nameof(LastTimestamp), new string[] { "lastTimestamp" }, isOutput: true);
+            _firstTimestamp = DefineProperty<DateTimeOffset>(nameof(FirstTimestamp), new string[] { "firstTimestamp" }, isOutput: true, format: "O");
+            _lastTimestamp = DefineProperty<DateTimeOffset>(nameof(LastTimestamp), new string[] { "lastTimestamp" }, isOutput: true, format: "O");
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
             _eventType = DefineProperty<string>(nameof(EventType), new string[] { "type" }, isOutput: true);

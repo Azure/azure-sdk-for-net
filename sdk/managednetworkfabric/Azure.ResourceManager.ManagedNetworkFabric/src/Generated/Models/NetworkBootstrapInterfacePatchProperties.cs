@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network Bootstrap Interface Patch properties. </summary>
-    public partial class NetworkBootstrapInterfacePatchProperties : AnnotationResourceProperties
+    internal partial class NetworkBootstrapInterfacePatchProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapInterfacePatchProperties"/>. </summary>
         public NetworkBootstrapInterfacePatchProperties()

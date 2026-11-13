@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string hostingEnvironmentDetectorApiVersion);
             _detectorResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _detectorResponsesRestClient = new DetectorResponses(_detectorResponsesClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentDetectorApiVersion ?? "2026-03-15");
+            _detectorResponsesRestClient = new DetectorResponses(_detectorResponsesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentDetectorApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

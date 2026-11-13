@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecureScoreControlDefinitions SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitions(SecureScoreControlDefinitionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private SecureScoreControlDefinitions SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitions(SecureScoreControlDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SensitivitySettingsClientDiagnostics => _sensitivitySettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SensitivitySettings SensitivitySettingsRestClient => _sensitivitySettingsRestClient ??= new SensitivitySettings(SensitivitySettingsClientDiagnostics, Pipeline, Endpoint, "2023-02-15-preview");
+        private SensitivitySettings SensitivitySettingsRestClient => _sensitivitySettingsRestClient ??= new SensitivitySettings(SensitivitySettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-02-15-preview");
 
         /// <summary> Gets a collection of TenantAssessmentMetadata in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of TenantAssessmentMetadata and their operations over a TenantAssessmentMetadataResource. </returns>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
+            return new SecureScoreControlDefinitionItemAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
+            return new SecureScoreControlDefinitionItemCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
         }
 
         /// <summary>

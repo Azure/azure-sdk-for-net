@@ -19,21 +19,21 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="AssetMetadata"/>. </summary>
         /// <param name="key"> The key of the asset. </param>
-        /// <param name="type"> The type of the asset. </param>
+        /// <param name="kind"> The type of the asset. </param>
         /// <param name="roles"> The roles of the asset. </param>
         /// <param name="title"> The title of the asset. </param>
         /// <param name="description"> The description of the asset. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="type"/>, <paramref name="roles"/>, <paramref name="title"/> or <paramref name="description"/> is null. </exception>
-        public AssetMetadata(string key, string @type, IEnumerable<string> roles, string title, string description)
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="kind"/>, <paramref name="roles"/>, <paramref name="title"/> or <paramref name="description"/> is null. </exception>
+        public AssetMetadata(string key, string kind, IEnumerable<string> roles, string title, string description)
         {
             Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(@type, nameof(@type));
+            Argument.AssertNotNull(kind, nameof(kind));
             Argument.AssertNotNull(roles, nameof(roles));
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(description, nameof(description));
 
             Key = key;
-            Type = @type;
+            Kind = kind;
             Roles = roles.ToList();
             Title = title;
             Description = description;
@@ -41,15 +41,15 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="AssetMetadata"/>. </summary>
         /// <param name="key"> The key of the asset. </param>
-        /// <param name="type"> The type of the asset. </param>
+        /// <param name="kind"> The type of the asset. </param>
         /// <param name="roles"> The roles of the asset. </param>
         /// <param name="title"> The title of the asset. </param>
         /// <param name="description"> The description of the asset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetMetadata(string key, string @type, IList<string> roles, string title, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetMetadata(string key, string kind, IList<string> roles, string title, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
-            Type = @type;
+            Kind = kind;
             Roles = roles;
             Title = title;
             Description = description;
@@ -60,7 +60,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Key { get; }
 
         /// <summary> The type of the asset. </summary>
-        public string Type { get; }
+        public string Kind { get; }
 
         /// <summary> The roles of the asset. </summary>
         public IList<string> Roles { get; }

@@ -12,7 +12,6 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.HealthDataAIServices.Tests
 {
     [TestFixture]
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     public class PrivateEndpointCreateGetDelete : HealthDataAIServicesManagementTestBase
     {
         public PrivateEndpointCreateGetDelete() : base(true)
@@ -36,6 +35,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task TestAddressCRUDOperations()
         {
             ResourceGroupResource rg = await CreateResourceGroup("testRg");

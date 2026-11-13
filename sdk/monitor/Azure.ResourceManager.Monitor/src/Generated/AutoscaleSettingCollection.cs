@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutoscaleSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AutoscaleSettingResource.ResourceType, out string autoscaleSettingApiVersion);
             _autoscaleSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", AutoscaleSettingResource.ResourceType.Namespace, Diagnostics);
-            _autoscaleSettingsRestClient = new AutoscaleSettings(_autoscaleSettingsClientDiagnostics, Pipeline, Endpoint, autoscaleSettingApiVersion ?? "2022-10-01");
+            _autoscaleSettingsRestClient = new AutoscaleSettings(_autoscaleSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetByResourceGroupAsyncCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
+            return new AsyncPageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingDataAsyncCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetByResourceGroupCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
+            return new PageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingDataCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +445,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +506,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

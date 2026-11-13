@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MongoRUToMongoRUCopyJobProperties(jobType, additionalBinaryDataProperties, sourceDetails, destinationDetails, tasks);
+            return new MongoRUToMongoRUCopyJobProperties(jobType, additionalBinaryDataProperties, sourceDetails, destinationDetails, tasks ?? new ChangeTrackingList<MongoRUToMongoRUCopyJobTask>());
         }
     }
 }

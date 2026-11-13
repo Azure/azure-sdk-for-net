@@ -101,7 +101,7 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public void SpeechStartedEvent_CancelsResponseAndClearsStreamingAudio()
+        public void SpeechStartedEvent_StopsPlaybackAndClearsStreaming()
         {
             // This test demonstrates how BasicVoiceAssistant.HandleSessionUpdateAsync would be tested
             // if the samples were accessible from the test project.
@@ -112,7 +112,7 @@ namespace Azure.AI.VoiceLive.Tests
                 "1. Add project reference to BasicVoiceAssistant sample in test project, OR " +
                 "2. Move BasicVoiceAssistant to the main SDK with dependency injection support. " +
                 "Expected behavior: SessionUpdateInputAudioBufferSpeechStarted should call " +
-                "CancelResponseAsync(), ClearStreamingAudioAsync(), and StopPlaybackAsync().");
+                "StopPlaybackAsync() and ClearStreamingAudioAsync(), but not CancelResponseAsync().");
         }
 
         [Test]

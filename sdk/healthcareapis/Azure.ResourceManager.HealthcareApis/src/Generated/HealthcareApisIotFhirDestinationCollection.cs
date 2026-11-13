@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(HealthcareApisIotFhirDestinationResource.ResourceType, out string healthcareApisIotFhirDestinationApiVersion);
             _iotConnectorFhirDestinationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisIotFhirDestinationResource.ResourceType.Namespace, Diagnostics);
-            _iotConnectorFhirDestinationRestClient = new IotConnectorFhirDestination(_iotConnectorFhirDestinationClientDiagnostics, Pipeline, Endpoint, healthcareApisIotFhirDestinationApiVersion ?? "2025-04-01-preview");
+            _iotConnectorFhirDestinationRestClient = new IotConnectorFhirDestination(_iotConnectorFhirDestinationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisIotFhirDestinationApiVersion ?? "2025-04-01-preview");
             _fhirDestinationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisIotFhirDestinationResource.ResourceType.Namespace, Diagnostics);
-            _fhirDestinationsRestClient = new FhirDestinations(_fhirDestinationsClientDiagnostics, Pipeline, Endpoint, healthcareApisIotFhirDestinationApiVersion ?? "2025-04-01-preview");
+            _fhirDestinationsRestClient = new FhirDestinations(_fhirDestinationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisIotFhirDestinationApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new FhirDestinationsGetByIotConnectorAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationDataAsyncCollectionResultOfT(
                 _fhirDestinationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new FhirDestinationsGetByIotConnectorCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationDataCollectionResultOfT(
                 _fhirDestinationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="IPGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the IpGroups. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal IPGroupData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpGroupPropertiesFormat properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal IPGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPGroupPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Properties of the IpGroups. </summary>
         [WirePath("properties")]
-        internal IpGroupPropertiesFormat Properties { get; set; }
+        internal IPGroupPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -62,9 +63,37 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpGroupPropertiesFormat();
+                    Properties = new IPGroupPropertiesFormat();
                 }
                 return Properties.IPAddresses;
+            }
+        }
+
+        /// <summary> List of references to Firewall resources that this IpGroups is associated with. </summary>
+        [WirePath("properties.firewalls")]
+        public IReadOnlyList<WritableSubResource> Firewalls
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IPGroupPropertiesFormat();
+                }
+                return Properties.Firewalls;
+            }
+        }
+
+        /// <summary> List of references to Firewall Policies resources that this IpGroups is associated with. </summary>
+        [WirePath("properties.firewallPolicies")]
+        public IReadOnlyList<WritableSubResource> FirewallPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IPGroupPropertiesFormat();
+                }
+                return Properties.FirewallPolicies;
             }
         }
     }

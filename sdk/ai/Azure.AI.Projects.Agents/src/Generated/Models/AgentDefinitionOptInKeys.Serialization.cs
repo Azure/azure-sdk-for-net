@@ -14,6 +14,11 @@ namespace Azure.AI.Projects.Agents
             AgentDefinitionOptInKeys.WorkflowAgentsV1Preview => "WorkflowAgents=V1Preview",
             AgentDefinitionOptInKeys.ExternalAgentsV1Preview => "ExternalAgents=V1Preview",
             AgentDefinitionOptInKeys.DraftAgentsV1Preview => "DraftAgents=V1Preview",
+            AgentDefinitionOptInKeys.VoiceAgentsV1Preview => "VoiceAgents=V1Preview",
+            AgentDefinitionOptInKeys.DigitalWorkerV1Preview => "DigitalWorker=V1Preview",
+            AgentDefinitionOptInKeys.GithubCopilotV1Preview => "GitHubCopilot=V1Preview",
+            AgentDefinitionOptInKeys.SkillsV1Preview => "Skills=V1Preview",
+            AgentDefinitionOptInKeys.MicrosoftCopilotV1Preview => "MicrosoftCopilot=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.")
         };
 
@@ -31,6 +36,26 @@ namespace Azure.AI.Projects.Agents
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "DraftAgents=V1Preview"))
             {
                 return AgentDefinitionOptInKeys.DraftAgentsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VoiceAgents=V1Preview"))
+            {
+                return AgentDefinitionOptInKeys.VoiceAgentsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DigitalWorker=V1Preview"))
+            {
+                return AgentDefinitionOptInKeys.DigitalWorkerV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GitHubCopilot=V1Preview"))
+            {
+                return AgentDefinitionOptInKeys.GithubCopilotV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
+            {
+                return AgentDefinitionOptInKeys.SkillsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftCopilot=V1Preview"))
+            {
+                return AgentDefinitionOptInKeys.MicrosoftCopilotV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.");
         }

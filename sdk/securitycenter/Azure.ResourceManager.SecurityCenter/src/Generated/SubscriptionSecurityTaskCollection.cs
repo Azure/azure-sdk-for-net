@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SubscriptionSecurityTaskResource.ResourceType, out string subscriptionSecurityTaskApiVersion);
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionSecurityTaskResource.ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityTaskApiVersion ?? "2015-06-01-preview");
+            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityTaskApiVersion ?? "2015-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new SecurityTaskDataAsync0CollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionCollectionResultOfT(
+            return new PageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new SecurityTaskData0CollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

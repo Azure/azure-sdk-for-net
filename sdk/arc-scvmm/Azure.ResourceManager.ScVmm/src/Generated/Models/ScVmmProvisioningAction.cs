@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Defines the different types of operations for guest agent. </summary>
+    /// <summary> Guest agent provisioning action. </summary>
     public readonly partial struct ScVmmProvisioningAction : IEquatable<ScVmmProvisioningAction>
     {
         private readonly string _value;
+        /// <summary> Install guest agent. </summary>
+        private const string InstallValue = "install";
+        /// <summary> Uninstall guest agent. </summary>
+        private const string UninstallValue = "uninstall";
+        /// <summary> Repair guest agent. </summary>
+        private const string RepairValue = "repair";
 
         /// <summary> Initializes a new instance of <see cref="ScVmmProvisioningAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScVmmProvisioningAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InstallValue = "install";
-        private const string UninstallValue = "uninstall";
-        private const string RepairValue = "repair";
-
-        /// <summary> install. </summary>
+        /// <summary> Install guest agent. </summary>
         public static ScVmmProvisioningAction Install { get; } = new ScVmmProvisioningAction(InstallValue);
-        /// <summary> uninstall. </summary>
+
+        /// <summary> Uninstall guest agent. </summary>
         public static ScVmmProvisioningAction Uninstall { get; } = new ScVmmProvisioningAction(UninstallValue);
-        /// <summary> repair. </summary>
+
+        /// <summary> Repair guest agent. </summary>
         public static ScVmmProvisioningAction Repair { get; } = new ScVmmProvisioningAction(RepairValue);
+
         /// <summary> Determines if two <see cref="ScVmmProvisioningAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScVmmProvisioningAction left, ScVmmProvisioningAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScVmmProvisioningAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScVmmProvisioningAction left, ScVmmProvisioningAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScVmmProvisioningAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScVmmProvisioningAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScVmmProvisioningAction(string value) => new ScVmmProvisioningAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScVmmProvisioningAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScVmmProvisioningAction?(string value) => value == null ? null : new ScVmmProvisioningAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScVmmProvisioningAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScVmmProvisioningAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string serviceWorkspaceProductApiLinkApiVersion);
             _workspaceProductApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _workspaceProductApiLinkRestClient = new WorkspaceProductApiLink(_workspaceProductApiLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceProductApiLinkApiVersion ?? "2025-09-01-preview");
+            _workspaceProductApiLinkRestClient = new WorkspaceProductApiLink(_workspaceProductApiLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceProductApiLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

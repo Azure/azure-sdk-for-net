@@ -140,7 +140,7 @@ private static void DisplayEvaluatorVersion(EvaluatorVersion evaluator)
     Console.WriteLine("     Categories:");
     foreach (EvaluatorCategory category in evaluator.Categories)
     {
-        Console.WriteLine("         - ${category}");
+        Console.WriteLine($"         - {category}");
     }
 }
 ```

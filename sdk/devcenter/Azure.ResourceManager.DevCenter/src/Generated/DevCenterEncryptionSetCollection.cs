@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterEncryptionSetResource.ResourceType, out string devCenterEncryptionSetApiVersion);
             _encryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterEncryptionSetResource.ResourceType.Namespace, Diagnostics);
-            _encryptionSetsRestClient = new EncryptionSets(_encryptionSetsClientDiagnostics, Pipeline, Endpoint, devCenterEncryptionSetApiVersion ?? "2026-01-01-preview");
+            _encryptionSetsRestClient = new EncryptionSets(_encryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterEncryptionSetApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterEncryptionSetData, DevCenterEncryptionSetResource>(new EncryptionSetsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterEncryptionSetData, DevCenterEncryptionSetResource>(new DevCenterEncryptionSetDataAsyncCollectionResultOfT(
                 _encryptionSetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterEncryptionSetData, DevCenterEncryptionSetResource>(new EncryptionSetsGetAllCollectionResultOfT(
+            return new PageableWrapper<DevCenterEncryptionSetData, DevCenterEncryptionSetResource>(new DevCenterEncryptionSetDataCollectionResultOfT(
                 _encryptionSetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

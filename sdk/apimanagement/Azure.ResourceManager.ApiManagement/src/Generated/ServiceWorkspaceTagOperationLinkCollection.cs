@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceTagOperationLinkResource.ResourceType, out string serviceWorkspaceTagOperationLinkApiVersion);
             _workspaceTagOperationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagOperationLinkResource.ResourceType.Namespace, Diagnostics);
-            _workspaceTagOperationLinkRestClient = new WorkspaceTagOperationLink(_workspaceTagOperationLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagOperationLinkApiVersion ?? "2025-09-01-preview");
+            _workspaceTagOperationLinkRestClient = new WorkspaceTagOperationLink(_workspaceTagOperationLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceTagOperationLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagOperationLinkContractData, ServiceWorkspaceTagOperationLinkResource>(new WorkspaceTagOperationLinkGetByProductAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TagOperationLinkContractData, ServiceWorkspaceTagOperationLinkResource>(new TagOperationLinkContractDataAsync0CollectionResultOfT(
                 _workspaceTagOperationLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagOperationLinkContractData, ServiceWorkspaceTagOperationLinkResource>(new WorkspaceTagOperationLinkGetByProductCollectionResultOfT(
+            return new PageableWrapper<TagOperationLinkContractData, ServiceWorkspaceTagOperationLinkResource>(new TagOperationLinkContractData0CollectionResultOfT(
                 _workspaceTagOperationLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

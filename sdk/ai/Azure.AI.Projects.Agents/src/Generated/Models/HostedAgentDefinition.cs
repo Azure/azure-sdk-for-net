@@ -36,7 +36,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
-        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        /// <param name="sessionConfiguration"> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </param>
+        /// <param name="enableMemorySnapshot"> Whether this agent version uses memory snapshots. Sessions for a snapshot-enabled version start from a snapshot of the agent's initialized process rather than starting the process from its image. Defaults to false. </param>
+        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig, SessionConfiguration sessionConfiguration, bool? enableMemorySnapshot) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Cpu = cpu;
             Memory = memory;
@@ -45,6 +47,8 @@ namespace Azure.AI.Projects.Agents
             Versions = versions;
             CodeConfiguration = codeConfiguration;
             TelemetryConfig = telemetryConfig;
+            SessionConfiguration = sessionConfiguration;
+            EnableMemorySnapshot = enableMemorySnapshot;
         }
 
         /// <summary> The CPU configuration for the hosted agent. </summary>
@@ -67,5 +71,11 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
         public TelemetryConfig TelemetryConfig { get; set; }
+
+        /// <summary> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </summary>
+        public SessionConfiguration SessionConfiguration { get; set; }
+
+        /// <summary> Whether this agent version uses memory snapshots. Sessions for a snapshot-enabled version start from a snapshot of the agent's initialized process rather than starting the process from its image. Defaults to false. </summary>
+        public bool? EnableMemorySnapshot { get; set; }
     }
 }

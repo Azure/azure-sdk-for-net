@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v6OverV4BgpSession"> V6OverV4 BGP Session state. </param>
         /// <param name="nativeIPv4PrefixLimit"> Native IPv4 prefix limits configuration. </param>
         /// <param name="nativeIPv6PrefixLimit"> Native IPv6 prefix limits configuration. </param>
-        internal ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ExternalNetworkBmpProperties bmpConfiguration, ResourceIdentifier egressAclId, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession, NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, additionalBinaryDataProperties)
+        internal ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ExternalNetworkBmpProperties bmpConfiguration, ResourceIdentifier egressAclId, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession, NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, additionalBinaryDataProperties)
         {
             Mtu = mtu;
             VlanId = vlanId;
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkFabricV6OverV4BgpSessionState? V6OverV4BgpSession { get; set; }
 
         /// <summary> Native IPv4 prefix limits configuration. </summary>
-        internal NativeIpv4PrefixLimitProperties NativeIPv4PrefixLimit { get; set; }
+        internal NativeIPv4PrefixLimitProperties NativeIPv4PrefixLimit { get; set; }
 
         /// <summary> Native IPv6 prefix limits configuration. </summary>
-        internal NativeIpv6PrefixLimitProperties NativeIPv6PrefixLimit { get; set; }
+        internal NativeIPv6PrefixLimitProperties NativeIPv6PrefixLimit { get; set; }
 
         /// <summary> BMP Configuration State. </summary>
         public BmpConfigurationState? BmpConfigurationState
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (NativeIPv4PrefixLimit is null)
                 {
-                    NativeIPv4PrefixLimit = new NativeIpv4PrefixLimitProperties();
+                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitProperties();
                 }
                 return NativeIPv4PrefixLimit.PrefixLimits;
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (NativeIPv6PrefixLimit is null)
                 {
-                    NativeIPv6PrefixLimit = new NativeIpv6PrefixLimitProperties();
+                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitProperties();
                 }
                 return NativeIPv6PrefixLimit.PrefixLimits;
             }

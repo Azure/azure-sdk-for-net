@@ -247,9 +247,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.IsNotEmpty(model.Data.DisplayProvisioningState);
             Assert.NotNull(model.Data.ProvisioningState);
             Assert.NotNull(model.Data.PurchaseOn);
-            Assert.NotNull(model.Data.BenefitStartOn);
+            Assert.NotNull(model.Data.BenefitStartsOn);
             Assert.NotNull(model.Data.EffectOn);
-            Assert.NotNull(model.Data.ExpireOn);
+            Assert.NotNull(model.Data.ExpiresOn);
         }
     }
 }

@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated the code generation to TypeSpec.
+
 ## 1.1.0 (2026-06-02)
 
 ### Other Changes

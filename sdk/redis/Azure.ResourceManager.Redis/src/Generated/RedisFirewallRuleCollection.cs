@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(RedisFirewallRuleResource.ResourceType, out string redisFirewallRuleApiVersion);
             _redisFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _redisFirewallRulesRestClient = new RedisFirewallRules(_redisFirewallRulesClientDiagnostics, Pipeline, Endpoint, redisFirewallRuleApiVersion ?? "2025-08-01-preview");
+            _redisFirewallRulesRestClient = new RedisFirewallRules(_redisFirewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisFirewallRuleApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRuleDataAsyncCollectionResultOfT(
                 _redisFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRuleDataCollectionResultOfT(
                 _redisFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

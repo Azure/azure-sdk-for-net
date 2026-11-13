@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             TryGetApiVersion(VariableValueResource.ResourceType, out string variableValueApiVersion);
             _variableValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", VariableValueResource.ResourceType.Namespace, Diagnostics);
-            _variableValuesRestClient = new VariableValues(_variableValuesClientDiagnostics, Pipeline, Endpoint, variableValueApiVersion ?? "2025-12-01-preview");
+            _variableValuesRestClient = new VariableValues(_variableValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, variableValueApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VariableValueData, VariableValueResource>(new VariableValuesGetAllAsyncCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "VariableValueCollection.GetAll"), data => new VariableValueResource(Client, data));
+            return new AsyncPageableWrapper<VariableValueData, VariableValueResource>(new VariableValueDataAsyncCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "VariableValueCollection.GetAll"), data => new VariableValueResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VariableValueData, VariableValueResource>(new VariableValuesGetAllCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "VariableValueCollection.GetAll"), data => new VariableValueResource(Client, data));
+            return new PageableWrapper<VariableValueData, VariableValueResource>(new VariableValueDataCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "VariableValueCollection.GetAll"), data => new VariableValueResource(Client, data));
         }
 
         /// <summary>

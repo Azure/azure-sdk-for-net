@@ -436,5 +436,19 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
             var response = await new DurationClient(host, null).GetQueryClient().Int32MillisecondsArrayAsync(new[] { data1, data2 });
             Assert.AreEqual(204, response.Status);
         });
+
+        [SpectorTest]
+        public Task LossyInt32Seconds() => Test(async (host) =>
+        {
+            var response = await new DurationClient(host, null).GetLossyClient().IntSecondsAsync(TimeSpan.FromSeconds(36.25));
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task LossyInt32Milliseconds() => Test(async (host) =>
+        {
+            var response = await new DurationClient(host, null).GetLossyClient().IntMillisecondsAsync(TimeSpan.FromMilliseconds(36250.25));
+            Assert.AreEqual(204, response.Status);
+        });
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SoftDeleteConfiguration"/>. </summary>
-        /// <param name="softDeletionEnabled"> Flag to indicate whether soft delete is enabled on the account. </param>
+        /// <param name="isSoftDeletionEnabled"> Flag to indicate whether soft delete is enabled on the account. </param>
         /// <param name="minMinutesBeforePermanentDeletionAllowed"> Minimum number of minutes before a soft deleted resource can be permanently deleted. </param>
         /// <param name="softDeleteRetentionPeriodInMinutes"> Soft delete retention period in minutes for resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftDeleteConfiguration(bool? softDeletionEnabled, int? minMinutesBeforePermanentDeletionAllowed, int? softDeleteRetentionPeriodInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftDeleteConfiguration(bool? isSoftDeletionEnabled, int? minMinutesBeforePermanentDeletionAllowed, int? softDeleteRetentionPeriodInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SoftDeletionEnabled = softDeletionEnabled;
+            IsSoftDeletionEnabled = isSoftDeletionEnabled;
             MinMinutesBeforePermanentDeletionAllowed = minMinutesBeforePermanentDeletionAllowed;
             SoftDeleteRetentionPeriodInMinutes = softDeleteRetentionPeriodInMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Flag to indicate whether soft delete is enabled on the account. </summary>
         [WirePath("softDeletionEnabled")]
-        public bool? SoftDeletionEnabled { get; set; }
+        public bool? IsSoftDeletionEnabled { get; set; }
 
         /// <summary> Minimum number of minutes before a soft deleted resource can be permanently deleted. </summary>
         [WirePath("minMinutesBeforePermanentDeletionAllowed")]

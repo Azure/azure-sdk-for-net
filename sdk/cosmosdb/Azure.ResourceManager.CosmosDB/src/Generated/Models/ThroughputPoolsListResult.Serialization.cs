@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ThroughputPoolsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ThroughputPoolsListResult(value ?? new ChangeTrackingList<CosmosDBThroughputPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

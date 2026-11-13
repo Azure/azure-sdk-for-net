@@ -12,8 +12,10 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
+    /// <summary> A convenience client that provides access to all persistent agents sub-clients. </summary>
     public class PersistentAgentsClient
     {
+        /// <summary> Initializes a new instance of the <see cref="PersistentAgentsClient"/> class for mocking. </summary>
         protected PersistentAgentsClient()
         { }
 
@@ -43,6 +45,11 @@ namespace Azure.AI.Agents.Persistent
             _client = new(endpoint, credential, options);
         }
 
+        /// <summary> Creates a new thread and immediately starts a run against it. </summary>
+        /// <param name="assistantId"> The identifier of the agent to run. </param>
+        /// <param name="options"> The options for thread creation and run configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The <see cref="ThreadRun"/> representing the created run. </returns>
         public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, ThreadAndRunOptions options, CancellationToken cancellationToken = default)
         {
             return _client.CreateThreadAndRun(
@@ -66,6 +73,11 @@ namespace Azure.AI.Agents.Persistent
             );
         }
 
+        /// <summary> Creates a new thread and immediately starts a run against it. </summary>
+        /// <param name="assistantId"> The identifier of the agent to run. </param>
+        /// <param name="options"> The options for thread creation and run configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The <see cref="ThreadRun"/> representing the created run. </returns>
         public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, ThreadAndRunOptions options, CancellationToken cancellationToken = default)
         {
             return await _client.CreateThreadAndRunAsync(
@@ -89,11 +101,17 @@ namespace Azure.AI.Agents.Persistent
             ).ConfigureAwait(false);
         }
 
+        /// <summary> Gets the administration sub-client. </summary>
         public PersistentAgentsAdministrationClient Administration { get => _client; }
+        /// <summary> Gets the files sub-client. </summary>
         public PersistentAgentsFiles Files { get => _client.GetPersistentAgentsFilesClient(); }
+        /// <summary> Gets the messages sub-client. </summary>
         public ThreadMessages Messages { get => _client.GetThreadMessagesClient(); }
+        /// <summary> Gets the threads sub-client. </summary>
         public Threads Threads { get => _client.GetThreadsClient(); }
+        /// <summary> Gets the runs sub-client. </summary>
         public ThreadRuns Runs { get => _client.GetThreadRunsClient(); }
+        /// <summary> Gets the vector stores sub-client. </summary>
         public VectorStores VectorStores { get => _client.GetVectorStoresClient(); }
     }
 }

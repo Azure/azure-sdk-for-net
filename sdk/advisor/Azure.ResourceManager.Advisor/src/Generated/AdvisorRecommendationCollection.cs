@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorRecommendationResource.ResourceType, out string advisorRecommendationApiVersion);
             _resourceRecommendationBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _resourceRecommendationBasesRestClient = new ResourceRecommendationBases(_resourceRecommendationBasesClientDiagnostics, Pipeline, Endpoint, advisorRecommendationApiVersion ?? "2025-05-01-preview");
+            _resourceRecommendationBasesRestClient = new ResourceRecommendationBases(_resourceRecommendationBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorRecommendationApiVersion ?? "2025-05-01-preview");
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new ResourceRecommendationBasesGetByTenantAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new AdvisorRecommendationDataAsyncCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
                 Id.ToString(),
                 filter,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new ResourceRecommendationBasesGetByTenantCollectionResultOfT(
+            return new PageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new AdvisorRecommendationDataCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
                 Id.ToString(),
                 filter,

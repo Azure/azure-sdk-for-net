@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ManagedClusterJwtAuthenticatorResource.ResourceType, out string managedClusterJwtAuthenticatorApiVersion);
             _jwtAuthenticatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterJwtAuthenticatorResource.ResourceType.Namespace, Diagnostics);
-            _jwtAuthenticatorsRestClient = new JWTAuthenticators(_jwtAuthenticatorsClientDiagnostics, Pipeline, Endpoint, managedClusterJwtAuthenticatorApiVersion ?? "2026-04-02-preview");
+            _jwtAuthenticatorsRestClient = new JWTAuthenticators(_jwtAuthenticatorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterJwtAuthenticatorApiVersion ?? "2026-08-02-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new ManagedClusterJwtAuthenticatorDataAsyncCollectionResultOfT(
                 _jwtAuthenticatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new ManagedClusterJwtAuthenticatorDataCollectionResultOfT(
                 _jwtAuthenticatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmHybridIdentityMetadataApiVersion);
             _hybridIdentityMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _hybridIdentityMetadataRestClient = new HybridIdentityMetadata(_hybridIdentityMetadataClientDiagnostics, Pipeline, Endpoint, hciVmHybridIdentityMetadataApiVersion ?? "2025-09-01-preview");
+            _hybridIdentityMetadataRestClient = new HybridIdentityMetadata(_hybridIdentityMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmHybridIdentityMetadataApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

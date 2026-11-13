@@ -9,11 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
-    /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
+    /// <summary> Represents the value for an extension config property. </summary>
     public partial class ArmDeploymentExtensionConfigItem : IJsonModel<ArmDeploymentExtensionConfigItem>
     {
         /// <param name="data"> The data to parse. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support writing '{options.Format}' format.");
             }
@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionConfigPropertyType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ExtensionConfigPropertyType.Value.ToString());
-            }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -95,6 +90,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExtensionConfigPropertyType))
+            {
+                writer.WritePropertyName("type"u8);
+                SerializeExtensionConfigPropertyType(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,28 +138,19 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ExtensionConfigPropertyType? extensionConfigPropertyType = default;
             BinaryData value = default;
             KeyVaultParameterReference keyVaultReference = default;
+            ExtensionConfigPropertyType? extensionConfigPropertyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    extensionConfigPropertyType = new ExtensionConfigPropertyType(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("value"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    value = BinaryData.FromString(prop.Value.GetRawText());
+                    value = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("keyVaultReference"u8))
@@ -171,12 +162,17 @@ namespace Azure.ResourceManager.Resources.Models
                     keyVaultReference = KeyVaultParameterReference.DeserializeKeyVaultParameterReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    DeserializeExtensionConfigPropertyType(prop, ref extensionConfigPropertyType, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, additionalBinaryDataProperties);
+            return new ArmDeploymentExtensionConfigItem(value, keyVaultReference, extensionConfigPropertyType, additionalBinaryDataProperties);
         }
     }
 }

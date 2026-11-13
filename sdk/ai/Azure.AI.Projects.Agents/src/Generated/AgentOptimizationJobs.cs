@@ -41,8 +41,90 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
+        /// <summary> Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry. Clients poll the URL in `Operation-Location` by using the get operation. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual OperationResult Create(bool waitUntilCompleted, BinaryContent content, string operationId = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateRequest(content, operationId, options);
+                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry. Clients poll the URL in `Operation-Location` by using the get operation. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, BinaryContent content, string operationId = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateRequest(content, operationId, options);
+                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry. Clients poll the URL in `Operation-Location` by using the get operation. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="job"> The job to create. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+        [Experimental("SCME0006")]
+        public virtual OperationResult Create(bool waitUntilCompleted, AgentOptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(job, nameof(job));
+
+            OperationResult result = Create(waitUntilCompleted, job, operationId, cancellationToken.ToRequestOptions());
+            return result;
+        }
+
+        /// <summary> Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry. Clients poll the URL in `Operation-Location` by using the get operation. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="job"> The job to create. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, AgentOptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(job, nameof(job));
+
+            OperationResult result = await CreateAsync(waitUntilCompleted, job, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return result;
+        }
+
         /// <summary>
-        /// [Protocol Method] Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry.
+        /// [Protocol Method] Estimates validation-set rows, per-stage model call volumes, and cost bands without submitting the job.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -50,18 +132,19 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Create(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
+        public virtual ClientResult Estimate(BinaryContent content, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Estimate");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateEstimateRequest(content, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -72,7 +155,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry.
+        /// [Protocol Method] Estimates validation-set rows, per-stage model call volumes, and cost bands without submitting the job.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -80,18 +163,19 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> EstimateAsync(BinaryContent content, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Estimate");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateEstimateRequest(content, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -101,34 +185,34 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
-        /// <param name="job"> The job to create. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <summary> Estimates validation-set rows, per-stage model call volumes, and cost bands without submitting the job. </summary>
+        /// <param name="inputs"> The inputs to estimate against. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
-        internal virtual ClientResult<OptimizationJob> Create(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentOptimizationEstimateResult> Estimate(AgentOptimizationEstimateInputs inputs, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Create(job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            ClientResult result = Estimate(inputs, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentOptimizationEstimateResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
-        /// <param name="job"> The job to create. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <summary> Estimates validation-set rows, per-stage model call volumes, and cost bands without submitting the job. </summary>
+        /// <param name="inputs"> The inputs to estimate against. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
-        internal virtual async Task<ClientResult<OptimizationJob>> CreateAsync(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentOptimizationEstimateResult>> EstimateAsync(AgentOptimizationEstimateInputs inputs, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateAsync(job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            ClientResult result = await EstimateAsync(inputs, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentOptimizationEstimateResult)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id.
+        /// [Protocol Method] Retrieves an optimization job by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -136,17 +220,20 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the job. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Get(string jobId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Get(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using PipelineMessage message = CreateGetRequest(jobId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -157,7 +244,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id.
+        /// [Protocol Method] Retrieves an optimization job by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -165,17 +252,20 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the job. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetAsync(string jobId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using PipelineMessage message = CreateGetRequest(jobId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -185,32 +275,36 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Get an optimization job by id. </summary>
+        /// <summary> Retrieves an optimization job by its identifier. </summary>
         /// <param name="jobId"> The ID of the job. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
-        internal virtual ClientResult<OptimizationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentOptimizationJob> Get(string jobId, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Get(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = Get(jobId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Get an optimization job by id. </summary>
+        /// <summary> Retrieves an optimization job by its identifier. </summary>
         /// <param name="jobId"> The ID of the job. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
-        internal virtual async Task<ClientResult<OptimizationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentOptimizationJob>> GetAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = await GetAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state.
+        /// [Protocol Method] Requests cancellation of a running or queued job. Returns 409 Conflict if the job is already in a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -218,17 +312,20 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Cancel(string jobId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Cancel(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using PipelineMessage message = CreateCancelRequest(jobId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -239,7 +336,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state.
+        /// [Protocol Method] Requests cancellation of a running or queued job. Returns 409 Conflict if the job is already in a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -247,17 +344,20 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CancelAsync(string jobId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> CancelAsync(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using PipelineMessage message = CreateCancelRequest(jobId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -267,32 +367,36 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state. </summary>
+        /// <summary> Requests cancellation of a running or queued job. Returns 409 Conflict if the job is already in a terminal state. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
-        internal virtual ClientResult<OptimizationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentOptimizationJob> Cancel(string jobId, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Cancel(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = Cancel(jobId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state. </summary>
+        /// <summary> Requests cancellation of a running or queued job. Returns 409 Conflict if the job is already in a terminal state. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
-        internal virtual async Task<ClientResult<OptimizationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentOptimizationJob>> CancelAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CancelAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = await CancelAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the job and its candidate artifacts. Cancels first if non-terminal.
+        /// [Protocol Method] Cancels active work, then deletes the job and its candidate artifacts.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -300,17 +404,20 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Delete(string jobId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Delete(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using PipelineMessage message = CreateDeleteRequest(jobId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -321,7 +428,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the job and its candidate artifacts. Cancels first if non-terminal.
+        /// [Protocol Method] Cancels active work, then deletes the job and its candidate artifacts.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -329,17 +436,20 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteAsync(string jobId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> DeleteAsync(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+                using PipelineMessage message = CreateDeleteRequest(jobId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -349,24 +459,30 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
+        /// <summary> Cancels active work, then deletes the job and its candidate artifacts. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult Delete(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
         {
-            return Delete(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            return Delete(jobId, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
+        /// <summary> Cancels active work, then deletes the job and its candidate artifacts. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            return await DeleteAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

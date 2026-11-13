@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementCacheResource.ResourceType, out string apiManagementCacheApiVersion);
             _cacheClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementCacheResource.ResourceType.Namespace, Diagnostics);
-            _cacheRestClient = new Cache(_cacheClientDiagnostics, Pipeline, Endpoint, apiManagementCacheApiVersion ?? "2025-09-01-preview");
+            _cacheRestClient = new Cache(_cacheClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementCacheApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new CacheGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new ApiManagementCacheDataAsyncCollectionResultOfT(
                 _cacheRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new CacheGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new ApiManagementCacheDataCollectionResultOfT(
                 _cacheRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

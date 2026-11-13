@@ -14,6 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Static input data definition. </summary>
     public partial class StaticInputData : MonitoringInputDataBase
     {
+        private string _preprocessingComponentId;
+        private bool _preprocessingComponentIdIsDefined;
+
+        /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
+        /// <param name="windowStart"> [Required] The start date of the data window. </param>
+        /// <param name="windowEnd"> [Required] The end date of the data window. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        public StaticInputData(JobInputType jobInputType, Uri uri, DateTimeOffset windowStart, DateTimeOffset windowEnd) : base(MonitoringInputDataType.Static, jobInputType, uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            WindowEnd = windowEnd;
+            WindowStart = windowStart;
+        }
+
         /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
         /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="dataContext"> The context metadata of the data source. </param>
@@ -26,14 +43,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="windowStart"> [Required] The start date of the data window. </param>
         internal StaticInputData(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties, string preprocessingComponentId, DateTimeOffset windowEnd, DateTimeOffset windowStart) : base(columns, dataContext, inputDataType, jobInputType, uri, additionalBinaryDataProperties)
         {
-            PreprocessingComponentId = preprocessingComponentId;
+            _preprocessingComponentId = preprocessingComponentId;
             WindowEnd = windowEnd;
             WindowStart = windowStart;
         }
 
         /// <summary> Reference to the component asset used to preprocess the data. </summary>
         [WirePath("preprocessingComponentId")]
-        public string PreprocessingComponentId { get; set; }
+        public string PreprocessingComponentId
+        {
+            get
+            {
+                return _preprocessingComponentId;
+            }
+            set
+            {
+                _preprocessingComponentId = value;
+                _preprocessingComponentIdIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The end date of the data window. </summary>
         [WirePath("windowEnd")]

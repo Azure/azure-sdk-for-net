@@ -23,6 +23,7 @@ namespace Azure.Core.Http.Multipart
     /// A Stream that wraps another stream and allows reading lines.
     /// The data is buffered in memory.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal class BufferedReadStream : Stream
     {
         private const byte CR = (byte)'\r';

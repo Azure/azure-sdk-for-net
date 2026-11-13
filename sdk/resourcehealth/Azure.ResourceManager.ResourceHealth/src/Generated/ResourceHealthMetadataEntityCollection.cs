@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ResourceHealthMetadataEntityResource.ResourceType, out string resourceHealthMetadataEntityApiVersion);
             _metadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthMetadataEntityResource.ResourceType.Namespace, Diagnostics);
-            _metadataRestClient = new Metadata(_metadataClientDiagnostics, Pipeline, Endpoint, resourceHealthMetadataEntityApiVersion ?? "2025-05-01");
+            _metadataRestClient = new Metadata(_metadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthMetadataEntityApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthMetadataEntityData, ResourceHealthMetadataEntityResource>(new MetadataGetAllAsyncCollectionResultOfT(_metadataRestClient, context, "ResourceHealthMetadataEntityCollection.GetAll"), data => new ResourceHealthMetadataEntityResource(Client, data));
+            return new AsyncPageableWrapper<ResourceHealthMetadataEntityData, ResourceHealthMetadataEntityResource>(new ResourceHealthMetadataEntityDataAsyncCollectionResultOfT(_metadataRestClient, context, "ResourceHealthMetadataEntityCollection.GetAll"), data => new ResourceHealthMetadataEntityResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthMetadataEntityData, ResourceHealthMetadataEntityResource>(new MetadataGetAllCollectionResultOfT(_metadataRestClient, context, "ResourceHealthMetadataEntityCollection.GetAll"), data => new ResourceHealthMetadataEntityResource(Client, data));
+            return new PageableWrapper<ResourceHealthMetadataEntityData, ResourceHealthMetadataEntityResource>(new ResourceHealthMetadataEntityDataCollectionResultOfT(_metadataRestClient, context, "ResourceHealthMetadataEntityCollection.GetAll"), data => new ResourceHealthMetadataEntityResource(Client, data));
         }
 
         /// <summary>

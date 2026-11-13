@@ -169,6 +169,39 @@ Describe "Update-MgmtPackageFolder function" -Tag "UnitTest" {
     }
 }
 
+Describe "Get-SDKValidationBuildArguments function" -Tag "UnitTest" {
+    It "scopes service.proj validation to the generated package and its tests" {
+        $sdkRootPath = Join-Path ([System.IO.Path]::GetTempPath()) "sdk-validation-build-test"
+
+        $result = @(Get-SDKValidationBuildArguments `
+            -sdkRootPath $sdkRootPath `
+            -service "monitorpipelinegroups" `
+            -packageName "Azure.ResourceManager.Monitor.PipelineGroups")
+
+        $result | Should -HaveCount 8
+        $result | Should -Contain "/p:Scope=monitorpipelinegroups"
+        $result | Should -Contain "/p:Project=Azure.ResourceManager.Monitor.PipelineGroups"
+        $result | Should -Contain "/p:IncludeSamples=false"
+        $result | Should -Contain "/p:IncludePerf=false"
+        $result | Should -Contain "/p:IncludeStress=false"
+        $result[-1] | Should -Be (Join-Path $sdkRootPath "eng" "service.proj")
+    }
+}
+
+Describe "Get-SDKPackageResult function" -Tag "UnitTest" {
+    It "reports management validation failures as warnings" {
+        Get-SDKPackageResult -isGenerateSuccess $true -hasValidationWarning $true | Should -Be "warning"
+    }
+
+    It "reports generation failures as failed" {
+        Get-SDKPackageResult -isGenerateSuccess $false -hasValidationWarning $true | Should -Be "failed"
+    }
+
+    It "reports successful validation as succeeded" {
+        Get-SDKPackageResult -isGenerateSuccess $true -hasValidationWarning $false | Should -Be "succeeded"
+    }
+}
+
 Describe "GetSDKProjectFolder function" -Tag "UnitTest" {
     BeforeAll {
         $testTspConfigDir = Join-Path $PSScriptRoot "test-data"
@@ -262,6 +295,43 @@ options:
         $testSdkRoot = "/test/sdk/root"
         $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileNew -sdkRepoRoot $testSdkRoot
         $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.NewEmitter"
+        $result | Should -Be $expected
+    }
+
+    it("should resolve namespace with the core C# emitter") {
+        $testTspConfigFileCore = Join-Path $testTspConfigDir "tspconfig-core-emitter.yaml"
+        $testConfigCoreEmitter = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@typespec/http-client-csharp":
+    namespace: TestService.CoreClient
+"@
+        $testConfigCoreEmitter | Out-File -FilePath $testTspConfigFileCore -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileCore -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "TestService.CoreClient"
+        $result | Should -Be $expected
+    }
+
+    it("should resolve core C# emitter output using package-name without namespace") {
+        $testTspConfigFileCoreOutput = Join-Path $testTspConfigDir "tspconfig-core-output.yaml"
+        $testConfigCoreOutput = @"
+parameters:
+  service-dir:
+    default: sdk/ai
+options:
+  "@typespec/http-client-csharp":
+    emitter-output-dir: "{output-dir}/{service-dir}/{package-name}"
+    package-name: Azure.AI.Extensions.OpenAI
+"@
+        $testConfigCoreOutput | Out-File -FilePath $testTspConfigFileCoreOutput -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileCoreOutput -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "sdk" "ai" "Azure.AI.Extensions.OpenAI"
         $result | Should -Be $expected
     }
     

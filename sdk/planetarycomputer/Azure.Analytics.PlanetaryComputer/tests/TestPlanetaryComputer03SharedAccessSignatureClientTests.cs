@@ -147,7 +147,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test signing an asset HREF using collection thumbnail.
         /// Python equivalent: test_03_get_sign_with_collection_thumbnail
-        /// C# method: GetSign(href, durationInMinutes=null)
+        /// C# method: GetUrl(href, durationInMinutes=null)
         /// </summary>
         [Test]
         [Category("SAS")]
@@ -160,12 +160,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             StacClient stacClient = client.GetStacClient();
             string collectionId = TestEnvironment.CollectionId;
 
-            TestContext.WriteLine($"Testing GetSign with collection: {collectionId}");
+            TestContext.WriteLine($"Testing GetUrl with collection: {collectionId}");
 
             // Get collection to retrieve thumbnail asset
             TestContext.WriteLine("Getting collection...");
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
 
             Assert.That(collection, Is.Not.Null, "Collection should not be null");
             Assert.That(collection.Assets, Is.Not.Null, "Collection should have assets");
@@ -178,11 +178,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Assert.That(originalHref, Is.Not.Null, "Thumbnail HREF should not be null");
 
             // Act - Sign the HREF
-            TestContext.WriteLine($"Calling GetSign(href={originalHref})");
-            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(originalHref);
+            TestContext.WriteLine($"Calling GetUrl(href={originalHref})");
+            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(originalHref);
 
             // Assert
-            ValidateResponse(signResponse.GetRawResponse(), "GetSign");
+            ValidateResponse(signResponse.GetRawResponse(), "GetUrl");
             Assert.That(signResponse.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             SharedAccessSignatureSignedLink signedLink = signResponse.Value;
@@ -233,7 +233,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test that a signed HREF can be used to download an asset.
         /// Python equivalent: test_04_signed_href_can_download_asset
-        /// C# method: GetSign(href) followed by HTTP download
+        /// C# method: GetUrl(href) followed by HTTP download
         /// </summary>
         [Test]
         [Category("SAS")]
@@ -250,15 +250,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Get collection thumbnail
             TestContext.WriteLine("Getting collection...");
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
             string thumbnailHrefString = collection.Assets["thumbnail"].Href;
             Uri thumbnailHref = new Uri(thumbnailHrefString);
             TestContext.WriteLine($"Thumbnail HREF: {thumbnailHref}");
 
             // Get signed HREF
-            TestContext.WriteLine($"Calling GetSign(href={thumbnailHref})");
-            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(thumbnailHref);
+            TestContext.WriteLine($"Calling GetUrl(href={thumbnailHref})");
+            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(thumbnailHref);
             Uri signedHref = signResponse.Value.Href;
             TestContext.WriteLine($"Signed HREF: {signedHref}");
 

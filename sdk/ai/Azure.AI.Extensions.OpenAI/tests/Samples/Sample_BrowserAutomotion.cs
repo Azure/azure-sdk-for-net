@@ -11,7 +11,6 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 {
@@ -32,7 +31,15 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         }
         else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
         {
-            throw new InvalidOperationException($"The stream has failed with the error: {errorUpdate.Message}");
+            throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
+        }
+        else if (streamResponse is StreamingResponseFailedUpdate failedUpdate)
+        {
+            throw new InvalidOperationException($"The response has failed: {failedUpdate.Response.Error?.Message}, error code: {failedUpdate.Response.Error?.Code}");
+        }
+        else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
+        {
+            throw new InvalidOperationException($"The response cannot be completed. Check the request for safety or guardrail requirements and review response {incompleteUpdate.Response.Id} for details, including output limits.");
         }
     }
     #endregion
@@ -46,11 +53,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_CONNECTION_NAME;
+        var playwrightConnectionName = TestEnvironment.BROWSER_AUTOMATION_NAME;
 #endif
         AIProjectClientOptions options = new()
         {
@@ -61,9 +68,9 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Async
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-        BrowserAutomationPreviewTool playwrightTool = new(
+        BrowserAutomationTool playwrightTool = new(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+                new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -78,7 +85,8 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+            new AgentReference(agentVersion.Name, agentVersion.Version));
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -93,7 +101,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
                     "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
             }
         };
-        await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate update in await responseClient.CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(update);
         }
@@ -101,70 +109,6 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_BrowserAutomotion_Async
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        #endregion
-    }
-
-    [Test]
-    [SyncOnly]
-    public void BrowserAutomotion()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_CONNECTION_NAME;
-#endif
-        AIProjectClientOptions options = new()
-        {
-            NetworkTimeout = TimeSpan.FromMinutes(5)
-        };
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
-        AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-        BrowserAutomationPreviewTool playwrightTool = new(
-            new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
-            ));
-
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are an Agent helping with browser automation tasks.\n" +
-            "You can answer questions, provide information, and assist with various tasks\n" +
-            "related to web browsing using the Browser Automation tool available to you.",
-            Tools = { playwrightTool }
-        };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myAgent",
-            options: new(agentDefinition));
-        #endregion
-        #region Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-        CreateResponseOptions responseOptions = new()
-        {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-            StreamingEnabled = true,
-            InputItems =
-            {
-                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-                    "To do that, go to the website finance.yahoo.com.\n" +
-                    "At the top of the page, you will find a search bar.\n" +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
-            }
-        };
-        foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
-        {
-            ParseResponse(update);
-        }
-        #endregion
-
-        #region Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maps
         {
             TryGetApiVersion(ResourceType, out string mapsPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, mapsPrivateEndpointConnectionApiVersion ?? "2025-10-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mapsPrivateEndpointConnectionApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

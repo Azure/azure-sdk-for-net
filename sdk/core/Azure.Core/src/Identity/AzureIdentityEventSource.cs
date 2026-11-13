@@ -49,6 +49,7 @@ namespace Azure.Identity
         private const int KubernetesProxyCaCertificateReloadFailedEvent = 28;
         private const int KubernetesProxyCaCertificateReloadedEvent = 29;
         private const int TokenBindingEvent = 30;
+        private const int ManagedIdentitySourcesUnavailableEvent = 31;
 
         internal const string TenantIdDiscoveredAndNotUsedEventMessage = "A token was request for a different tenant than was configured on the credential, but the configured value was used since multi tenant authentication has been disabled. Configured TenantId: {0}, Requested TenantId {1}";
         internal const string TenantIdDiscoveredAndUsedEventMessage = "A token was requested for a different tenant than was configured on the credential, and the requested tenant id was used to authenticate. Configured TenantId: {0}, Requested TenantId {1}";
@@ -205,6 +206,21 @@ namespace Azure.Identity
         public void ImdsEndpointUnavailable(string uri, string error)
         {
             WriteEvent(ImdsEndpointUnavailableEvent, uri, error);
+        }
+
+        [NonEvent]
+        public void ManagedIdentitySourcesUnavailable(Exception e)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                ManagedIdentitySourcesUnavailable(FormatException(e));
+            }
+        }
+
+        [Event(ManagedIdentitySourcesUnavailableEvent, Level = EventLevel.Informational, Message = "No managed identity source is available. Error: {0}")]
+        public void ManagedIdentitySourcesUnavailable(string error)
+        {
+            WriteEvent(ManagedIdentitySourcesUnavailableEvent, error);
         }
 
         [NonEvent]

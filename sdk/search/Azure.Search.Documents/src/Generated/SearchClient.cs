@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +47,8 @@ namespace Azure.Search.Documents
         public virtual Response<long> GetDocumentCount(CancellationToken cancellationToken = default)
         {
             Response result = GetDocumentCount(cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
+            long value = long.Parse(result.Content.ToString(), CultureInfo.InvariantCulture);
+            return Response.FromValue(value, result);
         }
 
         /// <summary> Queries the number of documents in the index. </summary>
@@ -55,7 +57,8 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<long>> GetDocumentCountAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetDocumentCountAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
+            long value = long.Parse(result.Content.ToString(), CultureInfo.InvariantCulture);
+            return Response.FromValue(value, result);
         }
 
         /// <summary>
@@ -358,7 +361,7 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<SearchDocumentsResult> SearchPost(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
         {
-            SearchPostRequest spreadModel = new SearchPostRequest(
+            SearchPostContent spreadModel = new SearchPostContent(
                 includeTotalCount,
                 facets?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 filter,
@@ -437,7 +440,7 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, IEnumerable<string> highlightFields = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, IEnumerable<string> searchFields = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, IEnumerable<string> @select = default, int? skip = default, int? top = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorHandling = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, QueryAnswerType? answers = default, QueryCaptionType? captions = default, QueryRewritesType? queryRewrites = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? vectorFilterMode = default, HybridSearch hybridSearch = default, string querySourceAuthorization = default, bool? enableElevatedRead = default, CancellationToken cancellationToken = default)
         {
-            SearchPostRequest spreadModel = new SearchPostRequest(
+            SearchPostContent spreadModel = new SearchPostContent(
                 includeTotalCount,
                 facets?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 filter,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WorkflowTriggerHistoryResource.ResourceType, out string workflowTriggerHistoryApiVersion);
             _workflowTriggerHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowTriggerHistoryResource.ResourceType.Namespace, Diagnostics);
-            _workflowTriggerHistoriesRestClient = new WorkflowTriggerHistories(_workflowTriggerHistoriesClientDiagnostics, Pipeline, Endpoint, workflowTriggerHistoryApiVersion ?? "2026-03-15");
+            _workflowTriggerHistoriesRestClient = new WorkflowTriggerHistories(_workflowTriggerHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workflowTriggerHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoriesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoryDataAsyncCollectionResultOfT(
                 _workflowTriggerHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoriesGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoryDataCollectionResultOfT(
                 _workflowTriggerHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

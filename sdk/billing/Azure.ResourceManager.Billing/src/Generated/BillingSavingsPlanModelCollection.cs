@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingSavingsPlanModelResource.ResourceType, out string billingSavingsPlanModelApiVersion);
             _savingsPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSavingsPlanModelResource.ResourceType.Namespace, Diagnostics);
-            _savingsPlansRestClient = new SavingsPlans(_savingsPlansClientDiagnostics, Pipeline, Endpoint, billingSavingsPlanModelApiVersion ?? "2024-04-01");
+            _savingsPlansRestClient = new SavingsPlans(_savingsPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingSavingsPlanModelApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new SavingsPlansGetBySavingsPlanOrderAsyncCollectionResultOfT(_savingsPlansRestClient, Id.Parent.Name, Id.Name, context, "BillingSavingsPlanModelCollection.GetAll"), data => new BillingSavingsPlanModelResource(Client, data));
+            return new AsyncPageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new BillingSavingsPlanModelDataAsync0CollectionResultOfT(_savingsPlansRestClient, Id.Parent.Name, Id.Name, context, "BillingSavingsPlanModelCollection.GetAll"), data => new BillingSavingsPlanModelResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new SavingsPlansGetBySavingsPlanOrderCollectionResultOfT(_savingsPlansRestClient, Id.Parent.Name, Id.Name, context, "BillingSavingsPlanModelCollection.GetAll"), data => new BillingSavingsPlanModelResource(Client, data));
+            return new PageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new BillingSavingsPlanModelData0CollectionResultOfT(_savingsPlansRestClient, Id.Parent.Name, Id.Name, context, "BillingSavingsPlanModelCollection.GetAll"), data => new BillingSavingsPlanModelResource(Client, data));
         }
 
         /// <summary>

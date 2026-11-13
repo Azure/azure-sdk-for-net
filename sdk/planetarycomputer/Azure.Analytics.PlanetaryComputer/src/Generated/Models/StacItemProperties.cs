@@ -20,15 +20,10 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StacItemProperties"/>. </summary>
-        /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datetime"/> is null. </exception>
-        public StacItemProperties(string datetime)
+        public StacItemProperties()
         {
-            Argument.AssertNotNull(datetime, nameof(datetime));
-
             Instruments = new ChangeTrackingList<string>();
             Providers = new ChangeTrackingList<StacProvider>();
-            Datetime = datetime;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -39,15 +34,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="mission"> Mission associated with the data. </param>
         /// <param name="providers"> Organizations or individuals who provide the data. </param>
         /// <param name="gsd"> Ground sample distance in meters. </param>
-        /// <param name="created"> Creation timestamp of the data. </param>
-        /// <param name="updated"> Last update timestamp of the data. </param>
+        /// <param name="createdOn"> Creation timestamp of the data. </param>
+        /// <param name="updatedOn"> Last update timestamp of the data. </param>
         /// <param name="title"> Human-readable title for the item. </param>
         /// <param name="description"> Detailed description of the item. </param>
         /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
-        /// <param name="startDatetime"> Start time of the item observation period. </param>
-        /// <param name="endDatetime"> End time of the item observation period. </param>
+        /// <param name="startedOn"> Start time of the item observation period. </param>
+        /// <param name="endedOn"> End time of the item observation period. </param>
         /// <param name="additionalProperties"></param>
-        internal StacItemProperties(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string datetime, DateTimeOffset? startDatetime, DateTimeOffset? endDatetime, IDictionary<string, BinaryData> additionalProperties)
+        internal StacItemProperties(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string title, string description, string datetime, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IDictionary<string, BinaryData> additionalProperties)
         {
             Platform = platform;
             Instruments = instruments;
@@ -55,14 +50,24 @@ namespace Azure.Analytics.PlanetaryComputer
             Mission = mission;
             Providers = providers;
             Gsd = gsd;
-            Created = created;
-            Updated = updated;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             Title = title;
             Description = description;
             Datetime = datetime;
-            StartDatetime = startDatetime;
-            EndDatetime = endDatetime;
+            StartedOn = startedOn;
+            EndedOn = endedOn;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StacItemProperties"/>. </summary>
+        /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datetime"/> is null. </exception>
+        public StacItemProperties(string datetime) : this()
+        {
+            Argument.AssertNotNull(datetime, nameof(datetime));
+
+            Datetime = datetime;
         }
 
         /// <summary> Platform that acquired the data. </summary>
@@ -84,10 +89,10 @@ namespace Azure.Analytics.PlanetaryComputer
         public float? Gsd { get; set; }
 
         /// <summary> Creation timestamp of the data. </summary>
-        public DateTimeOffset? Created { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Last update timestamp of the data. </summary>
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
 
         /// <summary> Human-readable title for the item. </summary>
         public string Title { get; set; }
@@ -99,10 +104,10 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Datetime { get; set; }
 
         /// <summary> Start time of the item observation period. </summary>
-        public DateTimeOffset? StartDatetime { get; set; }
+        public DateTimeOffset? StartedOn { get; set; }
 
         /// <summary> End time of the item observation period. </summary>
-        public DateTimeOffset? EndDatetime { get; set; }
+        public DateTimeOffset? EndedOn { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

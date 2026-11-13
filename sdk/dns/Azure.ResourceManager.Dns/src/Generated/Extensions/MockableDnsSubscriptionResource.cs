@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Dns.Mocking
 
         private ClientDiagnostics ZonesClientDiagnostics => _zonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dns.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Zones ZonesRestClient => _zonesRestClient ??= new Zones(ZonesClientDiagnostics, Pipeline, Endpoint, "2023-07-01-preview");
+        private Zones ZonesRestClient => _zonesRestClient ??= new Zones(ZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-07-01-preview");
 
         private ClientDiagnostics DnsResourceReferenceClientDiagnostics => _dnsResourceReferenceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dns.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResourceReference DnsResourceReferenceRestClient => _dnsResourceReferenceRestClient ??= new DnsResourceReference(DnsResourceReferenceClientDiagnostics, Pipeline, Endpoint, "2023-07-01-preview");
+        private DnsResourceReference DnsResourceReferenceRestClient => _dnsResourceReferenceRestClient ??= new DnsResourceReference(DnsResourceReferenceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-07-01-preview");
 
         /// <summary>
         /// Lists the DNS zones in all resource groups in a subscription.
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsZoneData, DnsZoneResource>(new ZonesGetAllAsyncCollectionResultOfT(ZonesRestClient, Id.SubscriptionId, top, context, "MockableDnsSubscriptionResource.GetAll"), data => new DnsZoneResource(Client, data));
+            return new AsyncPageableWrapper<DnsZoneData, DnsZoneResource>(new DnsZoneDataAsync0CollectionResultOfT(ZonesRestClient, Id.SubscriptionId, top, context, "MockableDnsSubscriptionResource.GetAll"), data => new DnsZoneResource(Client, data));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Dns.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsZoneData, DnsZoneResource>(new ZonesGetAllCollectionResultOfT(ZonesRestClient, Id.SubscriptionId, top, context, "MockableDnsSubscriptionResource.GetAll"), data => new DnsZoneResource(Client, data));
+            return new PageableWrapper<DnsZoneData, DnsZoneResource>(new DnsZoneData0CollectionResultOfT(ZonesRestClient, Id.SubscriptionId, top, context, "MockableDnsSubscriptionResource.GetAll"), data => new DnsZoneResource(Client, data));
         }
 
         /// <summary>

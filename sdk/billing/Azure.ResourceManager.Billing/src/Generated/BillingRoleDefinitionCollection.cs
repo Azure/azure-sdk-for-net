@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingRoleDefinitionResource.ResourceType, out string billingRoleDefinitionApiVersion);
             _billingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Endpoint, billingRoleDefinitionApiVersion ?? "2024-04-01");
+            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingRoleDefinitionApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionGetByBillingAccountAsyncCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionDataAsync2CollectionResultOfT(_billingRoleDefinitionRestClient, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionGetByBillingAccountCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
+            return new PageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionData2CollectionResultOfT(_billingRoleDefinitionRestClient, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
         }
 
         /// <summary>

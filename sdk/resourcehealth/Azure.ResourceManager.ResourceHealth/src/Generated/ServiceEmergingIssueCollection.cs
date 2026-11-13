@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ServiceEmergingIssueResource.ResourceType, out string serviceEmergingIssueApiVersion);
             _emergingIssuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ServiceEmergingIssueResource.ResourceType.Namespace, Diagnostics);
-            _emergingIssuesRestClient = new EmergingIssues(_emergingIssuesClientDiagnostics, Pipeline, Endpoint, serviceEmergingIssueApiVersion ?? "2025-05-01");
+            _emergingIssuesRestClient = new EmergingIssues(_emergingIssuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEmergingIssueApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new EmergingIssuesGetAllAsyncCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
+            return new AsyncPageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new ServiceEmergingIssueDataAsyncCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new EmergingIssuesGetAllCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
+            return new PageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new ServiceEmergingIssueDataCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
         }
 
         /// <summary>

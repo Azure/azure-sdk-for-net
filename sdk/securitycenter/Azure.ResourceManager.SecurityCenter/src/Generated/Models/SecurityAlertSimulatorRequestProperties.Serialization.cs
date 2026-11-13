@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Describes properties of an alert simulation request. </summary>
+    /// <summary>
+    /// Describes properties of an alert simulation request
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>.
+    /// </summary>
     public partial class SecurityAlertSimulatorRequestProperties : IJsonModel<SecurityAlertSimulatorRequestProperties>
     {
         /// <param name="data"> The data to parse. </param>

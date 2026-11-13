@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.CertificateRegistration
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of AppServiceCertificateOrders for mocking. </summary>
         protected AppServiceCertificateOrders()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <summary> Initializes a new instance of AppServiceCertificateOrders. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AppServiceCertificateOrders(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AppServiceCertificateOrders(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(AppServiceCertificateOrders).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -51,14 +54,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -73,14 +74,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -97,14 +96,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -121,14 +118,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -141,14 +136,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -164,14 +157,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -183,14 +174,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -206,14 +195,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -229,14 +216,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/reissue", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -253,14 +238,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/renew", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -277,14 +260,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/resendEmail", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -299,14 +280,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/resendRequestEmails", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -323,14 +302,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/retrieveSiteSeal", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -348,14 +325,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/verifyDomainOwnership", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -370,14 +345,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/retrieveCertificateActions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -393,14 +366,12 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/retrieveEmailHistory", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

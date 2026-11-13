@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeMachineResource.ResourceType, out string edgeMachineApiVersion);
             _edgeMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", EdgeMachineResource.ResourceType.Namespace, Diagnostics);
-            _edgeMachinesRestClient = new EdgeMachines(_edgeMachinesClientDiagnostics, Pipeline, Endpoint, edgeMachineApiVersion ?? "2026-05-01-preview");
+            _edgeMachinesRestClient = new EdgeMachines(_edgeMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/edgeMachines", out string edgeMachinesApiVersionOverride) ? edgeMachinesApiVersionOverride : "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetByResourceGroupAsyncCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeMachineCollection.GetAll"), data => new EdgeMachineResource(Client, data));
+            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachineDataAsyncCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeMachineCollection.GetAll"), data => new EdgeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetByResourceGroupCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeMachineCollection.GetAll"), data => new EdgeMachineResource(Client, data));
+            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachineDataCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeMachineCollection.GetAll"), data => new EdgeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

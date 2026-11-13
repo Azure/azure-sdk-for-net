@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChatSummaryMemoryItem"/>, <see cref="ProceduralMemoryItem"/>, and <see cref="UserProfileMemoryItem"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class MemoryOutputItem
@@ -52,9 +52,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> The unique ID of the memory item. </summary>
         public string MemoryId { get; set; }
-
-        /// <summary> The last update time of the memory item. </summary>
-        public DateTimeOffset UpdatedAt { get; set; }
 
         /// <summary> The namespace that logically groups and isolates memories, such as a user ID. </summary>
         public string Scope { get; set; }

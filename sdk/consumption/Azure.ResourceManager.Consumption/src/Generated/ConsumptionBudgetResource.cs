@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption
         {
             TryGetApiVersion(ResourceType, out string consumptionBudgetApiVersion);
             _budgetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ResourceType.Namespace, Diagnostics);
-            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Endpoint, consumptionBudgetApiVersion ?? "2024-08-01");
+            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, consumptionBudgetApiVersion ?? "2024-08-01");
             ValidateResourceId(id);
         }
 

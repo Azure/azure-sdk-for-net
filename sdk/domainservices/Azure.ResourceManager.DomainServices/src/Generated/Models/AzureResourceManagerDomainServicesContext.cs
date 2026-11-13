@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DomainServices.Models;
 using Azure.ResourceManager.Models;
 
@@ -23,11 +22,9 @@ namespace Azure.ResourceManager.DomainServices
     [ModelReaderWriterBuildable(typeof(DomainServiceData))]
     [ModelReaderWriterBuildable(typeof(DomainServiceHealthAlert))]
     [ModelReaderWriterBuildable(typeof(DomainServiceHealthMonitor))]
-    [ModelReaderWriterBuildable(typeof(DomainServiceListResult))]
     [ModelReaderWriterBuildable(typeof(DomainServiceMigrationProgress))]
     [ModelReaderWriterBuildable(typeof(DomainServiceMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(DomainServiceNotificationSettings))]
-    [ModelReaderWriterBuildable(typeof(DomainServiceProperties))]
     [ModelReaderWriterBuildable(typeof(DomainServiceReplicaSet))]
     [ModelReaderWriterBuildable(typeof(DomainServiceResource))]
     [ModelReaderWriterBuildable(typeof(DomainServiceUnsuspendResult))]
@@ -35,11 +32,8 @@ namespace Azure.ResourceManager.DomainServices
     [ModelReaderWriterBuildable(typeof(LdapsSettings))]
     [ModelReaderWriterBuildable(typeof(OuContainerCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(OuContainerData))]
-    [ModelReaderWriterBuildable(typeof(OuContainerListResult))]
-    [ModelReaderWriterBuildable(typeof(OuContainerProperties))]
     [ModelReaderWriterBuildable(typeof(OuContainerResource))]
     [ModelReaderWriterBuildable(typeof(ResourceForestSettings))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDomainServicesContext : ModelReaderWriterContext
     {

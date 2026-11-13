@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Salesforce V2 object dataset. </summary>
     public partial class SalesforceV2ObjectDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="SalesforceV2ObjectDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public SalesforceV2ObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("SalesforceV2Object", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="SalesforceV2ObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

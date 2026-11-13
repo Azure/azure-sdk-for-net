@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of Azure prepayment applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesAzurePrepaymentApplied : BillingAmount
+    internal partial class InvoicePropertiesAzurePrepaymentApplied : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesAzurePrepaymentApplied"/>. </summary>
         public InvoicePropertiesAzurePrepaymentApplied()

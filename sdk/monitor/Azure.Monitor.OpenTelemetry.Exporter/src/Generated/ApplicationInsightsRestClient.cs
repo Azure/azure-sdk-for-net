@@ -142,11 +142,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<TrackResponse> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        internal virtual Response<TrackResult> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = Track(content, cancellationToken.ToRequestContext());
-            return Response.FromValue((TrackResponse)result, result);
+            return Response.FromValue((TrackResult)result, result);
         }
 
         /// <summary>
@@ -156,11 +156,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<TrackResult>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
             Response result = await TrackAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TrackResponse)result, result);
+            return Response.FromValue((TrackResult)result, result);
         }
     }
 }

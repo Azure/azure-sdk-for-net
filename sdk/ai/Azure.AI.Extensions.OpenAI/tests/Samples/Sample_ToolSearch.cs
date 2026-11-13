@@ -12,7 +12,6 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_ToolSearch : ProjectsOpenAITestBase
 {
@@ -42,7 +41,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         MCPToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         CodeInterpreterToolboxTool codeInterpreter = new()
         {
@@ -50,7 +49,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
         };
-        ToolboxSearchPreviewToolboxTool searchTool = new()
+        ToolSearchToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
@@ -158,7 +157,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         MCPToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         CodeInterpreterToolboxTool codeInterpreter = new()
         {
@@ -166,7 +165,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
         };
-        ToolboxSearchPreviewToolboxTool searchTool = new()
+        ToolSearchToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"

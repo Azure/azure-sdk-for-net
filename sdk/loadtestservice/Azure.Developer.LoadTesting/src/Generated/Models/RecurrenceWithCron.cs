@@ -14,13 +14,8 @@ namespace Azure.Developer.LoadTesting
     public partial class RecurrenceWithCron : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/>. </summary>
-        /// <param name="cronExpression"> Cron expression for the recurrence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> is null. </exception>
-        public RecurrenceWithCron(string cronExpression) : base(Frequency.Cron)
+        public RecurrenceWithCron() : base(Frequency.Cron)
         {
-            Argument.AssertNotNull(cronExpression, nameof(cronExpression));
-
-            CronExpression = cronExpression;
         }
 
         /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/>. </summary>

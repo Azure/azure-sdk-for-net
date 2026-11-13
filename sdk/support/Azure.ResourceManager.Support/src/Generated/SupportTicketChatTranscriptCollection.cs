@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(SupportTicketChatTranscriptResource.ResourceType, out string supportTicketChatTranscriptApiVersion);
             _supportTicketChatTranscriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketChatTranscriptResource.ResourceType.Namespace, Diagnostics);
-            _supportTicketChatTranscriptRestClient = new SupportTicketChatTranscript(_supportTicketChatTranscriptClientDiagnostics, Pipeline, Endpoint, supportTicketChatTranscriptApiVersion ?? "2025-06-01-preview");
+            _supportTicketChatTranscriptRestClient = new SupportTicketChatTranscript(_supportTicketChatTranscriptClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketChatTranscriptApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new SupportTicketChatTranscriptGetAllAsyncCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketChatTranscriptCollection.GetAll"), data => new SupportTicketChatTranscriptResource(Client, data));
+            return new AsyncPageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new ChatTranscriptDetailDataAsyncCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketChatTranscriptCollection.GetAll"), data => new SupportTicketChatTranscriptResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new SupportTicketChatTranscriptGetAllCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketChatTranscriptCollection.GetAll"), data => new SupportTicketChatTranscriptResource(Client, data));
+            return new PageableWrapper<ChatTranscriptDetailData, SupportTicketChatTranscriptResource>(new ChatTranscriptDetailDataCollectionResultOfT(_supportTicketChatTranscriptRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketChatTranscriptCollection.GetAll"), data => new SupportTicketChatTranscriptResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

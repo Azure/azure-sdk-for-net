@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSiteBasicAuthPropertyResource.ResourceType, out string staticSiteBasicAuthPropertyApiVersion);
             _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBasicAuthPropertyResource.ResourceType.Namespace, Diagnostics);
-            _staticSiteBasicAuthPropertiesARMResourcesRestClient = new StaticSiteBasicAuthPropertiesARMResources(_staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteBasicAuthPropertyApiVersion ?? "2026-03-15");
+            _staticSiteBasicAuthPropertiesARMResourcesRestClient = new StaticSiteBasicAuthPropertiesARMResources(_staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBasicAuthPropertyApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteBasicAuthPropertyData, StaticSiteBasicAuthPropertyResource>(new StaticSiteBasicAuthPropertiesARMResourcesGetBasicAuthAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteBasicAuthPropertyData, StaticSiteBasicAuthPropertyResource>(new StaticSiteBasicAuthPropertyDataAsyncCollectionResultOfT(
                 _staticSiteBasicAuthPropertiesARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteBasicAuthPropertyData, StaticSiteBasicAuthPropertyResource>(new StaticSiteBasicAuthPropertiesARMResourcesGetBasicAuthCollectionResultOfT(
+            return new PageableWrapper<StaticSiteBasicAuthPropertyData, StaticSiteBasicAuthPropertyResource>(new StaticSiteBasicAuthPropertyDataCollectionResultOfT(
                 _staticSiteBasicAuthPropertiesARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

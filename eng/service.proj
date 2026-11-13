@@ -41,7 +41,6 @@
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\FormRecognizer\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.Face\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.CustomVision.Training\**\*.csproj" />
-      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Personalizer\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\hdinsight\Microsoft.Azure.HDInsight.Job\**\*.csproj" />
   </ItemGroup>
 
@@ -108,13 +107,17 @@
   </Target>
 
   <Target Name="BuildPlugin">
-    <Exec Command="dotnet build $(MSBuildThisFileDirectory)packages\plugins\client\Client.Plugin\" />
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="BuildPluginIfNeeded"
+             BuildInParallel="false"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
   </Target>
 
   <Target Name="GenerateCode" DependsOnTargets="InstallTspClient;BuildPlugin">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
-             Properties="SkipTspClientInstall=true"
+             Properties="SkipTspClientInstall=true;SkipBuildPlugin=true"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />

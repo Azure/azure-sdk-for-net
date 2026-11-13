@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationScheduleResource.ResourceType, out string automationScheduleApiVersion);
             _scheduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationScheduleResource.ResourceType.Namespace, Diagnostics);
-            _scheduleRestClient = new Schedule(_scheduleClientDiagnostics, Pipeline, Endpoint, automationScheduleApiVersion ?? "2024-10-23");
+            _scheduleRestClient = new Schedule(_scheduleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationScheduleApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationScheduleData, AutomationScheduleResource>(new ScheduleGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationScheduleData, AutomationScheduleResource>(new AutomationScheduleDataAsyncCollectionResultOfT(
                 _scheduleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationScheduleData, AutomationScheduleResource>(new ScheduleGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationScheduleData, AutomationScheduleResource>(new AutomationScheduleDataCollectionResultOfT(
                 _scheduleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

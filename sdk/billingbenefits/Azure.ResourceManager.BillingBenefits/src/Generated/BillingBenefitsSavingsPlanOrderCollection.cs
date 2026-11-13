@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(BillingBenefitsSavingsPlanOrderResource.ResourceType, out string billingBenefitsSavingsPlanOrderApiVersion);
             _savingsPlanOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsSavingsPlanOrderResource.ResourceType.Namespace, Diagnostics);
-            _savingsPlanOrderRestClient = new SavingsPlanOrder(_savingsPlanOrderClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanOrderApiVersion ?? "2025-12-01-preview");
+            _savingsPlanOrderRestClient = new SavingsPlanOrder(_savingsPlanOrderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsSavingsPlanOrderApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanOrderData, BillingBenefitsSavingsPlanOrderResource>(new SavingsPlanOrderGetAllAsyncCollectionResultOfT(_savingsPlanOrderRestClient, context, "BillingBenefitsSavingsPlanOrderCollection.GetAll"), data => new BillingBenefitsSavingsPlanOrderResource(Client, data));
+            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanOrderData, BillingBenefitsSavingsPlanOrderResource>(new BillingBenefitsSavingsPlanOrderDataAsyncCollectionResultOfT(_savingsPlanOrderRestClient, context, "BillingBenefitsSavingsPlanOrderCollection.GetAll"), data => new BillingBenefitsSavingsPlanOrderResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingBenefitsSavingsPlanOrderData, BillingBenefitsSavingsPlanOrderResource>(new SavingsPlanOrderGetAllCollectionResultOfT(_savingsPlanOrderRestClient, context, "BillingBenefitsSavingsPlanOrderCollection.GetAll"), data => new BillingBenefitsSavingsPlanOrderResource(Client, data));
+            return new PageableWrapper<BillingBenefitsSavingsPlanOrderData, BillingBenefitsSavingsPlanOrderResource>(new BillingBenefitsSavingsPlanOrderDataCollectionResultOfT(_savingsPlanOrderRestClient, context, "BillingBenefitsSavingsPlanOrderCollection.GetAll"), data => new BillingBenefitsSavingsPlanOrderResource(Client, data));
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securitySubAssessmentApiVersion);
             _subAssessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _subAssessmentsRestClient = new SubAssessments(_subAssessmentsClientDiagnostics, Pipeline, Endpoint, securitySubAssessmentApiVersion ?? "2019-01-01-preview");
+            _subAssessmentsRestClient = new SubAssessments(_subAssessmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securitySubAssessmentApiVersion ?? "2019-01-01-preview");
             ValidateResourceId(id);
         }
 

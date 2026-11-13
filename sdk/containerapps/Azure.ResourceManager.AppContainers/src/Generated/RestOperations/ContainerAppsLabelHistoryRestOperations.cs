@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of ContainerAppsLabelHistory for mocking. </summary>
         protected ContainerAppsLabelHistory()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of ContainerAppsLabelHistory. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ContainerAppsLabelHistory(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ContainerAppsLabelHistory(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(ContainerAppsLabelHistory).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
             uri.AppendPath(containerAppName, true);
-            uri.AppendPath("/labelHistory/", false);
+            uri.AppendPath("/labelHistories/", false);
             uri.AppendPath(labelName, true);
             if (_apiVersion != null)
             {
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.AppContainers
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
             uri.AppendPath(containerAppName, true);
-            uri.AppendPath("/labelHistory/", false);
+            uri.AppendPath("/labelHistories/", false);
             uri.AppendPath(labelName, true);
             if (_apiVersion != null)
             {
@@ -85,6 +89,7 @@ namespace Azure.ResourceManager.AppContainers
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
     }

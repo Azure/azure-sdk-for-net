@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Benefit utilization summary resource. </summary>
+    /// <summary>
+    /// Benefit utilization summary resource.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="IncludedQuantityUtilizationSummary"/> and <see cref="SavingsPlanUtilizationSummary"/>.
+    /// </summary>
     public partial class BenefitUtilizationSummary : ResourceData, IJsonModel<BenefitUtilizationSummary>
     {
         /// <param name="data"> The data to parse. </param>

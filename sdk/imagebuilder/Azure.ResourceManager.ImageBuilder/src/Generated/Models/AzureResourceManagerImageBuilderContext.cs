@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ImageBuilder.Models;
 using Azure.ResourceManager.Models;
 
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.ImageBuilder
     [ModelReaderWriterBuildable(typeof(ImageBuilderDataDisk))]
     [ModelReaderWriterBuildable(typeof(ImageBuilderProvisioningError))]
     [ModelReaderWriterBuildable(typeof(ImageBuilderVirtualNetworkConfig))]
-    [ModelReaderWriterBuildable(typeof(ImageTemplateAutoRun))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateCustomizer))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateData))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateDistributor))]
@@ -32,17 +30,13 @@ namespace Azure.ResourceManager.ImageBuilder
     [ModelReaderWriterBuildable(typeof(ImageTemplateIdentity))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateInVMValidator))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateLastRunStatus))]
-    [ModelReaderWriterBuildable(typeof(ImageTemplateListResult))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateManagedImageDistributor))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateManagedImageSource))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateOptimizeConfig))]
     [ModelReaderWriterBuildable(typeof(ImageTemplatePatch))]
-    [ModelReaderWriterBuildable(typeof(ImageTemplatePatchProperties))]
     [ModelReaderWriterBuildable(typeof(ImageTemplatePlatformImageSource))]
     [ModelReaderWriterBuildable(typeof(ImageTemplatePowerShellCustomizer))]
     [ModelReaderWriterBuildable(typeof(ImageTemplatePowerShellValidator))]
-    [ModelReaderWriterBuildable(typeof(ImageTemplateProperties))]
-    [ModelReaderWriterBuildable(typeof(ImageTemplatePropertiesOptimizeVmBoot))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateResource))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateRestartCustomizer))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateRunOutputData))]
@@ -54,7 +48,6 @@ namespace Azure.ResourceManager.ImageBuilder
     [ModelReaderWriterBuildable(typeof(ImageTemplateSource))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateTargetRegion))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateTriggerData))]
-    [ModelReaderWriterBuildable(typeof(ImageTemplateTriggerListResult))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateTriggerResource))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateTriggerStatus))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateValidationConfig))]
@@ -63,18 +56,9 @@ namespace Azure.ResourceManager.ImageBuilder
     [ModelReaderWriterBuildable(typeof(ImageTemplateWindowsUpdateCustomizer))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateWorkloadOptimization))]
     [ModelReaderWriterBuildable(typeof(PlatformImagePurchasePlan))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(RunOutputListResult))]
-    [ModelReaderWriterBuildable(typeof(RunOutputProperties))]
     [ModelReaderWriterBuildable(typeof(SourceImageTriggerProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TriggerProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownDistributeVersioner))]
-    [ModelReaderWriterBuildable(typeof(UnknownImageTemplateCustomizer))]
-    [ModelReaderWriterBuildable(typeof(UnknownImageTemplateDistributor))]
-    [ModelReaderWriterBuildable(typeof(UnknownImageTemplateInVMValidator))]
-    [ModelReaderWriterBuildable(typeof(UnknownImageTemplateSource))]
-    [ModelReaderWriterBuildable(typeof(UnknownTriggerProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerImageBuilderContext : ModelReaderWriterContext
     {

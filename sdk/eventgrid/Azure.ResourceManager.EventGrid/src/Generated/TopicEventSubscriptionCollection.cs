@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(TopicEventSubscriptionResource.ResourceType, out string topicEventSubscriptionApiVersion);
             _topicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", TopicEventSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _topicEventSubscriptionsRestClient = new TopicEventSubscriptions(_topicEventSubscriptionsClientDiagnostics, Pipeline, Endpoint, topicEventSubscriptionApiVersion ?? "2025-07-15-preview");
+            _topicEventSubscriptionsRestClient = new TopicEventSubscriptions(_topicEventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topicEventSubscriptionApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridSubscriptionData, TopicEventSubscriptionResource>(new TopicEventSubscriptionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridSubscriptionData, TopicEventSubscriptionResource>(new EventGridSubscriptionDataAsync7CollectionResultOfT(
                 _topicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridSubscriptionData, TopicEventSubscriptionResource>(new TopicEventSubscriptionsGetAllCollectionResultOfT(
+            return new PageableWrapper<EventGridSubscriptionData, TopicEventSubscriptionResource>(new EventGridSubscriptionData7CollectionResultOfT(
                 _topicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

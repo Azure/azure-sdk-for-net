@@ -69,26 +69,33 @@ AnalysisResult result = operation.Value;
 
 ## Get usage details
 
-After an analyze operation completes, you can retrieve usage details that describe the resources consumed — including document page counts, contextualization tokens, and per-model LLM/embedding token breakdown. Usage is returned as a sibling of `result` in the LRO response envelope and is accessed via the `GetUsage()` extension method on the completed operation.
+After an analyze operation completes, you can retrieve usage details that describe the resources consumed — including document page counts, contextualization tokens, and per-model LLM/embedding token breakdown. Usage is returned as a sibling of `result` in the LRO response envelope.
 
-The `AnalyzeUsageDetails` object contains:
-- **`DocumentPagesMinimal`**, **`DocumentPagesBasic`**, **`DocumentPagesStandard`** — pages processed at each extraction tier. Standard = layout + OCR (scanned docs), Basic = OCR only, Minimal = digital formats (DOCX, XLSX, HTML, TXT) that need no OCR. Charged per 1,000 pages.
+Use `GetUsageDetails()` to read generated `UsageDetails`.
+
+The usage object contains:
+- **`DocumentPagesMinimal`**, **`DocumentPagesBasic`**, **`DocumentPagesStandard`** — pages processed at each extraction tier. Standard = layout + OCR (scanned docs), Basic = OCR only, Minimal = digital formats (DOCX, XLSX, HTML, TXT) that need no OCR.
 - **`AudioHours`**, **`VideoHours`** — hours of audio/video processed
-- **`ContextualizationTokens`** — fixed-rate tokens charged by Content Understanding for preparing context, generating confidence scores, source grounding, and formatting output. Typically ~1,000 tokens per page. Charged separately from LLM tokens.
-- **`Tokens`** — a dictionary of LLM and embedding token counts consumed by your Foundry model deployment, grouped by model and type (e.g., `"gpt-4.1-input"`, `"gpt-4.1-output"`). These are billed on your Foundry deployment, not on Content Understanding.
+- **`ContextualizationTokens`**, **`AdvancedContextualizationTokens`** — tokens charged by Content Understanding for preparing context, generating confidence scores, source grounding, and formatting output. Advanced contextualization is used when the service selects that path. Charged separately from LLM tokens.
+- **`Tokens`** — a dictionary of LLM and embedding token counts consumed by your Foundry model deployment, grouped by model and type (e.g., `"gpt-5.2-input"`, `"gpt-5.2-output"`). These are billed on your Foundry deployment, not on Content Understanding.
 
 For full pricing details, see the [Content Understanding pricing explainer][pricing-explainer].
 
 ```C# Snippet:ContentUnderstandingGetUsage
-// Get usage details (token consumption, page counts) from the completed operation.
-AnalyzeUsageDetails? usage = operation.GetUsage();
+// Document page meters are three tiers (minimal / basic / standard).
+UsageDetails? usage = operation.GetUsageDetails();
 if (usage != null)
 {
+    Console.WriteLine($"Document pages (minimal): {usage.DocumentPagesMinimal}");
+    Console.WriteLine($"Document pages (basic): {usage.DocumentPagesBasic}");
     Console.WriteLine($"Document pages (standard): {usage.DocumentPagesStandard}");
     Console.WriteLine($"Contextualization tokens: {usage.ContextualizationTokens}");
-    foreach (var kvp in usage.Tokens)
+    if (usage.Tokens != null)
     {
-        Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+        foreach (var kvp in usage.Tokens)
+        {
+            Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+        }
     }
 }
 ```

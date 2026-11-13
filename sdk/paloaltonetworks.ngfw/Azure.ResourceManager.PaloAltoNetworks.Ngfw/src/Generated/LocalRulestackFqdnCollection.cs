@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(LocalRulestackFqdnResource.ResourceType, out string localRulestackFqdnApiVersion);
             _fqdnListLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackFqdnResource.ResourceType.Namespace, Diagnostics);
-            _fqdnListLocalRulestackRestClient = new FqdnListLocalRulestack(_fqdnListLocalRulestackClientDiagnostics, Pipeline, Endpoint, localRulestackFqdnApiVersion ?? "2025-10-08");
+            _fqdnListLocalRulestackRestClient = new FqdnListLocalRulestack(_fqdnListLocalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackFqdnApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new LocalRulestackFqdnDataAsyncCollectionResultOfT(
                 _fqdnListLocalRulestackRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksCollectionResultOfT(
+            return new PageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new LocalRulestackFqdnDataCollectionResultOfT(
                 _fqdnListLocalRulestackRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

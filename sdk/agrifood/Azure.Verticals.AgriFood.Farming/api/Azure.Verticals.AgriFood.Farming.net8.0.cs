@@ -19,46 +19,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
     }
-    public partial class Attachments
-    {
-        protected Attachments() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Download(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetAttachment(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAttachmentAsync(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetAttachmentsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> resourceIds, System.Collections.Generic.IEnumerable<string> resourceTypes, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetAttachmentsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> resourceIds, System.Collections.Generic.IEnumerable<string> resourceTypes, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-    }
-    public partial class Boundaries
-    {
-        protected Boundaries() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string boundaryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string boundaryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string partyId, string boundaryId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string boundaryId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetBoundaries(string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> boundaryIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetBoundariesAsync(string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> boundaryIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetBoundariesByPartyId(string partyId, string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetBoundariesByPartyIdAsync(string partyId, string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetBoundary(string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetBoundaryAsync(string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetOverlap(string partyId, string boundaryId, string otherPartyId, string otherBoundaryId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetOverlapAsync(string partyId, string boundaryId, string otherPartyId, string otherBoundaryId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> Search(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> SearchAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> SearchByPartyId(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> SearchByPartyIdAsync(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
     public partial class CropProducts
     {
         protected CropProducts() { }
@@ -71,19 +31,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCropProductAsync(string cropProductId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetCropProducts(System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> brands, System.Collections.Generic.IEnumerable<string> products, System.Collections.Generic.IEnumerable<string> traits, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetCropProductsAsync(System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> brands, System.Collections.Generic.IEnumerable<string> products, System.Collections.Generic.IEnumerable<string> traits, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-    }
-    public partial class Crops
-    {
-        protected Crops() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string cropId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string cropId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string cropId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string cropId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetCrop(string cropId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCropAsync(string cropId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetCrops(System.Collections.Generic.IEnumerable<string> phenotypes, System.Collections.Generic.IEnumerable<string> breedingMethods, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetCropsAsync(System.Collections.Generic.IEnumerable<string> phenotypes, System.Collections.Generic.IEnumerable<string> breedingMethods, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
     public partial class DeviceDataModels
     {
@@ -98,19 +45,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Pageable<System.BinaryData> GetDeviceDataModels(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceDataModelsAsync(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
-    public partial class Devices
-    {
-        protected Devices() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string sensorPartnerId, string deviceId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string sensorPartnerId, string deviceId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string sensorPartnerId, string deviceId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string sensorPartnerId, string deviceId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetDevice(string sensorPartnerId, string deviceId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceAsync(string sensorPartnerId, string deviceId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDevices(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> parentDeviceIds, System.Collections.Generic.IEnumerable<string> deviceDataModelIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDevicesAsync(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> parentDeviceIds, System.Collections.Generic.IEnumerable<string> deviceDataModelIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-    }
     public partial class FarmBeatsClient
     {
         protected FarmBeatsClient() { }
@@ -118,42 +52,42 @@ namespace Azure.Verticals.AgriFood.Farming
         public FarmBeatsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Verticals.AgriFood.Farming.ApplicationData GetApplicationDataClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Attachments GetAttachmentsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Boundaries GetBoundariesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.CropProducts GetCropProductsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Crops GetCropsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.DeviceDataModels GetDeviceDataModelsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Devices GetDevicesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.FarmerOAuthTokens GetFarmerOAuthTokensClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingAttachments GetFarmingAttachmentsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingBoundaries GetFarmingBoundariesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingCrops GetFarmingCropsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingDevices GetFarmingDevicesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingFarms GetFarmingFarmsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingFields GetFarmingFieldsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingInsights GetFarmingInsightsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingParties GetFarmingPartiesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingPrescriptions GetFarmingPrescriptionsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingScenes GetFarmingScenesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingSeasons GetFarmingSeasonsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingSensors GetFarmingSensorsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingWeather GetFarmingWeatherClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmingZones GetFarmingZonesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Farms GetFarmsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Fields GetFieldsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.HarvestData GetHarvestDataClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.ImageProcessing GetImageProcessingClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.InsightAttachments GetInsightAttachmentsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Insights GetInsightsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.ManagementZones GetManagementZonesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.ModelInference GetModelInferenceClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.NutrientAnalyses GetNutrientAnalysesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.OAuthProviders GetOAuthProvidersClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Parties GetPartiesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.PlantingData GetPlantingDataClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.PlantTissueAnalyses GetPlantTissueAnalysesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.PrescriptionMaps GetPrescriptionMapsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Prescriptions GetPrescriptionsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Scenes GetScenesClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.SeasonalFields GetSeasonalFieldsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Seasons GetSeasonsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.SensorDataModels GetSensorDataModelsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.SensorEvents GetSensorEventsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.SensorMappings GetSensorMappingsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.SensorPartnerIntegrations GetSensorPartnerIntegrationsClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Sensors GetSensorsClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.SolutionInference GetSolutionInferenceClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.TillageData GetTillageDataClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Weather GetWeatherClient() { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.WeatherData GetWeatherDataClient() { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Zones GetZonesClient() { throw null; }
     }
     public partial class FarmBeatsClientOptions : Azure.Core.ClientOptions
     {
@@ -176,18 +110,75 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Response GetOAuthConnectionLink(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOAuthConnectionLinkAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class FarmOperationsDataIngestion
+    public partial class FarmingAttachments
     {
-        protected FarmOperationsDataIngestion() { }
+        protected FarmingAttachments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Download(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetAttachment(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAttachmentAsync(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetAttachmentsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> resourceIds, System.Collections.Generic.IEnumerable<string> resourceTypes, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetAttachmentsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> resourceIds, System.Collections.Generic.IEnumerable<string> resourceTypes, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
-    public partial class Farms
+    public partial class FarmingBoundaries
     {
-        protected Farms() { }
+        protected FarmingBoundaries() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string boundaryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string boundaryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string partyId, string boundaryId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string boundaryId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetBoundaries(string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> boundaryIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetBoundariesAsync(string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> boundaryIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetBoundariesByPartyId(string partyId, string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetBoundariesByPartyIdAsync(string partyId, string parentType, string type, System.Collections.Generic.IEnumerable<string> parentIds, double? minArea, double? maxArea, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetBoundary(string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetBoundaryAsync(string partyId, string boundaryId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetOverlap(string partyId, string boundaryId, string otherPartyId, string otherBoundaryId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOverlapAsync(string partyId, string boundaryId, string otherPartyId, string otherBoundaryId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> Search(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> SearchAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> SearchByPartyId(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> SearchByPartyIdAsync(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class FarmingCrops
+    {
+        protected FarmingCrops() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response CreateOrUpdate(string cropId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string cropId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string cropId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string cropId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetCrop(string cropId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCropAsync(string cropId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetCrops(System.Collections.Generic.IEnumerable<string> phenotypes, System.Collections.Generic.IEnumerable<string> breedingMethods, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetCropsAsync(System.Collections.Generic.IEnumerable<string> phenotypes, System.Collections.Generic.IEnumerable<string> breedingMethods, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingDevices
+    {
+        protected FarmingDevices() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response CreateOrUpdate(string sensorPartnerId, string deviceId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string sensorPartnerId, string deviceId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string sensorPartnerId, string deviceId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string sensorPartnerId, string deviceId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetDevice(string sensorPartnerId, string deviceId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceAsync(string sensorPartnerId, string deviceId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDevices(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> parentDeviceIds, System.Collections.Generic.IEnumerable<string> deviceDataModelIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDevicesAsync(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> parentDeviceIds, System.Collections.Generic.IEnumerable<string> deviceDataModelIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingFarms
+    {
+        protected FarmingFarms() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string farmId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string farmId, Azure.RequestContext context) { throw null; }
@@ -204,9 +195,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Pageable<System.BinaryData> GetFarmsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetFarmsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
-    public partial class Fields
+    public partial class FarmingFields
     {
-        protected Fields() { }
+        protected FarmingFields() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string fieldId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string fieldId, Azure.RequestContext context) { throw null; }
@@ -222,6 +213,149 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.AsyncPageable<System.BinaryData> GetFieldsAsync(System.Collections.Generic.IEnumerable<string> farmIds, System.Collections.Generic.IEnumerable<string> fieldIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetFieldsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> farmIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetFieldsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> farmIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingInsights
+    {
+        protected FarmingInsights() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetInsight(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetInsightAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetInsightsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, System.DateTimeOffset? minInsightStartDateTime, System.DateTimeOffset? maxInsightStartDateTime, System.DateTimeOffset? minInsightEndDateTime, System.DateTimeOffset? maxInsightEndDateTime, System.Collections.Generic.IEnumerable<string> measurementFilters, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetInsightsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, System.DateTimeOffset? minInsightStartDateTime, System.DateTimeOffset? maxInsightStartDateTime, System.DateTimeOffset? minInsightEndDateTime, System.DateTimeOffset? maxInsightEndDateTime, System.Collections.Generic.IEnumerable<string> measurementFilters, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingParties
+    {
+        protected FarmingParties() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string partyId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetParties(System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPartiesAsync(System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetParty(string partyId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPartyAsync(string partyId, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingPrescriptions
+    {
+        protected FarmingPrescriptions() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string prescriptionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string prescriptionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string partyId, string prescriptionId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string prescriptionId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetPrescription(string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPrescriptionAsync(string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetPrescriptions(System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPrescriptionsAsync(System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetPrescriptionsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPrescriptionsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingScenes
+    {
+        protected FarmingScenes() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateSatelliteDataIngestionJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateSatelliteDataIngestionJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Download(string filePath, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string filePath, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetSatelliteDataIngestionJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetScenes(string provider, string partyId, string boundaryId, string source, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, System.Collections.Generic.IEnumerable<string> imageNames, System.Collections.Generic.IEnumerable<double> imageResolutions, System.Collections.Generic.IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, System.Collections.Generic.IEnumerable<string> imageNames, System.Collections.Generic.IEnumerable<double> imageResolutions, System.Collections.Generic.IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetStacFeature(string collectionId, string featureId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetStacFeatureAsync(string collectionId, string featureId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response SearchFeatures(string collectionId, Azure.Core.RequestContent content, int? maxpagesize = default(int?), int? skip = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SearchFeaturesAsync(string collectionId, Azure.Core.RequestContent content, int? maxpagesize = default(int?), int? skip = default(int?), Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class FarmingSeasons
+    {
+        protected FarmingSeasons() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response CreateOrUpdate(string seasonId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string seasonId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string seasonId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string seasonId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetSeason(string seasonId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSeasonAsync(string seasonId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSeasons(System.DateTimeOffset? minStartDateTime, System.DateTimeOffset? maxStartDateTime, System.DateTimeOffset? minEndDateTime, System.DateTimeOffset? maxEndDateTime, System.Collections.Generic.IEnumerable<int> years, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSeasonsAsync(System.DateTimeOffset? minStartDateTime, System.DateTimeOffset? maxStartDateTime, System.DateTimeOffset? minEndDateTime, System.DateTimeOffset? maxEndDateTime, System.Collections.Generic.IEnumerable<int> years, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingSensors
+    {
+        protected FarmingSensors() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response CreateOrUpdate(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string sensorPartnerId, string sensorId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string sensorPartnerId, string sensorId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetConnectionString(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetConnectionStringAsync(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetSensor(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSensorAsync(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSensors(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> sensorDataModelIds, System.Collections.Generic.IEnumerable<string> sensorMappingIds, System.Collections.Generic.IEnumerable<string> deviceIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSensorsAsync(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> sensorDataModelIds, System.Collections.Generic.IEnumerable<string> sensorMappingIds, System.Collections.Generic.IEnumerable<string> deviceIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response RenewConnectionString(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RenewConnectionStringAsync(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class FarmingWeather
+    {
+        protected FarmingWeather() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateDataDeleteJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateDataIngestionJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataIngestionJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetDataDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDataDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetDataIngestionJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDataIngestionJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetWeathers(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetWeathersAsync(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmingZones
+    {
+        protected FarmingZones() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string zoneId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string zoneId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string zoneId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string zoneId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(string partyId, string zoneId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string zoneId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetZone(string partyId, string zoneId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetZoneAsync(string partyId, string zoneId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetZones(System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetZonesAsync(System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetZonesByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetZonesByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
+    }
+    public partial class FarmOperationsDataIngestion
+    {
+        protected FarmOperationsDataIngestion() { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CreateJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetJobDetails(string jobId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
     }
     public partial class HarvestData
     {
@@ -265,23 +399,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual System.Threading.Tasks.Task<Azure.Response> GetInsightAttachmentAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetInsightAttachmentsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, System.Collections.Generic.IEnumerable<string> insightIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetInsightAttachmentsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, System.Collections.Generic.IEnumerable<string> insightIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-    }
-    public partial class Insights
-    {
-        protected Insights() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetInsight(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetInsightAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetInsightsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, System.DateTimeOffset? minInsightStartDateTime, System.DateTimeOffset? maxInsightStartDateTime, System.DateTimeOffset? minInsightEndDateTime, System.DateTimeOffset? maxInsightEndDateTime, System.Collections.Generic.IEnumerable<string> measurementFilters, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetInsightsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, System.DateTimeOffset? minInsightStartDateTime, System.DateTimeOffset? maxInsightStartDateTime, System.DateTimeOffset? minInsightEndDateTime, System.DateTimeOffset? maxInsightEndDateTime, System.Collections.Generic.IEnumerable<string> measurementFilters, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
     public partial class ManagementZones
     {
@@ -351,23 +468,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Pageable<System.BinaryData> GetOAuthProviders(System.Collections.Generic.IEnumerable<string> providerIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetOAuthProvidersAsync(System.Collections.Generic.IEnumerable<string> providerIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
-    public partial class Parties
-    {
-        protected Parties() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response CreateOrUpdate(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string partyId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetParties(System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPartiesAsync(System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetParty(string partyId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetPartyAsync(string partyId, Azure.RequestContext context) { throw null; }
-    }
     public partial class PlantingData
     {
         protected PlantingData() { }
@@ -425,42 +525,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Pageable<System.BinaryData> GetPrescriptionMapsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> fieldIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetPrescriptionMapsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> fieldIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
-    public partial class Prescriptions
-    {
-        protected Prescriptions() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string prescriptionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string prescriptionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string partyId, string prescriptionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string prescriptionId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetPrescription(string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetPrescriptionAsync(string partyId, string prescriptionId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetPrescriptions(System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPrescriptionsAsync(System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetPrescriptionsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPrescriptionsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> prescriptionMapIds, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> productCodes, System.Collections.Generic.IEnumerable<string> productNames, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-    }
-    public partial class Scenes
-    {
-        protected Scenes() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateSatelliteDataIngestionJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateSatelliteDataIngestionJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Download(string filePath, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string filePath, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetSatelliteDataIngestionJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetScenes(string provider, string partyId, string boundaryId, string source, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, System.Collections.Generic.IEnumerable<string> imageNames, System.Collections.Generic.IEnumerable<double> imageResolutions, System.Collections.Generic.IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, System.Collections.Generic.IEnumerable<string> imageNames, System.Collections.Generic.IEnumerable<double> imageResolutions, System.Collections.Generic.IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetStacFeature(string collectionId, string featureId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetStacFeatureAsync(string collectionId, string featureId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response SearchFeatures(string collectionId, Azure.Core.RequestContent content, int? maxpagesize = default(int?), int? skip = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SearchFeaturesAsync(string collectionId, Azure.Core.RequestContent content, int? maxpagesize = default(int?), int? skip = default(int?), Azure.RequestContext context = null) { throw null; }
-    }
     public partial class SeasonalFields
     {
         protected SeasonalFields() { }
@@ -479,19 +543,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.AsyncPageable<System.BinaryData> GetSeasonalFieldsAsync(System.Collections.Generic.IEnumerable<string> farmIds, System.Collections.Generic.IEnumerable<string> fieldIds, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> cropProductIds, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> seasonalFieldIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetSeasonalFieldsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> farmIds, System.Collections.Generic.IEnumerable<string> fieldIds, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> cropProductIds, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSeasonalFieldsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> farmIds, System.Collections.Generic.IEnumerable<string> fieldIds, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> cropProductIds, System.Collections.Generic.IEnumerable<string> cropIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-    }
-    public partial class Seasons
-    {
-        protected Seasons() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string seasonId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string seasonId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string seasonId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string seasonId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetSeason(string seasonId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSeasonAsync(string seasonId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetSeasons(System.DateTimeOffset? minStartDateTime, System.DateTimeOffset? maxStartDateTime, System.DateTimeOffset? minEndDateTime, System.DateTimeOffset? maxEndDateTime, System.Collections.Generic.IEnumerable<int> years, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetSeasonsAsync(System.DateTimeOffset? minStartDateTime, System.DateTimeOffset? maxStartDateTime, System.DateTimeOffset? minEndDateTime, System.DateTimeOffset? maxEndDateTime, System.Collections.Generic.IEnumerable<int> years, System.Collections.Generic.IEnumerable<string> seasonIds, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
     public partial class SensorDataModels
     {
@@ -543,23 +594,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Pageable<System.BinaryData> GetSensorPartnerIntegrations(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> integrationIds, System.Collections.Generic.IEnumerable<string> partyIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSensorPartnerIntegrationsAsync(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> integrationIds, System.Collections.Generic.IEnumerable<string> partyIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
-    public partial class Sensors
-    {
-        protected Sensors() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string sensorPartnerId, string sensorId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string sensorPartnerId, string sensorId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetConnectionString(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetConnectionStringAsync(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetSensor(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSensorAsync(string sensorPartnerId, string sensorId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetSensors(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> sensorDataModelIds, System.Collections.Generic.IEnumerable<string> sensorMappingIds, System.Collections.Generic.IEnumerable<string> deviceIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetSensorsAsync(string sensorPartnerId, System.Collections.Generic.IEnumerable<string> sensorDataModelIds, System.Collections.Generic.IEnumerable<string> sensorMappingIds, System.Collections.Generic.IEnumerable<string> deviceIds, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response RenewConnectionString(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RenewConnectionStringAsync(string sensorPartnerId, string sensorId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
     public partial class SolutionInference
     {
         protected SolutionInference() { }
@@ -590,46 +624,12 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Response GetTillageData(string partyId, string tillageDataId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTillageDataAsync(string partyId, string tillageDataId, Azure.RequestContext context) { throw null; }
     }
-    public partial class Weather
-    {
-        protected Weather() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateDataDeleteJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> CreateDataIngestionJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataIngestionJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetDataDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDataDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetDataIngestionJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDataIngestionJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetWeathers(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetWeathersAsync(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, System.DateTimeOffset? startDateTime, System.DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-    }
     public partial class WeatherData
     {
         protected WeatherData() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetWeatherData(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetWeatherDataAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
-    public partial class Zones
-    {
-        protected Zones() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string partyId, string zoneId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string partyId, string zoneId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string zoneId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string zoneId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(string partyId, string zoneId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string zoneId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetZone(string partyId, string zoneId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetZoneAsync(string partyId, string zoneId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetZones(System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetZonesAsync(System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetZonesByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetZonesByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> types, System.Collections.Generic.IEnumerable<string> managementZoneIds, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,14 +17,9 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccountProperties))]
-    [ModelReaderWriterBuildable(typeof(AccountsListResponse))]
     [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
-    [ModelReaderWriterBuildable(typeof(AppServicesListResponse))]
-    [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourcesListResponse))]
-    [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
-    [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
     [ModelReaderWriterBuildable(typeof(MonitorProperties))]
     [ModelReaderWriterBuildable(typeof(NewRelicAccountProperties))]
@@ -70,18 +64,14 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(NewRelicSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(NewRelicSwitchBillingContent))]
     [ModelReaderWriterBuildable(typeof(OrganizationProperties))]
-    [ModelReaderWriterBuildable(typeof(OrganizationsListResponse))]
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
-    [ModelReaderWriterBuildable(typeof(PlanDataListResponse))]
     [ModelReaderWriterBuildable(typeof(PlanDataProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(TagRuleUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VMHostsListResponse))]
     public partial class AzureResourceManagerNewRelicObservabilityContext : ModelReaderWriterContext
     {
     }

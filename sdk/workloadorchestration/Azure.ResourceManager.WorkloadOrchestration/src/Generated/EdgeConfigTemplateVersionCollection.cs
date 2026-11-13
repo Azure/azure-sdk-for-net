@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeConfigTemplateVersionResource.ResourceType, out string edgeConfigTemplateVersionApiVersion);
             _configTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateVersionResource.ResourceType.Namespace, Diagnostics);
-            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2025-06-01");
+            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new EdgeConfigTemplateVersionDataAsyncCollectionResultOfT(
                 _configTemplateVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateCollectionResultOfT(
+            return new PageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new EdgeConfigTemplateVersionDataCollectionResultOfT(
                 _configTemplateVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -12,7 +12,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The message content object used to create interactive messages components.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextMessageContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="VideoMessageContent"/>, <see cref="ButtonSetContent"/>, <see cref="LinkContent"/>, and <see cref="ActionGroupContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActionGroupContent"/>, <see cref="ButtonSetContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="LinkContent"/>, <see cref="TextMessageContent"/>, and <see cref="VideoMessageContent"/>.
     /// </summary>
     public abstract partial class MessageContent
     {

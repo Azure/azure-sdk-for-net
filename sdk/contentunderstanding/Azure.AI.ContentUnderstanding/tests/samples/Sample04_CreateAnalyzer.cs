@@ -22,7 +22,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task CreateAnalyzerAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingCreateAnalyzer
@@ -101,7 +101,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Add model mappings for supported large language models (required for custom analyzers)
             // Maps model roles (completion, embedding) to specific model names
-            customAnalyzer.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            customAnalyzer.Models["completion"] = "gpt-5.2";
+#else
+            customAnalyzer.Models["completion"] = ModelProfile.CompletionModel;
+#endif
             customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
             // Create the analyzer
@@ -200,7 +204,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Models.Count >= 2, "Should have at least 2 model mappings");
             Assert.IsTrue(result.Models.ContainsKey("completion"), "Should contain 'completion' model mapping");
             Assert.IsTrue(result.Models.ContainsKey("embedding"), "Should contain 'embedding' model mapping");
-            Assert.AreEqual("gpt-4.1", result.Models["completion"], "Completion model should be 'gpt-4.1'");
+            Assert.AreEqual(ModelProfile.CompletionModel, result.Models["completion"], "Completion model should match the configured model");
             Assert.AreEqual("text-embedding-3-large", result.Models["embedding"], "Embedding model should be 'text-embedding-3-large'");
             Console.WriteLine($"Model mappings verified: {result.Models.Count} model(s)");
 
@@ -237,7 +241,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task UseCustomAnalyzerAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First create an analyzer
@@ -299,7 +303,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 FieldSchema = fieldSchema
             };
 
-            customAnalyzer.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            customAnalyzer.Models["completion"] = "gpt-5.2";
+#else
+            customAnalyzer.Models["completion"] = ModelProfile.CompletionModel;
+#endif
             customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
             await client.CreateAnalyzerAsync(
@@ -381,26 +389,22 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         }
                     }
 
-                    // Generate field (AI-generated value)
                     if (content.Fields.TryGetValue("document_summary", out var summaryField))
                     {
                         var summary = summaryField is ContentStringField sf ? sf.Value : null;
-                        Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
+                        Console.WriteLine($"Document Summary: {summary ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
-                        // Note: Generated fields may not have grounding source information
                         if (summaryField.Sources != null)
                         {
                             Console.WriteLine($"  Grounding sources: {summaryField.Sources.Length}");
                         }
                     }
 
-                    // Classify field (classification against predefined categories)
                     if (content.Fields.TryGetValue("document_type", out var documentTypeField))
                     {
                         var documentType = documentTypeField is ContentStringField sf ? sf.Value : null;
-                        Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
+                        Console.WriteLine($"Document Type: {documentType ?? "(not found)"}");
                         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
-                        // Note: Classified fields may not have grounding source information
                         if (documentTypeField.Sources != null)
                         {
                             Console.WriteLine($"  Grounding sources: {documentTypeField.Sources.Length}");
@@ -606,6 +610,169 @@ namespace Azure.AI.ContentUnderstanding.Samples
             finally
             {
                 // Ensure cleanup even if snippet code fails
+                try
+                {
+                    await client.DeleteAnalyzerAsync(analyzerId);
+                }
+                catch
+                {
+                    // Ignore cleanup errors in tests
+                }
+            }
+        }
+
+        /// <summary>
+        /// Preview-only: with EstimateFieldSourceAndConfidence, extract, generate, and classify fields
+        /// should all return confidence and grounding sources.
+        /// </summary>
+        [RecordedTest]
+        [ServiceVersion(Min = ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)]
+        public async Task GenerateClassifyFieldGroundingPreviewAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            string analyzerId = Recording.GetVariable(
+                "generateClassifyGroundingAnalyzerId",
+                $"test_gen_classify_grounding_{Recording.Random.NewGuid():N}")!;
+
+            var fieldSchema = new ContentFieldSchema(
+                new Dictionary<string, ContentFieldDefinition>
+                {
+                    ["company_name"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.String,
+                        Method = GenerationMethod.Extract,
+                        Description = "Name of the company"
+                    },
+                    ["document_summary"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.String,
+                        Method = GenerationMethod.Generate,
+                        Description = "A brief summary of the document content"
+                    },
+                    ["document_type"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.String,
+                        Method = GenerationMethod.Classify,
+                        Description = "Type of document"
+                    }
+                })
+            {
+                Name = "extract_generate_classify_grounding_schema",
+                Description = "Schema for verifying extract/generate/classify confidence and grounding"
+            };
+            fieldSchema.Fields["document_type"].Enum.Add("invoice");
+            fieldSchema.Fields["document_type"].Enum.Add("receipt");
+            fieldSchema.Fields["document_type"].Enum.Add("contract");
+            fieldSchema.Fields["document_type"].Enum.Add("report");
+            fieldSchema.Fields["document_type"].Enum.Add("other");
+
+            var customAnalyzer = new ContentAnalyzer
+            {
+                BaseAnalyzerId = "prebuilt-document",
+                Description = "Preview analyzer for extract/generate/classify grounding",
+                Config = new ContentAnalyzerConfig
+                {
+                    EnableLayout = true,
+                    EnableOcr = true,
+                    EstimateFieldSourceAndConfidence = true,
+                    ShouldReturnDetails = true
+                },
+                FieldSchema = fieldSchema
+            };
+            customAnalyzer.Models["completion"] = ModelProfile.CompletionModel;
+            customAnalyzer.Models["embedding"] = ModelProfile.EmbeddingModel;
+
+            await client.CreateAnalyzerAsync(
+                WaitUntil.Completed,
+                analyzerId,
+                customAnalyzer,
+                allowReplace: true);
+
+            try
+            {
+                // Preview (2026-06-01-preview): with EstimateFieldSourceAndConfidence = true,
+                // extract, generate, and classify fields all return confidence and grounding sources.
+                var documentUrl = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
+                Operation<AnalysisResult> analyzeOperation = await client.AnalyzeAsync(
+                    WaitUntil.Completed,
+                    analyzerId,
+                    inputs: new[] { new AnalysisInput { Uri = documentUrl } });
+
+                DocumentContent content = (DocumentContent)analyzeOperation.Value.Contents!.First();
+
+                ContentField companyNameField = content.Fields["company_name"];
+                Console.WriteLine($"Extract: {(companyNameField as ContentStringField)?.Value}");
+                Console.WriteLine($"  Confidence: {companyNameField.Confidence:F2}");
+                if (companyNameField.Sources != null)
+                {
+                    foreach (ContentSource source in companyNameField.Sources)
+                    {
+                        if (source is DocumentSource docSource)
+                        {
+                            Console.WriteLine($"  Page {docSource.PageNumber}, BoundingBox: {docSource.BoundingBox}");
+                        }
+                    }
+                }
+
+                ContentField summaryField = content.Fields["document_summary"];
+                Console.WriteLine($"Generate: {(summaryField as ContentStringField)?.Value}");
+                Console.WriteLine($"  Confidence: {summaryField.Confidence:F2}");
+                if (summaryField.Sources != null)
+                {
+                    foreach (ContentSource source in summaryField.Sources)
+                    {
+                        if (source is DocumentSource docSource)
+                        {
+                            Console.WriteLine($"  Page {docSource.PageNumber}, BoundingBox: {docSource.BoundingBox}");
+                        }
+                    }
+                }
+
+                ContentField documentTypeField = content.Fields["document_type"];
+                Console.WriteLine($"Classify: {(documentTypeField as ContentStringField)?.Value}");
+                Console.WriteLine($"  Confidence: {documentTypeField.Confidence:F2}");
+                if (documentTypeField.Sources != null)
+                {
+                    foreach (ContentSource source in documentTypeField.Sources)
+                    {
+                        if (source is DocumentSource docSource)
+                        {
+                            Console.WriteLine($"  Page {docSource.PageNumber}, BoundingBox: {docSource.BoundingBox}");
+                        }
+                    }
+                }
+
+                Assert.IsTrue(content.Fields.ContainsKey("company_name"), "company_name should be present");
+                Assert.IsTrue(content.Fields.ContainsKey("document_summary"), "document_summary should be present");
+                Assert.IsTrue(content.Fields.ContainsKey("document_type"), "document_type should be present");
+
+                Assert.IsNotNull(companyNameField.Confidence, "Extract field should return confidence in 2026-06-01-preview");
+                Assert.That(companyNameField.Confidence!.Value, Is.InRange(0f, 1f));
+                Assert.IsNotNull(companyNameField.Sources, "Extract field should return grounding sources in 2026-06-01-preview");
+                Assert.That(companyNameField.Sources!, Has.Length.GreaterThan(0));
+
+                Assert.IsNotNull(summaryField.Confidence, "Generate field should return confidence in 2026-06-01-preview");
+                Assert.That(summaryField.Confidence!.Value, Is.InRange(0f, 1f));
+                Assert.IsNotNull(summaryField.Sources, "Generate field should return grounding sources in 2026-06-01-preview");
+                Assert.That(summaryField.Sources!, Has.Length.GreaterThan(0));
+
+                Assert.IsNotNull(documentTypeField.Confidence, "Classify field should return confidence in 2026-06-01-preview");
+                Assert.That(documentTypeField.Confidence!.Value, Is.InRange(0f, 1f));
+                Assert.IsNotNull(documentTypeField.Sources, "Classify field should return grounding sources in 2026-06-01-preview");
+                Assert.That(documentTypeField.Sources!, Has.Length.GreaterThan(0));
+
+                if (documentTypeField is ContentStringField classified)
+                {
+                    Assert.That(
+                        new[] { "invoice", "receipt", "contract", "report", "other" },
+                        Does.Contain(classified.Value));
+                }
+            }
+            finally
+            {
                 try
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);

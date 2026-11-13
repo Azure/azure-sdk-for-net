@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
@@ -55,9 +56,9 @@ namespace Azure.ResourceManager.PrivateDns
         {
             TryGetApiVersion(ResourceType, out string privateDnsZoneApiVersion);
             _privateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
+            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/privateDnsZones", out string privateZonesApiVersionOverride) ? privateZonesApiVersionOverride : "2026-06-01-preview");
             _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
+            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -376,7 +377,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -426,7 +427,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -444,7 +445,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetRecordsAsyncCollectionResultOfT(
+            return new PrivateDnsRecordDataAsyncCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -486,7 +487,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetRecordsCollectionResultOfT(
+            return new PrivateDnsRecordDataCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -510,7 +511,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -554,7 +555,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -695,10 +696,9 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -738,10 +738,9 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

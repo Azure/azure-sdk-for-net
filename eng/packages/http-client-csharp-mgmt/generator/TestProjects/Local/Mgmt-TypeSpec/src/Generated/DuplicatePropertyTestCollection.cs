@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(DuplicatePropertyTestResource.ResourceType, out string duplicatePropertyTestApiVersion);
             _duplicatePropertyTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", DuplicatePropertyTestResource.ResourceType.Namespace, Diagnostics);
-            _duplicatePropertyTestsRestClient = new DuplicatePropertyTests(_duplicatePropertyTestsClientDiagnostics, Pipeline, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
+            _duplicatePropertyTestsRestClient = new DuplicatePropertyTests(_duplicatePropertyTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestsGetAllAsyncCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DuplicatePropertyTestCollection.GetAll"), data => new DuplicatePropertyTestResource(Client, data));
+            return new AsyncPageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestDataAsyncCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DuplicatePropertyTestCollection.GetAll"), data => new DuplicatePropertyTestResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestsGetAllCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DuplicatePropertyTestCollection.GetAll"), data => new DuplicatePropertyTestResource(Client, data));
+            return new PageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestDataCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DuplicatePropertyTestCollection.GetAll"), data => new DuplicatePropertyTestResource(Client, data));
         }
 
         /// <summary>

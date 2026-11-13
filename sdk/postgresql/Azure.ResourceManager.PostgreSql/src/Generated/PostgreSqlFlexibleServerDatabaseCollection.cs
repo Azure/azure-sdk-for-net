@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(PostgreSqlFlexibleServerDatabaseResource.ResourceType, out string postgreSqlFlexibleServerDatabaseApiVersion);
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerDatabaseApiVersion ?? "2026-04-01-preview");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerDatabaseApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseDataAsyncCollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(
+            return new PageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseDataCollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

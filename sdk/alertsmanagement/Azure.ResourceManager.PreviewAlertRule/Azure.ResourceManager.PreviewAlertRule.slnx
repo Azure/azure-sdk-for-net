@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.PreviewAlertRule.csproj" />
+  <Project Path="tests/Azure.ResourceManager.PreviewAlertRule.Tests.csproj" />
+</Solution>

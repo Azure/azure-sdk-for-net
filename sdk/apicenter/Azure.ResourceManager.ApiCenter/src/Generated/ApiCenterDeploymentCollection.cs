@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             TryGetApiVersion(ApiCenterDeploymentResource.ResourceType, out string apiCenterDeploymentApiVersion);
             _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, apiCenterDeploymentApiVersion ?? "2024-06-01-preview");
+            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterDeploymentApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new DeploymentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new ApiCenterDeploymentDataAsyncCollectionResultOfT(
                 _deploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new DeploymentsGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new ApiCenterDeploymentDataCollectionResultOfT(
                 _deploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -112,6 +112,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return new NotSupportedException(EnrichMessage(message));
             }
 
+            // A receiver opening a non-exclusive session link reports one refusal carrying this condition as a
+            // NotSupportedException instead, because that refusal is the endpoint declining the feature rather than
+            // the operation. See AmqpReceiver.IsUnrecognizedFilterRejection; every other refusal maps here.
             if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new InvalidOperationException(EnrichMessage(message));

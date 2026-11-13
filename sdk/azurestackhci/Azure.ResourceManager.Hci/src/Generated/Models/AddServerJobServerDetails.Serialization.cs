@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
             writer.WritePropertyName("hostIpv4Address"u8);
-            writer.WriteStringValue(HostIpv4Address);
+            writer.WriteStringValue(HostIPv4Address);
             if (Optional.IsDefined(LocalAvailabilityZoneName))
             {
                 writer.WritePropertyName("localAvailabilityZoneName"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string serverName = default;
-            string hostIpv4Address = default;
+            string hostIPv4Address = default;
             string localAvailabilityZoneName = default;
             ResourceIdentifier serverResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("hostIpv4Address"u8))
                 {
-                    hostIpv4Address = prop.Value.GetString();
+                    hostIPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("localAvailabilityZoneName"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AddServerJobServerDetails(serverName, hostIpv4Address, localAvailabilityZoneName, serverResourceId, additionalBinaryDataProperties);
+            return new AddServerJobServerDetails(serverName, hostIPv4Address, localAvailabilityZoneName, serverResourceId, additionalBinaryDataProperties);
         }
     }
 }

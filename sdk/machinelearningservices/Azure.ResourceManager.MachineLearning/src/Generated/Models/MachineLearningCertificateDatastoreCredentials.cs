@@ -15,6 +15,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningCertificateDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>
+        /// <param name="clientId"> [Required] Service principal client ID. </param>
+        /// <param name="secrets"> [Required] Service principal secrets. </param>
+        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
+        /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> or <paramref name="thumbprint"/> is null. </exception>
+        public MachineLearningCertificateDatastoreCredentials(Guid clientId, MachineLearningCertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint) : base(CredentialsType.Certificate)
+        {
+            Argument.AssertNotNull(secrets, nameof(secrets));
+            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
+
+            ClientId = clientId;
+            Secrets = secrets;
+            TenantId = tenantId;
+            Thumbprint = thumbprint;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authorityUri"> Authority URL used for authentication. </param>

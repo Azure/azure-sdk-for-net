@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkProperties(string annotation, StaticRouteConfigurationExtension? extension, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, int vlanId, BgpConfiguration bgpSettings, StaticRouteConfiguration staticRouteSettings, NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalNetworkProperties(string annotation, StaticRouteConfigurationExtension? extension, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, int vlanId, BgpConfiguration bgpSettings, StaticRouteConfiguration staticRouteSettings, NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             Extension = extension;
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public StaticRouteConfiguration StaticRouteSettings { get; set; }
 
         /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
-        internal NativeIpv4PrefixLimitProperties NativeIPv4PrefixLimit { get; set; }
+        internal NativeIPv4PrefixLimitProperties NativeIPv4PrefixLimit { get; set; }
 
         /// <summary> Native IPv6 Prefix Limit Configuration properties. </summary>
-        internal NativeIpv6PrefixLimitProperties NativeIPv6PrefixLimit { get; set; }
+        internal NativeIPv6PrefixLimitProperties NativeIPv6PrefixLimit { get; set; }
 
         /// <summary> Details of the last operation performed on the resource. </summary>
         internal LastOperationProperties LastOperation { get; }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (NativeIPv4PrefixLimit is null)
                 {
-                    NativeIPv4PrefixLimit = new NativeIpv4PrefixLimitProperties();
+                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitProperties();
                 }
                 return NativeIPv4PrefixLimit.PrefixLimits;
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (NativeIPv6PrefixLimit is null)
                 {
-                    NativeIPv6PrefixLimit = new NativeIpv6PrefixLimitProperties();
+                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitProperties();
                 }
                 return NativeIPv6PrefixLimit.PrefixLimits;
             }

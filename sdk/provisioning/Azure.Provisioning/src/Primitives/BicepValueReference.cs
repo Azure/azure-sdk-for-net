@@ -8,10 +8,27 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
 
+/// <summary>
+/// Tracks a reference to a specific property on a provisioning construct, including the Bicep path needed to resolve it.
+/// </summary>
+/// <param name="construct">The construct that owns the referenced property.</param>
+/// <param name="propertyName">The property name.</param>
+/// <param name="path">The Bicep path segments used to resolve the reference.</param>
 public class BicepValueReference(ProvisionableConstruct construct, string propertyName, params string[]? path)
 {
+    /// <summary>
+    /// Gets the construct that owns the referenced property.
+    /// </summary>
     public ProvisionableConstruct Construct { get; } = construct;
-    public string PropertyName { get; } = propertyName;
+
+    /// <summary>
+    /// Gets the property name.
+    /// </summary>
+    public string PropertyName { get; internal set; } = propertyName;
+
+    /// <summary>
+    /// Gets the Bicep path segments used to resolve the reference.
+    /// </summary>
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
     internal virtual BicepExpression GetReference(bool throwIfNoRoot = true)
@@ -47,6 +64,7 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
         return target;
     }
 
+    /// <inheritdoc />
     public override string ToString() => GetReference(throwIfNoRoot: false).ToString();
 }
 

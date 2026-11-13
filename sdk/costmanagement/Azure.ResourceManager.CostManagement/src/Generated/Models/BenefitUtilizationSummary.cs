@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Benefit utilization summary resource. </summary>
+    /// <summary>
+    /// Benefit utilization summary resource.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="IncludedQuantityUtilizationSummary"/> and <see cref="SavingsPlanUtilizationSummary"/>.
+    /// </summary>
     public partial class BenefitUtilizationSummary : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -36,6 +39,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummary"/>. </summary>
+        public BenefitUtilizationSummary() : this(default)
+        {
         }
 
         /// <summary> Supported values: 'SavingsPlan'. </summary>

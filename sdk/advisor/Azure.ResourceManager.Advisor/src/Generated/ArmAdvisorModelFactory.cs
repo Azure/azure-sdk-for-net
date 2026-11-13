@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Models;
@@ -47,6 +46,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default), default);
         }
 
+        /// <summary> A summary of the recommendation. </summary>
         /// <param name="problem"> The issue or opportunity identified by the recommendation and proposed solution. </param>
         /// <param name="solution"> The issue or opportunity identified by the recommendation and proposed solution. </param>
         /// <returns> A new <see cref="Models.RecommendationShortDescription"/> instance for mocking. </returns>
@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> The metadata supported value detail. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
         /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
@@ -152,6 +153,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> Recommendation resource metadata. </summary>
         /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
         /// <param name="source"> Source from which recommendation is generated. </param>
         /// <param name="action"> The action to view resource. </param>
@@ -171,6 +173,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> The tracked properties of a Recommendation. </summary>
         /// <param name="state"> The state of the Recommendation. </param>
         /// <param name="postponedUntil"> The time the Recommendation was postponed until. </param>
         /// <param name="reason"> The reason the state of the Recommendation was changed. </param>
@@ -181,6 +184,7 @@ namespace Azure.ResourceManager.Advisor.Models
             return new TrackedRecommendationProperties(state, postponedUntil, reason, priority, default);
         }
 
+        /// <summary> The Review that this Recommendation belongs to. </summary>
         /// <param name="id"> The ARM Resource Id of the Review. </param>
         /// <param name="name"> The Name of the Review. </param>
         /// <returns> A new <see cref="Models.RecommendationReview"/> instance for mocking. </returns>
@@ -189,6 +193,7 @@ namespace Azure.ResourceManager.Advisor.Models
             return new RecommendationReview(id, name, default);
         }
 
+        /// <summary> The Workload that this Resource belongs to. </summary>
         /// <param name="id"> The Id of the Workload. </param>
         /// <param name="name"> The Name of the Workload. </param>
         /// <returns> A new <see cref="Models.RecommendationResourceWorkload"/> instance for mocking. </returns>
@@ -210,16 +215,16 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="suppressionId"> The GUID of the suppression. </param>
         /// <param name="ttl"> The duration for which the suppression is valid. </param>
-        /// <param name="expireOn"> Gets or sets the expiration time stamp. </param>
+        /// <param name="expiresOn"> Gets or sets the expiration time stamp. </param>
         /// <returns> A new <see cref="Advisor.AdvisorSuppressionContractData"/> instance for mocking. </returns>
-        public static AdvisorSuppressionContractData AdvisorSuppressionContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string suppressionId = default, string ttl = default, DateTimeOffset? expireOn = default)
+        public static AdvisorSuppressionContractData AdvisorSuppressionContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string suppressionId = default, string ttl = default, DateTimeOffset? expiresOn = default)
         {
             return new AdvisorSuppressionContractData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                suppressionId is null && ttl is null && expireOn is null ? default : new AdvisorSuppressionProperties(suppressionId, ttl, expireOn, default),
+                suppressionId is null && ttl is null && expiresOn is null ? default : new AdvisorSuppressionProperties(suppressionId, ttl, expiresOn, default),
                 default);
         }
 
@@ -241,6 +246,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> The details of Advisor Score. </summary>
         /// <param name="date"> The date score was calculated. </param>
         /// <param name="score"> The percentage score. </param>
         /// <param name="consumptionUnits"> The consumption units for the score. </param>
@@ -260,6 +266,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> The historic data at different aggregation levels. </summary>
         /// <param name="aggregationLevel"> The aggregation level of the score. </param>
         /// <param name="scoreHistory"> The past score data. </param>
         /// <returns> A new <see cref="Models.AdvisorTimeSeriesEntity"/> instance for mocking. </returns>
@@ -373,6 +380,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> Recommendation reject body. </summary>
         /// <param name="reasonForRejection"> Reason for rejecting recommendation. </param>
         /// <returns> A new <see cref="Models.RecommendationRejectContent"/> instance for mocking. </returns>
         public static RecommendationRejectContent RecommendationRejectContent(RejectingRecommendationReason? reasonForRejection = default)
@@ -431,6 +439,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> Advisor Digest configuration entity. </summary>
         /// <param name="name"> Name of digest configuration. Value is case-insensitive and must be unique within a subscription. </param>
         /// <param name="actionGroupResourceId"> Action group resource id used by digest. </param>
         /// <param name="frequency"> Frequency that digest will be triggered, in days. Value must be between 7 and 30 days inclusive. </param>
@@ -452,6 +461,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> The Advisor assessment type result data structure. </summary>
         /// <param name="id"> Assessment Type Id. </param>
         /// <param name="title"> Assessment Type Title. </param>
         /// <param name="description"> Assessment Type Description. </param>
@@ -469,6 +479,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
+        /// <summary> The Workload result data structure. </summary>
         /// <param name="id"> Workload Id. </param>
         /// <param name="name"> Workload Name. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>

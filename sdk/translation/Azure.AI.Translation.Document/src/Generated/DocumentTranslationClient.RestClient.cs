@@ -258,10 +258,7 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (@type != null)
-            {
-                uri.AppendQuery("type", @type, true);
-            }
+            uri.AppendQuery("type", @type, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

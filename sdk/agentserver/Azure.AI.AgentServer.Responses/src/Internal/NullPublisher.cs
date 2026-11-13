@@ -17,9 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <see cref="ResponseExecution.LastEmittedSequenceNumber"/> (B9).
 /// </para>
 /// <para>
-/// This avoids allocating a full <see cref="SeekableReplaySubject"/> (with its
-/// buffer, write lock, subscriber list, and TTL-based eviction) for modes where
-/// the events will never be replayed.
+/// This avoids allocating a live event stream (with its buffer, subscriber list, and
+/// TTL-based eviction) for modes where the events will never be replayed.
 /// </para>
 /// </remarks>
 internal sealed class NullPublisher : IAsyncObserver<ResponseStreamEvent>

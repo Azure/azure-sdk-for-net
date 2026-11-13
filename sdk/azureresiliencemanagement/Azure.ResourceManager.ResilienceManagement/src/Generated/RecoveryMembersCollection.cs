@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     /// <summary>
     /// A class representing a collection of <see cref="RecoveryMembersResource"/> and their operations.
     /// Each <see cref="RecoveryMembersResource"/> in the collection will belong to the same instance of <see cref="RecoveryPlanResource"/>.
-    /// To get a <see cref="RecoveryMembersCollection"/> instance call the GetRecoveryMembers method from an instance of <see cref="RecoveryPlanResource"/>.
+    /// To get a <see cref="RecoveryMembersCollection"/> instance call the GetAllRecoveryMembers method from an instance of <see cref="RecoveryPlanResource"/>.
     /// </summary>
     public partial class RecoveryMembersCollection : ArmCollection, IEnumerable<RecoveryMembersResource>, IAsyncEnumerable<RecoveryMembersResource>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(RecoveryMembersResource.ResourceType, out string recoveryMembersApiVersion);
             _recoveryResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", RecoveryMembersResource.ResourceType.Namespace, Diagnostics);
-            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Endpoint, recoveryMembersApiVersion ?? "2026-04-01-preview");
+            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryMembersApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryResourcesGetAllAsyncCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryMembersDataAsyncCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryResourcesGetAllCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
+            return new PageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryMembersDataCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

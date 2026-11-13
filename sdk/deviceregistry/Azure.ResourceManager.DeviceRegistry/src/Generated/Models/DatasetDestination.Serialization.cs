@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary>
     /// The type of the destination.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetMqttDestination"/>, <see cref="DatasetBrokerStateStoreDestination"/>, and <see cref="DatasetStorageDestination"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetBrokerStateStoreDestination"/>, <see cref="DatasetMqttDestination"/>, and <see cref="DatasetStorageDestination"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDatasetDestination))]
     public abstract partial class DatasetDestination : IJsonModel<DatasetDestination>
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Mqtt":
-                        return DatasetMqttDestination.DeserializeDatasetMqttDestination(element, options);
                     case "BrokerStateStore":
                         return DatasetBrokerStateStoreDestination.DeserializeDatasetBrokerStateStoreDestination(element, options);
+                    case "Mqtt":
+                        return DatasetMqttDestination.DeserializeDatasetMqttDestination(element, options);
                     case "Storage":
                         return DatasetStorageDestination.DeserializeDatasetStorageDestination(element, options);
                 }

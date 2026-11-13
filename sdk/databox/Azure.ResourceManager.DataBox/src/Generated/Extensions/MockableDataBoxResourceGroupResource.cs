@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
 
         private ClientDiagnostics ServiceOperationGroupClientDiagnostics => _serviceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceOperationGroup ServiceOperationGroupRestClient => _serviceOperationGroupRestClient ??= new ServiceOperationGroup(ServiceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+        private ServiceOperationGroup ServiceOperationGroupRestClient => _serviceOperationGroupRestClient ??= new ServiceOperationGroup(ServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
 
         /// <summary> Gets a collection of DataBoxJobs in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DataBoxJobs and their operations over a DataBoxJobResource. </returns>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceOperationGroupGetAvailableSkusAsyncCollectionResultOfT(
+            return new DataBoxSkuInformationAsyncCollectionResultOfT(
                 ServiceOperationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceOperationGroupGetAvailableSkusCollectionResultOfT(
+            return new DataBoxSkuInformationCollectionResultOfT(
                 ServiceOperationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

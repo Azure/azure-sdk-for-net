@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             TryGetApiVersion(OnlineExperimentationPrivateLinkResource.ResourceType, out string onlineExperimentationPrivateLinkApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, onlineExperimentationPrivateLinkApiVersion ?? "2025-08-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationPrivateLinkApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new OnlineExperimentationPrivateLinkDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new OnlineExperimentationPrivateLinkDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

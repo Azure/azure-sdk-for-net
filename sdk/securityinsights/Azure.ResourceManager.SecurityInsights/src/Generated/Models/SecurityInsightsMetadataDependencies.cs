@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="operator"> Operator used for list of dependencies in criteria array. </param>
         /// <param name="criteria"> This is the list of dependencies we must fulfill, according to the AND/OR operator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsMetadataDependencies(string contentId, SecurityInsightsKind? kind, string version, string name, ThreatIntelligenceQueryOperator? @operator, IList<SecurityInsightsMetadataDependencies> criteria, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityInsightsMetadataDependencies(string contentId, SecurityInsightsKind? kind, string version, string name, MetadataDependencyOperator? @operator, IList<SecurityInsightsMetadataDependencies> criteria, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContentId = contentId;
             Kind = kind;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Operator used for list of dependencies in criteria array. </summary>
         [WirePath("operator")]
-        public ThreatIntelligenceQueryOperator? Operator { get; set; }
+        public MetadataDependencyOperator? Operator { get; set; }
 
         /// <summary> This is the list of dependencies we must fulfill, according to the AND/OR operator. </summary>
         [WirePath("criteria")]

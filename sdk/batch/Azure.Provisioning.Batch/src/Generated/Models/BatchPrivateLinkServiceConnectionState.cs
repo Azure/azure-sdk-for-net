@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<BatchPrivateLinkServiceConnectionStatus> Status
         {
             get
@@ -30,25 +30,15 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
             {
                 Initialize();
                 return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
             }
         }
 
@@ -66,7 +56,7 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _status = DefineProperty<BatchPrivateLinkServiceConnectionStatus>(nameof(Status), new string[] { "status" }, isRequired: true);
+            _status = DefineProperty<BatchPrivateLinkServiceConnectionStatus>(nameof(Status), new string[] { "status" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _actionRequired = DefineProperty<string>(nameof(ActionRequired), new string[] { "actionsRequired" }, isOutput: true);
             DefineAdditionalProperties();

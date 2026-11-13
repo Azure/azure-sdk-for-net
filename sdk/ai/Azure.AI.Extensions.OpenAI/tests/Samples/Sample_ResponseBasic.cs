@@ -62,6 +62,7 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         #endregion
     }
 
+#pragma warning disable AAIP001
     [Test]
     [AsyncOnly]
     public async Task ListResponses()
@@ -88,6 +89,8 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         }
         #endregion
     }
+#pragma warning restore AAIP001
+
     public Sample_ResponseBasic(bool isAsync) : base(isAsync)
     { }
 }

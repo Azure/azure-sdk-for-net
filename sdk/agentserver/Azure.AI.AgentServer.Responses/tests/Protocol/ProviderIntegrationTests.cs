@@ -40,7 +40,6 @@ public class ProviderDiIntegrationTests : IDisposable
                 // Register spy before AddResponsesServer so TryAddSingleton skips the defaults
                 services.AddSingleton<ResponsesProvider>(_spy);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(_spy.AsCancellationProvider());
-                services.AddSingleton<ResponsesStreamProvider>(_spy.AsStreamProvider());
             });
         _client = _factory.CreateClient();
     }
@@ -54,32 +53,6 @@ public class ProviderDiIntegrationTests : IDisposable
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         XAssert.Contains("CreateResponseAsync", _spy.Calls);
-    }
-
-    [Test]
-    public async Task Post_Responses_BgStreaming_Calls_CreateEventPublisherAsync()
-    {
-        // Only background+streaming mode creates a replay-capable event publisher
-        // via the stream provider. Non-replay modes use NullPublisher internally.
-        var body = JsonSerializer.Serialize(new { model = "test", background = true, stream = true });
-        var response = await _client.PostAsync("/responses",
-            new StringContent(body, Encoding.UTF8, "application/json"));
-
-        // Consume the SSE stream so the handler completes
-        await response.Content.ReadAsStringAsync();
-
-        XAssert.Contains("CreateEventPublisherAsync", _spy.Calls);
-    }
-
-    [Test]
-    public async Task Post_Responses_Default_DoesNot_Call_CreateEventPublisherAsync()
-    {
-        // Default mode (bg=false, stream=false) uses NullPublisher — no stream provider call.
-        var body = JsonSerializer.Serialize(new { model = "test" });
-        await _client.PostAsync("/responses",
-            new StringContent(body, Encoding.UTF8, "application/json"));
-
-        XAssert.DoesNotContain("CreateEventPublisherAsync", _spy.Calls);
     }
 
     [Test]
@@ -127,29 +100,6 @@ public class ProviderDiIntegrationTests : IDisposable
         await Task.Delay(100);
     }
 
-    [Test]
-    public async Task Get_Response_Stream_Calls_SubscribeToEventsAsync()
-    {
-        // Create a background streaming response
-        var body = JsonSerializer.Serialize(new { model = "test", stream = true, background = true });
-        var createResponse = await _client.PostAsync("/responses",
-            new StringContent(body, Encoding.UTF8, "application/json"));
-
-        // Read SSE to get the response ID
-        var sseBody = await createResponse.Content.ReadAsStringAsync();
-        var events = SseParser.Parse(sseBody);
-        using var doc = JsonDocument.Parse(events[0].Data);
-        var responseId = doc.RootElement.GetProperty("response").GetProperty("id").GetString()!;
-
-        // Wait for background to complete
-        await WaitForCompletionAsync(responseId);
-
-        // GET with ?stream=true to trigger SSE replay
-        var getResponse = await _client.GetAsync($"/responses/{responseId}?stream=true");
-
-        XAssert.Contains("SubscribeToEventsAsync", _spy.Calls);
-    }
-
     private async Task WaitForCompletionAsync(string responseId, TimeSpan? timeout = null)
     {
         var deadline = DateTimeOffset.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
@@ -191,9 +141,7 @@ public class ProviderDiIntegrationTests : IDisposable
     private sealed class RecordingResponsesProvider : ResponsesProvider, IDisposable
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
-        private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources = new();
-        private readonly TimeSpan _ttl = TimeSpan.FromMinutes(30);
 
         public ConcurrentBag<string> Calls { get; } = new();
 
@@ -241,7 +189,6 @@ public class ProviderDiIntegrationTests : IDisposable
         // --- Adapter factories for DI registration ---
 
         internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(this);
-        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(this);
 
         private sealed class CancellationAdapter(RecordingResponsesProvider provider) : ResponsesCancellationSignalProvider
         {
@@ -249,38 +196,6 @@ public class ProviderDiIntegrationTests : IDisposable
                 => provider.CancelResponseAsync(responseId, cancellationToken);
             public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken cancellationToken = default)
                 => provider.GetResponseCancellationTokenAsync(responseId, cancellationToken);
-        }
-
-        private sealed class StreamAdapter(RecordingResponsesProvider provider) : ResponsesStreamProvider
-        {
-            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken cancellationToken = default)
-                => provider.CreateEventPublisherAsync(responseId, cancellationToken);
-            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken cancellationToken = default)
-                => provider.SubscribeToEventsAsync(responseId, observer, cursor, cancellationToken);
-        }
-
-        public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
-            string responseId, CancellationToken cancellationToken = default)
-        {
-            Calls.Add("CreateEventPublisherAsync");
-            var subject = _subjects.GetOrAdd(responseId, _ => new SeekableReplaySubject(_ttl));
-            return Task.FromResult(subject.GetPublisher());
-        }
-
-        public async Task<IAsyncDisposable> SubscribeToEventsAsync(
-            string responseId,
-            IAsyncObserver<ResponseStreamEvent> observer,
-            long? cursor = null,
-            CancellationToken cancellationToken = default)
-        {
-            Calls.Add("SubscribeToEventsAsync");
-            if (!_subjects.TryGetValue(responseId, out var subject))
-            {
-                throw new InvalidOperationException($"No event stream for '{responseId}'.");
-            }
-
-            var unwrapping = new UnwrappingObserver(observer);
-            return await subject.SubscribeAsync(unwrapping, cursor);
         }
 
         public Task CancelResponseAsync(string responseId, CancellationToken cancellationToken = default)
@@ -305,27 +220,8 @@ public class ProviderDiIntegrationTests : IDisposable
 
         public void Dispose()
         {
-            foreach (var subject in _subjects.Values)
-                subject.Dispose();
             foreach (var cts in _cancellationTokenSources.Values)
                 cts.Dispose();
-        }
-
-        /// <summary>
-        /// Adapts IAsyncObserver&lt;ResponseStreamEvent&gt; to IAsyncObserver&lt;(long, ResponseStreamEvent)&gt;
-        /// by unwrapping the tuple and forwarding only the event.
-        /// </summary>
-        private sealed class UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner)
-            : IAsyncObserver<(long SequenceNumber, ResponseStreamEvent Event)>
-        {
-            public ValueTask OnNextAsync((long SequenceNumber, ResponseStreamEvent Event) value)
-                => inner.OnNextAsync(value.Event);
-
-            public ValueTask OnErrorAsync(Exception error)
-                => inner.OnErrorAsync(error);
-
-            public ValueTask OnCompletedAsync()
-                => inner.OnCompletedAsync();
         }
     }
 }
@@ -443,7 +339,7 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
 /// <summary>
 /// T014 — Protocol tests verifying partial provider override:
 /// register only ResponsesProvider (custom) while ResponsesCancellationSignalProvider
-/// and ResponsesStreamProvider fall back to the SDK's in-memory defaults.
+/// and event streaming fall back to the SDK's Core defaults.
 /// </summary>
 public class PartialProviderOverrideTests : IDisposable
 {
@@ -572,9 +468,9 @@ public class PartialProviderOverrideTests : IDisposable
         await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        // State provider should never see streaming or cancellation calls
-        XAssert.DoesNotContain("CreateEventPublisherAsync", _stateProvider.Calls);
-        XAssert.DoesNotContain("SubscribeToEventsAsync", _stateProvider.Calls);
+        // State provider should never see streaming or cancellation calls. Streaming is now handled
+        // by the Core event-stream primitive, so a custom state-only provider is never asked to
+        // publish or subscribe to events.
         XAssert.DoesNotContain("CancelResponseAsync", _stateProvider.Calls);
         XAssert.DoesNotContain("GetResponseCancellationTokenAsync", _stateProvider.Calls);
     }
@@ -620,7 +516,7 @@ public class PartialProviderOverrideTests : IDisposable
 
     /// <summary>
     /// A state-only provider that handles Create/Get/Update with in-memory storage
-    /// but does NOT extend ResponsesCancellationSignalProvider or ResponsesStreamProvider.
+    /// but does NOT extend ResponsesCancellationSignalProvider.
     /// </summary>
     private sealed class StateOnlyProvider : ResponsesProvider
     {

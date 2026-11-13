@@ -41,6 +41,28 @@ public class CustomerSdkStatsDimensionsTests
     }
 
     [Theory]
+    [InlineData("Request", true, "true")]
+    [InlineData("Request", false, "false")]
+    [InlineData("Dependency", true, "true")]
+    [InlineData("Dependency", false, "false")]
+    public void GetDroppedTags_RequestAndDependencyIncludeTelemetrySuccess(string telemetryTypeName, bool telemetrySuccess, string expected)
+    {
+        var telemetryType = (TelemetryType)Enum.Parse(typeof(TelemetryType), telemetryTypeName);
+
+        var tags = CustomerSdkStatsDimensions.GetDroppedTags(telemetryType, "402", telemetrySuccess: telemetrySuccess);
+
+        Assert.Contains(tags, tag => tag.Key == "telemetrySuccess" && tag.Value?.Equals(expected) == true);
+    }
+
+    [Fact]
+    public void GetDroppedTags_NonRequestOrDependencyDoesNotIncludeTelemetrySuccess()
+    {
+        var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Exception, "500", telemetrySuccess: false);
+
+        Assert.DoesNotContain(tags, tag => tag.Key == "telemetrySuccess");
+    }
+
+    [Theory]
     [InlineData("Request", "429")]
     [InlineData("Dependency", "503")]
     public void GetRetryTags_IncludesRetryCodeAndReason(string telemetryTypeName, string retryCode)

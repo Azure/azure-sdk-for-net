@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(ResourceType, out string sphereProductApiVersion);
             _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
-            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, sphereProductApiVersion ?? "2024-04-01");
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereProductApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new ProductsGenerateDefaultDeviceGroupsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new SphereDeviceGroupDataAsyncCollectionResultOfT(
                 _productsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new ProductsGenerateDefaultDeviceGroupsCollectionResultOfT(
+            return new PageableWrapper<SphereDeviceGroupData, SphereDeviceGroupResource>(new SphereDeviceGroupDataCollectionResultOfT(
                 _productsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

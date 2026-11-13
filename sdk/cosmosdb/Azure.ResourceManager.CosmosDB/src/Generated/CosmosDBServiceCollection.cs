@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBServiceResource.ResourceType, out string cosmosDBServiceApiVersion);
             _serviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBServiceResource.ResourceType.Namespace, Diagnostics);
-            _serviceRestClient = new Service(_serviceClientDiagnostics, Pipeline, Endpoint, cosmosDBServiceApiVersion ?? "2026-04-01-preview");
+            _serviceRestClient = new Service(_serviceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBServiceApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new ServiceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new CosmosDBServiceDataAsyncCollectionResultOfT(
                 _serviceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new ServiceGetAllCollectionResultOfT(
+            return new PageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new CosmosDBServiceDataCollectionResultOfT(
                 _serviceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

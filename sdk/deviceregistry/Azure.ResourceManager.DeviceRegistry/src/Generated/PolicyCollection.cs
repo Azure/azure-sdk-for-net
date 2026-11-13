@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(PolicyResource.ResourceType, out string policyApiVersion);
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", PolicyResource.ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, policyApiVersion ?? "2026-03-01-preview");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyData, PolicyResource>(new PolicyDataAsyncCollectionResultOfT(
                 _policiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PolicyData, PolicyResource>(new PolicyDataCollectionResultOfT(
                 _policiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

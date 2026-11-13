@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(ResourceType, out string siteRecoveryFabricApiVersion);
             _replicationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _replicationFabricsRestClient = new ReplicationFabrics(_replicationFabricsClientDiagnostics, Pipeline, Endpoint, siteRecoveryFabricApiVersion ?? "2026-02-01");
+            _replicationFabricsRestClient = new ReplicationFabrics(_replicationFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryFabricApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1122,29 +1122,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary> Gets the details of a registered vCenter server(Add vCenter server). </summary>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteRecoveryVCenterResource>> GetSiteRecoveryVCenterAsync(string vcenterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryVCenterResource>> GetSiteRecoveryVCenterAsync(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
 
-            return await GetSiteRecoveryVCenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryVCenters().GetAsync(vCenterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of a registered vCenter server(Add vCenter server). </summary>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteRecoveryVCenterResource> GetSiteRecoveryVCenter(string vcenterName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryVCenterResource> GetSiteRecoveryVCenter(string vCenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
 
-            return GetSiteRecoveryVCenters().Get(vcenterName, cancellationToken);
+            return GetSiteRecoveryVCenters().Get(vCenterName, cancellationToken);
         }
     }
 }

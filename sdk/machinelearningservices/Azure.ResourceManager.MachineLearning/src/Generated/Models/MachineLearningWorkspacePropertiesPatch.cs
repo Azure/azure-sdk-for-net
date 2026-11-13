@@ -20,59 +20,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePropertiesPatch"/>. </summary>
         public MachineLearningWorkspacePropertiesPatch()
         {
-            IpAllowlist = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePropertiesPatch"/>. </summary>
-        /// <param name="allowRoleAssignmentOnRG"></param>
         /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
         /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
         /// <param name="description"> The description of this workspace. </param>
         /// <param name="enableDataIsolation"></param>
-        /// <param name="enableSoftwareBillOfMaterials"> Flag to tell if SoftwareBillOfMaterials should be enabled for this workspace. </param>
         /// <param name="encryption"></param>
         /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
         /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
         /// <param name="imageBuildCompute"> The compute name for image build. </param>
-        /// <param name="ipAllowlist"> The list of IPv4 addresses that are allowed to access the workspace. </param>
         /// <param name="managedNetwork"></param>
-        /// <param name="networkAcls"> A set of rules governing the network accessibility of the workspace. </param>
         /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
         /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
         /// <param name="serverlessComputeSettings"> Settings for serverless compute in a workspace. </param>
         /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
-        /// <param name="softDeleteRetentionInDays"> Retention time in days after workspace get soft deleted. </param>
         /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
         /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspacePropertiesPatch(bool? allowRoleAssignmentOnRG, string applicationInsights, string containerRegistry, string description, bool? enableDataIsolation, bool? enableSoftwareBillOfMaterials, EncryptionUpdateProperties encryption, FeatureStoreSettings featureStoreSettings, string friendlyName, string imageBuildCompute, IList<string> ipAllowlist, ManagedNetworkSettings managedNetwork, NetworkAcls networkAcls, string primaryUserAssignedIdentity, PublicNetworkAccess? publicNetworkAccessType, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, int? softDeleteRetentionInDays, SystemDatastoresAuthMode? systemDatastoresAuthMode, bool? isV1LegacyMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningWorkspacePropertiesPatch(string applicationInsights, string containerRegistry, string description, bool? enableDataIsolation, EncryptionUpdateProperties encryption, FeatureStoreSettings featureStoreSettings, string friendlyName, string imageBuildCompute, ManagedNetworkSettings managedNetwork, string primaryUserAssignedIdentity, PublicNetworkAccess? publicNetworkAccessType, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, SystemDatastoresAuthMode? systemDatastoresAuthMode, bool? isV1LegacyMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AllowRoleAssignmentOnRG = allowRoleAssignmentOnRG;
             ApplicationInsights = applicationInsights;
             ContainerRegistry = containerRegistry;
             Description = description;
             EnableDataIsolation = enableDataIsolation;
-            EnableSoftwareBillOfMaterials = enableSoftwareBillOfMaterials;
             Encryption = encryption;
             FeatureStoreSettings = featureStoreSettings;
             FriendlyName = friendlyName;
             ImageBuildCompute = imageBuildCompute;
-            IpAllowlist = ipAllowlist;
             ManagedNetwork = managedNetwork;
-            NetworkAcls = networkAcls;
             PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
             PublicNetworkAccessType = publicNetworkAccessType;
             ServerlessComputeSettings = serverlessComputeSettings;
             ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
-            SoftDeleteRetentionInDays = softDeleteRetentionInDays;
             SystemDatastoresAuthMode = systemDatastoresAuthMode;
             IsV1LegacyMode = isV1LegacyMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets or sets the AllowRoleAssignmentOnRG. </summary>
-        [WirePath("allowRoleAssignmentOnRG")]
-        public bool? AllowRoleAssignmentOnRG { get; set; }
 
         /// <summary> ARM id of the application insights associated with this workspace. </summary>
         [WirePath("applicationInsights")]
@@ -90,10 +75,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("enableDataIsolation")]
         public bool? EnableDataIsolation { get; set; }
 
-        /// <summary> Flag to tell if SoftwareBillOfMaterials should be enabled for this workspace. </summary>
-        [WirePath("enableSoftwareBillOfMaterials")]
-        public bool? EnableSoftwareBillOfMaterials { get; set; }
-
         /// <summary> Gets or sets the Encryption. </summary>
         [WirePath("encryption")]
         internal EncryptionUpdateProperties Encryption { get; set; }
@@ -110,17 +91,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("imageBuildCompute")]
         public string ImageBuildCompute { get; set; }
 
-        /// <summary> The list of IPv4 addresses that are allowed to access the workspace. </summary>
-        [WirePath("ipAllowlist")]
-        public IList<string> IpAllowlist { get; } = new ChangeTrackingList<string>();
-
         /// <summary> Gets or sets the ManagedNetwork. </summary>
         [WirePath("managedNetwork")]
         public ManagedNetworkSettings ManagedNetwork { get; set; }
-
-        /// <summary> A set of rules governing the network accessibility of the workspace. </summary>
-        [WirePath("networkAcls")]
-        public NetworkAcls NetworkAcls { get; set; }
 
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         [WirePath("primaryUserAssignedIdentity")]
@@ -138,10 +111,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("serviceManagedResourcesSettings")]
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
 
-        /// <summary> Retention time in days after workspace get soft deleted. </summary>
-        [WirePath("softDeleteRetentionInDays")]
-        public int? SoftDeleteRetentionInDays { get; set; }
-
         /// <summary> The auth mode used for accessing the system datastores of the workspace. </summary>
         [WirePath("systemDatastoresAuthMode")]
         public SystemDatastoresAuthMode? SystemDatastoresAuthMode { get; set; }
@@ -152,11 +121,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
         [WirePath("serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
-        public int? ServiceManagedResourcesCosmosDbCollectionsThroughput
+        public int? ServiceManagedResourcesCosmosDBCollectionsThroughput
         {
             get
             {
-                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
+                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput;
             }
             set
             {
@@ -164,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     ServiceManagedResourcesSettings = new ServiceManagedResourcesSettings();
                 }
-                ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput = value;
+                ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput = value;
             }
         }
     }

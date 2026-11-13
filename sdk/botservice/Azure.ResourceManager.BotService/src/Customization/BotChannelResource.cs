@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.BotService.Models;
 using Microsoft.TypeSpec.Generator.Customizations;

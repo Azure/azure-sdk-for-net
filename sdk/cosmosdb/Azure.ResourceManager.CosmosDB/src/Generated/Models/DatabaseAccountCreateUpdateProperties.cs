@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
         /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
         /// <param name="softDeleteConfiguration"> The configuration for soft delete on the Cosmos DB account. </param>
-        /// <param name="enforceHierarchicalPartitionKeyIdLastLevel"> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </param>
+        /// <param name="isHierarchicalPartitionKeyIdLastLevelEnforced"> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseAccountCreateUpdateProperties(ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enableAllVersionsAndDeletesChangeFeed, SoftDeleteConfiguration softDeleteConfiguration, bool? enforceHierarchicalPartitionKeyIdLastLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseAccountCreateUpdateProperties(ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enableAllVersionsAndDeletesChangeFeed, SoftDeleteConfiguration softDeleteConfiguration, bool? isHierarchicalPartitionKeyIdLastLevelEnforced, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             EnablePerRegionPerPartitionAutoscale = enablePerRegionPerPartitionAutoscale;
             EnableAllVersionsAndDeletesChangeFeed = enableAllVersionsAndDeletesChangeFeed;
             SoftDeleteConfiguration = softDeleteConfiguration;
-            EnforceHierarchicalPartitionKeyIdLastLevel = enforceHierarchicalPartitionKeyIdLastLevel;
+            IsHierarchicalPartitionKeyIdLastLevelEnforced = isHierarchicalPartitionKeyIdLastLevelEnforced;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
         [WirePath("enforceHierarchicalPartitionKeyIdLastLevel")]
-        public bool? EnforceHierarchicalPartitionKeyIdLastLevel { get; set; }
+        public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced { get; set; }
 
         /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("apiProperties.serverVersion")]

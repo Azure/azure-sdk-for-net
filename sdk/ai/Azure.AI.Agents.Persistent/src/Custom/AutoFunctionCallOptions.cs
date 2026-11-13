@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Agents.Persistent
 {
+    /// <summary> Options for automatically executing function tool calls during streaming. </summary>
     public class AutoFunctionCallOptions
     {
         private Dictionary<string, Delegate> _autoFunctionCallDelegates = new();

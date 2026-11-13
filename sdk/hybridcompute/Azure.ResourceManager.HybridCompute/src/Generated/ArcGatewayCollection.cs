@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArcGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ArcGatewayResource.ResourceType, out string arcGatewayApiVersion);
             _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ArcGatewayResource.ResourceType.Namespace, Diagnostics);
-            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Endpoint, arcGatewayApiVersion ?? "2025-09-16-preview");
+            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/gateways", out string gatewaysApiVersionOverride) ? gatewaysApiVersionOverride : "2026-07-15");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, ArcGatewayData.ToRequestContent(data), context);
+                HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ArcGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<ArcGatewayResource> operation = new HybridComputeArmOperation<ArcGatewayResource>(
                     new ArcGatewayResourceOperationSource(Client),
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, ArcGatewayData.ToRequestContent(data), context);
+                HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ArcGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<ArcGatewayResource> operation = new HybridComputeArmOperation<ArcGatewayResource>(
                     new ArcGatewayResourceOperationSource(Client),
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, context);
+                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArcGatewayData> response = Response.FromValue(ArcGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, context);
+                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArcGatewayData> response = Response.FromValue(ArcGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetByResourceGroupAsyncCollectionResultOfT(_gatewaysRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataAsyncCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetByResourceGroupCollectionResultOfT(_gatewaysRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
+            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, context);
+                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArcGatewayData> response = default;
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, context);
+                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArcGatewayData> response = default;
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,7 +471,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, context);
+                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArcGatewayData> response = default;
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,7 +532,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, context);
+                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArcGatewayData> response = default;

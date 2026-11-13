@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkFabricSkuApiVersion);
             _networkFabricSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _networkFabricSkusRestClient = new NetworkFabricSkus(_networkFabricSkusClientDiagnostics, Pipeline, Endpoint, networkFabricSkuApiVersion ?? "2025-07-15");
+            _networkFabricSkusRestClient = new NetworkFabricSkus(_networkFabricSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricSkuApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

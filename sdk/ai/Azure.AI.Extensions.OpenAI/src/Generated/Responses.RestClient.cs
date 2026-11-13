@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        internal PipelineMessage CreateCompactResponseConversationRequest(BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateCompactconversationRequest(BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

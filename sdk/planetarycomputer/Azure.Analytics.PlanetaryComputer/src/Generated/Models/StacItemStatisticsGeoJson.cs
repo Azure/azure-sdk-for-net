@@ -19,7 +19,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacItemStatisticsGeoJson"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureType @type)
+        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureKind @type)
         {
             Geometry = geometry;
             Type = @type;
@@ -30,7 +30,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
         /// <param name="properties"> Feature properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureType @type, StacItemStatisticsGeoJsonProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureKind @type, StacItemStatisticsGeoJsonProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Geometry = geometry;
             Type = @type;
@@ -42,7 +42,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public GeoJsonGeometry Geometry { get; }
 
         /// <summary> GeoJSON type identifier for Feature. </summary>
-        public FeatureType Type { get; }
+        public FeatureKind Type { get; }
 
         /// <summary> Feature properties. </summary>
         public StacItemStatisticsGeoJsonProperties Properties { get; }

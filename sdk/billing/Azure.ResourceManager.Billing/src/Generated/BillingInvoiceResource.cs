@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingInvoiceApiVersion);
             _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
             _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
+            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByInvoiceAsyncCollectionResultOfT(
+            return new BillingTransactionDataAsyncCollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByInvoiceCollectionResultOfT(
+            return new BillingTransactionDataCollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,

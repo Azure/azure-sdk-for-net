@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
@@ -28,6 +30,8 @@ namespace Azure.ResourceManager.ContainerService
     {
         private readonly ClientDiagnostics _managedClustersClientDiagnostics;
         private readonly ManagedClusters _managedClustersRestClient;
+        private readonly ClientDiagnostics _upgradeInsightsClientDiagnostics;
+        private readonly UpgradeInsights _upgradeInsightsRestClient;
         private readonly ContainerServiceManagedClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters";
@@ -53,7 +57,9 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string containerServiceManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, containerServiceManagedClusterApiVersion ?? "2026-04-02-preview");
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/managedClusters", out string managedClustersApiVersionOverride) ? managedClustersApiVersionOverride : "2026-08-02-preview");
+            _upgradeInsightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
+            _upgradeInsightsRestClient = new UpgradeInsights(_upgradeInsightsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceManagedClusterApiVersion ?? "2026-08-02-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +208,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +379,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -424,7 +430,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -473,7 +479,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -522,7 +528,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -575,7 +581,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -628,7 +634,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -676,7 +682,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -724,7 +730,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -777,7 +783,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -830,7 +836,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -879,7 +885,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -928,7 +934,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -977,7 +983,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1026,7 +1032,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1076,7 +1082,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1126,7 +1132,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1142,7 +1148,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new ContainerServiceOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1164,7 +1170,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1180,7 +1186,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new ContainerServiceOutboundEnvironmentEndpointCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1202,7 +1208,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1254,7 +1260,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1306,7 +1312,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1322,7 +1328,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ContainerServicePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1344,7 +1350,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1360,7 +1366,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetPrivateLinkResourcesCollectionResultOfT(
+            return new ContainerServicePrivateLinkResourceDataCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1382,7 +1388,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1435,7 +1441,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1488,7 +1494,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1541,7 +1547,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1594,7 +1600,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1647,7 +1653,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1700,7 +1706,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1749,7 +1755,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1798,7 +1804,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1847,7 +1853,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1896,7 +1902,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1955,7 +1961,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2014,7 +2020,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2063,7 +2069,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2112,7 +2118,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2161,7 +2167,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2189,6 +2195,122 @@ namespace Azure.ResourceManager.ContainerService
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates (or refreshes) an upgrade readiness evaluation for the managed cluster.
+        /// The requested scope and target version(s) are supplied in the request body; the
+        /// server runs the readiness checks — the control plane Kubernetes version upgrade, a
+        /// single agent pool Kubernetes version upgrade, a single agent pool node OS image
+        /// upgrade, or the combined control plane and agent pools upgrade — persists the result
+        /// as an UpgradeInsight resource with a server-generated name, and returns that
+        /// resource. The response body is identical to a subsequent GET of the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/generateUpgradeInsights. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpgradeInsights_Generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<UpgradeInsightResource>> GenerateAsync(GenerateUpgradeInsightsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _upgradeInsightsClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Generate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _upgradeInsightsRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateUpgradeInsightsContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<UpgradeInsightData> response = Response.FromValue(UpgradeInsightData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new UpgradeInsightResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates (or refreshes) an upgrade readiness evaluation for the managed cluster.
+        /// The requested scope and target version(s) are supplied in the request body; the
+        /// server runs the readiness checks — the control plane Kubernetes version upgrade, a
+        /// single agent pool Kubernetes version upgrade, a single agent pool node OS image
+        /// upgrade, or the combined control plane and agent pools upgrade — persists the result
+        /// as an UpgradeInsight resource with a server-generated name, and returns that
+        /// resource. The response body is identical to a subsequent GET of the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/generateUpgradeInsights. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpgradeInsights_Generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<UpgradeInsightResource> Generate(GenerateUpgradeInsightsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _upgradeInsightsClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Generate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _upgradeInsightsRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateUpgradeInsightsContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<UpgradeInsightData> response = Response.FromValue(UpgradeInsightData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new UpgradeInsightResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -2307,10 +2429,9 @@ namespace Azure.ResourceManager.ContainerService
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2350,10 +2471,9 @@ namespace Azure.ResourceManager.ContainerService
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2807,5 +2927,182 @@ namespace Azure.ResourceManager.ContainerService
 
             return GetManagedClusterMeshMemberships().Get(meshMembershipName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of AgentFabricMemberships in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of AgentFabricMemberships and their operations over a AgentFabricMembershipResource. </returns>
+        public virtual AgentFabricMembershipCollection GetAgentFabricMemberships()
+        {
+            return GetCachedClient(client => new AgentFabricMembershipCollection(client, Id));
+        }
+
+        /// <summary> Gets the AgentFabric membership of a managed cluster. </summary>
+        /// <param name="agentFabricMembershipName"> The name of the AgentFabricMembership. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentFabricMembershipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentFabricMembershipName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AgentFabricMembershipResource>> GetAgentFabricMembershipAsync(string agentFabricMembershipName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentFabricMembershipName, nameof(agentFabricMembershipName));
+
+            return await GetAgentFabricMemberships().GetAsync(agentFabricMembershipName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the AgentFabric membership of a managed cluster. </summary>
+        /// <param name="agentFabricMembershipName"> The name of the AgentFabricMembership. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentFabricMembershipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentFabricMembershipName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AgentFabricMembershipResource> GetAgentFabricMembership(string agentFabricMembershipName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentFabricMembershipName, nameof(agentFabricMembershipName));
+
+            return GetAgentFabricMemberships().Get(agentFabricMembershipName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerServiceAlertConfigurations in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerServiceAlertConfigurations and their operations over a ContainerServiceAlertConfigurationResource. </returns>
+        public virtual ContainerServiceAlertConfigurationCollection GetContainerServiceAlertConfigurations()
+        {
+            return GetCachedClient(client => new ContainerServiceAlertConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified alert configuration of a managed cluster. </summary>
+        /// <param name="configurationName"> The name of the alert configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerServiceAlertConfigurationResource>> GetContainerServiceAlertConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetContainerServiceAlertConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified alert configuration of a managed cluster. </summary>
+        /// <param name="configurationName"> The name of the alert configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerServiceAlertConfigurationResource> GetContainerServiceAlertConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetContainerServiceAlertConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of UpgradeInsights in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of UpgradeInsights and their operations over a UpgradeInsightResource. </returns>
+        public virtual UpgradeInsightCollection GetUpgradeInsights()
+        {
+            return GetCachedClient(client => new UpgradeInsightCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a stored upgrade insight for the managed cluster by its server-generated name.
+        /// This is a read-only operation: it returns the most recently generated readiness
+        /// evaluation for that scope from the data store, including the detected
+        /// upgrade-blocking issues and contextual upgrade information. It does not regenerate
+        /// the evaluation. If no non-expired evaluation exists for the name, it returns 404.
+        /// </summary>
+        /// <param name="upgradeInsightName"> The name of the UpgradeInsight. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upgradeInsightName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="upgradeInsightName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<UpgradeInsightResource>> GetUpgradeInsightAsync(string upgradeInsightName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(upgradeInsightName, nameof(upgradeInsightName));
+
+            return await GetUpgradeInsights().GetAsync(upgradeInsightName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a stored upgrade insight for the managed cluster by its server-generated name.
+        /// This is a read-only operation: it returns the most recently generated readiness
+        /// evaluation for that scope from the data store, including the detected
+        /// upgrade-blocking issues and contextual upgrade information. It does not regenerate
+        /// the evaluation. If no non-expired evaluation exists for the name, it returns 404.
+        /// </summary>
+        /// <param name="upgradeInsightName"> The name of the UpgradeInsight. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upgradeInsightName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="upgradeInsightName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<UpgradeInsightResource> GetUpgradeInsight(string upgradeInsightName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(upgradeInsightName, nameof(upgradeInsightName));
+
+            return GetUpgradeInsights().Get(upgradeInsightName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes a managed cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch, CancellationToken cancellationToken)
+        {
+            return DeleteAsync(waitUntil: waitUntil, ifMatch: ifMatch, ignorePodDisruptionBudget: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Deletes a managed cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch, CancellationToken cancellationToken)
+        {
+            return Delete(waitUntil: waitUntil, ifMatch: ifMatch, ignorePodDisruptionBudget: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

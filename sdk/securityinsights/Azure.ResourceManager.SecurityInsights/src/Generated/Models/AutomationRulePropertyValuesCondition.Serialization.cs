@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AutomationRulePropertyValuesCondition(propertyName, @operator, propertyValues ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

@@ -169,20 +169,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("nicStatus"u8);
                 writer.WriteStringValue(NicStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(IpInterfaceType))
+            if (options.Format != "W" && Optional.IsDefined(IPInterfaceType))
             {
                 writer.WritePropertyName("ipInterfaceType"u8);
-                writer.WriteStringValue(IpInterfaceType.Value.ToString());
+                writer.WriteStringValue(IPInterfaceType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementInterface))
+            if (options.Format != "W" && Optional.IsDefined(IsManagementInterface))
             {
                 writer.WritePropertyName("managementInterface"u8);
-                writer.WriteBooleanValue(ManagementInterface.Value);
+                writer.WriteBooleanValue(IsManagementInterface.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RdmaCapability))
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Hci.Models
             string switchName = default;
             NetworkInterfaceType? interfaceType = default;
             int? interfaceSpeed = default;
-            InterfaceState? interfaceState = default;
+            EdgeMachineNetworkInterfaceState? interfaceState = default;
             string nicType = default;
             string nicStatus = default;
-            IpInterfaceType? ipInterfaceType = default;
+            IPInterfaceType? ipInterfaceType = default;
             int? vlanId = default;
-            bool? managementInterface = default;
+            bool? isManagementInterface = default;
             RdmaCapability? rdmaCapability = default;
             NetworkAdapterStatus networkAdapterStatus = default;
             WifiConfigurationReportedProperties wifiConfiguration = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    interfaceState = new InterfaceState(prop.Value.GetString());
+                    interfaceState = new EdgeMachineNetworkInterfaceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nicType"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    ipInterfaceType = new IpInterfaceType(prop.Value.GetString());
+                    ipInterfaceType = new IPInterfaceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vlanId"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    managementInterface = prop.Value.GetBoolean();
+                    isManagementInterface = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("rdmaCapability"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkAdapterReportedProperties(
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Hci.Models
                 nicStatus,
                 ipInterfaceType,
                 vlanId,
-                managementInterface,
+                isManagementInterface,
                 rdmaCapability,
                 networkAdapterStatus,
                 wifiConfiguration,

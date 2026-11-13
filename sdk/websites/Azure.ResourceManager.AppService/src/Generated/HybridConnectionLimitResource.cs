@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string hybridConnectionLimitApiVersion);
             _hybridConnectionLimitsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _hybridConnectionLimitsOperationGroupRestClient = new HybridConnectionLimitsOperationGroup(_hybridConnectionLimitsOperationGroupClientDiagnostics, Pipeline, Endpoint, hybridConnectionLimitApiVersion ?? "2026-03-15");
+            _hybridConnectionLimitsOperationGroupRestClient = new HybridConnectionLimitsOperationGroup(_hybridConnectionLimitsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectionLimitApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(GroupQuotaLimitListResource.ResourceType, out string groupQuotaLimitListApiVersion);
             _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2025-09-01");
+            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

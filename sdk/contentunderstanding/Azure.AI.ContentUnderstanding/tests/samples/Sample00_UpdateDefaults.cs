@@ -20,7 +20,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task UpdateDefaultsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingUpdateDefaults
@@ -28,9 +28,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Map your deployed models to the models required by prebuilt analyzers
             var modelDeployments = new Dictionary<string, string>
             {
-                ["gpt-4.1"] = "<your-gpt-4.1-deployment-name>",
-                ["gpt-4.1-mini"] = "<your-gpt-4.1-mini-deployment-name>",
-                ["text-embedding-3-large"] = "<your-text-embedding-3-large-deployment-name>"
+                ["gpt-5.2"] = "<your-gpt-5.2-deployment-name>",
+                ["text-embedding-3-large"] = "<your-text-embedding-3-large-deployment-name>",
+                ["prebuilt-analyzer-completion"] = "<your-gpt-5.2-deployment-name>",
+                ["prebuilt-analyzer-completion-mini"] = "<your-gpt-5.2-deployment-name>",
+                ["prebuilt-analyzer-embedding"] = "<your-text-embedding-3-large-deployment-name>"
             };
 
             var response = await client.UpdateDefaultsAsync(modelDeployments);
@@ -43,17 +45,22 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 #else
             // Only update if we have deployment names configured in environment
-            string? gpt41Deployment = TestEnvironment.Gpt41Deployment;
-            string? gpt41MiniDeployment = TestEnvironment.Gpt41MiniDeployment;
-            string? textEmbeddingDeployment = TestEnvironment.TextEmbedding3LargeDeployment;
+            string completionModel = ModelProfile.CompletionModel;
+            string? completionModelDeployment = ModelProfile.CompletionDeployment;
+            string? completionMiniDeployment = ModelProfile.MiniCompletionDeployment;
+            string? embeddingDeployment = TestEnvironment.EmbeddingDeployment;
 
-            if (!string.IsNullOrEmpty(gpt41Deployment) && !string.IsNullOrEmpty(gpt41MiniDeployment) && !string.IsNullOrEmpty(textEmbeddingDeployment))
+            if (!string.IsNullOrEmpty(completionModelDeployment) &&
+                !string.IsNullOrEmpty(completionMiniDeployment) &&
+                !string.IsNullOrEmpty(embeddingDeployment))
             {
                 var modelDeployments = new Dictionary<string, string>
                 {
-                    ["gpt-4.1"] = gpt41Deployment!,
-                    ["gpt-4.1-mini"] = gpt41MiniDeployment!,
-                    ["text-embedding-3-large"] = textEmbeddingDeployment!
+                    [completionModel] = completionModelDeployment!,
+                    ["text-embedding-3-large"] = embeddingDeployment!,
+                    ["prebuilt-analyzer-completion"] = completionModelDeployment!,
+                    ["prebuilt-analyzer-completion-mini"] = completionMiniDeployment!,
+                    ["prebuilt-analyzer-embedding"] = embeddingDeployment!
                 };
 
                 var response = await client.UpdateDefaultsAsync(modelDeployments);

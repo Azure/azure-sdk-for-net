@@ -16,6 +16,11 @@ using System.Threading.Tasks;
 
 #pragma warning disable AZC0002 // DO ensure that service method parameters are optional
 
+// This file intentionally groups backward-compatibility overloads for many client types that
+// accept the old IReadOnlyDictionary metadata signature; one file per type would be excessive.
+#pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable SA1649 // File name should match first type name
+
 namespace Azure.AI.Agents.Persistent
 {
     // Helper to convert IReadOnlyDictionary → IDictionary without copying when possible.

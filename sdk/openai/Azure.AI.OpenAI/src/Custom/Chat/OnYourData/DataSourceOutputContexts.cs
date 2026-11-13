@@ -21,7 +21,10 @@ namespace Azure.AI.OpenAI.Chat;
 [Experimental("AOAI001")]
 public enum DataSourceOutputContexts : int
 {
+    /// <summary> Requests that the inferred user intent be included in the response context. </summary>
     Intent = 1 << 0,
+    /// <summary> Requests that citation information for retrieved documents be included in the response context. </summary>
     Citations = 1 << 1,
+    /// <summary> Requests that the full content of all retrieved documents be included in the response context. </summary>
     AllRetrievedDocuments = 1 << 2,
 }

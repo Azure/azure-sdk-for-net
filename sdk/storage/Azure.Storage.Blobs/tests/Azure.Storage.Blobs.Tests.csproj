@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.Azure.Storage.Blob" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <ProjectReference Include="..\..\..\..\sdk\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.csproj" />

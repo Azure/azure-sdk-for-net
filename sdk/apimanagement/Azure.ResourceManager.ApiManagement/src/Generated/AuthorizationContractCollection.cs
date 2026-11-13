@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(AuthorizationContractResource.ResourceType, out string authorizationContractApiVersion);
             _authorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", AuthorizationContractResource.ResourceType.Namespace, Diagnostics);
-            _authorizationRestClient = new Authorization(_authorizationClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
+            _authorizationRestClient = new Authorization(_authorizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthorizationContractData, AuthorizationContractResource>(new AuthorizationGetByAuthorizationProviderAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AuthorizationContractData, AuthorizationContractResource>(new AuthorizationContractDataAsyncCollectionResultOfT(
                 _authorizationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthorizationContractData, AuthorizationContractResource>(new AuthorizationGetByAuthorizationProviderCollectionResultOfT(
+            return new PageableWrapper<AuthorizationContractData, AuthorizationContractResource>(new AuthorizationContractDataCollectionResultOfT(
                 _authorizationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ComputePrivateEndpointConnectionResource.ResourceType, out string computePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ComputePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, computePrivateEndpointConnectionApiVersion ?? "2026-03-02");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computePrivateEndpointConnectionApiVersion ?? "2026-03-02");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsCollectionResultOfT(
+            return new PageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

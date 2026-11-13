@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             TryGetApiVersion(DomainOwnershipIdentifierResource.ResourceType, out string domainOwnershipIdentifierApiVersion);
             _domainOwnershipIdentifiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", DomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
-            _domainOwnershipIdentifiersRestClient = new DomainOwnershipIdentifiers(_domainOwnershipIdentifiersClientDiagnostics, Pipeline, Endpoint, domainOwnershipIdentifierApiVersion ?? "2024-11-01");
+            _domainOwnershipIdentifiersRestClient = new DomainOwnershipIdentifiers(_domainOwnershipIdentifiersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainOwnershipIdentifierApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifierDataAsyncCollectionResultOfT(
                 _domainOwnershipIdentifiersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersCollectionResultOfT(
+            return new PageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifierDataCollectionResultOfT(
                 _domainOwnershipIdentifiersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

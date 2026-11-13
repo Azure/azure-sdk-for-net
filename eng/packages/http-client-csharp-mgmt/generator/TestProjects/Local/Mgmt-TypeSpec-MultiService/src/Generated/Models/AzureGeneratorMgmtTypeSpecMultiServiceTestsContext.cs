@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models;
 using Azure.ResourceManager.Models;
 
@@ -17,16 +16,13 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BarData))]
-    [ModelReaderWriterBuildable(typeof(BarListResult))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarResource))]
     [ModelReaderWriterBuildable(typeof(CheckAvailabilityRequest))]
-    [ModelReaderWriterBuildable(typeof(CheckAvailabilityResponse))]
+    [ModelReaderWriterBuildable(typeof(CheckAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(FooData))]
-    [ModelReaderWriterBuildable(typeof(FooListResult))]
     [ModelReaderWriterBuildable(typeof(FooProperties))]
     [ModelReaderWriterBuildable(typeof(FooResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureGeneratorMgmtTypeSpecMultiServiceTestsContext : ModelReaderWriterContext
     {

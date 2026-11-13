@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string monitoringMetricConfigurationApiVersion);
             _monitoringConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _monitoringConfigRestClient = new MonitoringConfig(_monitoringConfigClientDiagnostics, Pipeline, Endpoint, monitoringMetricConfigurationApiVersion ?? "2023-12-01");
+            _monitoringConfigRestClient = new MonitoringConfig(_monitoringConfigClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitoringMetricConfigurationApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

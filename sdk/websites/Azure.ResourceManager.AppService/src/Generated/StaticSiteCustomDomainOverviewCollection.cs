@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSiteCustomDomainOverviewResource.ResourceType, out string staticSiteCustomDomainOverviewApiVersion);
             _staticSiteCustomDomainOverviewARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteCustomDomainOverviewResource.ResourceType.Namespace, Diagnostics);
-            _staticSiteCustomDomainOverviewARMResourcesRestClient = new StaticSiteCustomDomainOverviewARMResources(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteCustomDomainOverviewApiVersion ?? "2026-03-15");
+            _staticSiteCustomDomainOverviewARMResourcesRestClient = new StaticSiteCustomDomainOverviewARMResources(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteCustomDomainOverviewApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewARMResourcesGetStaticSiteCustomDomainsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewDataAsyncCollectionResultOfT(
                 _staticSiteCustomDomainOverviewARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewARMResourcesGetStaticSiteCustomDomainsCollectionResultOfT(
+            return new PageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewDataCollectionResultOfT(
                 _staticSiteCustomDomainOverviewARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

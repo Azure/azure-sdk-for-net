@@ -12,7 +12,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningOnlineDeploymentProperties. </summary>
+    /// <summary>
+    /// The MachineLearningOnlineDeploymentProperties.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
+    /// </summary>
     public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties, IJsonModel<MachineLearningOnlineDeploymentProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -79,10 +82,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
-            if (Optional.IsDefined(DataCollector))
+            if (Optional.IsDefined(DataCollector, _dataCollectorIsDefined))
             {
-                writer.WritePropertyName("dataCollector"u8);
-                writer.WriteObjectValue(DataCollector, options);
+                if (DataCollector != null)
+                {
+                    writer.WritePropertyName("dataCollector"u8);
+                    writer.WriteObjectValue(DataCollector, options);
+                }
+                else
+                {
+                    writer.WriteNull("dataCollector"u8);
+                }
             }
             if (Optional.IsDefined(EgressPublicNetworkAccess))
             {
@@ -91,50 +101,106 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(InstanceType, _instanceTypeIsDefined))
             {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
+                if (InstanceType != null)
+                {
+                    writer.WritePropertyName("instanceType"u8);
+                    writer.WriteStringValue(InstanceType);
+                }
+                else
+                {
+                    writer.WriteNull("instanceType"u8);
+                }
             }
-            if (Optional.IsDefined(LivenessProbe))
+            if (Optional.IsDefined(LivenessProbe, _livenessProbeIsDefined))
             {
-                writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe, options);
+                if (LivenessProbe != null)
+                {
+                    writer.WritePropertyName("livenessProbe"u8);
+                    writer.WriteObjectValue(LivenessProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("livenessProbe"u8);
+                }
             }
-            if (Optional.IsDefined(Model))
+            if (Optional.IsDefined(Model, _modelIsDefined))
             {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
+                if (Model != null)
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(Model);
+                }
+                else
+                {
+                    writer.WriteNull("model"u8);
+                }
             }
-            if (Optional.IsDefined(ModelMountPath))
+            if (Optional.IsDefined(ModelMountPath, _modelMountPathIsDefined))
             {
-                writer.WritePropertyName("modelMountPath"u8);
-                writer.WriteStringValue(ModelMountPath);
+                if (ModelMountPath != null)
+                {
+                    writer.WritePropertyName("modelMountPath"u8);
+                    writer.WriteStringValue(ModelMountPath);
+                }
+                else
+                {
+                    writer.WriteNull("modelMountPath"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ReadinessProbe))
+            if (Optional.IsDefined(ReadinessProbe, _readinessProbeIsDefined))
             {
-                writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe, options);
+                if (ReadinessProbe != null)
+                {
+                    writer.WritePropertyName("readinessProbe"u8);
+                    writer.WriteObjectValue(ReadinessProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("readinessProbe"u8);
+                }
             }
-            if (Optional.IsDefined(RequestSettings))
+            if (Optional.IsDefined(RequestSettings, _requestSettingsIsDefined))
             {
-                writer.WritePropertyName("requestSettings"u8);
-                writer.WriteObjectValue(RequestSettings, options);
+                if (RequestSettings != null)
+                {
+                    writer.WritePropertyName("requestSettings"u8);
+                    writer.WriteObjectValue(RequestSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("requestSettings"u8);
+                }
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (Optional.IsDefined(ScaleSettings, _scaleSettingsIsDefined))
             {
-                writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings, options);
+                if (ScaleSettings != null)
+                {
+                    writer.WritePropertyName("scaleSettings"u8);
+                    writer.WriteObjectValue(ScaleSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("scaleSettings"u8);
+                }
             }
-            if (Optional.IsDefined(StartupProbe))
+            if (Optional.IsDefined(StartupProbe, _startupProbeIsDefined))
             {
-                writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue(StartupProbe, options);
+                if (StartupProbe != null)
+                {
+                    writer.WritePropertyName("startupProbe"u8);
+                    writer.WriteObjectValue(StartupProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("startupProbe"u8);
+                }
             }
         }
 

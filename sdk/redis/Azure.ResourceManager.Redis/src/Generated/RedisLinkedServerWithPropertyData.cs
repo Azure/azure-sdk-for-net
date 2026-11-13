@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties is null ? default : Properties.LinkedRedisCacheLocation;
+                return Properties is null ? (AzureLocation?)default : Properties.LinkedRedisCacheLocation;
             }
             set
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties is null ? default : Properties.ServerRole;
+                return Properties is null ? (RedisLinkedServerRole?)default : Properties.ServerRole;
             }
             set
             {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityContactResource.ResourceType, out string securityContactApiVersion);
             _securityContactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityContactResource.ResourceType.Namespace, Diagnostics);
-            _securityContactsRestClient = new SecurityContacts(_securityContactsClientDiagnostics, Pipeline, Endpoint, securityContactApiVersion ?? "2023-12-01-preview");
+            _securityContactsRestClient = new SecurityContacts(_securityContactsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityContactApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactsGetAllAsyncCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
+            return new AsyncPageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactDataAsyncCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactsGetAllCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
+            return new PageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactDataCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
         }
 
         /// <summary>

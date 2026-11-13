@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceData"/>. </summary>
+        public StoragePrivateLinkResourceData()
+        {
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeDynamicSchemaVersionResource.ResourceType, out string edgeDynamicSchemaVersionApiVersion);
             _dynamicSchemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDynamicSchemaVersionResource.ResourceType.Namespace, Diagnostics);
-            _dynamicSchemaVersionsRestClient = new DynamicSchemaVersions(_dynamicSchemaVersionsClientDiagnostics, Pipeline, Endpoint, edgeDynamicSchemaVersionApiVersion ?? "2025-06-01");
+            _dynamicSchemaVersionsRestClient = new DynamicSchemaVersions(_dynamicSchemaVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDynamicSchemaVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDynamicSchemaVersionData, EdgeDynamicSchemaVersionResource>(new DynamicSchemaVersionsGetByDynamicSchemaAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeDynamicSchemaVersionData, EdgeDynamicSchemaVersionResource>(new EdgeDynamicSchemaVersionDataAsyncCollectionResultOfT(
                 _dynamicSchemaVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDynamicSchemaVersionData, EdgeDynamicSchemaVersionResource>(new DynamicSchemaVersionsGetByDynamicSchemaCollectionResultOfT(
+            return new PageableWrapper<EdgeDynamicSchemaVersionData, EdgeDynamicSchemaVersionResource>(new EdgeDynamicSchemaVersionDataCollectionResultOfT(
                 _dynamicSchemaVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

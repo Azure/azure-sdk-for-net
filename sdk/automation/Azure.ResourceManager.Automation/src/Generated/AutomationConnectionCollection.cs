@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationConnectionResource.ResourceType, out string automationConnectionApiVersion);
             _connectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationConnectionResource.ResourceType.Namespace, Diagnostics);
-            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Endpoint, automationConnectionApiVersion ?? "2024-10-23");
+            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationConnectionApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationConnectionData, AutomationConnectionResource>(new ConnectionGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationConnectionData, AutomationConnectionResource>(new AutomationConnectionDataAsyncCollectionResultOfT(
                 _connectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationConnectionData, AutomationConnectionResource>(new ConnectionGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationConnectionData, AutomationConnectionResource>(new AutomationConnectionDataCollectionResultOfT(
                 _connectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -496,7 +496,7 @@ namespace Azure.Provisioning.ContainerInstance
         public Azure.Provisioning.BicepValue<string> DetailStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> ExitCode { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> FinishOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> State { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

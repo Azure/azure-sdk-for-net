@@ -278,6 +278,7 @@ public partial class AzureOpenAIClient : OpenAIClient
         => throw new InvalidOperationException($"VectorStoreClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
 #endif
 
+    /// <inheritdoc/>
     public override RealtimeClient GetRealtimeClient()
     {
         throw new InvalidOperationException($"{nameof(RealtimeClient)} is not supported via the Azure.AI.OpenAI library. Please use the OpenAI library directly with v1 endpoints, instead.");
@@ -286,6 +287,7 @@ public partial class AzureOpenAIClient : OpenAIClient
 #if AZURE_OPENAI_GA
     [EditorBrowsable(EditorBrowsableState.Never)]
 #endif
+    /// <inheritdoc/>
     [Experimental("OPENAI001")]
     public override ResponsesClient GetResponsesClient()
 #if !AZURE_OPENAI_GA
@@ -294,6 +296,7 @@ public partial class AzureOpenAIClient : OpenAIClient
         => throw new InvalidOperationException($"ResponsesClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
 #endif
 
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ConversationClient GetConversationClient()
     {
@@ -301,6 +304,7 @@ public partial class AzureOpenAIClient : OpenAIClient
         return null;
     }
 
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ContainerClient GetContainerClient()
     {
@@ -308,6 +312,7 @@ public partial class AzureOpenAIClient : OpenAIClient
         return null;
     }
 
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override GraderClient GetGraderClient()
     {
@@ -315,6 +320,7 @@ public partial class AzureOpenAIClient : OpenAIClient
         return null;
     }
 
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override VideoClient GetVideoClient()
     {

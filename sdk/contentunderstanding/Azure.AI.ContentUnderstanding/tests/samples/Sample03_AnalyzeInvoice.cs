@@ -23,7 +23,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeInvoiceAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingAnalyzeInvoice
@@ -38,15 +38,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingGetUsage
-            // Get usage details (token consumption, page counts) from the completed operation.
-            AnalyzeUsageDetails? usage = operation.GetUsage();
+            // Document page meters are three tiers (minimal / basic / standard).
+            UsageDetails? usage = operation.GetUsageDetails();
             if (usage != null)
             {
+                Console.WriteLine($"Document pages (minimal): {usage.DocumentPagesMinimal}");
+                Console.WriteLine($"Document pages (basic): {usage.DocumentPagesBasic}");
                 Console.WriteLine($"Document pages (standard): {usage.DocumentPagesStandard}");
                 Console.WriteLine($"Contextualization tokens: {usage.ContextualizationTokens}");
-                foreach (var kvp in usage.Tokens)
+                if (usage.Tokens != null)
                 {
-                    Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+                    foreach (var kvp in usage.Tokens)
+                    {
+                        Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+                    }
                 }
             }
             #endregion
@@ -58,6 +63,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 Assert.IsNotNull(usage, "Usage details should be available after a completed analysis");
                 Assert.IsNotNull(usage!.Tokens, "Tokens dictionary should not be null");
+                Assert.IsNotNull(usage.DocumentPagesStandard, "prebuilt-invoice LRO should bill DocumentPagesStandard");
+                Assert.IsNull(usage.DocumentPagesStandardInline, "Inline meters should not be set for LRO analyze");
             }
             #endregion
 
@@ -370,7 +377,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingInvoiceToLlmInput
             Assert.IsNotNull(llmText, "LLM input text should not be null");
             Assert.That(llmText, Does.StartWith("---\n"));
-            Assert.That(llmText, Does.Contain("contentType: document"));
+            Assert.That(llmText, Does.Contain("mimeType: application/pdf"));
             Assert.That(llmText, Does.Contain("fields:"));
             Console.WriteLine($"Invoice LLM input text generated ({llmText.Length} characters)");
             #endregion

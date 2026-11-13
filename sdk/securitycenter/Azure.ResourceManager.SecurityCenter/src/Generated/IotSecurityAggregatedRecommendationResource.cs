@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string iotSecurityAggregatedRecommendationApiVersion);
             _iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _iotSecuritySolutionsAnalyticsRecommendationRestClient = new IotSecuritySolutionsAnalyticsRecommendation(_iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, Endpoint, iotSecurityAggregatedRecommendationApiVersion ?? "2019-08-01");
+            _iotSecuritySolutionsAnalyticsRecommendationRestClient = new IotSecuritySolutionsAnalyticsRecommendation(_iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotSecurityAggregatedRecommendationApiVersion ?? "2019-08-01");
             ValidateResourceId(id);
         }
 

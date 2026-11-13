@@ -15,3 +15,7 @@ namespace Azure.AI.Projects;
 [Experimental("AAIP001")] internal partial class AIProjectModelsGetLatestModelVersionsCollectionResult { }
 [Experimental("AAIP001")] internal partial class CreateOrUpdateRoutineRequest { }
 [Experimental("AAIP001")] internal partial class DispatchRoutineAsyncRequest { }
+[Experimental("AAIP001")] internal partial class AIProjectRoutinesGetRoutinesCollectionResult { }
+[Experimental("AAIP001")] internal partial class AIProjectRoutinesGetRoutinesAsyncCollectionResult { }
+[Experimental("AAIP001")] internal partial class AIProjectRoutinesGetRoutineRunsAsyncCollectionResult { }
+[Experimental("AAIP001")] internal partial class AIProjectRoutinesGetRoutineRunsCollectionResult { }

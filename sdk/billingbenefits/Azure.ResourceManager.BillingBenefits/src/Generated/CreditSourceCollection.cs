@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(CreditSourceResource.ResourceType, out string creditSourceApiVersion);
             _sourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", CreditSourceResource.ResourceType.Namespace, Diagnostics);
-            _sourcesRestClient = new Sources(_sourcesClientDiagnostics, Pipeline, Endpoint, creditSourceApiVersion ?? "2025-12-01-preview");
+            _sourcesRestClient = new Sources(_sourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, creditSourceApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CreditSourceData, CreditSourceResource>(new CreditSourceDataAsyncCollectionResultOfT(
                 _sourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditCollectionResultOfT(
+            return new PageableWrapper<CreditSourceData, CreditSourceResource>(new CreditSourceDataCollectionResultOfT(
                 _sourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

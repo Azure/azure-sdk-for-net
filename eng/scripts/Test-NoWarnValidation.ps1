@@ -6,12 +6,11 @@
 .DESCRIPTION
   Runs a small suite of synthetic scenarios that exercise the NoWarn validator end
   to end:
-    * Project on the skip list: validator should NOT error.
-    * Project NOT on the skip list, clean: validator should NOT error.
-    * Project NOT on the skip list with a raw <NoWarn> in the csproj: validator
-      MUST error (AZSDK0002), and the error MUST point at the csproj.
-    * Project NOT on the skip list with a <NoWarn> coming from an imported props
-      file: validator MUST error (AZSDK0002).
+    * Clean project: validator should NOT error.
+    * Project with a raw <NoWarn> in the csproj: validator MUST error (AZSDK0002),
+      and the error MUST point at the csproj.
+    * Project with a <NoWarn> coming from an imported props file: validator MUST
+      error (AZSDK0002).
     * Allow-list parsing variants (case, whitespace around the prefix, blank lines,
       comments): every code MUST be recognized and the validator MUST NOT error.
     * Record mode: validator MUST emit a NoWarnAudit line and MUST NOT error.
@@ -91,17 +90,13 @@ function New-TestCsproj {
     [string]$ProjectName,
     [string]$ExtraPropertyXml = '',
     [string]$ExtraImportXml = '',
-    [string]$AllowListDir = $null,
-    [string]$SkipListFile = $null
+    [string]$AllowListDir = $null
   )
   # Property overrides for paths to test fixtures (so the targets file uses our temp dir, not the repo eng dir).
   $extraProps = @()
   if ($AllowListDir) {
     $normalized = ($AllowListDir.TrimEnd('\','/') + [IO.Path]::DirectorySeparatorChar)
     $extraProps += "    <_AnalyzerAllowListDir>$normalized</_AnalyzerAllowListDir>"
-  }
-  if ($SkipListFile) {
-    $extraProps += "    <_NoWarnSkipListFile>$SkipListFile</_NoWarnSkipListFile>"
   }
   $extraPropsXml = $extraProps -join "`n"
 
@@ -124,43 +119,24 @@ $ExtraImportXml
 }
 
 # ----------------------------------------------------------------------------
-# Scenario 1: skip-listed project with NoWarn -> no error
-# ----------------------------------------------------------------------------
-$dir = New-ScenarioDir 'skiplisted'
-try {
-  $skipFile = Join-Path $dir 'skip.txt'
-  Set-Content -Path $skipFile -Value "TestSkipListed`n" -Encoding UTF8
-  $proj = New-TestCsproj -Dir $dir -ProjectName 'TestSkipListed' `
-    -ExtraPropertyXml '    <NoWarn>$(NoWarn);CA9999</NoWarn>' `
-    -SkipListFile $skipFile
-  $r = Invoke-Validator $proj
-  Assert-Scenario 'skip-listed project with NoWarn does not error' { param($x) $x.ExitCode -eq 0 -and $x.Output -notmatch 'AZSDK0002' } $r
-} finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
-
-# ----------------------------------------------------------------------------
-# Scenario 2: non-skip-listed clean project -> no error
+# Scenario 1: clean project -> no error
 # ----------------------------------------------------------------------------
 $dir = New-ScenarioDir 'clean'
 try {
-  $skipFile = Join-Path $dir 'skip.txt'
-  Set-Content -Path $skipFile -Value '' -Encoding UTF8
-  $proj = New-TestCsproj -Dir $dir -ProjectName 'TestClean' -SkipListFile $skipFile
+  $proj = New-TestCsproj -Dir $dir -ProjectName 'TestClean'
   $r = Invoke-Validator $proj
   Assert-Scenario 'clean project without NoWarn does not error' { param($x) $x.ExitCode -eq 0 -and $x.Output -notmatch 'AZSDK0002' } $r
 } finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
 
 # ----------------------------------------------------------------------------
-# Scenario 3: raw NoWarn in csproj -> error (AZSDK0002) pointing at csproj
+# Scenario 2: raw NoWarn in csproj -> error (AZSDK0002) pointing at csproj
 # ----------------------------------------------------------------------------
 $dir = New-ScenarioDir 'badnowarn-csproj'
 try {
-  $skipFile = Join-Path $dir 'skip.txt'
-  Set-Content -Path $skipFile -Value '' -Encoding UTF8
   $proj = New-TestCsproj -Dir $dir -ProjectName 'TestBadNoWarn' `
-    -ExtraPropertyXml '    <NoWarn>$(NoWarn);CA9999</NoWarn>' `
-    -SkipListFile $skipFile
+    -ExtraPropertyXml '    <NoWarn>$(NoWarn);CA9999</NoWarn>'
   $r = Invoke-Validator $proj
-  Assert-Scenario 'raw NoWarn in non-skip-listed csproj errors AZSDK0002' {
+  Assert-Scenario 'raw NoWarn in csproj errors AZSDK0002' {
     param($x) $x.Output -match 'error AZSDK0002' -and $x.Output -match 'CA9999'
   } $r
   Assert-Scenario 'AZSDK0002 error points at the csproj file path' {
@@ -169,17 +145,14 @@ try {
 } finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
 
 # ----------------------------------------------------------------------------
-# Scenario 4: NoWarn coming from an imported props file -> error
+# Scenario 3: NoWarn coming from an imported props file -> error
 # ----------------------------------------------------------------------------
 $dir = New-ScenarioDir 'badnowarn-props'
 try {
-  $skipFile = Join-Path $dir 'skip.txt'
-  Set-Content -Path $skipFile -Value '' -Encoding UTF8
   $propsFile = Join-Path $dir 'Custom.props'
   Set-Content -Path $propsFile -Value "<Project><PropertyGroup><NoWarn>`$(NoWarn);CA8888</NoWarn></PropertyGroup></Project>" -Encoding UTF8
   $proj = New-TestCsproj -Dir $dir -ProjectName 'TestPropsNoWarn' `
-    -ExtraImportXml "  <Import Project=`"$propsFile`" />" `
-    -SkipListFile $skipFile
+    -ExtraImportXml "  <Import Project=`"$propsFile`" />"
   $r = Invoke-Validator $proj
   Assert-Scenario 'NoWarn from imported props file errors AZSDK0002' {
     param($x) $x.Output -match 'error AZSDK0002' -and $x.Output -match 'CA8888'
@@ -187,12 +160,10 @@ try {
 } finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
 
 # ----------------------------------------------------------------------------
-# Scenario 5: allow-list parsing variants -> all codes recognized, no error
+# Scenario 4: allow-list parsing variants -> all codes recognized, no error
 # ----------------------------------------------------------------------------
 $dir = New-ScenarioDir 'allowlist-variants'
 try {
-  $skipFile = Join-Path $dir 'skip.txt'
-  Set-Content -Path $skipFile -Value '' -Encoding UTF8
   $allowDir = Join-Path $dir 'allow'
   New-Item -ItemType Directory -Force -Path $allowDir | Out-Null
   $allowFile = Join-Path $allowDir 'TestAllowList.txt'
@@ -210,8 +181,7 @@ try {
 
   $proj = New-TestCsproj -Dir $dir -ProjectName 'TestAllowList' `
     -ExtraPropertyXml '    <NoWarn>$(NoWarn);CA1111;CA2222;CA3333;CA4444</NoWarn>' `
-    -AllowListDir $allowDir `
-    -SkipListFile $skipFile
+    -AllowListDir $allowDir
   $r = Invoke-Validator $proj
   Assert-Scenario 'allow-list tolerates whitespace, mixed case, and blanks' {
     param($x) $x.ExitCode -eq 0 -and $x.Output -notmatch 'AZSDK0002'
@@ -219,15 +189,12 @@ try {
 } finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
 
 # ----------------------------------------------------------------------------
-# Scenario 6: record mode -> NoWarnAudit emitted, no error
+# Scenario 5: record mode -> NoWarnAudit emitted, no error
 # ----------------------------------------------------------------------------
 $dir = New-ScenarioDir 'record'
 try {
-  $skipFile = Join-Path $dir 'skip.txt'
-  Set-Content -Path $skipFile -Value '' -Encoding UTF8
   $proj = New-TestCsproj -Dir $dir -ProjectName 'TestRecord' `
-    -ExtraPropertyXml '    <NoWarn>$(NoWarn);CA7777</NoWarn>' `
-    -SkipListFile $skipFile
+    -ExtraPropertyXml '    <NoWarn>$(NoWarn);CA7777</NoWarn>'
   $r = Invoke-Validator $proj -Properties @{ NoWarnValidationMode = 'record' }
   Assert-Scenario 'record mode emits NoWarnAudit and does not error' {
     param($x) $x.ExitCode -eq 0 -and $x.Output -match 'NoWarnAudit:\s*TestRecord\|.*CA7777' -and $x.Output -notmatch 'AZSDK0002'
@@ -235,14 +202,12 @@ try {
 } finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
 
 # ----------------------------------------------------------------------------
-# Scenario 7: allow-list entries are auto-injected into $(NoWarn) so the
+# Scenario 6: allow-list entries are auto-injected into $(NoWarn) so the
 # project's csproj does not need to duplicate them. Confirm by emitting
 # $(NoWarn) from a target that depends on ReadAnalyzerAllowList.
 # ----------------------------------------------------------------------------
 $dir = New-ScenarioDir 'autoinject'
 try {
-  $skipFile = Join-Path $dir 'skip.txt'
-  Set-Content -Path $skipFile -Value '' -Encoding UTF8
   $allowDir = Join-Path $dir 'allow'
   New-Item -ItemType Directory -Force -Path $allowDir | Out-Null
   $allowFile = Join-Path $allowDir 'TestAutoInject.txt'
@@ -256,7 +221,6 @@ try {
 '@
   $proj = New-TestCsproj -Dir $dir -ProjectName 'TestAutoInject' `
     -AllowListDir $allowDir `
-    -SkipListFile $skipFile `
     -ExtraImportXml $probeXml
 
   $output = & dotnet msbuild $proj '/t:ProbeNoWarn' '/nologo' '/v:m' 2>&1

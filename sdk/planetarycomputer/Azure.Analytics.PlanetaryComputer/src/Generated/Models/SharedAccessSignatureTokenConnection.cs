@@ -29,13 +29,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureTokenConnection"/>. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="sharedAccessSignatureToken"> SAS token. </param>
-        /// <param name="expiration"> Azure Blob Storage SAS token expiration in UTC format. </param>
+        /// <param name="expiresOn"> Azure Blob Storage SAS token expiration in UTC format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedAccessSignatureTokenConnection(Uri containerUri, string sharedAccessSignatureToken, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedAccessSignatureTokenConnection(Uri containerUri, string sharedAccessSignatureToken, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerUri = containerUri;
             SharedAccessSignatureToken = sharedAccessSignatureToken;
-            Expiration = expiration;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public string SharedAccessSignatureToken { get; set; }
 
         /// <summary> Azure Blob Storage SAS token expiration in UTC format. </summary>
-        public DateTimeOffset? Expiration { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             TryGetApiVersion(ResourceType, out string connectedClusterBgpPeerApiVersion);
             _bgpPeersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
-            _bgpPeersRestClient = new BgpPeers(_bgpPeersClientDiagnostics, Pipeline, Endpoint, connectedClusterBgpPeerApiVersion ?? "2024-03-01");
+            _bgpPeersRestClient = new BgpPeers(_bgpPeersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterBgpPeerApiVersion ?? "2024-03-01");
             ValidateResourceId(id);
         }
 

@@ -159,7 +159,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             GeoJsonGeometry geometry = default;
-            FeatureType @type = default;
+            FeatureKind @type = default;
             IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new FeatureType(prop.Value.GetString());
+                    @type = new FeatureKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -189,7 +189,7 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     properties = dictionary;
@@ -197,7 +197,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GeoJsonFeature(geometry, @type, properties ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);

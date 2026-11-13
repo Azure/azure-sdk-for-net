@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBSqlStoredProcedureResource.ResourceType, out string cosmosDBSqlStoredProcedureApiVersion);
             _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBSqlStoredProcedureResource.ResourceType.Namespace, Diagnostics);
-            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlStoredProcedureApiVersion ?? "2026-04-01-preview");
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBSqlStoredProcedureApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBSqlStoredProcedureData, CosmosDBSqlStoredProcedureResource>(new SqlResourcesGetSqlStoredProceduresAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBSqlStoredProcedureData, CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureDataAsyncCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBSqlStoredProcedureData, CosmosDBSqlStoredProcedureResource>(new SqlResourcesGetSqlStoredProceduresCollectionResultOfT(
+            return new PageableWrapper<CosmosDBSqlStoredProcedureData, CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureDataCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

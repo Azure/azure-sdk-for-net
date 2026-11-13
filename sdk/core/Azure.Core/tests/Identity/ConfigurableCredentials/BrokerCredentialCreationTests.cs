@@ -33,6 +33,15 @@ namespace Azure.Core.Tests.Identity.Broker.ConfigurableCredentials.Broker
     {
         protected override string CredentialSource => nameof(BrokerCredential);
 
+        // Phase 3.5: AzureCredentialResolver no longer claims top-level BrokerCredential
+        // sections; resolution requires AddBrokerCredentialResolver() from
+        // Azure.Identity.Broker, which Azure.Core tests cannot reference (would create
+        // a dependency cycle). End-to-end coverage lives in the Azure.Identity.Broker
+        // test project.
+        [Test]
+        [Ignore("Phase 3.5: Broker resolution requires AddBrokerCredentialResolver from Azure.Identity.Broker; covered by broker package tests.")]
+        public override void CreatesCredentialFromConfiguration_E2E() { }
+
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {
             { "AZURE_TENANT_ID", null },

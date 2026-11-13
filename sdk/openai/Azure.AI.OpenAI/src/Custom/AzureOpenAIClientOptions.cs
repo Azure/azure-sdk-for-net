@@ -48,6 +48,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     private string _userAgentApplicationId;
 
 #if !AZURE_OPENAI_GA
+    /// <summary> Gets or sets additional HTTP headers to include with every request made by clients using these options. </summary>
     [Experimental("AOAI001")]
     public IDictionary<string, string> DefaultHeaders
     {
@@ -60,6 +61,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     }
     private ChangeTrackingDictionary<string, string> _defaultHeaders;
 
+    /// <summary> Gets or sets additional query parameters to include with every request made by clients using these options. </summary>
     [Experimental("AOAI001")]
     public IDictionary<string, string> DefaultQueryParameters
     {
@@ -135,17 +137,26 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     /// <summary> The version of the service to use. </summary>
     public enum ServiceVersion
     {
+        /// <summary> Azure OpenAI service version 2024-06-01. </summary>
         V2024_06_01 = 0,
 #if !AZURE_OPENAI_GA
+        /// <summary> Azure OpenAI service version 2024-08-01-preview. </summary>
         V2024_08_01_Preview = 1,
+        /// <summary> Azure OpenAI service version 2024-09-01-preview. </summary>
         V2024_09_01_Preview = 2,
+        /// <summary> Azure OpenAI service version 2024-10-01-preview. </summary>
         V2024_10_01_Preview = 3,
 #endif
+        /// <summary> Azure OpenAI service version 2024-10-21. </summary>
         V2024_10_21 = 4,
 #if !AZURE_OPENAI_GA
+        /// <summary> Azure OpenAI service version 2024-12-01-preview. </summary>
         V2024_12_01_Preview = 5,
+        /// <summary> Azure OpenAI service version 2025-01-01-preview. </summary>
         V2025_01_01_Preview = 6,
+        /// <summary> Azure OpenAI service version 2025-03-01-preview. </summary>
         V2025_03_01_Preview = 8,
+        /// <summary> Azure OpenAI service version 2025-04-01-preview. </summary>
         V2025_04_01_Preview = 9,
 #endif
     }

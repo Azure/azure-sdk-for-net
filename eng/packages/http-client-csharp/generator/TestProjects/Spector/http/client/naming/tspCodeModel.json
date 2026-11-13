@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ClientExtensibleEnum",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Naming.UnionEnum.ServerExtensibleEnum",
       "valueType": {
         "$id": "2",
@@ -41,6 +42,7 @@
       "$id": "4",
       "kind": "enum",
       "name": "ExtensibleEnum",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Naming.UnionEnum.ExtensibleEnum",
       "valueType": {
         "$id": "5",
@@ -247,6 +249,7 @@
       "$id": "26",
       "kind": "model",
       "name": "ClientNameModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.Property",
       "crossLanguageDefinitionId": "Client.Naming.Property.ClientNameModel",
       "usage": "Input,Json",
@@ -262,6 +265,8 @@
           "$id": "27",
           "kind": "property",
           "name": "clientName",
+          "originalName": "defaultName",
+          "apiVersions": [],
           "serializedName": "defaultName",
           "doc": "Pass in true",
           "type": {
@@ -291,6 +296,7 @@
       "$id": "29",
       "kind": "model",
       "name": "LanguageClientNameModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.Property",
       "crossLanguageDefinitionId": "Client.Naming.Property.LanguageClientNameModel",
       "usage": "Input,Json",
@@ -306,6 +312,8 @@
           "$id": "30",
           "kind": "property",
           "name": "CSName",
+          "originalName": "defaultName",
+          "apiVersions": [],
           "serializedName": "defaultName",
           "doc": "Pass in true",
           "type": {
@@ -335,6 +343,7 @@
       "$id": "32",
       "kind": "model",
       "name": "ClientNameAndJsonEncodedNameModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.Property",
       "crossLanguageDefinitionId": "Client.Naming.Property.ClientNameAndJsonEncodedNameModel",
       "usage": "Input,Json",
@@ -350,6 +359,8 @@
           "$id": "33",
           "kind": "property",
           "name": "clientName",
+          "originalName": "defaultName",
+          "apiVersions": [],
           "serializedName": "wireName",
           "doc": "Pass in true",
           "type": {
@@ -379,6 +390,7 @@
       "$id": "35",
       "kind": "model",
       "name": "ClientModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.Model",
       "crossLanguageDefinitionId": "Client.Naming.Model.ModelWithClientClientName",
       "usage": "Input,Json",
@@ -394,6 +406,7 @@
           "$id": "36",
           "kind": "property",
           "name": "defaultName",
+          "apiVersions": [],
           "serializedName": "defaultName",
           "doc": "Pass in true",
           "type": {
@@ -423,6 +436,7 @@
       "$id": "38",
       "kind": "model",
       "name": "CSModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.Model",
       "crossLanguageDefinitionId": "Client.Naming.Model.ModelWithLanguageClientName",
       "usage": "Input,Json",
@@ -438,6 +452,7 @@
           "$id": "39",
           "kind": "property",
           "name": "defaultName",
+          "apiVersions": [],
           "serializedName": "defaultName",
           "doc": "Pass in true",
           "type": {
@@ -484,7 +499,6 @@
             "$id": "43",
             "name": "clientName",
             "isExactName": false,
-            "resourceName": "Naming",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -525,7 +539,6 @@
             "$id": "45",
             "name": "parameter",
             "isExactName": false,
-            "resourceName": "Naming",
             "accessibility": "public",
             "parameters": [
               {
@@ -662,7 +675,6 @@
                 "$id": "55",
                 "name": "client",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -798,7 +810,6 @@
                 "$id": "61",
                 "name": "language",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -934,7 +945,6 @@
                 "$id": "67",
                 "name": "compatibleWithEncodedName",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1120,7 +1130,6 @@
                 "$id": "77",
                 "name": "request",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1211,7 +1220,6 @@
                 "$id": "83",
                 "name": "response",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -1314,7 +1322,6 @@
                 "$id": "90",
                 "name": "client",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1450,7 +1457,6 @@
                 "$id": "96",
                 "name": "language",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1636,7 +1642,6 @@
                 "$id": "106",
                 "name": "unionEnumName",
                 "isExactName": false,
-                "resourceName": "UnionEnum",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1770,7 +1775,6 @@
                 "$id": "112",
                 "name": "unionEnumMemberName",
                 "isExactName": false,
-                "resourceName": "UnionEnum",
                 "accessibility": "public",
                 "parameters": [
                   {

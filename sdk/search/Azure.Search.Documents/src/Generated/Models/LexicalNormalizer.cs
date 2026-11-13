@@ -11,7 +11,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for normalizers. </summary>
+    /// <summary>
+    /// Base type for normalizers.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CustomNormalizer"/>.
+    /// </summary>
     public partial class LexicalNormalizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

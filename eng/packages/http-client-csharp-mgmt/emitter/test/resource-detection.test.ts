@@ -14,7 +14,8 @@ import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ArmResourceSchema,
-  ResourceScopeKind
+  ResourceScopeKind,
+  convertArmProviderSchemaToArguments
 } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
@@ -2206,9 +2207,16 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     const serviceGroupResourcePattern =
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
     const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
-      if (
-        resource.metadata.resourceIdPattern.path === serviceGroupResourcePattern
-      ) {
+      const resourceIdPattern = (
+        resource.metadata as {
+          resourceIdPattern: string | { path: string };
+        }
+      ).resourceIdPattern;
+      const resourceIdPath =
+        typeof resourceIdPattern === "string"
+          ? resourceIdPattern
+          : resourceIdPattern.path;
+      if (resourceIdPath === serviceGroupResourcePattern) {
         (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
@@ -2340,6 +2348,21 @@ interface SharedConfigs {
       subResource.metadata.resourceName,
       "PublicSharedConfig",
       "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
+    );
+    strictEqual(rgResource.metadata.resourceNameIsExplicit, false);
+    strictEqual(subResource.metadata.resourceNameIsExplicit, true);
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    strictEqual(
+      resolvedSchema.resources.find(
+        (r) => r.metadata.scope.kind === ResourceScopeKind.Subscription
+      )?.metadata.resourceNameIsExplicit,
+      true
+    );
+    strictEqual(
+      resolvedSchema.resources.find(
+        (r) => r.metadata.scope.kind === ResourceScopeKind.ResourceGroup
+      )?.metadata.resourceNameIsExplicit,
+      false
     );
 
     // The operation paths are authoritative: both remaining List operations
@@ -4940,7 +4963,7 @@ interface DynamicChildren {
     );
   });
 
-  it("RoutedOperations with dynamic parent type expands into concrete resources", async () => {
+  it.each([false, true])("expanded names (%s)", async (explicit) => {
     // This test validates the fix for resources that use Legacy.RoutedOperations with
     // dynamic parent types (e.g., {parentType}/{parentName}). The emitter should:
     // 1. Reclassify ActionSync operations based on HTTP verb (GET->Read, PUT->Create, DELETE->Delete)
@@ -4980,6 +5003,7 @@ union ParentType {
 }
 
 /** Private endpoint connection model */
+${explicit ? '@clientName("CustomConnection", "csharp")' : ""}
 model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
   ...ResourceNameParameter<PrivateEndpointConnection>;
 }
@@ -5082,7 +5106,7 @@ interface PrivateEndpointConnections {
     ok(topicPec, "TopicPrivateEndpointConnection resource should exist");
     strictEqual(
       topicPec.metadata.resourceName,
-      "TopicPrivateEndpointConnection"
+      explicit ? "TopicCustomConnection" : "TopicPrivateEndpointConnection"
     );
 
     const domainPec = armProviderSchema.resources.find(
@@ -5093,7 +5117,7 @@ interface PrivateEndpointConnections {
     ok(domainPec, "DomainPrivateEndpointConnection resource should exist");
     strictEqual(
       domainPec.metadata.resourceName,
-      "DomainPrivateEndpointConnection"
+      explicit ? "DomainCustomConnection" : "DomainPrivateEndpointConnection"
     );
 
     // Verify expanded resources share the same model
@@ -5124,6 +5148,7 @@ interface PrivateEndpointConnections {
 
     // Verify each expanded resource has Read, Create, and Delete operations
     for (const pec of [topicPec, domainPec]) {
+      strictEqual(pec.metadata.resourceNameIsExplicit, explicit);
       const hasRead = pec.metadata.methods.some((m) => m.kind === "Read");
       const hasCreate = pec.metadata.methods.some((m) => m.kind === "Create");
       const hasDelete = pec.metadata.methods.some((m) => m.kind === "Delete");
@@ -5211,9 +5236,18 @@ interface RecordSets {
       armProviderSchema.resources[0].metadata.resourceName,
       "DnsRecordSet"
     );
+    strictEqual(
+      armProviderSchema.resources[0].metadata.resourceNameIsExplicit,
+      true
+    );
+    strictEqual(
+      convertArmProviderSchemaToArguments(armProviderSchema).resources[0]
+        .resourceNameIsExplicit,
+      true
+    );
   });
 
-  it("resource-name override - map for expandable {parentType} resource", async () => {
+  it.each([false, true])("expanded map names (%s)", async (partial) => {
     const program = await typeSpecCompile(
       `
 /** Parent topic resource */
@@ -5300,7 +5334,7 @@ interface PrivateEndpointConnections {
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "Custom expanded names"
 @@clientOption(PrivateEndpointConnections.get, "resource-name", #{
   topics: "TopicPrivateEndpointConnectionCustom",
-  domains: "DomainPrivateEndpointConnectionCustom",
+  ${partial ? "" : 'domains: "DomainPrivateEndpointConnectionCustom",'}
 }, "csharp");
 `,
       runner
@@ -5331,8 +5365,12 @@ interface PrivateEndpointConnections {
     );
     strictEqual(
       domainPec.metadata.resourceName,
-      "DomainPrivateEndpointConnectionCustom"
+      partial
+        ? "DomainPrivateEndpointConnection"
+        : "DomainPrivateEndpointConnectionCustom"
     );
+    strictEqual(topicPec.metadata.resourceNameIsExplicit, true);
+    strictEqual(domainPec.metadata.resourceNameIsExplicit, !partial);
 
     // Underlying model unchanged.
     strictEqual(topicPec.resourceModelId, domainPec.resourceModelId);

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import {
+import type {
   CodeModel,
   CSharpEmitterContext,
   InputClient
-} from "@typespec/http-client-csharp";
+} from "./code-model-types.js";
 import { NoTarget } from "@typespec/compiler";
 import { UsageFlags } from "@azure-tools/typespec-client-generator-core";
 import { traverseClient } from "./sdk-client-utils.js";

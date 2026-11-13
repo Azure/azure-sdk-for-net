@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(ResourceType, out string siteRecoveryVCenterApiVersion);
             _replicationvCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _replicationvCentersRestClient = new ReplicationvCenters(_replicationvCentersClientDiagnostics, Pipeline, Endpoint, siteRecoveryVCenterApiVersion ?? "2026-02-01");
+            _replicationvCentersRestClient = new ReplicationvCenters(_replicationvCentersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryVCenterApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="resourceName"> The resourceName. </param>
         /// <param name="fabricName"> The fabricName. </param>
-        /// <param name="vcenterName"> The vcenterName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName)
+        /// <param name="vCenterName"> The vCenterName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vCenterName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

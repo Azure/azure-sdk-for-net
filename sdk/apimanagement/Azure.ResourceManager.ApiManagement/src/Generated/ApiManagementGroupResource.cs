@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementGroupApiVersion);
             _groupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _groupRestClient = new Group(_groupClientDiagnostics, Pipeline, Endpoint, apiManagementGroupApiVersion ?? "2025-09-01-preview");
+            _groupRestClient = new Group(_groupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGroupApiVersion ?? "2025-09-01-preview");
             _groupUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _groupUserRestClient = new GroupUser(_groupUserClientDiagnostics, Pipeline, Endpoint, apiManagementGroupApiVersion ?? "2025-09-01-preview");
+            _groupUserRestClient = new GroupUser(_groupUserClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UserContractData, ApiManagementUserResource>(new GroupUserGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UserContractData, ApiManagementUserResource>(new UserContractDataAsync1CollectionResultOfT(
                 _groupUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UserContractData, ApiManagementUserResource>(new GroupUserGetAllCollectionResultOfT(
+            return new PageableWrapper<UserContractData, ApiManagementUserResource>(new UserContractData1CollectionResultOfT(
                 _groupUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

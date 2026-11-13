@@ -80,7 +80,7 @@ public class FoundryAgentRequestContextTests
         var handler = new FoundryCallIdHandler(capture);
         using var client = new HttpClient(handler);
 
-        FoundryAgentRequestContext.Set(new FoundryAgentRequestContext { CallId = "call-77", UserId = "user-77" });
+        FoundryAgentRequestContext.Exchange(new FoundryAgentRequestContext { CallId = "call-77", UserId = "user-77" });
         await client.GetAsync("https://example.test/x");
 
         Assert.That(capture.Request!.Headers.Contains(PlatformHeaders.FoundryCallId), Is.True);
@@ -96,7 +96,7 @@ public class FoundryAgentRequestContextTests
         var handler = new FoundryCallIdHandler(capture);
         using var client = new HttpClient(handler);
 
-        FoundryAgentRequestContext.Set(new FoundryAgentRequestContext());
+        FoundryAgentRequestContext.Exchange(new FoundryAgentRequestContext());
         await client.GetAsync("https://example.test/x");
 
         Assert.That(capture.Request!.Headers.Contains(PlatformHeaders.FoundryCallId), Is.False);

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.18.0-beta.2 (Unreleased)
+## 1.20.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,68 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.20.0-beta.1 (2026-10-30)
+
+### Features Added
+
+- Upgraded api-version to `2026-08-15-preview`.
+- Added `ExternalClusterResource` and `ExternalSvmResource`, together with their collections and models, for external NetApp ONTAP clusters and storage virtual machines.
+- Added `ClusterPeerResource` and `SvmPeerResource`, together with their collections and models, for cluster and storage virtual machine peering.
+- Added `ExternalCacheResource` and `ExternalCacheConnectionResource`, together with their collections and models, for external caches and cache connections between external and Azure NetApp Files volumes.
+- Added `GeoNamespaceOriginVolume` to `NetAppVolumeData`, `NetAppVolumePatch`, and `NetAppVolumeGroupVolume`, with the `OriginVolume` enum for geographic namespace origin settings.
+- Added asynchronous directory deletion settings through `AsyncDirectoryDelete` and `AsyncDirectoryDeleteStatus` on volume and volume-group models.
+- Added SMB opportunistic locking settings through `SmbOplocks` on volume, volume-group, and `NetAppSmbSettings` models.
+- Added `UserAssignedIdentity` to `CertificateKeyVaultDetails` and `CredentialsKeyVaultDetails` for user-assigned managed identity access to Key Vault-backed bucket certificates and credentials.
+
+### Bugs Fixed
+
+- Fixed account and account-patch Entra ID configuration property forwarding and JSON serialization, including nested Key Vault settings.
+
+## 1.19.0 (2026-10-20)
+
+### Features Added
+
+- Upgraded api-version to `2026-08-01`.
+- Expanded `LdapConfiguration` and `LdapConfigurationPatch` with bind authentication, DNS servers, distinguished names, LDAP port, and Key Vault-backed bind password settings.
+- Added `BindPasswordKeyVaultConfig` and `BindPasswordKeyVaultConfigPatch` models.
+- Added `BindAuthenticationLevel` and `SecureLdapType` enums for LDAP authentication and secure LDAP configuration.
+- Added the `Canceled` member to `NetAppProvisioningState`.
+- Added `RefreshLdapBindPassword` and `RefreshLdapBindPasswordAsync` operations to `NetAppAccountResource`.
+
+### Bugs Fixed
+
+- Preserved the existing `NetAppAccountPatch.Encryption` and `NetAppAccountPatch.ActiveDirectories` property types and `NfsV4IdDomain` property name when generating from TypeSpec.
+- Preserved explicit-null NFSv4 ID domain updates and their serialization round-trips.
+- Restored mutable empty tags when Elastic resource model factories receive omitted or null tags.
+- Restored collection interface enumeration through overridden listing methods, including cancellation-token forwarding.
+
+## 1.19.0-beta.2 (2026-08-27)
+
+### Features Added
+
+- Upgraded api-version to `2026-06-15-preview`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `SecureLdapType` support to `LdapConfiguration` and `LdapConfigurationPatch`.
+
+### Breaking Changes
+
+- Changed the `ArmNetAppModelFactory.LdapConfiguration` and `ArmNetAppModelFactory.LdapConfigurationPatch` factory methods to accept `SecureLdapType` instead of `bool` for the LDAP security setting.
+
+## 1.19.0-beta.1 (2026-08-12)
+
+### Features Added
+
+- Upgraded api-version to `2026-05-15-preview`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added LDAP bind password refresh support to `NetAppAccountResource`.
+- Expanded `LdapConfiguration` and `LdapConfigurationPatch` with bind authentication, Key Vault-backed bind password, DNS server, distinguished name, and LDAP port settings.
+- Added user-assigned managed identity support to certificate and credential Key Vault configurations for Bucket resources.
+
+## 1.18.0 (2026-07-15)
+
+### Features Added
+
+- Upgraded api-version to `2026-05-01`.
+- Added `BreakThroughMode` property to `VolumeProperties`.
 
 ## 1.18.0-beta.1 (2026-06-30)
 

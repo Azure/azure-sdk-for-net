@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string migrateMySqlStatusApiVersion);
             _migrateMySqlStatusOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _migrateMySqlStatusOperationGroupRestClient = new MigrateMySqlStatusOperationGroup(_migrateMySqlStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, migrateMySqlStatusApiVersion ?? "2026-03-15");
+            _migrateMySqlStatusOperationGroupRestClient = new MigrateMySqlStatusOperationGroup(_migrateMySqlStatusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, migrateMySqlStatusApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

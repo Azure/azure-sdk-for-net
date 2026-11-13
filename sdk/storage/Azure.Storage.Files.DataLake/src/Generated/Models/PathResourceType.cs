@@ -7,12 +7,12 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The PathResourceType. </summary>
+    /// <summary> Required only for Create File and Create Directory. The value must be "file" or "directory". </summary>
     public enum PathResourceType
     {
-        /// <summary> directory. </summary>
+        /// <summary> A directory resource type. </summary>
         Directory,
-        /// <summary> file. </summary>
+        /// <summary> A file resource type. </summary>
         File
     }
 }

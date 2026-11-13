@@ -15,11 +15,11 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create a notebook workspace resource. </summary>
-    public partial class NotebookWorkspaceCreateOrUpdateContent : ArmProxyResource, IJsonModel<NotebookWorkspaceCreateOrUpdateContent>
+    public partial class NotebookWorkspaceCreateOrUpdateContent : CosmosDBProxyResource, IJsonModel<NotebookWorkspaceCreateOrUpdateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ArmProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NotebookWorkspaceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ArmProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NotebookWorkspaceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NotebookWorkspaceCreateOrUpdateContent(id, name, @type, additionalBinaryDataProperties);

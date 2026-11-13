@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.3 (Unreleased)
+
+### Breaking Changes
+
+- Renamed the sub-clients to service-prefixed names to comply with type-naming guidelines: `Attachments`→`FarmingAttachments`, `Boundaries`→`FarmingBoundaries`, `Crops`→`FarmingCrops`, `Devices`→`FarmingDevices`, `Farms`→`FarmingFarms`, `Fields`→`FarmingFields`, `Insights`→`FarmingInsights`, `Parties`→`FarmingParties`, `Prescriptions`→`FarmingPrescriptions`, `Scenes`→`FarmingScenes`, `Seasons`→`FarmingSeasons`, `Sensors`→`FarmingSensors`, `Weather`→`FarmingWeather`, `Zones`→`FarmingZones`. The corresponding `Get<Name>Client()` accessors were renamed accordingly (for example, `GetFarmsClient()`→`GetFarmingFarmsClient()`).
+
 ## 1.0.0-beta.2 (2023-02-22)
 
 ### Features Added

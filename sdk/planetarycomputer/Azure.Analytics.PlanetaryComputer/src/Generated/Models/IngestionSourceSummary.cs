@@ -19,7 +19,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="IngestionSourceSummary"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Ingestion source type. </param>
-        internal IngestionSourceSummary(Guid id, IngestionSourceType kind)
+        internal IngestionSourceSummary(Guid id, IngestionSourceKind kind)
         {
             Id = id;
             Kind = kind;
@@ -28,13 +28,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="IngestionSourceSummary"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Ingestion source type. </param>
-        /// <param name="created"> Created time in UTC format. </param>
+        /// <param name="createdOn"> Created time in UTC format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionSourceSummary(Guid id, IngestionSourceType kind, DateTimeOffset? created, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionSourceSummary(Guid id, IngestionSourceKind kind, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kind = kind;
-            Created = created;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,9 +42,9 @@ namespace Azure.Analytics.PlanetaryComputer
         public Guid Id { get; }
 
         /// <summary> Ingestion source type. </summary>
-        public IngestionSourceType Kind { get; }
+        public IngestionSourceKind Kind { get; }
 
         /// <summary> Created time in UTC format. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

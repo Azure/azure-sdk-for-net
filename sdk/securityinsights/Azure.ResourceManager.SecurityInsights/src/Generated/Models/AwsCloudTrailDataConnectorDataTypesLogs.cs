@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class AwsCloudTrailDataConnectorDataTypesLogs : DataConnectorDataTypeCommon
+    internal partial class AwsCloudTrailDataConnectorDataTypesLogs : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="AwsCloudTrailDataConnectorDataTypesLogs"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

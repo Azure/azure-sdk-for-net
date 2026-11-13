@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new IsDeviceMatchCondition. </summary>
         public IsDeviceMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters);
         }
 
         /// <summary> Gets or sets the IsDeviceOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleIsDeviceConditionParameters");
             _isDeviceOperator = DefineProperty<IsDeviceOperator>(nameof(IsDeviceOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValues = DefineListProperty<IsDeviceMatchConditionMatchValue>(nameof(MatchValues), new string[] { "matchValues" });

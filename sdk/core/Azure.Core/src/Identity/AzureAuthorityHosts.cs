@@ -16,6 +16,7 @@ namespace Azure.Identity
     public static class AzureAuthorityHosts
     {
         private const string AzurePublicCloudHostUrl = "https://login.microsoftonline.com/";
+        private const string AzureBleuCloudHostUrl = "https://login.sovcloud-identity.fr/";
         private const string AzureChinaHostUrl = "https://login.chinacloudapi.cn/";
         private const string AzureGermanyHostUrl = "https://login.microsoftonline.de/";
         private const string AzureGovernmentHostUrl = "https://login.microsoftonline.us/";
@@ -23,6 +24,11 @@ namespace Azure.Identity
         /// The host of the Microsoft Entra authority for tenants in the Azure Public Cloud.
         /// </summary>
         public static Uri AzurePublicCloud { get; } = new Uri(AzurePublicCloudHostUrl);
+
+        /// <summary>
+        /// The host of the Microsoft Entra authority for tenants in Bleu Cloud, the national partner cloud for France.
+        /// </summary>
+        public static Uri AzureBleuCloud { get; } = new Uri(AzureBleuCloudHostUrl);
 
         /// <summary>
         /// The host of the Microsoft Entra authority for tenants in the Azure China Cloud.
@@ -57,6 +63,9 @@ namespace Azure.Identity
                 case AzurePublicCloudHostUrl:
                     // The double slash is intentional for public cloud.
                     return "https://management.azure.com//.default";
+                case AzureBleuCloudHostUrl:
+                    // The double slash is intentional for Bleu Cloud.
+                    return "https://management.sovcloud-api.fr//.default";
                 case AzureChinaHostUrl:
                     return "https://management.chinacloudapi.cn/.default";
                 case AzureGermanyHostUrl:

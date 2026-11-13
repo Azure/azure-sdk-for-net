@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     // The generated RetrieveThroughputContent constructor passes an IEnumerable<CosmosDBPhysicalPartitionId>
     // into RetrieveThroughputProperties, but the auto-generated ctor for this type takes IList.
     // This overload bridges the gap so the generated code compiles.
+    // TODO: Remove this workaround when https://github.com/Azure/azure-sdk-for-net/issues/63263 is fixed.
     internal partial class RetrieveThroughputProperties
     {
         internal RetrieveThroughputProperties(IEnumerable<CosmosDBPhysicalPartitionId> resourcePhysicalPartitionIds)

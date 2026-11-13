@@ -15,11 +15,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence model when frequency is set as MonthlyByDays . </summary>
     public partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence, IJsonModel<MonthlyRecurrenceByWeekDays>
     {
-        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/> for deserialization. </summary>
-        internal MonthlyRecurrenceByWeekDays()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -168,7 +163,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MonthlyRecurrenceByWeekDays(

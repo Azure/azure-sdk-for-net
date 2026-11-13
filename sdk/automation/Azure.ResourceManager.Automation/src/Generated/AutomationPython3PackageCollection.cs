@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationPython3PackageResource.ResourceType, out string automationPython3PackageApiVersion);
             _python3PackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationPython3PackageResource.ResourceType.Namespace, Diagnostics);
-            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Endpoint, automationPython3PackageApiVersion ?? "2024-10-23");
+            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationPython3PackageApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationModuleData, AutomationPython3PackageResource>(new Python3PackageGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationModuleData, AutomationPython3PackageResource>(new AutomationModuleDataAsync0CollectionResultOfT(
                 _python3PackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationModuleData, AutomationPython3PackageResource>(new Python3PackageGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationModuleData, AutomationPython3PackageResource>(new AutomationModuleData0CollectionResultOfT(
                 _python3PackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

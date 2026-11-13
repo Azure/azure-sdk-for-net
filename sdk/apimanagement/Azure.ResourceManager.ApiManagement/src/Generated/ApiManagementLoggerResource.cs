@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementLoggerApiVersion);
             _loggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _loggerRestClient = new Logger(_loggerClientDiagnostics, Pipeline, Endpoint, apiManagementLoggerApiVersion ?? "2025-09-01-preview");
+            _loggerRestClient = new Logger(_loggerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementLoggerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

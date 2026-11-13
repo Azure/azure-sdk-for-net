@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Cassandra view. </summary>
-    public partial class CassandraViewCreateOrUpdateContent : TrackedResourceData, IJsonModel<CassandraViewCreateOrUpdateContent>
+    public partial class CassandraViewCreateOrUpdateContent : ArmResourceProperties, IJsonModel<CassandraViewCreateOrUpdateContent>
     {
         /// <summary> Initializes a new instance of <see cref="CassandraViewCreateOrUpdateContent"/> for deserialization. </summary>
         internal CassandraViewCreateOrUpdateContent()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ArmResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -95,21 +95,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ArmResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CassandraViewCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -137,23 +122,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
+            string @type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            CassandraViewCreateUpdateProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            CassandraViewCreateUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -163,20 +144,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
+                if (prop.NameEquals("location"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCosmosDBContext.Default);
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -200,9 +177,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCosmosDBContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -212,18 +193,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CassandraViewCreateOrUpdateContent(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
-                properties,
-                additionalBinaryDataProperties);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }

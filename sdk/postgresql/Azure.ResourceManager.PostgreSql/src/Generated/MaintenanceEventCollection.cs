@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(MaintenanceEventResource.ResourceType, out string maintenanceEventApiVersion);
             _maintenanceEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", MaintenanceEventResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Endpoint, maintenanceEventApiVersion ?? "2026-04-01-preview");
+            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceEventApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventDataAsyncCollectionResultOfT(
                 _maintenanceEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventsGetAllCollectionResultOfT(
+            return new PageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventDataCollectionResultOfT(
                 _maintenanceEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

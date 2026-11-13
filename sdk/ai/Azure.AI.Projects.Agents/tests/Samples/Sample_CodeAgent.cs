@@ -11,6 +11,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
+
 public class Sample_CodeAgent : SamplesBase
 {
     protected static string GetDirectory(string path, [CallerFilePath] string pth = "")
@@ -29,9 +30,9 @@ public class Sample_CodeAgent : SamplesBase
         {
             Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
             CodeConfiguration = new(
-                runtime: "python_3_14",
-                entryPoint: ["python", "main.py"],
-                dependencyResolution: CodeDependencyResolution.RemoteBuild
+                runtime: "dotnet_10",
+                entryPoint: ["dotnet", "EchoAgent.dll"],
+                dependencyResolution: CodeDependencyResolution.Bundled
             ),
         };
         AgentVersionFromCodeMetadata metadata = new(agentDefinition);

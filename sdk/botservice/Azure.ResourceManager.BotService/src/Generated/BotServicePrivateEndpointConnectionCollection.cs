@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(BotServicePrivateEndpointConnectionResource.ResourceType, out string botServicePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotServicePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, botServicePrivateEndpointConnectionApiVersion ?? "2023-09-15-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botServicePrivateEndpointConnectionApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotServicePrivateEndpointConnectionData, BotServicePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BotServicePrivateEndpointConnectionData, BotServicePrivateEndpointConnectionResource>(new BotServicePrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotServicePrivateEndpointConnectionData, BotServicePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<BotServicePrivateEndpointConnectionData, BotServicePrivateEndpointConnectionResource>(new BotServicePrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

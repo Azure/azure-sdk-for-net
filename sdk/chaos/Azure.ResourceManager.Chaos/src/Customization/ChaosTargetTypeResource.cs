@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos
         {
             _chaosTargetTypeTargetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string chaosTargetTypeTargetTypesApiVersion);
-            _chaosTargetTypeTargetTypesRestClient = new TargetTypes(_chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, Endpoint, chaosTargetTypeTargetTypesApiVersion);
+            _chaosTargetTypeTargetTypesRestClient = new TargetTypes(_chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosTargetTypeTargetTypesApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

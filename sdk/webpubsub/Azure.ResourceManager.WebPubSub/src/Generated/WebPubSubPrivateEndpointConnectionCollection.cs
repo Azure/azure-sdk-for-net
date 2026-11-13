@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubPrivateEndpointConnectionResource.ResourceType, out string webPubSubPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, webPubSubPrivateEndpointConnectionApiVersion ?? "2025-08-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubPrivateEndpointConnectionApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubPrivateEndpointConnectionData, WebPubSubPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebPubSubPrivateEndpointConnectionData, WebPubSubPrivateEndpointConnectionResource>(new WebPubSubPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubPrivateEndpointConnectionData, WebPubSubPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<WebPubSubPrivateEndpointConnectionData, WebPubSubPrivateEndpointConnectionResource>(new WebPubSubPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

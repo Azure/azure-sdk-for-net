@@ -66,12 +66,12 @@ namespace Azure.Storage
         /// Used by advanced features such as clientside encryption, which alters ranges to
         /// ensure necessary info for decryption is downloaded.
         /// </remarks>
-        public delegate HttpRange PredictEncryptedRangeAdjustment(HttpRange range);
+        public delegate (HttpRange ResourceRange, long InitialAuthRegionIdx) PredictEncryptedRangeAdjustment(HttpRange range);
 
         /// <summary>
         /// No-op for range adjustment.
         /// </summary>
-        public static PredictEncryptedRangeAdjustment NoRangeAdjustment => range => range;
+        public static PredictEncryptedRangeAdjustment NoRangeAdjustment => range => (range, -1);
 
         /// <summary>
         /// The current position within the blob or file.
@@ -146,7 +146,7 @@ namespace Azure.Storage
         {
             _downloadInternalFunc = downloadInternalFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
-            _predictEncryptedRangeAdjustment = rangePredictionFunc ?? (range => range);
+            _predictEncryptedRangeAdjustment = rangePredictionFunc ?? NoRangeAdjustment;
             _position = position;
 
             // If the blob cannot be modified and the total blob size is less than the default streaming size,
@@ -246,7 +246,7 @@ namespace Azure.Storage
             HttpRange range = new HttpRange(_position, _bufferSize);
 
             // if _downloadInternalFunc is going to produce a range out of bounds response, we're at the end of the blob
-            if (_predictEncryptedRangeAdjustment(range).Offset >= _length)
+            if (_predictEncryptedRangeAdjustment(range).ResourceRange.Offset >= _length)
             {
                 return 0;
             }

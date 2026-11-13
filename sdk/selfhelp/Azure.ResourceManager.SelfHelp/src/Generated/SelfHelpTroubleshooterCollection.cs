@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             TryGetApiVersion(SelfHelpTroubleshooterResource.ResourceType, out string selfHelpTroubleshooterApiVersion);
             _troubleshooterResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpTroubleshooterResource.ResourceType.Namespace, Diagnostics);
-            _troubleshooterResourcesRestClient = new TroubleshooterResources(_troubleshooterResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpTroubleshooterApiVersion ?? "2024-03-01-preview");
+            _troubleshooterResourcesRestClient = new TroubleshooterResources(_troubleshooterResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpTroubleshooterApiVersion ?? "2024-03-01-preview");
         }
 
         /// <summary>

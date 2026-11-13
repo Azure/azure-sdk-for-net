@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppService.Mocking
 
         private ClientDiagnostics WebClientClientDiagnostics => _webClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics => _resourceHealthMetadataNonResourceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceHealthMetadataNonResourceOperationGroup ResourceHealthMetadataNonResourceOperationGroupRestClient => _resourceHealthMetadataNonResourceOperationGroupRestClient ??= new ResourceHealthMetadataNonResourceOperationGroup(ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private ResourceHealthMetadataNonResourceOperationGroup ResourceHealthMetadataNonResourceOperationGroupRestClient => _resourceHealthMetadataNonResourceOperationGroupRestClient ??= new ResourceHealthMetadataNonResourceOperationGroup(ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         /// <summary> Gets a collection of AppServiceEnvironments in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of AppServiceEnvironments and their operations over a AppServiceEnvironmentResource. </returns>

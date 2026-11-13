@@ -17,17 +17,9 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>
-        /// <param name="metrics">
-        /// Azure resource metrics collection {metric id : metrics object} (Refer :
-        /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
-        /// for metric id).
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public TestServerMetricsConfiguration(IDictionary<string, ResourceMetric> metrics)
+        public TestServerMetricsConfiguration()
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            Metrics = metrics;
+            Metrics = new ChangeTrackingDictionary<string, ResourceMetric>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>
@@ -37,18 +29,18 @@ namespace Azure.Developer.LoadTesting
         /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
         /// for metric id).
         /// </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestServerMetricsConfiguration(string testId, IDictionary<string, ResourceMetric> metrics, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestServerMetricsConfiguration(string testId, IDictionary<string, ResourceMetric> metrics, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TestId = testId;
             Metrics = metrics;
-            CreatedDateTime = createdDateTime;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
-            LastModifiedDateTime = lastModifiedDateTime;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -64,13 +56,13 @@ namespace Azure.Developer.LoadTesting
         public IDictionary<string, ResourceMetric> Metrics { get; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? CreatedDateTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
 
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? LastModifiedDateTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }

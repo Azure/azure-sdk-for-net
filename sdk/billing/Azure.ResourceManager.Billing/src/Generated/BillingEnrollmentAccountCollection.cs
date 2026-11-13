@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingEnrollmentAccountResource.ResourceType, out string billingEnrollmentAccountApiVersion);
             _enrollmentAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingEnrollmentAccountResource.ResourceType.Namespace, Diagnostics);
-            _enrollmentAccountsRestClient = new EnrollmentAccounts(_enrollmentAccountsClientDiagnostics, Pipeline, Endpoint, billingEnrollmentAccountApiVersion ?? "2024-04-01");
+            _enrollmentAccountsRestClient = new EnrollmentAccounts(_enrollmentAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingEnrollmentAccountApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingEnrollmentAccountData, BillingEnrollmentAccountResource>(new EnrollmentAccountsGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingEnrollmentAccountData, BillingEnrollmentAccountResource>(new BillingEnrollmentAccountDataAsync0CollectionResultOfT(
                 _enrollmentAccountsRestClient,
                 Id.Name,
                 filter,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingEnrollmentAccountData, BillingEnrollmentAccountResource>(new EnrollmentAccountsGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingEnrollmentAccountData, BillingEnrollmentAccountResource>(new BillingEnrollmentAccountData0CollectionResultOfT(
                 _enrollmentAccountsRestClient,
                 Id.Name,
                 filter,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryManagedVirtualNetworkResource.ResourceType, out string dataFactoryManagedVirtualNetworkApiVersion);
             _managedVirtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryManagedVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _managedVirtualNetworksRestClient = new ManagedVirtualNetworks(_managedVirtualNetworksClientDiagnostics, Pipeline, Endpoint, dataFactoryManagedVirtualNetworkApiVersion ?? "2018-06-01");
+            _managedVirtualNetworksRestClient = new ManagedVirtualNetworks(_managedVirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryManagedVirtualNetworkApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new ManagedVirtualNetworksGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new DataFactoryManagedVirtualNetworkDataAsyncCollectionResultOfT(
                 _managedVirtualNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new ManagedVirtualNetworksGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new DataFactoryManagedVirtualNetworkDataCollectionResultOfT(
                 _managedVirtualNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

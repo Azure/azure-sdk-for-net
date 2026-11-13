@@ -12,11 +12,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The AgentCard. </summary>
     public partial class AgentCard : IJsonModel<AgentCard>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentCard"/> for deserialization. </summary>
-        internal AgentCard()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentCard PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -159,10 +154,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentCard(version, description, skills, additionalBinaryDataProperties);
+            return new AgentCard(version, description, skills ?? new ChangeTrackingList<AgentCardSkill>(), additionalBinaryDataProperties);
         }
     }
 }

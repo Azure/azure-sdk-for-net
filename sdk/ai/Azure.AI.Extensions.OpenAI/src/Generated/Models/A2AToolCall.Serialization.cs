@@ -4,22 +4,18 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
-    public partial class A2AToolCall : AgentResponseItem, IJsonModel<A2AToolCall>
+    public partial class A2AToolCall : ResponseItem, IJsonModel<A2AToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="A2AToolCall"/> for deserialization. </summary>
-        internal A2AToolCall()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<A2AToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -27,7 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeA2AToolCall(document.RootElement, options);
+                        return DeserializeA2AToolCall(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(A2AToolCall)} does not support reading '{options.Format}' format.");
@@ -61,6 +57,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<A2AToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -76,14 +80,30 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(A2AToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("call_id"u8);
-            writer.WriteStringValue(CallId);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("arguments"u8);
-            writer.WriteStringValue(Arguments);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (!Patch.Contains("$.call_id"u8))
+            {
+                writer.WritePropertyName("call_id"u8);
+                writer.WriteStringValue(CallId);
+            }
+            if (!Patch.Contains("$.name"u8))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (!Patch.Contains("$.arguments"u8))
+            {
+                writer.WritePropertyName("arguments"u8);
+                writer.WriteStringValue(Arguments);
+            }
+            if (!Patch.Contains("$.status"u8))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.ToSerialString());
+            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -92,7 +112,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<A2AToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -100,31 +120,34 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(A2AToolCall)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeA2AToolCall(document.RootElement, options);
+            return DeserializeA2AToolCall(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static A2AToolCall DeserializeA2AToolCall(JsonElement element, ModelReaderWriterOptions options)
+        internal static A2AToolCall DeserializeA2AToolCall(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AgentResponseItemKind @type = default;
+            ResponseItemKind @type = "a2a_preview_call";
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             string name = default;
             string arguments = default;
             ToolCallStatus status = default;
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new AgentResponseItemKind(prop.Value.GetString());
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -166,21 +189,18 @@ namespace Azure.AI.Extensions.OpenAI
                     status = prop.Value.GetString().ToToolCallStatus();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new A2AToolCall(
                 @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties,
                 callId,
                 name,
                 arguments,
-                status);
+                status,
+                patch);
         }
     }
 }

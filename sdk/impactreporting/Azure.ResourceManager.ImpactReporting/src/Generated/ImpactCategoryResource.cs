@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ResourceType, out string impactCategoryApiVersion);
             _impactCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
-            _impactCategoriesRestClient = new ImpactCategories(_impactCategoriesClientDiagnostics, Pipeline, Endpoint, impactCategoryApiVersion ?? "2024-05-01-preview");
+            _impactCategoriesRestClient = new ImpactCategories(_impactCategoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, impactCategoryApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 

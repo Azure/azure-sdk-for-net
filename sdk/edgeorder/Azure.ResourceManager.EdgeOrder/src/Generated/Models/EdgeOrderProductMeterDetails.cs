@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>
+        protected EdgeOrderProductMeterDetails() : this(default)
+        {
+        }
+
         /// <summary> Represents billing type. </summary>
         internal BillingType BillingType { get; set; }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmGuestAgentApiVersion);
             _guestAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _guestAgentsRestClient = new GuestAgents(_guestAgentsClientDiagnostics, Pipeline, Endpoint, hciVmGuestAgentApiVersion ?? "2025-09-01-preview");
+            _guestAgentsRestClient = new GuestAgents(_guestAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmGuestAgentApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

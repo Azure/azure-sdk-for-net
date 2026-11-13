@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Deployment What-if properties. </summary>
     public partial class ArmDeploymentWhatIfProperties : ArmDeploymentProperties, IJsonModel<ArmDeploymentWhatIfProperties>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support writing '{options.Format}' format.");
             }
@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("whatIfSettings"u8);
                 writer.WriteObjectValue(WhatIfSettings, options);
+            }
+            if (Optional.IsCollectionDefined(ResourcePredictions))
+            {
+                writer.WritePropertyName("resourcePredictions"u8);
+                writer.WriteStartArray();
+                foreach (DeploymentResourceWhatIfPrediction item in ResourcePredictions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
         }
 
@@ -126,6 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
             ValidationLevel? validationLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ArmDeploymentWhatIfSettings whatIfSettings = default;
+            IList<DeploymentResourceWhatIfPrediction> resourcePredictions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("template"u8))
@@ -134,7 +145,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    template = BinaryData.FromString(prop.Value.GetRawText());
+                    template = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("templateLink"u8))
@@ -273,9 +284,23 @@ namespace Azure.ResourceManager.Resources.Models
                     whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("resourcePredictions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DeploymentResourceWhatIfPrediction> array = new List<DeploymentResourceWhatIfPrediction>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeploymentResourceWhatIfPrediction.DeserializeDeploymentResourceWhatIfPrediction(item, options));
+                    }
+                    resourcePredictions = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ArmDeploymentWhatIfProperties(
@@ -292,7 +317,8 @@ namespace Azure.ResourceManager.Resources.Models
                 expressionEvaluationOptions,
                 validationLevel,
                 additionalBinaryDataProperties,
-                whatIfSettings);
+                whatIfSettings,
+                resourcePredictions ?? new ChangeTrackingList<DeploymentResourceWhatIfPrediction>());
         }
     }
 }

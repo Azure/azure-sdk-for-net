@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabServiceFabricResource.ResourceType, out string devTestLabServiceFabricApiVersion);
             _serviceFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabServiceFabricResource.ResourceType.Namespace, Diagnostics);
-            _serviceFabricsRestClient = new ServiceFabrics(_serviceFabricsClientDiagnostics, Pipeline, Endpoint, devTestLabServiceFabricApiVersion ?? "2018-09-15");
+            _serviceFabricsRestClient = new ServiceFabrics(_serviceFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabServiceFabricApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabServiceFabricData, DevTestLabServiceFabricResource>(new ServiceFabricsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabServiceFabricData, DevTestLabServiceFabricResource>(new DevTestLabServiceFabricDataAsyncCollectionResultOfT(
                 _serviceFabricsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabServiceFabricData, DevTestLabServiceFabricResource>(new ServiceFabricsGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabServiceFabricData, DevTestLabServiceFabricResource>(new DevTestLabServiceFabricDataCollectionResultOfT(
                 _serviceFabricsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

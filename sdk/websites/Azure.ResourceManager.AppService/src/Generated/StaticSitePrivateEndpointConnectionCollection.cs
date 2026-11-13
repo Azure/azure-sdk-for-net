@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSitePrivateEndpointConnectionResource.ResourceType, out string staticSitePrivateEndpointConnectionApiVersion);
             _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSitePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSitePrivateEndpointConnectionApiVersion ?? "2026-03-15");
+            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSitePrivateEndpointConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, StaticSitePrivateEndpointConnectionResource>(new StaticSitesGetPrivateEndpointConnectionListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, StaticSitePrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceDataAsync0CollectionResultOfT(
                 _staticSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, StaticSitePrivateEndpointConnectionResource>(new StaticSitesGetPrivateEndpointConnectionListCollectionResultOfT(
+            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, StaticSitePrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceData0CollectionResultOfT(
                 _staticSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

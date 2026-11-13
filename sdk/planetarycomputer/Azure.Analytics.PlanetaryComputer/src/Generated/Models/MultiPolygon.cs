@@ -15,13 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class MultiPolygon : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="MultiPolygon"/>. </summary>
-        /// <param name="coordinates"> The coordinates of the multipolygon. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public MultiPolygon(IEnumerable<IList<IList<IList<float>>>> coordinates) : base(GeometryType.MultiPolygon)
+        public MultiPolygon() : base(GeometryKind.MultiPolygon)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
-
-            Coordinates = coordinates.ToList();
+            Coordinates = new ChangeTrackingList<IList<IList<IList<float>>>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiPolygon"/>. </summary>
@@ -29,9 +25,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the multipolygon. </param>
-        internal MultiPolygon(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<IList<float>>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal MultiPolygon(GeometryKind @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<IList<float>>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiPolygon"/>. </summary>
+        /// <param name="coordinates"> The coordinates of the multipolygon. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public MultiPolygon(IEnumerable<IList<IList<IList<float>>>> coordinates) : this()
+        {
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
+
+            Coordinates = coordinates.ToList();
         }
 
         /// <summary> The coordinates of the multipolygon. </summary>

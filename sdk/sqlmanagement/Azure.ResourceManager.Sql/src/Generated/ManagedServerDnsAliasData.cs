@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Sql
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasData"/>. </summary>
+        public ManagedServerDnsAliasData()
+        {
+        }
+
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal ManagedServerDnsAliasProperties Properties { get; }

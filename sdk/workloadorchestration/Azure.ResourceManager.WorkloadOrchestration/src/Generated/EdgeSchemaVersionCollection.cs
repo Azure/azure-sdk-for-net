@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSchemaVersionResource.ResourceType, out string edgeSchemaVersionApiVersion);
             _schemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaVersionResource.ResourceType.Namespace, Diagnostics);
-            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Endpoint, edgeSchemaVersionApiVersion ?? "2025-06-01");
+            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new EdgeSchemaVersionDataAsyncCollectionResultOfT(
                 _schemaVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new SchemaVersionsGetBySchemaCollectionResultOfT(
+            return new PageableWrapper<EdgeSchemaVersionData, EdgeSchemaVersionResource>(new EdgeSchemaVersionDataCollectionResultOfT(
                 _schemaVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

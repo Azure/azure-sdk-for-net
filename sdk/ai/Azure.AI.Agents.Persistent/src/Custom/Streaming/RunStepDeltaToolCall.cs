@@ -44,6 +44,7 @@ namespace Azure.AI.Agents.Persistent
 
         // Backward-compat: old API exposed this as a protected internal field.
 #pragma warning disable SA1401
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
         protected internal IDictionary<string, BinaryData> SerializedAdditionalRawData;
 #pragma warning restore SA1401
     }

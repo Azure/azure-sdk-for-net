@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
             _virtualMachineScaleSetName = virtualMachineScaleSetName;
             _virtualmachineIndex = virtualmachineIndex;
             _virtualMachineScaleSetNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualMachineScaleSetNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetNetworkInterfaceApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceApiVersion ?? "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new VirtualMachineScaleSetNetworkInterfacesGetVirtualMachineScaleSetVMNetworkInterfacesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new NetworkInterfaceDataAsync2CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new VirtualMachineScaleSetNetworkInterfacesGetVirtualMachineScaleSetVMNetworkInterfacesCollectionResultOfT(
+            return new PageableWrapper<NetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new NetworkInterfaceData2CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

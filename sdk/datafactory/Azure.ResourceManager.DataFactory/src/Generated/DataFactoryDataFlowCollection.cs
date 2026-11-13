@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryDataFlowResource.ResourceType, out string dataFactoryDataFlowApiVersion);
             _dataFlowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryDataFlowResource.ResourceType.Namespace, Diagnostics);
-            _dataFlowsRestClient = new DataFlows(_dataFlowsClientDiagnostics, Pipeline, Endpoint, dataFactoryDataFlowApiVersion ?? "2018-06-01");
+            _dataFlowsRestClient = new DataFlows(_dataFlowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryDataFlowApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryDataFlowData, DataFactoryDataFlowResource>(new DataFlowsGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryDataFlowData, DataFactoryDataFlowResource>(new DataFactoryDataFlowDataAsyncCollectionResultOfT(
                 _dataFlowsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryDataFlowData, DataFactoryDataFlowResource>(new DataFlowsGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryDataFlowData, DataFactoryDataFlowResource>(new DataFactoryDataFlowDataCollectionResultOfT(
                 _dataFlowsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

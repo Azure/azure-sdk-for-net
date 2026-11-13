@@ -21,6 +21,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             _converter = new();
         }
 
+        /// <summary>
+        /// Adds a SignalR message or group action to be sent to the SignalR Service.
+        /// </summary>
+        /// <param name="item">The SignalR message or group action to send.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         public async Task AddAsync(T item, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (item == null)
@@ -102,6 +107,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
         }
 
+        /// <summary>
+        /// Flushes the collector. Items are sent as they are added, so this is a no-op.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         public Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return Task.CompletedTask;

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgricultureServicePatchProperties(config, dataConnectorCredentials ?? new ChangeTrackingList<DataConnectorCredentialMap>(), installedSolutions ?? new ChangeTrackingList<InstalledSolutionMap>(), additionalBinaryDataProperties);

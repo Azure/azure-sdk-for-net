@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(EventGridNamespaceClientResource.ResourceType, out string eventGridNamespaceClientApiVersion);
             _clientsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridNamespaceClientResource.ResourceType.Namespace, Diagnostics);
-            _clientsRestClient = new Clients(_clientsClientDiagnostics, Pipeline, Endpoint, eventGridNamespaceClientApiVersion ?? "2025-07-15-preview");
+            _clientsRestClient = new Clients(_clientsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridNamespaceClientApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridNamespaceClientData, EventGridNamespaceClientResource>(new ClientsGetByNamespaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridNamespaceClientData, EventGridNamespaceClientResource>(new EventGridNamespaceClientDataAsyncCollectionResultOfT(
                 _clientsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridNamespaceClientData, EventGridNamespaceClientResource>(new ClientsGetByNamespaceCollectionResultOfT(
+            return new PageableWrapper<EventGridNamespaceClientData, EventGridNamespaceClientResource>(new EventGridNamespaceClientDataCollectionResultOfT(
                 _clientsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

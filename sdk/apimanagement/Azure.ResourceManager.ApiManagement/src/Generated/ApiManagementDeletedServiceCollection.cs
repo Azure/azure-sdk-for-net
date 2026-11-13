@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementDeletedServiceResource.ResourceType, out string apiManagementDeletedServiceApiVersion);
             _deletedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementDeletedServiceResource.ResourceType.Namespace, Diagnostics);
-            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Endpoint, apiManagementDeletedServiceApiVersion ?? "2025-09-01-preview");
+            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementDeletedServiceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

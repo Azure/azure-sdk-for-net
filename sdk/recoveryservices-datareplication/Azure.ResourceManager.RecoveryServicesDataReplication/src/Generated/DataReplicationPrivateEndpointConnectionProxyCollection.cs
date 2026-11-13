@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationPrivateEndpointConnectionProxyResource.ResourceType, out string dataReplicationPrivateEndpointConnectionProxyApiVersion);
             _privateEndpointConnectionProxiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationPrivateEndpointConnectionProxyResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxies(_privateEndpointConnectionProxiesClientDiagnostics, Pipeline, Endpoint, dataReplicationPrivateEndpointConnectionProxyApiVersion ?? "2024-09-01");
+            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxies(_privateEndpointConnectionProxiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPrivateEndpointConnectionProxyApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new DataReplicationPrivateEndpointConnectionProxyDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionProxiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new DataReplicationPrivateEndpointConnectionProxyDataCollectionResultOfT(
                 _privateEndpointConnectionProxiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

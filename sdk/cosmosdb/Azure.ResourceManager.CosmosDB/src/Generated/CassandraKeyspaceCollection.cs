@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CassandraKeyspaceResource.ResourceType, out string cassandraKeyspaceApiVersion);
             _cassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraKeyspaceResource.ResourceType.Namespace, Diagnostics);
-            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraKeyspaceApiVersion ?? "2026-04-01-preview");
+            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraKeyspaceApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CassandraKeyspaceData, CassandraKeyspaceResource>(new CassandraResourcesGetCassandraKeyspacesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CassandraKeyspaceData, CassandraKeyspaceResource>(new CassandraKeyspaceDataAsyncCollectionResultOfT(
                 _cassandraResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CassandraKeyspaceData, CassandraKeyspaceResource>(new CassandraResourcesGetCassandraKeyspacesCollectionResultOfT(
+            return new PageableWrapper<CassandraKeyspaceData, CassandraKeyspaceResource>(new CassandraKeyspaceDataCollectionResultOfT(
                 _cassandraResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

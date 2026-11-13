@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(PolicyRestrictionContractResource.ResourceType, out string policyRestrictionContractApiVersion);
             _policyRestrictionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PolicyRestrictionContractResource.ResourceType.Namespace, Diagnostics);
-            _policyRestrictionRestClient = new PolicyRestriction(_policyRestrictionClientDiagnostics, Pipeline, Endpoint, policyRestrictionContractApiVersion ?? "2025-09-01-preview");
+            _policyRestrictionRestClient = new PolicyRestriction(_policyRestrictionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyRestrictionContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionContractDataAsyncCollectionResultOfT(
                 _policyRestrictionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceCollectionResultOfT(
+            return new PageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionContractDataCollectionResultOfT(
                 _policyRestrictionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

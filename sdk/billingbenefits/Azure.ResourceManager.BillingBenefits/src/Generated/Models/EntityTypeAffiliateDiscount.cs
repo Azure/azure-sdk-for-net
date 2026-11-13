@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         /// <summary> Initializes a new instance of <see cref="EntityTypeAffiliateDiscount"/>. </summary>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="productCode"/> is null. </exception>
-        public EntityTypeAffiliateDiscount(string productCode, DateTimeOffset startOn) : base(DiscountEntityType.Affiliate, productCode, startOn)
+        public EntityTypeAffiliateDiscount(string productCode, DateTimeOffset startsOn) : base(DiscountEntityType.Affiliate, productCode, startsOn)
         {
             Argument.AssertNotNull(productCode, nameof(productCode));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="EntityTypeAffiliateDiscount"/>. </summary>
         /// <param name="entityType"> This defines whether the entity being created is primary or affiliate. Supported values: primary, affiliate. Validation: Required, must match one of the 2 values. </param>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
         /// <param name="systemId"> This is the globally unique identifier of the Discount which will not change for the lifetime of the Discount. </param>
         /// <param name="provisioningState"> The state of the resource. Supported values are Pending, Failed, Succeeded, Canceled. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the discount metadata is present. </param>
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="appliedScopeType"> List of applied scopes supported for discounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryResourceId"> This will be present in the response if the primary has a resource ID. </param>
-        /// <param name="endOn"> End date of the discount. No duration will be supported. Allowed value is any date greater than or equal to startDate. </param>
-        internal EntityTypeAffiliateDiscount(DiscountEntityType entityType, string productCode, DateTimeOffset startOn, string systemId, DiscountProvisioningState? provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string displayName, DiscountStatus? status, ResourceIdentifier benefitResourceId, DiscountAppliedScopeType? appliedScopeType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier primaryResourceId, DateTimeOffset? endOn) : base(entityType, productCode, startOn, systemId, provisioningState, billingAccountResourceId, billingProfileResourceId, customerResourceId, displayName, status, benefitResourceId, appliedScopeType, additionalBinaryDataProperties)
+        /// <param name="endsOn"> End date of the discount. No duration will be supported. Allowed value is any date greater than or equal to startDate. </param>
+        internal EntityTypeAffiliateDiscount(DiscountEntityType entityType, string productCode, DateTimeOffset startsOn, string systemId, DiscountProvisioningState? provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string displayName, DiscountStatus? status, ResourceIdentifier benefitResourceId, DiscountAppliedScopeType? appliedScopeType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier primaryResourceId, DateTimeOffset? endsOn) : base(entityType, productCode, startsOn, systemId, provisioningState, billingAccountResourceId, billingProfileResourceId, customerResourceId, displayName, status, benefitResourceId, appliedScopeType, additionalBinaryDataProperties)
         {
             PrimaryResourceId = primaryResourceId;
-            EndOn = endOn;
+            EndsOn = endsOn;
         }
 
         /// <summary> This will be present in the response if the primary has a resource ID. </summary>
         public ResourceIdentifier PrimaryResourceId { get; }
 
         /// <summary> End date of the discount. No duration will be supported. Allowed value is any date greater than or equal to startDate. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

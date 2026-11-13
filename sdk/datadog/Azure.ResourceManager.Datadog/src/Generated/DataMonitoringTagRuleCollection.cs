@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DataMonitoringTagRuleResource.ResourceType, out string dataMonitoringTagRuleApiVersion);
             _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DataMonitoringTagRuleResource.ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, dataMonitoringTagRuleApiVersion ?? "2025-12-26-preview");
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMonitoringTagRuleApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new DataMonitoringTagRuleDataAsyncCollectionResultOfT(
                 _tagRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DataMonitoringTagRuleData, DataMonitoringTagRuleResource>(new DataMonitoringTagRuleDataCollectionResultOfT(
                 _tagRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

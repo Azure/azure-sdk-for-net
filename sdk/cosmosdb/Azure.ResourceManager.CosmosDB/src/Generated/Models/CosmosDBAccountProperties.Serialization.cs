@@ -385,10 +385,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("throughputPoolMaxConsumableRUs"u8);
                 writer.WriteNumberValue(ThroughputPoolMaxConsumableRUs.Value);
             }
-            if (Optional.IsDefined(EnforceHierarchicalPartitionKeyIdLastLevel))
+            if (Optional.IsDefined(IsHierarchicalPartitionKeyIdLastLevelEnforced))
             {
                 writer.WritePropertyName("enforceHierarchicalPartitionKeyIdLastLevel"u8);
-                writer.WriteBooleanValue(EnforceHierarchicalPartitionKeyIdLastLevel.Value);
+                writer.WriteBooleanValue(IsHierarchicalPartitionKeyIdLastLevelEnforced.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             SoftDeleteConfiguration softDeleteConfiguration = default;
             long? throughputPoolDedicatedRUs = default;
             long? throughputPoolMaxConsumableRUs = default;
-            bool? enforceHierarchicalPartitionKeyIdLastLevel = default;
+            bool? isHierarchicalPartitionKeyIdLastLevelEnforced = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -989,12 +989,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    enforceHierarchicalPartitionKeyIdLastLevel = prop.Value.GetBoolean();
+                    isHierarchicalPartitionKeyIdLastLevelEnforced = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CosmosDBAccountProperties(
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 softDeleteConfiguration,
                 throughputPoolDedicatedRUs,
                 throughputPoolMaxConsumableRUs,
-                enforceHierarchicalPartitionKeyIdLastLevel,
+                isHierarchicalPartitionKeyIdLastLevelEnforced,
                 additionalBinaryDataProperties);
         }
     }

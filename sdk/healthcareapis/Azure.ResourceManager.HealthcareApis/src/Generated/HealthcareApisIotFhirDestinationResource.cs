@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(ResourceType, out string healthcareApisIotFhirDestinationApiVersion);
             _iotConnectorFhirDestinationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            _iotConnectorFhirDestinationRestClient = new IotConnectorFhirDestination(_iotConnectorFhirDestinationClientDiagnostics, Pipeline, Endpoint, healthcareApisIotFhirDestinationApiVersion ?? "2025-04-01-preview");
+            _iotConnectorFhirDestinationRestClient = new IotConnectorFhirDestination(_iotConnectorFhirDestinationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisIotFhirDestinationApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 

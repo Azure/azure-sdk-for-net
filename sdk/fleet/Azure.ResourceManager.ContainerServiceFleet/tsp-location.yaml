@@ -1,5 +1,5 @@
 directory: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet
-commit: 96e4b77b3e26fcd1e309c7f9e8fda7151de05e13
+commit: 23e9854f0c5955309c49d15d4f3c448861ff692b
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

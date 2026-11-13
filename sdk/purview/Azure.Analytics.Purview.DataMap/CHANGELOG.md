@@ -8,6 +8,9 @@
 
 ### Breaking Changes
 
+- Renamed the sub-clients to service-prefixed names to comply with type-naming guidelines: `Entity`→`DataMapEntity`, `Glossary`→`DataMapGlossary`, `Lineage`→`DataMapLineage`, `Relationship`→`DataMapRelationship`, `Discovery`→`DataMapDiscovery`. The corresponding `Get<Name>Client()` accessors were renamed accordingly (for example, `GetEntityClient()`→`GetDataMapEntityClient()`).
+- Renamed `EntityStatus` to `DataMapEntityStatus` to avoid a type-name collision with `Azure.Messaging.ServiceBus.Administration.EntityStatus`.
+
 ### Bugs Fixed
 
 ### Other Changes

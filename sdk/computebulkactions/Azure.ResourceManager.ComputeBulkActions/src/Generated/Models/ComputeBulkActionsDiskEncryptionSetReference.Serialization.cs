@@ -15,7 +15,7 @@ using Azure.ResourceManager.ComputeBulkActions;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </summary>
-    public partial class ComputeBulkActionsDiskEncryptionSetReference : ComputeBulkActionsSubResource, IJsonModel<ComputeBulkActionsDiskEncryptionSetReference>
+    internal partial class ComputeBulkActionsDiskEncryptionSetReference : ComputeBulkActionsSubResource, IJsonModel<ComputeBulkActionsDiskEncryptionSetReference>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeBulkActionsDiskEncryptionSetReference(id, additionalBinaryDataProperties);

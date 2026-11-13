@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Information about a single resource change predicted by What-If operation. </summary>
     public partial class WhatIfChange : IJsonModel<WhatIfChange>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{options.Format}' format.");
             }
@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("symbolicName"u8);
                 writer.WriteStringValue(SymbolicName);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
             }
             if (Optional.IsDefined(Identifiers))
             {
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.Resources.Models
             string resourceId = default;
             string deploymentId = default;
             string symbolicName = default;
+            string resourceType = default;
             BinaryData identifiers = default;
             ArmDeploymentExtensionDefinition extension = default;
             WhatIfChangeType changeType = default;
@@ -222,13 +228,18 @@ namespace Azure.ResourceManager.Resources.Models
                     symbolicName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("resourceType"u8))
+                {
+                    resourceType = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("identifiers"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identifiers = BinaryData.FromString(prop.Value.GetRawText());
+                    identifiers = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))
@@ -256,7 +267,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    before = BinaryData.FromString(prop.Value.GetRawText());
+                    before = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("after"u8))
@@ -265,7 +276,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    after = BinaryData.FromString(prop.Value.GetRawText());
+                    after = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("delta"u8))
@@ -284,13 +295,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WhatIfChange(
                 resourceId,
                 deploymentId,
                 symbolicName,
+                resourceType,
                 identifiers,
                 extension,
                 changeType,

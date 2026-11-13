@@ -104,8 +104,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 },
                 },
             };
-            ArmOperation<EventHubsNamespaceResource> lro = await eventHubsNamespace.UpdateAsync(WaitUntil.Completed, data);
-            EventHubsNamespaceResource result = lro.Value;
+            EventHubsNamespaceResource result = await eventHubsNamespace.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -14,14 +14,14 @@ namespace Azure.AI.Translation.Document
     /// <summary> Client options for clients in this library. </summary>
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_12_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_03_01;
 
         /// <summary> Initializes a new instance of DocumentTranslationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
         internal DocumentTranslationClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2025-12-01-preview";
+            Version = "2026-03-01";
             if (section is null || !section.Exists())
             {
                 return;
@@ -48,10 +48,8 @@ namespace Azure.AI.Translation.Document
         {
             /// <summary> V2024_05_01. </summary>
             V2024_05_01 = 1,
-            /// <summary> V2024_11_01_Preview. </summary>
-            V2024_11_01_Preview = 2,
-            /// <summary> V2025_12_01_Preview. </summary>
-            V2025_12_01_Preview = 3
+            /// <summary> V2026_03_01. </summary>
+            V2026_03_01 = 2
         }
     }
 }

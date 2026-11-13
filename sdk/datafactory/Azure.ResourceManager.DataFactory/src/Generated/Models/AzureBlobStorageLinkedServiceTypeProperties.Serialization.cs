@@ -79,10 +79,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(AccountKey, options);
+            }
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(SasUri, options);
+            }
+            if (Optional.IsDefined(SasToken))
+            {
+                writer.WritePropertyName("sasToken"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(SasToken, options);
             }
             if (Optional.IsDefined(ServiceEndpoint))
             {
@@ -177,7 +187,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> connectionString = default;
+            DataFactoryKeyVaultSecret accountKey = default;
             DataFactoryElement<string> sasUri = default;
+            DataFactoryKeyVaultSecret sasToken = default;
             DataFactoryElement<string> serviceEndpoint = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactorySecret servicePrincipalKey = default;
@@ -197,7 +209,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("accountKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accountKey = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sasUri"u8))
@@ -206,7 +227,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sasUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    sasUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("sasToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sasToken = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("serviceEndpoint"u8))
@@ -215,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serviceEndpoint = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    serviceEndpoint = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
@@ -229,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -238,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    tenant = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    tenant = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("azureCloudType"u8))
@@ -247,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    azureCloudType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    azureCloudType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("accountKind"u8))
@@ -256,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    accountKind = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    accountKind = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -288,17 +318,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    containerUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    containerUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AzureBlobStorageLinkedServiceTypeProperties(
                 connectionString,
+                accountKey,
                 sasUri,
+                sasToken,
                 serviceEndpoint,
                 servicePrincipalId,
                 servicePrincipalKey,

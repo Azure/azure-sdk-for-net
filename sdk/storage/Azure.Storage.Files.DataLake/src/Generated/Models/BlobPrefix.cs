@@ -5,25 +5,19 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The BlobPrefix. </summary>
+    /// <summary> A blob prefix. </summary>
     internal partial class BlobPrefix
     {
         /// <summary> Initializes a new instance of <see cref="BlobPrefix"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <param name="name"> The prefix name. </param>
         internal BlobPrefix(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The prefix name. </summary>
         public string Name { get; }
     }
 }

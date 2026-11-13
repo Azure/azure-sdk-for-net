@@ -5,36 +5,52 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     internal partial class MultiFlattenProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        [Experimental("SCME0001")]
+        private JsonPatch _patch;
 
         /// <summary> Initializes a new instance of <see cref="MultiFlattenProperties"/>. </summary>
         /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         public MultiFlattenProperties(FlattenChannel? channel)
         {
             Channel = channel;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Initializes a new instance of <see cref="MultiFlattenProperties"/>. </summary>
         /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
         /// <param name="inner"> Property whose type has a single public property, triggering safe-flatten. </param>
         /// <param name="disabled"> Additional property after inner to verify it is not skipped. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiFlattenProperties(FlattenChannel? channel, SafeFlattenInner inner, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="independentInternal"> Must not safe-flatten because its model also has an independent internal property. </param>
+        /// <param name="patch"></param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        internal MultiFlattenProperties(FlattenChannel? channel, SafeFlattenInner inner, bool? disabled, IndependentInternalPropertyModel independentInternal, in JsonPatch patch)
         {
             Channel = channel;
             Inner = inner;
             Disabled = disabled;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            IndependentInternal = independentInternal;
+            _patch = patch;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> Gets the Patch. </summary>
+        [JsonIgnore]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Experimental("SCME0001")]
+        public ref JsonPatch Patch => ref _patch;
 
         /// <summary> Property whose type has a single public property, triggering safe-flatten. </summary>
         [WirePath("inner")]
@@ -43,6 +59,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Additional property after inner to verify it is not skipped. </summary>
         [WirePath("disabled")]
         public bool? Disabled { get; set; }
+
+        /// <summary> Must not safe-flatten because its model also has an independent internal property. </summary>
+        [WirePath("independentInternal")]
+        public IndependentInternalPropertyModel IndependentInternal { get; set; }
 
         /// <summary> Gets or sets the SelectionType. </summary>
         [WirePath("inner.selectionType")]

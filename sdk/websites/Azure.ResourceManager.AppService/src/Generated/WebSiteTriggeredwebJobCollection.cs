@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteTriggeredwebJobResource.ResourceType, out string webSiteTriggeredwebJobApiVersion);
             _triggeredWebJobOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteTriggeredwebJobResource.ResourceType.Namespace, Diagnostics);
-            _triggeredWebJobOperationGroupRestClient = new TriggeredWebJobOperationGroup(_triggeredWebJobOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteTriggeredwebJobApiVersion ?? "2026-03-15");
+            _triggeredWebJobOperationGroupRestClient = new TriggeredWebJobOperationGroup(_triggeredWebJobOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteTriggeredwebJobApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TriggeredWebJobData, WebSiteTriggeredwebJobResource>(new TriggeredWebJobOperationGroupGetTriggeredWebJobsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TriggeredWebJobData, WebSiteTriggeredwebJobResource>(new TriggeredWebJobDataAsync0CollectionResultOfT(
                 _triggeredWebJobOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TriggeredWebJobData, WebSiteTriggeredwebJobResource>(new TriggeredWebJobOperationGroupGetTriggeredWebJobsCollectionResultOfT(
+            return new PageableWrapper<TriggeredWebJobData, WebSiteTriggeredwebJobResource>(new TriggeredWebJobData0CollectionResultOfT(
                 _triggeredWebJobOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

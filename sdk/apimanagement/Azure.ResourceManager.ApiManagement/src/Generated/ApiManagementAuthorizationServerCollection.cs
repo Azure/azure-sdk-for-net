@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementAuthorizationServerResource.ResourceType, out string apiManagementAuthorizationServerApiVersion);
             _authorizationServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementAuthorizationServerResource.ResourceType.Namespace, Diagnostics);
-            _authorizationServerRestClient = new AuthorizationServer(_authorizationServerClientDiagnostics, Pipeline, Endpoint, apiManagementAuthorizationServerApiVersion ?? "2025-09-01-preview");
+            _authorizationServerRestClient = new AuthorizationServer(_authorizationServerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementAuthorizationServerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementAuthorizationServerData, ApiManagementAuthorizationServerResource>(new AuthorizationServerGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementAuthorizationServerData, ApiManagementAuthorizationServerResource>(new ApiManagementAuthorizationServerDataAsyncCollectionResultOfT(
                 _authorizationServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementAuthorizationServerData, ApiManagementAuthorizationServerResource>(new AuthorizationServerGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementAuthorizationServerData, ApiManagementAuthorizationServerResource>(new ApiManagementAuthorizationServerDataCollectionResultOfT(
                 _authorizationServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
     {
         /// <summary> Initializes a new instance of <see cref="SyncConfigurationNetworkAdapterJobProperties"/>. </summary>
         /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
-        public SyncConfigurationNetworkAdapterJobProperties(ResolutionStrategy resolutionStrategy) : base(NetworkAdapterJobType.SyncConfiguration)
+        public SyncConfigurationNetworkAdapterJobProperties(HciConfigurationDriftResolutionStrategy resolutionStrategy) : base(NetworkAdapterJobType.SyncConfiguration)
         {
             ResolutionStrategy = resolutionStrategy;
         }
@@ -27,20 +27,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
-        internal SyncConfigurationNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResolutionStrategy resolutionStrategy) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, reportedProperties, additionalBinaryDataProperties)
+        internal SyncConfigurationNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciConfigurationDriftResolutionStrategy resolutionStrategy) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, error, reportedProperties, additionalBinaryDataProperties)
         {
             ResolutionStrategy = resolutionStrategy;
         }
 
         /// <summary> The strategy to use for resolving the configuration drift. </summary>
         [WirePath("resolutionStrategy")]
-        public ResolutionStrategy ResolutionStrategy { get; set; }
+        public HciConfigurationDriftResolutionStrategy ResolutionStrategy { get; set; }
     }
 }

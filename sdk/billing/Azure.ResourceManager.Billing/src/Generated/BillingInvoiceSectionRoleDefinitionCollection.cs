@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingInvoiceSectionRoleDefinitionResource.ResourceType, out string billingInvoiceSectionRoleDefinitionApiVersion);
             _billingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingInvoiceSectionRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionRoleDefinitionApiVersion ?? "2024-04-01");
+            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionRoleDefinitionApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingInvoiceSectionRoleDefinitionResource>(new BillingRoleDefinitionGetByInvoiceSectionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingInvoiceSectionRoleDefinitionResource>(new BillingRoleDefinitionDataAsync1CollectionResultOfT(
                 _billingRoleDefinitionRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleDefinitionData, BillingInvoiceSectionRoleDefinitionResource>(new BillingRoleDefinitionGetByInvoiceSectionCollectionResultOfT(
+            return new PageableWrapper<BillingRoleDefinitionData, BillingInvoiceSectionRoleDefinitionResource>(new BillingRoleDefinitionData1CollectionResultOfT(
                 _billingRoleDefinitionRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,

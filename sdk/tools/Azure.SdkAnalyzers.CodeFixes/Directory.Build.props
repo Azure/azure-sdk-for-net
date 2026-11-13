@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <IsAnalzyer>true</IsAnalzyer>
+    <IsAnalyzer>true</IsAnalyzer>
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 </Project>

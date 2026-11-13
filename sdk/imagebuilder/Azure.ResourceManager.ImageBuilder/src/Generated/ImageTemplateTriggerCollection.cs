@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ImageBuilder
         {
             TryGetApiVersion(ImageTemplateTriggerResource.ResourceType, out string imageTemplateTriggerApiVersion);
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ImageTemplateTriggerResource.ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, imageTemplateTriggerApiVersion ?? "2025-10-01");
+            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, imageTemplateTriggerApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new TriggersGetByImageTemplateAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new ImageTemplateTriggerDataAsyncCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new TriggersGetByImageTemplateCollectionResultOfT(
+            return new PageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new ImageTemplateTriggerDataCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

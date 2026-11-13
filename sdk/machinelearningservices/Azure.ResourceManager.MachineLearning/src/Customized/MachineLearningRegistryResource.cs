@@ -29,13 +29,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Gets a registry code container. </summary>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningRegistryCodeContainerResource> GetMachineLearningRegistryCodeContainer(string codeName, CancellationToken cancellationToken = default) => GetMachineLearningRegistryCodeContainers().Get(codeName, cancellationToken);
+
+        // Customized: correcting the component resource name changes these generated child accessors. Keep the
+        // shipped MachineLearnin* names because client.tsp cannot generate compatibility aliases for child accessors.
         /// <summary> Gets registry component containers. </summary>
+        [Obsolete("GetMachineLearninRegistryComponentContainers is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainers instead.")]
         public virtual MachineLearninRegistryComponentContainerCollection GetMachineLearninRegistryComponentContainers() => new MachineLearninRegistryComponentContainerCollection(Client, Id);
         /// <summary> Gets a registry component container. </summary>
         [ForwardsClientCalls]
+        [Obsolete("GetMachineLearninRegistryComponentContainerAsync is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainerAsync instead.")]
         public virtual Task<Response<MachineLearninRegistryComponentContainerResource>> GetMachineLearninRegistryComponentContainerAsync(string componentName, CancellationToken cancellationToken = default) => GetMachineLearninRegistryComponentContainers().GetAsync(componentName, cancellationToken);
         /// <summary> Gets a registry component container. </summary>
         [ForwardsClientCalls]
+        [Obsolete("GetMachineLearninRegistryComponentContainer is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainer instead.")]
         public virtual Response<MachineLearninRegistryComponentContainerResource> GetMachineLearninRegistryComponentContainer(string componentName, CancellationToken cancellationToken = default) => GetMachineLearninRegistryComponentContainers().Get(componentName, cancellationToken);
         /// <summary> Gets registry data containers. </summary>
         public virtual MachineLearningRegistryDataContainerCollection GetMachineLearningRegistryDataContainers() => new MachineLearningRegistryDataContainerCollection(Client, Id);

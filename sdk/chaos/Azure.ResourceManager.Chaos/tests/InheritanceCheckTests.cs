@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[] { "ChaosPrivateLinkResource" };
+            ExceptionList = new string[] { "ChaosPrivateLinkResource", "ScenarioRunResource" };
         }
     }
 }

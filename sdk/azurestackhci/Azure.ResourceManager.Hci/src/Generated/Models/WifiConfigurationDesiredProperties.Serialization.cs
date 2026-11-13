@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string ssid = default;
-            AuthenticationType? authenticationType = default;
-            EAPMethod? eapMethod = default;
+            EdgeMachineWifiAuthenticationType? authenticationType = default;
+            EapMethod? eapMethod = default;
             string username = default;
             WifiSecret wifiSecret = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    authenticationType = new AuthenticationType(prop.Value.GetString());
+                    authenticationType = new EdgeMachineWifiAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eapMethod"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    eapMethod = new EAPMethod(prop.Value.GetString());
+                    eapMethod = new EapMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("username"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WifiConfigurationDesiredProperties(

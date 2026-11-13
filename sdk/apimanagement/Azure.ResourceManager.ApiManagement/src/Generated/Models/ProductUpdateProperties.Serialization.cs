@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters supplied to the Update Product operation. </summary>
-    public partial class ProductUpdateProperties : ProductEntityBaseProperties, IJsonModel<ProductUpdateProperties>
+    internal partial class ProductUpdateProperties : ProductEntityBaseProperties, IJsonModel<ProductUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProductUpdateProperties(

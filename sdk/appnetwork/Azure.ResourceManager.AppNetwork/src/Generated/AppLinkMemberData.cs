@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppNetwork
 {
-    /// <summary> AppLink Member resource. </summary>
+    /// <summary> A member of an Azure Kubernetes Application Network resource. </summary>
     public partial class AppLinkMemberData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

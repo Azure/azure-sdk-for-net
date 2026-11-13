@@ -30,8 +30,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="status"> Status of the Cluster resource. </param>
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
         /// <param name="platformCapabilities"></param>
+        /// <param name="zoneRedundant"> A value that indicates whether the cluster is zone redundant. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling, PlatformCapabilities platformCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling, PlatformCapabilities platformCapabilities, bool? zoneRedundant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Status = status;
             SupportsScaling = supportsScaling;
             PlatformCapabilities = platformCapabilities;
+            ZoneRedundant = zoneRedundant;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,6 +72,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Gets or sets the PlatformCapabilities. </summary>
         [WirePath("platformCapabilities")]
         internal PlatformCapabilities PlatformCapabilities { get; set; }
+
+        /// <summary> A value that indicates whether the cluster is zone redundant. </summary>
+        [WirePath("zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("platformCapabilities.confidentialCompute.mode")]

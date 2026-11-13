@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
+    /// <summary></summary>
     public partial class ServiceAlertResource : IJsonModel<ServiceAlertData>
     {
-        private static ServiceAlertData s_dataDeserializationInstance;
-        private static ServiceAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServiceAlertData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServiceAlertData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceAlertData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceAlertData>)Data).Write(writer, options);
 
-        ServiceAlertData IJsonModel<ServiceAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceAlertData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceAlertData IJsonModel<ServiceAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceAlertData>(Data, options, AzureResourceManagerAlertsManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceAlertData IPersistableModel<ServiceAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceAlertData>(data, options, AzureResourceManagerAlertsManagementContext.Default);
 
-        string IPersistableModel<ServiceAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

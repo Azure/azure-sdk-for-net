@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securityWorkspaceSettingApiVersion);
             _workspaceSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _workspaceSettingsRestClient = new WorkspaceSettings(_workspaceSettingsClientDiagnostics, Pipeline, Endpoint, securityWorkspaceSettingApiVersion ?? "2017-08-01-preview");
+            _workspaceSettingsRestClient = new WorkspaceSettings(_workspaceSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityWorkspaceSettingApiVersion ?? "2017-08-01-preview");
             ValidateResourceId(id);
         }
 

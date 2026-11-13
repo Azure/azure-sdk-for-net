@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleManagementScheduleRequestType : IEquatable<RoleManagementScheduleRequestType>
     {
         private readonly string _value;
+        /// <summary> AdminAssign. </summary>
+        private const string AdminAssignValue = "AdminAssign";
+        /// <summary> AdminRemove. </summary>
+        private const string AdminRemoveValue = "AdminRemove";
+        /// <summary> AdminUpdate. </summary>
+        private const string AdminUpdateValue = "AdminUpdate";
+        /// <summary> AdminExtend. </summary>
+        private const string AdminExtendValue = "AdminExtend";
+        /// <summary> AdminRenew. </summary>
+        private const string AdminRenewValue = "AdminRenew";
+        /// <summary> SelfActivate. </summary>
+        private const string SelfActivateValue = "SelfActivate";
+        /// <summary> SelfDeactivate. </summary>
+        private const string SelfDeactivateValue = "SelfDeactivate";
+        /// <summary> SelfExtend. </summary>
+        private const string SelfExtendValue = "SelfExtend";
+        /// <summary> SelfRenew. </summary>
+        private const string SelfRenewValue = "SelfRenew";
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementScheduleRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleManagementScheduleRequestType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdminAssignValue = "AdminAssign";
-        private const string AdminRemoveValue = "AdminRemove";
-        private const string AdminUpdateValue = "AdminUpdate";
-        private const string AdminExtendValue = "AdminExtend";
-        private const string AdminRenewValue = "AdminRenew";
-        private const string SelfActivateValue = "SelfActivate";
-        private const string SelfDeactivateValue = "SelfDeactivate";
-        private const string SelfExtendValue = "SelfExtend";
-        private const string SelfRenewValue = "SelfRenew";
+            _value = value;
+        }
 
         /// <summary> AdminAssign. </summary>
         public static RoleManagementScheduleRequestType AdminAssign { get; } = new RoleManagementScheduleRequestType(AdminAssignValue);
+
         /// <summary> AdminRemove. </summary>
         public static RoleManagementScheduleRequestType AdminRemove { get; } = new RoleManagementScheduleRequestType(AdminRemoveValue);
+
         /// <summary> AdminUpdate. </summary>
         public static RoleManagementScheduleRequestType AdminUpdate { get; } = new RoleManagementScheduleRequestType(AdminUpdateValue);
+
         /// <summary> AdminExtend. </summary>
         public static RoleManagementScheduleRequestType AdminExtend { get; } = new RoleManagementScheduleRequestType(AdminExtendValue);
+
         /// <summary> AdminRenew. </summary>
         public static RoleManagementScheduleRequestType AdminRenew { get; } = new RoleManagementScheduleRequestType(AdminRenewValue);
+
         /// <summary> SelfActivate. </summary>
         public static RoleManagementScheduleRequestType SelfActivate { get; } = new RoleManagementScheduleRequestType(SelfActivateValue);
+
         /// <summary> SelfDeactivate. </summary>
         public static RoleManagementScheduleRequestType SelfDeactivate { get; } = new RoleManagementScheduleRequestType(SelfDeactivateValue);
+
         /// <summary> SelfExtend. </summary>
         public static RoleManagementScheduleRequestType SelfExtend { get; } = new RoleManagementScheduleRequestType(SelfExtendValue);
+
         /// <summary> SelfRenew. </summary>
         public static RoleManagementScheduleRequestType SelfRenew { get; } = new RoleManagementScheduleRequestType(SelfRenewValue);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleRequestType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementScheduleRequestType left, RoleManagementScheduleRequestType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleRequestType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementScheduleRequestType left, RoleManagementScheduleRequestType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementScheduleRequestType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementScheduleRequestType(string value) => new RoleManagementScheduleRequestType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementScheduleRequestType?(string value) => value == null ? null : new RoleManagementScheduleRequestType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementScheduleRequestType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementScheduleRequestType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

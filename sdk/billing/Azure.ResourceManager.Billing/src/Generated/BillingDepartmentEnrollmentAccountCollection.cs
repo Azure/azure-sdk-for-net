@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingDepartmentEnrollmentAccountResource.ResourceType, out string billingDepartmentEnrollmentAccountApiVersion);
             _enrollmentAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingDepartmentEnrollmentAccountResource.ResourceType.Namespace, Diagnostics);
-            _enrollmentAccountsRestClient = new EnrollmentAccounts(_enrollmentAccountsClientDiagnostics, Pipeline, Endpoint, billingDepartmentEnrollmentAccountApiVersion ?? "2024-04-01");
+            _enrollmentAccountsRestClient = new EnrollmentAccounts(_enrollmentAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingDepartmentEnrollmentAccountApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new EnrollmentAccountsGetByDepartmentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new BillingEnrollmentAccountDataAsyncCollectionResultOfT(
                 _enrollmentAccountsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new EnrollmentAccountsGetByDepartmentCollectionResultOfT(
+            return new PageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new BillingEnrollmentAccountDataCollectionResultOfT(
                 _enrollmentAccountsRestClient,
                 Id.Parent.Name,
                 Id.Name,

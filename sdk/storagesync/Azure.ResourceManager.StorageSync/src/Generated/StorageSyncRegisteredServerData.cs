@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             get
             {
-                return Properties is null ? default : Properties.AgentVersionExpireOn;
+                return Properties is null ? default : Properties.AgentVersionExpiresOn;
             }
         }
 

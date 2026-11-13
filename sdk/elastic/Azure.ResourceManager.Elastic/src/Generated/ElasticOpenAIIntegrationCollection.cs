@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ElasticOpenAIIntegrationResource.ResourceType, out string elasticOpenAIIntegrationApiVersion);
             _openAIIntegrationRPModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticOpenAIIntegrationResource.ResourceType.Namespace, Diagnostics);
-            _openAIIntegrationRPModelsRestClient = new OpenAIIntegrationRPModels(_openAIIntegrationRPModelsClientDiagnostics, Pipeline, Endpoint, elasticOpenAIIntegrationApiVersion ?? "2025-06-01");
+            _openAIIntegrationRPModelsRestClient = new OpenAIIntegrationRPModels(_openAIIntegrationRPModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticOpenAIIntegrationApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new OpenAIIntegrationRPModelsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new ElasticOpenAIIntegrationDataAsyncCollectionResultOfT(
                 _openAIIntegrationRPModelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new OpenAIIntegrationRPModelsGetAllCollectionResultOfT(
+            return new PageableWrapper<ElasticOpenAIIntegrationData, ElasticOpenAIIntegrationResource>(new ElasticOpenAIIntegrationDataCollectionResultOfT(
                 _openAIIntegrationRPModelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

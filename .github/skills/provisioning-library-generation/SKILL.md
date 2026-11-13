@@ -139,14 +139,17 @@ If enum member ordering changes (affecting implicit numeric values):
   ```
 
 ### DataMember Attribute Removed
-If `[DataMember]` attributes are removed from enums, ApiCompat will report `CP0002` errors.
+If `[DataMember]` attributes are removed from enums, ApiCompat will report `CP0014` errors.
 
-For provisioning packages, create `ApiCompatBaseline.txt` in the package's `src/` directory to suppress the compatibility errors:
-```
-CP0002:M:Azure.Provisioning.{Service}.{EnumType}.{Member}.get->System.Runtime.Serialization.DataMemberAttribute
+For provisioning packages, add the suppression to `eng/apicompatbaselines/Azure.Provisioning.{Service}.xml`:
+```xml
+<Suppression>
+  <DiagnosticId>CP0014</DiagnosticId>
+  <Target>F:Azure.Provisioning.{Service}.{EnumType}.{Member}:[T:System.Runtime.Serialization.DataMemberAttribute]</Target>
+</Suppression>
 ```
 
-> Note: This baseline file approach is specifically supported for provisioning packages and is the only option for suppressing these particular ApiCompat errors.
+> Note: This centralized suppression approach is specifically supported for provisioning packages and is the only option for suppressing these particular ApiCompat errors.
 
 ## Step 5: Fix Spell Check Issues
 
@@ -219,7 +222,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 | `sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs` | Generator customizations and resource whitelist |
 | `sdk/provisioning/Generator/src/Model/Specification.Customize.cs` | Customization API (`OrderEnum`, `CustomizeResource`, etc.) |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/BackwardCompatible/` | Backward-compatible customizations |
-| `sdk/provisioning/Azure.Provisioning.{Service}/src/ApiCompatBaseline.txt` | API compatibility suppressions (provisioning only) |
+| `eng/apicompatbaselines/Azure.Provisioning.{Service}.xml` | API compatibility suppressions (provisioning only) |
 | `sdk/provisioning/cspell.yaml` | Spell check configuration for provisioning |
 
 ## Troubleshooting
@@ -238,7 +241,7 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
   - Create backward-compatible stubs in `BackwardCompatible/Models/`
   - Use `CustomizeProperty` and `CustomizeResource` in specification files
   - Add partial classes with `DefineAdditionalProperties()` for property renames
-- Only `[DataMember]` attribute removal errors can be suppressed via `ApiCompatBaseline.txt`
+- Only `[DataMember]` attribute removal errors can be suppressed via the centralized XML suppression file
 
 ### Enum values in wrong order
 - Use `OrderEnum<T>()` in the specification file to control ordering

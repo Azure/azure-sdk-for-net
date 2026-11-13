@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
 
@@ -24,19 +23,14 @@ namespace Azure.ResourceManager.Kubernetes
     [ModelReaderWriterBuildable(typeof(ConnectedClusterArcAgentProfile))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterArcAgentryConfiguration))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterData))]
-    [ModelReaderWriterBuildable(typeof(ConnectedClusterList))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterOidcIssuerProfile))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterPatch))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterResource))]
-    [ModelReaderWriterBuildable(typeof(ConnectedClusterSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterSystemComponent))]
-    [ModelReaderWriterBuildable(typeof(ConnectedClusterWorkloadIdentityProfile))]
-    [ModelReaderWriterBuildable(typeof(Gateway))]
     [ModelReaderWriterBuildable(typeof(GetClusterUserCredentialContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKubernetesContext : ModelReaderWriterContext

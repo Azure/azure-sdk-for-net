@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityComplianceResource.ResourceType, out string securityComplianceApiVersion);
             _compliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityComplianceResource.ResourceType.Namespace, Diagnostics);
-            _compliancesRestClient = new Compliances(_compliancesClientDiagnostics, Pipeline, Endpoint, securityComplianceApiVersion ?? "2017-08-01-preview");
+            _compliancesRestClient = new Compliances(_compliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityComplianceApiVersion ?? "2017-08-01-preview");
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityComplianceData, SecurityComplianceResource>(new CompliancesGetAllAsyncCollectionResultOfT(_compliancesRestClient, Id.ToString(), context, "SecurityComplianceCollection.GetAll"), data => new SecurityComplianceResource(Client, data));
+            return new AsyncPageableWrapper<SecurityComplianceData, SecurityComplianceResource>(new SecurityComplianceDataAsyncCollectionResultOfT(_compliancesRestClient, Id.ToString(), context, "SecurityComplianceCollection.GetAll"), data => new SecurityComplianceResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityComplianceData, SecurityComplianceResource>(new CompliancesGetAllCollectionResultOfT(_compliancesRestClient, Id.ToString(), context, "SecurityComplianceCollection.GetAll"), data => new SecurityComplianceResource(Client, data));
+            return new PageableWrapper<SecurityComplianceData, SecurityComplianceResource>(new SecurityComplianceDataCollectionResultOfT(_compliancesRestClient, Id.ToString(), context, "SecurityComplianceCollection.GetAll"), data => new SecurityComplianceResource(Client, data));
         }
 
         /// <summary>

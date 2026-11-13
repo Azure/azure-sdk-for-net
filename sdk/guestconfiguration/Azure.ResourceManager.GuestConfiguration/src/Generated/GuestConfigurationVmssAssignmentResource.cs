@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(ResourceType, out string guestConfigurationVmssAssignmentApiVersion);
             _guestConfigurationAssignmentsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentsVMSSRestClient = new GuestConfigurationAssignmentsVMSS(_guestConfigurationAssignmentsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentsVMSSRestClient = new GuestConfigurationAssignmentsVMSS(_guestConfigurationAssignmentsVMSSClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationAssignmentReportsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentReportsVMSSRestClient = new GuestConfigurationAssignmentReportsVMSS(_guestConfigurationAssignmentReportsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentReportsVMSSRestClient = new GuestConfigurationAssignmentReportsVMSS(_guestConfigurationAssignmentReportsVMSSClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentReportsVMSSGetReportsAsyncCollectionResultOfT(
+            return new GuestConfigurationAssignmentReportAsync1CollectionResultOfT(
                 _guestConfigurationAssignmentReportsVMSSRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentReportsVMSSGetReportsCollectionResultOfT(
+            return new GuestConfigurationAssignmentReport1CollectionResultOfT(
                 _guestConfigurationAssignmentReportsVMSSRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

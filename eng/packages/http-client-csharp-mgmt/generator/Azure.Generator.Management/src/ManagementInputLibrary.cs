@@ -29,8 +29,9 @@ namespace Azure.Generator.Management
         private HashSet<InputServiceMethod>? _clientNameOverriddenMethods;
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
+        internal Dictionary<InputClient, (string ResourceType, string DefaultVersion)?> ConstructorApiVersions { get; } = [];
 
-        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate, bool IsNameExplicit)>? _resourceUpdateModelToResourceNameMap;
 
         internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
 
@@ -261,16 +262,55 @@ namespace Azure.Generator.Management
 
         private InputNamespace BuildInputNamespaceInternal()
         {
-            // For MPG, we always generate convenience methods for all operations.
-            foreach (var client in base.InputNamespace.Clients)
+            var inputNamespace = base.InputNamespace;
+            var rootClients = new List<InputClient>();
+            foreach (var client in inputNamespace.RootClients)
             {
-                foreach (var method in client.Methods)
+                if (PrepareClientForManagementGeneration(client))
                 {
-                    method.Operation.Update(generateConvenienceMethod: true);
+                    rootClients.Add(client);
                 }
             }
 
-            return base.InputNamespace;
+            return new InputNamespace(
+                inputNamespace.Name,
+                inputNamespace.ApiVersions,
+                inputNamespace.Constants,
+                inputNamespace.Enums,
+                inputNamespace.Models,
+                rootClients,
+                inputNamespace.Auth)
+            {
+                InvalidNamespaceSegments = inputNamespace.InvalidNamespaceSegments
+            };
+        }
+
+        private static bool PrepareClientForManagementGeneration(InputClient client)
+        {
+            var methods = client.Methods
+                .Where(method => !_methodsToOmit.Contains(method.CrossLanguageDefinitionId))
+                .ToArray();
+            var children = new List<InputClient>();
+            foreach (var child in client.Children)
+            {
+                if (PrepareClientForManagementGeneration(child))
+                {
+                    children.Add(child);
+                }
+            }
+
+            // For MPG, we always generate convenience methods for all operations.
+            foreach (var method in methods)
+            {
+                method.Operation.Update(generateConvenienceMethod: true);
+            }
+
+            if (methods.Length != client.Methods.Count || children.Count != client.Children.Count)
+            {
+                client.Update(methods: methods, children: children);
+            }
+
+            return methods.Length > 0 || children.Count > 0;
         }
 
         // Resource-model checks must use the model's semantic identity rather than InputModelType object identity.
@@ -302,14 +342,14 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> InputMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
 
-        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate, bool IsNameExplicit)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
-        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate, bool IsNameExplicit)> BuildResourceUpdateModelToResourceNameMap()
         {
-            Dictionary<string, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new(StringComparer.Ordinal);
+            Dictionary<string, (string ResourceName, int Count, bool IsAlsoUsedInCreate, bool IsNameExplicit)> tempMap = new(StringComparer.Ordinal);
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -324,19 +364,20 @@ namespace Azure.Generator.Management
                             // can receive distinct InputModelType instances for the same TypeSpec declaration.
                             var updateModelKey = GetModelIdentityKey(updateModel);
                             bool isAlsoUsedInCreate = IsModelUsedInCreateOperation(metadata, updateModel);
+                            bool isNameExplicit = metadata.ResourceNameIsExplicit || metadata.ResourceModel.IsExactName;
                             if (tempMap.TryGetValue(updateModelKey, out var existing))
                             {
                                 var resourceCount = string.Equals(existing.ResourceName, metadata.ResourceName, StringComparison.Ordinal)
                                     ? existing.Count
                                     : existing.Count + 1;
-                                tempMap[updateModelKey] = (existing.ResourceName, resourceCount, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
+                                tempMap[updateModelKey] = (existing.ResourceName, resourceCount, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate, existing.IsNameExplicit || isNameExplicit);
                             }
                             else
                             {
                                 // Use ARM metadata.ResourceName rather than the raw model name. Some services
                                 // customize resource model names, while the previous SDK patch type was based on
                                 // the resource name that owns the PATCH operation.
-                                tempMap[updateModelKey] = (metadata.ResourceName, 1, isAlsoUsedInCreate);
+                                tempMap[updateModelKey] = (metadata.ResourceName, 1, isAlsoUsedInCreate, isNameExplicit);
                             }
                             break;
                         }
@@ -348,7 +389,7 @@ namespace Azure.Generator.Management
             // resource can have multiple PATCH methods/API versions using the same model.
             return tempMap
                 .Where(kvp => kvp.Value.Count == 1)
-                .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate));
+                .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate, kvp.Value.IsNameExplicit));
         }
 
         private static bool IsModelUsedInCreateOperation(ArmResourceMetadata metadata, InputModelType model)
@@ -417,11 +458,13 @@ namespace Azure.Generator.Management
                     continue;
                 }
 
-                // Filter out methods that should be omitted during deserialization
+                // Omitted methods have already been removed from InputNamespace so base generation does not
+                // create orphan REST clients for them. Filter their raw IDs before deserialization because
+                // NonResourceMethod.DeserializeNonResourceMethod resolves the method through InputNamespace.
                 var schema = ArmProviderSchema.Deserialize(
                     decorator.Arguments,
                     this,
-                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
+                    shouldDeserializeMethod: methodId => !_methodsToOmit.Contains(methodId));
 
                 foreach (var resource in schema.Resources)
                 {
@@ -461,5 +504,8 @@ namespace Azure.Generator.Management
             isAlsoUsedInCreate = false;
             return false;
         }
+
+        internal bool IsResourceUpdateModelNameExplicit(InputModelType model)
+            => ResourceUpdateModelToResourceNameMap.TryGetValue(GetModelIdentityKey(model), out var entry) && entry.IsNameExplicit;
     }
 }

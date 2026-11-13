@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(DefenderForStorageSettingResource.ResourceType, out string defenderForStorageSettingApiVersion);
             _defenderForStorageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DefenderForStorageSettingResource.ResourceType.Namespace, Diagnostics);
-            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Endpoint, defenderForStorageSettingApiVersion ?? "2025-09-01-preview");
+            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForStorageSettingApiVersion ?? "2025-09-01-preview");
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DefenderForStorageSettingData, DefenderForStorageSettingResource>(new DefenderForStorageGetAllAsyncCollectionResultOfT(_defenderForStorageRestClient, Id.ToString(), context, "DefenderForStorageSettingCollection.GetAll"), data => new DefenderForStorageSettingResource(Client, data));
+            return new AsyncPageableWrapper<DefenderForStorageSettingData, DefenderForStorageSettingResource>(new DefenderForStorageSettingDataAsyncCollectionResultOfT(_defenderForStorageRestClient, Id.ToString(), context, "DefenderForStorageSettingCollection.GetAll"), data => new DefenderForStorageSettingResource(Client, data));
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DefenderForStorageSettingData, DefenderForStorageSettingResource>(new DefenderForStorageGetAllCollectionResultOfT(_defenderForStorageRestClient, Id.ToString(), context, "DefenderForStorageSettingCollection.GetAll"), data => new DefenderForStorageSettingResource(Client, data));
+            return new PageableWrapper<DefenderForStorageSettingData, DefenderForStorageSettingResource>(new DefenderForStorageSettingDataCollectionResultOfT(_defenderForStorageRestClient, Id.ToString(), context, "DefenderForStorageSettingCollection.GetAll"), data => new DefenderForStorageSettingResource(Client, data));
         }
 
         /// <summary>

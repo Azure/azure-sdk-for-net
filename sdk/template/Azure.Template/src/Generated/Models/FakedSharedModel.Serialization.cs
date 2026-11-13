@@ -15,11 +15,6 @@ namespace Azure.Template
     /// <summary> Faked shared model. </summary>
     public partial class FakedSharedModel : IJsonModel<FakedSharedModel>
     {
-        /// <summary> Initializes a new instance of <see cref="FakedSharedModel"/> for deserialization. </summary>
-        internal FakedSharedModel()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FakedSharedModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -81,7 +76,7 @@ namespace Azure.Template
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
             writer.WritePropertyName("createdAt"u8);
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,7 +120,7 @@ namespace Azure.Template
                 return null;
             }
             string tag = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,15 +131,15 @@ namespace Azure.Template
                 }
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FakedSharedModel(tag, createdAt, additionalBinaryDataProperties);
+            return new FakedSharedModel(tag, createdOn, additionalBinaryDataProperties);
         }
     }
 }

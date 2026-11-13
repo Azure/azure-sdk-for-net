@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class SkuNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SkuName value) => value switch
         {
             SkuName.StandardLrs => "Standard_LRS",
@@ -24,16 +25,41 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SkuName ToSkuName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_LRS")) return SkuName.StandardLrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_GRS")) return SkuName.StandardGrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_RAGRS")) return SkuName.StandardRagrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_ZRS")) return SkuName.StandardZrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS")) return SkuName.PremiumLrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_GZRS")) return SkuName.StandardGzrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_ZRS")) return SkuName.PremiumZrs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_RAGZRS")) return SkuName.StandardRagzrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_LRS"))
+            {
+                return SkuName.StandardLrs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_GRS"))
+            {
+                return SkuName.StandardGrs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_RAGRS"))
+            {
+                return SkuName.StandardRagrs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_ZRS"))
+            {
+                return SkuName.StandardZrs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS"))
+            {
+                return SkuName.PremiumLrs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_GZRS"))
+            {
+                return SkuName.StandardGzrs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_ZRS"))
+            {
+                return SkuName.PremiumZrs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_RAGZRS"))
+            {
+                return SkuName.StandardRagzrs;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuName value.");
         }
     }

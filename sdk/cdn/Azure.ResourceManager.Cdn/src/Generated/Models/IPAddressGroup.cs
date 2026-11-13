@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
         /// <param name="deliveryRegion"> The delivery region of the ip address group. </param>
-        /// <param name="iPv4Addresses"> The list of ip v4 addresses. </param>
-        /// <param name="iPv6Addresses"> The list of ip v6 addresses. </param>
+        /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
+        /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPAddressGroup(string deliveryRegion, IList<CidrIPAddress> iPv4Addresses, IList<CidrIPAddress> iPv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPAddressGroup(string deliveryRegion, IList<CidrIPAddress> ipv4Addresses, IList<CidrIPAddress> ipv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeliveryRegion = deliveryRegion;
-            IPv4Addresses = iPv4Addresses;
-            IPv6Addresses = iPv6Addresses;
+            IPv4Addresses = ipv4Addresses;
+            IPv6Addresses = ipv6Addresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

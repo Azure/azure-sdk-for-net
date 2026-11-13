@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ToolContractResource.ResourceType, out string toolContractApiVersion);
             _apiToolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ToolContractResource.ResourceType.Namespace, Diagnostics);
-            _apiToolRestClient = new ApiTool(_apiToolClientDiagnostics, Pipeline, Endpoint, toolContractApiVersion ?? "2025-09-01-preview");
+            _apiToolRestClient = new ApiTool(_apiToolClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, toolContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ToolContractData, ToolContractResource>(new ApiToolGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ToolContractData, ToolContractResource>(new ToolContractDataAsyncCollectionResultOfT(
                 _apiToolRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ToolContractData, ToolContractResource>(new ApiToolGetByApiCollectionResultOfT(
+            return new PageableWrapper<ToolContractData, ToolContractResource>(new ToolContractDataCollectionResultOfT(
                 _apiToolRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

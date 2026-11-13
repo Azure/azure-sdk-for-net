@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of DrillRuns for mocking. </summary>
         protected DrillRuns()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <summary> Initializes a new instance of DrillRuns. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DrillRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DrillRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(DrillRuns).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -103,6 +108,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -126,14 +132,18 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("operation-id", operationId);
-            request.Headers.SetValue("Content-Type", "application/json");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateReprotectRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContext context)
+        internal HttpMessage CreateReprotectRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -152,8 +162,14 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("operation-id", operationId);
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -176,6 +192,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("operation-id", operationId);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
@@ -202,6 +219,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("operation-id", operationId);
             request.Headers.SetValue("Accept", "application/json");
             return message;
@@ -226,6 +244,59 @@ namespace Azure.ResourceManager.ResilienceManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("operation-id", operationId);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGenerateReportRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureResilienceManagement/drills/", false);
+            uri.AppendPath(drillName, true);
+            uri.AppendPath("/drillRuns/", false);
+            uri.AppendPath(drillRunName, true);
+            uri.AppendPath("/generateReport", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("operation-id", operationId);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetReportDownloadUrlRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureResilienceManagement/drills/", false);
+            uri.AppendPath(drillName, true);
+            uri.AppendPath("/drillRuns/", false);
+            uri.AppendPath(drillRunName, true);
+            uri.AppendPath("/listReportDownloadUrl", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("operation-id", operationId);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");

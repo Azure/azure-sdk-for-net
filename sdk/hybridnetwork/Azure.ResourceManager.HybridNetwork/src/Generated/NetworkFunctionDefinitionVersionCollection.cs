@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(NetworkFunctionDefinitionVersionResource.ResourceType, out string networkFunctionDefinitionVersionApiVersion);
             _networkFunctionDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkFunctionDefinitionVersionResource.ResourceType.Namespace, Diagnostics);
-            _networkFunctionDefinitionVersionsRestClient = new NetworkFunctionDefinitionVersions(_networkFunctionDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, networkFunctionDefinitionVersionApiVersion ?? "2025-03-30");
+            _networkFunctionDefinitionVersionsRestClient = new NetworkFunctionDefinitionVersions(_networkFunctionDefinitionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFunctionDefinitionVersionApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFunctionDefinitionVersionData, NetworkFunctionDefinitionVersionResource>(new NetworkFunctionDefinitionVersionsGetByNetworkFunctionDefinitionGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkFunctionDefinitionVersionData, NetworkFunctionDefinitionVersionResource>(new NetworkFunctionDefinitionVersionDataAsyncCollectionResultOfT(
                 _networkFunctionDefinitionVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFunctionDefinitionVersionData, NetworkFunctionDefinitionVersionResource>(new NetworkFunctionDefinitionVersionsGetByNetworkFunctionDefinitionGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkFunctionDefinitionVersionData, NetworkFunctionDefinitionVersionResource>(new NetworkFunctionDefinitionVersionDataCollectionResultOfT(
                 _networkFunctionDefinitionVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

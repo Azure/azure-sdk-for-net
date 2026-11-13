@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteSlotHostNameBindingApiVersion);
             _hostNameBindingOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _hostNameBindingOperationGroupRestClient = new HostNameBindingOperationGroup(_hostNameBindingOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotHostNameBindingApiVersion ?? "2026-03-15");
+            _hostNameBindingOperationGroupRestClient = new HostNameBindingOperationGroup(_hostNameBindingOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotHostNameBindingApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

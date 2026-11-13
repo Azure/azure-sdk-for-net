@@ -1,19 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Immutable;
+using System.IO;
+using System.Linq;
 using Microsoft.CodeAnalysis.Testing;
 
 namespace Azure.SdkAnalyzers.Tests
 {
     internal static class AzureTestReferences
     {
-        public static readonly ReferenceAssemblies DefaultReferenceAssemblies =
-            ReferenceAssemblies.Default.AddPackages(ImmutableArray.Create(
-                new PackageIdentity("Azure.Core", "1.50.0"),
-                new PackageIdentity("Microsoft.Bcl.AsyncInterfaces", "10.0.2"),
-                new PackageIdentity("System.Text.Json", "10.0.1"),
-                new PackageIdentity("System.Threading.Tasks.Extensions", "4.6.3")));
+        public static readonly ReferenceAssemblies DefaultReferenceAssemblies = CreateDefaultReferenceAssemblies();
 
         public const string CodeGenTypeAttributeFilePath = "Generated/Internal/CodeGenTypeAttribute.cs";
 
@@ -39,5 +37,55 @@ namespace Microsoft.TypeSpec.Generator.Customizations
     }
 }
 ";
+
+        private static ReferenceAssemblies CreateDefaultReferenceAssemblies()
+        {
+            ReferenceAssemblies referenceAssemblies = ReferenceAssemblies.Default.AddPackages(ImmutableArray.Create(
+                new PackageIdentity("Azure.Core", "1.50.0"),
+                new PackageIdentity("Microsoft.Bcl.AsyncInterfaces", "10.0.2"),
+                new PackageIdentity("System.Text.Json", "10.0.1"),
+                new PackageIdentity("System.Threading.Tasks.Extensions", "4.6.3")));
+
+            // The analyzer test harness restores reference assemblies through NuGet while the tests run.
+            // Without an explicit configuration file it uses NuGet's default (user/machine wide) settings,
+            // which resolve to nuget.org. Build agents can only reach the feed declared in the repository's
+            // NuGet.config, so point the harness at it to keep runtime package resolution on that feed.
+            string? nugetConfigFilePath = FindRepositoryNuGetConfigFile();
+            return nugetConfigFilePath is null
+                ? referenceAssemblies
+                : referenceAssemblies.WithNuGetConfigFilePath(nugetConfigFilePath);
+        }
+
+        private static string? FindRepositoryNuGetConfigFile()
+        {
+            // RS1035 flows in from the referenced analyzer projects. This is test infrastructure rather than
+            // analyzer code, so file enumeration is safe here.
+#pragma warning disable RS1035 // Do not use APIs banned for analyzers
+            // The repository file is named NuGet.Config, but the casing convention varies and Linux agents
+            // are case sensitive, so enumerate and compare rather than probing a hard-coded file name.
+            for (DirectoryInfo? directory = new DirectoryInfo(AppContext.BaseDirectory); directory is not null; directory = directory.Parent)
+            {
+                string? match;
+                try
+                {
+                    match = directory
+                        .EnumerateFiles()
+                        .FirstOrDefault(file => string.Equals(file.Name, "NuGet.config", StringComparison.OrdinalIgnoreCase))
+                        ?.FullName;
+                }
+                catch (Exception e) when (e is IOException || e is UnauthorizedAccessException)
+                {
+                    continue;
+                }
+
+                if (match is not null)
+                {
+                    return match;
+                }
+            }
+
+            return null;
+#pragma warning restore RS1035
+        }
     }
 }

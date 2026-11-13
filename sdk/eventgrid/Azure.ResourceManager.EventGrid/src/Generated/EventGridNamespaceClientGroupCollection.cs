@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(EventGridNamespaceClientGroupResource.ResourceType, out string eventGridNamespaceClientGroupApiVersion);
             _clientGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridNamespaceClientGroupResource.ResourceType.Namespace, Diagnostics);
-            _clientGroupsRestClient = new ClientGroups(_clientGroupsClientDiagnostics, Pipeline, Endpoint, eventGridNamespaceClientGroupApiVersion ?? "2025-07-15-preview");
+            _clientGroupsRestClient = new ClientGroups(_clientGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridNamespaceClientGroupApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridNamespaceClientGroupData, EventGridNamespaceClientGroupResource>(new ClientGroupsGetByNamespaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridNamespaceClientGroupData, EventGridNamespaceClientGroupResource>(new EventGridNamespaceClientGroupDataAsyncCollectionResultOfT(
                 _clientGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridNamespaceClientGroupData, EventGridNamespaceClientGroupResource>(new ClientGroupsGetByNamespaceCollectionResultOfT(
+            return new PageableWrapper<EventGridNamespaceClientGroupData, EventGridNamespaceClientGroupResource>(new EventGridNamespaceClientGroupDataCollectionResultOfT(
                 _clientGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

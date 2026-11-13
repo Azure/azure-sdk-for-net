@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(HealthcareApisServicePrivateEndpointConnectionResource.ResourceType, out string healthcareApisServicePrivateEndpointConnectionApiVersion);
             _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisServicePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _healthcareApisServicePrivateEndpointConnectionsRestClient = new HealthcareApisServicePrivateEndpointConnections(_healthcareApisServicePrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, healthcareApisServicePrivateEndpointConnectionApiVersion ?? "2025-04-01-preview");
+            _healthcareApisServicePrivateEndpointConnectionsRestClient = new HealthcareApisServicePrivateEndpointConnections(_healthcareApisServicePrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisServicePrivateEndpointConnectionApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisServicePrivateEndpointConnectionsGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _healthcareApisServicePrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisServicePrivateEndpointConnectionsGetByServiceCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisPrivateEndpointConnectionDataCollectionResultOfT(
                 _healthcareApisServicePrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

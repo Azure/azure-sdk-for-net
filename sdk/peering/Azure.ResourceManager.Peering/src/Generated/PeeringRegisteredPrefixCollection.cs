@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(PeeringRegisteredPrefixResource.ResourceType, out string peeringRegisteredPrefixApiVersion);
             _registeredPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringRegisteredPrefixResource.ResourceType.Namespace, Diagnostics);
-            _registeredPrefixesRestClient = new RegisteredPrefixes(_registeredPrefixesClientDiagnostics, Pipeline, Endpoint, peeringRegisteredPrefixApiVersion ?? "2025-05-01");
+            _registeredPrefixesRestClient = new RegisteredPrefixes(_registeredPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringRegisteredPrefixApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new PeeringRegisteredPrefixDataAsyncCollectionResultOfT(
                 _registeredPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringCollectionResultOfT(
+            return new PageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new PeeringRegisteredPrefixDataCollectionResultOfT(
                 _registeredPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

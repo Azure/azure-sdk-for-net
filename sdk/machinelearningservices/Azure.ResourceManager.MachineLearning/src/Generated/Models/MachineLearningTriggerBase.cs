@@ -13,12 +13,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The MachineLearningTriggerBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningRecurrenceTrigger"/> and <see cref="CronTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
     /// </summary>
     public abstract partial class MachineLearningTriggerBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _endTime;
+        private protected bool _endTimeIsDefined;
+        private string _startTime;
+        private protected bool _startTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerBase"/>. </summary>
         /// <param name="triggerType"> [Required]. </param>
@@ -42,8 +46,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndTime = endTime;
-            StartTime = startTime;
+            _endTime = endTime;
+            _startTime = startTime;
             TimeZone = timeZone;
             TriggerType = triggerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,11 +59,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If not present, the schedule will run indefinitely
         /// </summary>
         [WirePath("endTime")]
-        public string EndTime { get; set; }
+        public string EndTime
+        {
+            get
+            {
+                return _endTime;
+            }
+            set
+            {
+                _endTime = value;
+                _endTimeIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies start time of schedule in ISO 8601 format, but without a UTC offset. </summary>
         [WirePath("startTime")]
-        public string StartTime { get; set; }
+        public string StartTime
+        {
+            get
+            {
+                return _startTime;
+            }
+            set
+            {
+                _startTime = value;
+                _startTimeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Specifies time zone in which the schedule runs.

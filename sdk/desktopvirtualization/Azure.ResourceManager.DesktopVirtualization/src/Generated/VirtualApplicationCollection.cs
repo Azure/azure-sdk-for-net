@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(VirtualApplicationResource.ResourceType, out string virtualApplicationApiVersion);
             _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, virtualApplicationApiVersion ?? "2026-03-01-preview");
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualApplicationData, VirtualApplicationResource>(new ApplicationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualApplicationData, VirtualApplicationResource>(new VirtualApplicationDataAsyncCollectionResultOfT(
                 _applicationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualApplicationData, VirtualApplicationResource>(new ApplicationsGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualApplicationData, VirtualApplicationResource>(new VirtualApplicationDataCollectionResultOfT(
                 _applicationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

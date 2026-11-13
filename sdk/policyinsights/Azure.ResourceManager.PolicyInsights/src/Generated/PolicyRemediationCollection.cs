@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             TryGetApiVersion(PolicyRemediationResource.ResourceType, out string policyRemediationApiVersion);
             _remediationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyRemediationResource.ResourceType.Namespace, Diagnostics);
-            _remediationsRestClient = new Remediations(_remediationsClientDiagnostics, Pipeline, Endpoint, policyRemediationApiVersion ?? "2024-10-01");
+            _remediationsRestClient = new Remediations(_remediationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyRemediationApiVersion ?? "2024-10-01");
         }
 
         /// <summary>

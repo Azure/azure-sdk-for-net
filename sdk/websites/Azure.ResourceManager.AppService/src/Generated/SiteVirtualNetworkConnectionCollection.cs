@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteVirtualNetworkConnectionResource.ResourceType, out string siteVirtualNetworkConnectionApiVersion);
             _vnetConnectionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteVirtualNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-            _vnetConnectionOperationGroupRestClient = new VnetConnectionOperationGroup(_vnetConnectionOperationGroupClientDiagnostics, Pipeline, Endpoint, siteVirtualNetworkConnectionApiVersion ?? "2026-03-15");
+            _vnetConnectionOperationGroupRestClient = new VnetConnectionOperationGroup(_vnetConnectionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteVirtualNetworkConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new MicrosoftWebVnetConnectionOperationGroupListVnetConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new SiteVirtualNetworkConnectionCollectionGetAllAsyncCollectionResultOfT(
                 _vnetConnectionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new MicrosoftWebVnetConnectionOperationGroupListVnetConnectionsCollectionResultOfT(
+            return new PageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new SiteVirtualNetworkConnectionCollectionGetAllCollectionResultOfT(
                 _vnetConnectionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

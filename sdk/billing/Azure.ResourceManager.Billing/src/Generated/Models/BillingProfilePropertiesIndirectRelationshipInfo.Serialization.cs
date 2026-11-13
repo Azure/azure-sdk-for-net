@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Identifies the billing profile that is linked to another billing profile in indirect purchase motion. </summary>
-    public partial class BillingProfilePropertiesIndirectRelationshipInfo : IndirectRelationshipInfo, IJsonModel<BillingProfilePropertiesIndirectRelationshipInfo>
+    internal partial class BillingProfilePropertiesIndirectRelationshipInfo : IndirectRelationshipInfo, IJsonModel<BillingProfilePropertiesIndirectRelationshipInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BillingProfilePropertiesIndirectRelationshipInfo(billingAccountName, billingProfileName, displayName, additionalBinaryDataProperties);

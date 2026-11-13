@@ -19,11 +19,11 @@ namespace Azure.Analytics.Purview.DataMap
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly string _apiVersion;
-        private Entity _cachedEntity;
-        private Glossary _cachedGlossary;
-        private Discovery _cachedDiscovery;
-        private Lineage _cachedLineage;
-        private Relationship _cachedRelationship;
+        private DataMapEntity _cachedDataMapEntity;
+        private DataMapGlossary _cachedDataMapGlossary;
+        private DataMapDiscovery _cachedDataMapDiscovery;
+        private DataMapLineage _cachedDataMapLineage;
+        private DataMapRelationship _cachedDataMapRelationship;
         private TypeDefinition _cachedTypeDefinition;
 
         /// <summary> Initializes a new instance of DataMapClient for mocking. </summary>
@@ -84,34 +84,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of Entity. </summary>
-        public virtual Entity GetEntityClient()
+        /// <summary> Initializes a new instance of DataMapEntity. </summary>
+        public virtual DataMapEntity GetDataMapEntityClient()
         {
-            return Volatile.Read(ref _cachedEntity) ?? Interlocked.CompareExchange(ref _cachedEntity, new Entity(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEntity;
+            return Volatile.Read(ref _cachedDataMapEntity) ?? Interlocked.CompareExchange(ref _cachedDataMapEntity, new DataMapEntity(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapEntity;
         }
 
-        /// <summary> Initializes a new instance of Glossary. </summary>
-        public virtual Glossary GetGlossaryClient()
+        /// <summary> Initializes a new instance of DataMapGlossary. </summary>
+        public virtual DataMapGlossary GetDataMapGlossaryClient()
         {
-            return Volatile.Read(ref _cachedGlossary) ?? Interlocked.CompareExchange(ref _cachedGlossary, new Glossary(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedGlossary;
+            return Volatile.Read(ref _cachedDataMapGlossary) ?? Interlocked.CompareExchange(ref _cachedDataMapGlossary, new DataMapGlossary(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapGlossary;
         }
 
-        /// <summary> Initializes a new instance of Discovery. </summary>
-        public virtual Discovery GetDiscoveryClient()
+        /// <summary> Initializes a new instance of DataMapDiscovery. </summary>
+        public virtual DataMapDiscovery GetDataMapDiscoveryClient()
         {
-            return Volatile.Read(ref _cachedDiscovery) ?? Interlocked.CompareExchange(ref _cachedDiscovery, new Discovery(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDiscovery;
+            return Volatile.Read(ref _cachedDataMapDiscovery) ?? Interlocked.CompareExchange(ref _cachedDataMapDiscovery, new DataMapDiscovery(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapDiscovery;
         }
 
-        /// <summary> Initializes a new instance of Lineage. </summary>
-        public virtual Lineage GetLineageClient()
+        /// <summary> Initializes a new instance of DataMapLineage. </summary>
+        public virtual DataMapLineage GetDataMapLineageClient()
         {
-            return Volatile.Read(ref _cachedLineage) ?? Interlocked.CompareExchange(ref _cachedLineage, new Lineage(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedLineage;
+            return Volatile.Read(ref _cachedDataMapLineage) ?? Interlocked.CompareExchange(ref _cachedDataMapLineage, new DataMapLineage(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataMapLineage;
         }
 
-        /// <summary> Initializes a new instance of Relationship. </summary>
-        public virtual Relationship GetRelationshipClient()
+        /// <summary> Initializes a new instance of DataMapRelationship. </summary>
+        public virtual DataMapRelationship GetDataMapRelationshipClient()
         {
-            return Volatile.Read(ref _cachedRelationship) ?? Interlocked.CompareExchange(ref _cachedRelationship, new Relationship(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedRelationship;
+            return Volatile.Read(ref _cachedDataMapRelationship) ?? Interlocked.CompareExchange(ref _cachedDataMapRelationship, new DataMapRelationship(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDataMapRelationship;
         }
 
         /// <summary> Initializes a new instance of TypeDefinition. </summary>

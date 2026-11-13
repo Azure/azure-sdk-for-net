@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// <summary>
     /// A class representing a collection of <see cref="PolicyMetadataResource"/> and their operations.
     /// Each <see cref="PolicyMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="PolicyMetadataCollection"/> instance call the GetPolicyMetadatas method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="PolicyMetadataCollection"/> instance call the GetAllPolicyMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class PolicyMetadataCollection : ArmCollection
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             TryGetApiVersion(PolicyMetadataResource.ResourceType, out string policyMetadataApiVersion);
             _policyMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyMetadataResource.ResourceType.Namespace, Diagnostics);
-            _policyMetadataRestClient = new PolicyMetadata(_policyMetadataClientDiagnostics, Pipeline, Endpoint, policyMetadataApiVersion ?? "2024-10-01");
+            _policyMetadataRestClient = new PolicyMetadata(_policyMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyMetadataApiVersion ?? "2024-10-01");
             ValidateResourceId(id);
         }
 

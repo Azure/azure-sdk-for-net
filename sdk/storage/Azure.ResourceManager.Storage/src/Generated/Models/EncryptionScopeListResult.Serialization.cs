@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EncryptionScopeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EncryptionScopeListResult(value ?? new ChangeTrackingList<EncryptionScopeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

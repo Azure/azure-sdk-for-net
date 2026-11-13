@@ -1,0 +1,19 @@
+# Azure.Monitor.OpenTelemetry.AspNetCore approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# OpenTelemetryBuilderExtensions is a GA'd public type name that intentionally
+# mirrors the same-named type in the sibling Azure.Monitor.OpenTelemetry.Exporter
+# package — the two distro packages expose parallel builder-extension entry points.
+# Renaming the public type would be a breaking change, so AZC0034 is suppressed for
+# this specific type only (the analyzer stays live for every other type).
+nowarn:AZC0034 T:Azure.Monitor.OpenTelemetry.AspNetCore.OpenTelemetryBuilderExtensions
+
+# SA1636 (file header copyright text should match) fires only on the vendored,
+# unmodified third-party OpenTelemetry source under src/Vendoring/, which carries the
+# upstream "Copyright The OpenTelemetry Authors" Apache-2.0 header and must not be
+# rewritten (doing so would diverge from upstream and create ongoing merge burden).
+# A scoped suppression is not achievable here: eng/CodeAnalysis.ruleset pins SA1636
+# severity and outranks an editorconfig severity override, and marking the subtree as
+# generated_code breaks the nullable context (CS8669). Every SA1636 site is confined to
+# vendored code, so the suppression is approved at the project level.
+nowarn:SA1636

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(EmailSuppressionListAddressResource.ResourceType, out string emailSuppressionListAddressApiVersion);
             _suppressionListAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", EmailSuppressionListAddressResource.ResourceType.Namespace, Diagnostics);
-            _suppressionListAddressesRestClient = new SuppressionListAddresses(_suppressionListAddressesClientDiagnostics, Pipeline, Endpoint, emailSuppressionListAddressApiVersion ?? "2026-03-18");
+            _suppressionListAddressesRestClient = new SuppressionListAddresses(_suppressionListAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, emailSuppressionListAddressApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EmailSuppressionListAddressData, EmailSuppressionListAddressResource>(new SuppressionListAddressesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EmailSuppressionListAddressData, EmailSuppressionListAddressResource>(new EmailSuppressionListAddressDataAsyncCollectionResultOfT(
                 _suppressionListAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EmailSuppressionListAddressData, EmailSuppressionListAddressResource>(new SuppressionListAddressesGetAllCollectionResultOfT(
+            return new PageableWrapper<EmailSuppressionListAddressData, EmailSuppressionListAddressResource>(new EmailSuppressionListAddressDataCollectionResultOfT(
                 _suppressionListAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

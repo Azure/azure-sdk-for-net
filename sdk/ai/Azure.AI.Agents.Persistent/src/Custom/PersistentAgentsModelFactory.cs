@@ -197,16 +197,31 @@ public static partial class PersistentAgentsModelFactory
         return new PersistentThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, additionalBinaryDataProperties: null);
     }
 
+    /// <summary> Initializes a new instance of <see cref="Persistent.RequiredFunctionToolCall"/> for mocking. </summary>
+    /// <param name="toolCallId"> The identifier of the tool call. </param>
+    /// <param name="functionName"> The name of the function. </param>
+    /// <param name="functionArguments"> The arguments to call the function with. </param>
+    /// <returns> A new <see cref="Persistent.RequiredFunctionToolCall"/> instance for mocking. </returns>
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)
     {
         return new RequiredFunctionToolCall(toolCallId, new InternalRequiredFunctionToolCallDetails(functionName, functionArguments));
     }
 
+    /// <summary> Initializes a new instance of <see cref="Persistent.RunStepFunctionToolCall"/> for mocking. </summary>
+    /// <param name="id"> The identifier of the tool call. </param>
+    /// <param name="name"> The name of the function. </param>
+    /// <param name="arguments"> The arguments to call the function with. </param>
+    /// <returns> A new <see cref="Persistent.RunStepFunctionToolCall"/> instance for mocking. </returns>
     public static RunStepFunctionToolCall RunStepFunctionToolCall(string id, string name, string arguments)
     {
         return new RunStepFunctionToolCall(id, new InternalRunStepFunctionToolCallDetails(name, arguments));
     }
 
+    /// <summary> Initializes a new instance of <see cref="Persistent.RunStepCodeInterpreterToolCall"/> for mocking. </summary>
+    /// <param name="id"> The identifier of the tool call. </param>
+    /// <param name="input"> The input provided to the code interpreter. </param>
+    /// <param name="outputs"> The outputs produced by the code interpreter. </param>
+    /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterToolCall"/> instance for mocking. </returns>
     public static RunStepCodeInterpreterToolCall RunStepCodeInterpreterToolCall(string id, string input, IReadOnlyList<RunStepCodeInterpreterToolCallOutput> outputs)
     {
         return new RunStepCodeInterpreterToolCall(id, new InternalCodeInterpreterToolCallDetails(input, outputs));

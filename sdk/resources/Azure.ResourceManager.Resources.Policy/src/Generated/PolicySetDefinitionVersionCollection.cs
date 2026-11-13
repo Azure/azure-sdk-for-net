@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             TryGetApiVersion(PolicySetDefinitionVersionResource.ResourceType, out string policySetDefinitionVersionApiVersion);
             _policySetDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicySetDefinitionVersionResource.ResourceType.Namespace, Diagnostics);
-            _policySetDefinitionVersionsRestClient = new PolicySetDefinitionVersions(_policySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, policySetDefinitionVersionApiVersion ?? "2025-12-01-preview");
+            _policySetDefinitionVersionsRestClient = new PolicySetDefinitionVersions(_policySetDefinitionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policySetDefinitionVersionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicySetDefinitionVersionData, PolicySetDefinitionVersionResource>(new PolicySetDefinitionVersionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicySetDefinitionVersionData, PolicySetDefinitionVersionResource>(new PolicySetDefinitionVersionDataAsyncCollectionResultOfT(
                 _policySetDefinitionVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicySetDefinitionVersionData, PolicySetDefinitionVersionResource>(new PolicySetDefinitionVersionsGetAllCollectionResultOfT(
+            return new PageableWrapper<PolicySetDefinitionVersionData, PolicySetDefinitionVersionResource>(new PolicySetDefinitionVersionDataCollectionResultOfT(
                 _policySetDefinitionVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(FleetUpdateStrategyResource.ResourceType, out string fleetUpdateStrategyApiVersion);
             _fleetUpdateStrategiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", FleetUpdateStrategyResource.ResourceType.Namespace, Diagnostics);
-            _fleetUpdateStrategiesRestClient = new FleetUpdateStrategies(_fleetUpdateStrategiesClientDiagnostics, Pipeline, Endpoint, fleetUpdateStrategyApiVersion ?? "2026-03-02-preview");
+            _fleetUpdateStrategiesRestClient = new FleetUpdateStrategies(_fleetUpdateStrategiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fleetUpdateStrategyApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategiesGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategyDataAsyncCollectionResultOfT(
                 _fleetUpdateStrategiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategiesGetByFleetCollectionResultOfT(
+            return new PageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategyDataCollectionResultOfT(
                 _fleetUpdateStrategiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

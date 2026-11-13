@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Fabric
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CapacityOverageProperties))]
     [ModelReaderWriterBuildable(typeof(FabricCapacitiesQuota))]
     [ModelReaderWriterBuildable(typeof(FabricCapacitiesQuotaName))]
     [ModelReaderWriterBuildable(typeof(FabricCapacityAdministration))]
@@ -30,7 +31,6 @@ namespace Azure.ResourceManager.Fabric
     [ModelReaderWriterBuildable(typeof(FabricSku))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForExistingCapacity))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForNewCapacity))]
-    [ModelReaderWriterBuildable(typeof(PagedQuota))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForExistingResourceResult))]
     [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForNewResourceResult))]

@@ -9,7 +9,8 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
@@ -402,7 +403,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Template = BinaryData.FromString(templateString)
             };
             var deploymentModel = new ArmDeploymentContent(deploymentProperties);
-            var deploymentWait = await resourceGroup.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deploymentModel);
+            var deploymentWait = await ResourcesDeploymentsExtensions.GetArmDeployments(resourceGroup).CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deploymentModel);
             await deploymentWait.WaitForCompletionAsync();
         }
 
@@ -515,7 +516,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     },
                     LegacyMode = Convert.ToInt32(true)
                 },
-                RouteFilter = { Id = filter.Id }
+                RouteFilterId = filter.Id
             };
 
             Operation<ExpressRouteCircuitPeeringResource> peerOperation = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(WaitUntil.Completed, ExpressRouteTests.Peering_Microsoft, peering);
@@ -666,10 +667,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
@@ -690,10 +688,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 

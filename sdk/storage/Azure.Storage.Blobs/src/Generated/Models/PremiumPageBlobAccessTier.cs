@@ -7,72 +7,110 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The PremiumPageBlobAccessTier. </summary>
+    /// <summary> The premium page blob access tier types. </summary>
     public readonly partial struct PremiumPageBlobAccessTier : IEquatable<PremiumPageBlobAccessTier>
     {
         private readonly string _value;
+        /// <summary> The premium page blob access tier is P4. </summary>
+        private const string P4Value = "P4";
+        /// <summary> The premium page blob access tier is P6. </summary>
+        private const string P6Value = "P6";
+        /// <summary> The premium page blob access tier is P10. </summary>
+        private const string P10Value = "P10";
+        /// <summary> The premium page blob access tier is P15. </summary>
+        private const string P15Value = "P15";
+        /// <summary> The premium page blob access tier is P20. </summary>
+        private const string P20Value = "P20";
+        /// <summary> The premium page blob access tier is P30. </summary>
+        private const string P30Value = "P30";
+        /// <summary> The premium page blob access tier is P40. </summary>
+        private const string P40Value = "P40";
+        /// <summary> The premium page blob access tier is P50. </summary>
+        private const string P50Value = "P50";
+        /// <summary> The premium page blob access tier is P60. </summary>
+        private const string P60Value = "P60";
+        /// <summary> The premium page blob access tier is P70. </summary>
+        private const string P70Value = "P70";
+        /// <summary> The premium page blob access tier is P80. </summary>
+        private const string P80Value = "P80";
 
         /// <summary> Initializes a new instance of <see cref="PremiumPageBlobAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PremiumPageBlobAccessTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string P4Value = "P4";
-        private const string P6Value = "P6";
-        private const string P10Value = "P10";
-        private const string P15Value = "P15";
-        private const string P20Value = "P20";
-        private const string P30Value = "P30";
-        private const string P40Value = "P40";
-        private const string P50Value = "P50";
-        private const string P60Value = "P60";
-        private const string P70Value = "P70";
-        private const string P80Value = "P80";
-
-        /// <summary> P4. </summary>
+        /// <summary> The premium page blob access tier is P4. </summary>
         public static PremiumPageBlobAccessTier P4 { get; } = new PremiumPageBlobAccessTier(P4Value);
-        /// <summary> P6. </summary>
+
+        /// <summary> The premium page blob access tier is P6. </summary>
         public static PremiumPageBlobAccessTier P6 { get; } = new PremiumPageBlobAccessTier(P6Value);
-        /// <summary> P10. </summary>
+
+        /// <summary> The premium page blob access tier is P10. </summary>
         public static PremiumPageBlobAccessTier P10 { get; } = new PremiumPageBlobAccessTier(P10Value);
-        /// <summary> P15. </summary>
+
+        /// <summary> The premium page blob access tier is P15. </summary>
         public static PremiumPageBlobAccessTier P15 { get; } = new PremiumPageBlobAccessTier(P15Value);
-        /// <summary> P20. </summary>
+
+        /// <summary> The premium page blob access tier is P20. </summary>
         public static PremiumPageBlobAccessTier P20 { get; } = new PremiumPageBlobAccessTier(P20Value);
-        /// <summary> P30. </summary>
+
+        /// <summary> The premium page blob access tier is P30. </summary>
         public static PremiumPageBlobAccessTier P30 { get; } = new PremiumPageBlobAccessTier(P30Value);
-        /// <summary> P40. </summary>
+
+        /// <summary> The premium page blob access tier is P40. </summary>
         public static PremiumPageBlobAccessTier P40 { get; } = new PremiumPageBlobAccessTier(P40Value);
-        /// <summary> P50. </summary>
+
+        /// <summary> The premium page blob access tier is P50. </summary>
         public static PremiumPageBlobAccessTier P50 { get; } = new PremiumPageBlobAccessTier(P50Value);
-        /// <summary> P60. </summary>
+
+        /// <summary> The premium page blob access tier is P60. </summary>
         public static PremiumPageBlobAccessTier P60 { get; } = new PremiumPageBlobAccessTier(P60Value);
-        /// <summary> P70. </summary>
+
+        /// <summary> The premium page blob access tier is P70. </summary>
         public static PremiumPageBlobAccessTier P70 { get; } = new PremiumPageBlobAccessTier(P70Value);
-        /// <summary> P80. </summary>
+
+        /// <summary> The premium page blob access tier is P80. </summary>
         public static PremiumPageBlobAccessTier P80 { get; } = new PremiumPageBlobAccessTier(P80Value);
+
         /// <summary> Determines if two <see cref="PremiumPageBlobAccessTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PremiumPageBlobAccessTier left, PremiumPageBlobAccessTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PremiumPageBlobAccessTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PremiumPageBlobAccessTier left, PremiumPageBlobAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PremiumPageBlobAccessTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PremiumPageBlobAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PremiumPageBlobAccessTier(string value) => new PremiumPageBlobAccessTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PremiumPageBlobAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PremiumPageBlobAccessTier?(string value) => value == null ? null : new PremiumPageBlobAccessTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PremiumPageBlobAccessTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PremiumPageBlobAccessTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

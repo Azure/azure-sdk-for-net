@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ScVmm
 {
     /// <summary>
-    /// A Class representing a ScVmmInventoryItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmInventoryItemResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetScVmmInventoryItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScVmmServerResource"/> using the GetScVmmInventoryItem method.
+    /// A class representing a ScVmmInventoryItem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmInventoryItemResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScVmmServerResource"/> using the GetScVmmInventoryItems method.
     /// </summary>
     public partial class ScVmmInventoryItemResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ScVmmInventoryItemResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vmmServerName"> The vmmServerName. </param>
-        /// <param name="inventoryItemResourceName"> The inventoryItemResourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _scVmmInventoryItemInventoryItemsClientDiagnostics;
-        private readonly InventoryItemsRestOperations _scVmmInventoryItemInventoryItemsRestClient;
+        private readonly ClientDiagnostics _inventoryItemsClientDiagnostics;
+        private readonly InventoryItems _inventoryItemsRestClient;
         private readonly ScVmmInventoryItemData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ScVmm/vmmServers/inventoryItems";
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmInventoryItemResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ScVmmInventoryItemResource for mocking. </summary>
         protected ScVmmInventoryItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmInventoryItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmInventoryItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmInventoryItemResource(ArmClient client, ScVmmInventoryItemData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.ScVmm
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmInventoryItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmInventoryItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmInventoryItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scVmmInventoryItemInventoryItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string scVmmInventoryItemInventoryItemsApiVersion);
-            _scVmmInventoryItemInventoryItemsRestClient = new InventoryItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmInventoryItemInventoryItemsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string scVmmInventoryItemApiVersion);
+            _inventoryItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
+            _inventoryItemsRestClient = new InventoryItems(_inventoryItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmInventoryItemApiVersion ?? "2025-03-13");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ScVmmInventoryItemData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vmmServerName"> The vmmServerName. </param>
+        /// <param name="inventoryItemResourceName"> The inventoryItemResourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Shows an inventory item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryItems_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InventoryItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmInventoryItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmInventoryItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScVmmInventoryItemResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _scVmmInventoryItemInventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Get");
+            using DiagnosticScope scope = _inventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Get");
             scope.Start();
             try
             {
-                var response = await _scVmmInventoryItemInventoryItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScVmmInventoryItemData> response = Response.FromValue(ScVmmInventoryItemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmInventoryItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.ScVmm
         /// Shows an inventory item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryItems_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InventoryItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmInventoryItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmInventoryItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScVmmInventoryItemResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _scVmmInventoryItemInventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Get");
+            using DiagnosticScope scope = _inventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Get");
             scope.Start();
             try
             {
-                var response = _scVmmInventoryItemInventoryItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScVmmInventoryItemData> response = Response.FromValue(ScVmmInventoryItemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmInventoryItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.ScVmm
         /// Deletes an inventoryItem.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryItems_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> InventoryItems_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmInventoryItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmInventoryItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,16 +212,23 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scVmmInventoryItemInventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Delete");
+            using DiagnosticScope scope = _inventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Delete");
             scope.Start();
             try
             {
-                var response = await _scVmmInventoryItemInventoryItemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _scVmmInventoryItemInventoryItemsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ScVmmArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryItemsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ScVmmArmOperation operation = new ScVmmArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +242,20 @@ namespace Azure.ResourceManager.ScVmm
         /// Deletes an inventoryItem.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryItems_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> InventoryItems_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmInventoryItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmInventoryItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,16 +263,23 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scVmmInventoryItemInventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Delete");
+            using DiagnosticScope scope = _inventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Delete");
             scope.Start();
             try
             {
-                var response = _scVmmInventoryItemInventoryItemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _scVmmInventoryItemInventoryItemsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ScVmmArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryItemsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ScVmmArmOperation operation = new ScVmmArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -257,44 +290,52 @@ namespace Azure.ResourceManager.ScVmm
         }
 
         /// <summary>
-        /// Create Or Update InventoryItem.
+        /// Update a ScVmmInventoryItem.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryItems_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> InventoryItems_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmInventoryItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmInventoryItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Request payload. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScVmmInventoryItemResource>> UpdateAsync(WaitUntil waitUntil, ScVmmInventoryItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scVmmInventoryItemInventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Update");
+            using DiagnosticScope scope = _inventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Update");
             scope.Start();
             try
             {
-                var response = await _scVmmInventoryItemInventoryItemsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _scVmmInventoryItemInventoryItemsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryItemsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScVmmInventoryItemData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScVmmInventoryItemData> response = Response.FromValue(ScVmmInventoryItemData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ScVmmArmOperation<ScVmmInventoryItemResource> operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,44 +346,52 @@ namespace Azure.ResourceManager.ScVmm
         }
 
         /// <summary>
-        /// Create Or Update InventoryItem.
+        /// Update a ScVmmInventoryItem.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InventoryItems_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> InventoryItems_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmInventoryItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScVmmInventoryItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Request payload. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScVmmInventoryItemResource> Update(WaitUntil waitUntil, ScVmmInventoryItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scVmmInventoryItemInventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Update");
+            using DiagnosticScope scope = _inventoryItemsClientDiagnostics.CreateScope("ScVmmInventoryItemResource.Update");
             scope.Start();
             try
             {
-                var response = _scVmmInventoryItemInventoryItemsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _scVmmInventoryItemInventoryItemsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inventoryItemsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScVmmInventoryItemData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScVmmInventoryItemData> response = Response.FromValue(ScVmmInventoryItemData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ScVmmArmOperation<ScVmmInventoryItemResource> operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

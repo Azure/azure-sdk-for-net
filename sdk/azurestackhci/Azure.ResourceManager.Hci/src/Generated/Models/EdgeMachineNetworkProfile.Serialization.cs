@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(HostNetwork))
+            {
+                writer.WritePropertyName("hostNetwork"u8);
+                writer.WriteObjectValue(HostNetwork, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SdnProperties))
+            {
+                writer.WritePropertyName("sdnProperties"u8);
+                writer.WriteObjectValue(SdnProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +148,8 @@ namespace Azure.ResourceManager.Hci.Models
             }
             IReadOnlyList<EdgeMachineNicDetail> nicDetails = default;
             IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails = default;
+            EdgeMachineHostNetwork hostNetwork = default;
+            SdnProperties sdnProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,12 +181,30 @@ namespace Azure.ResourceManager.Hci.Models
                     switchDetails = array;
                     continue;
                 }
+                if (prop.NameEquals("hostNetwork"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hostNetwork = EdgeMachineHostNetwork.DeserializeEdgeMachineHostNetwork(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sdnProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sdnProperties = SdnProperties.DeserializeSdnProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeMachineNetworkProfile(nicDetails ?? new ChangeTrackingList<EdgeMachineNicDetail>(), switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>(), additionalBinaryDataProperties);
+            return new EdgeMachineNetworkProfile(nicDetails ?? new ChangeTrackingList<EdgeMachineNicDetail>(), switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>(), hostNetwork, sdnProperties, additionalBinaryDataProperties);
         }
     }
 }

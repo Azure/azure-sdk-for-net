@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(ResourceGroupSecurityAlertResource.ResourceType, out string resourceGroupSecurityAlertApiVersion);
             _ascLocation = ascLocation;
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceGroupSecurityAlertResource.ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, resourceGroupSecurityAlertApiVersion ?? "2022-01-01");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupSecurityAlertApiVersion ?? "2022-01-01");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new SecurityAlertDataAsync0CollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionCollectionResultOfT(
+            return new PageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new SecurityAlertData0CollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

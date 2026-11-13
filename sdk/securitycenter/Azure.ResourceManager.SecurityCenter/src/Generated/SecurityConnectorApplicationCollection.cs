@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityConnectorApplicationResource.ResourceType, out string securityConnectorApplicationApiVersion);
             _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
-            _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
             _securityConnectorApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
-            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityConnectorApplicationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityApplicationDataAsyncCollectionResultOfT(
                 _securityConnectorApplicationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityConnectorApplicationsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityApplicationDataCollectionResultOfT(
                 _securityConnectorApplicationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

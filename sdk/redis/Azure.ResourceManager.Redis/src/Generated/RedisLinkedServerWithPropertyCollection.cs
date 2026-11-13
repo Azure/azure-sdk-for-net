@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(RedisLinkedServerWithPropertyResource.ResourceType, out string redisLinkedServerWithPropertyApiVersion);
             _linkedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisLinkedServerWithPropertyResource.ResourceType.Namespace, Diagnostics);
-            _linkedServerRestClient = new LinkedServer(_linkedServerClientDiagnostics, Pipeline, Endpoint, redisLinkedServerWithPropertyApiVersion ?? "2025-08-01-preview");
+            _linkedServerRestClient = new LinkedServer(_linkedServerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisLinkedServerWithPropertyApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyDataAsyncCollectionResultOfT(
                 _linkedServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyDataCollectionResultOfT(
                 _linkedServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

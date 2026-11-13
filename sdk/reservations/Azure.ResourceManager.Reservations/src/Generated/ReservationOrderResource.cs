@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Reservations
         {
             TryGetApiVersion(ResourceType, out string reservationOrderApiVersion);
             _reservationOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            _reservationOrderRestClient = new ReservationOrder(_reservationOrderClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
+            _reservationOrderRestClient = new ReservationOrder(_reservationOrderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
             _reservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            _reservationRestClient = new Reservation(_reservationClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
+            _reservationRestClient = new Reservation(_reservationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
             _calculateRefundClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            _calculateRefundRestClient = new CalculateRefund(_calculateRefundClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
+            _calculateRefundRestClient = new CalculateRefund(_calculateRefundClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
             _returnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            _returnRestClient = new Return(_returnClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
+            _returnRestClient = new Return(_returnClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 

@@ -14,9 +14,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArmDeploymentResource"/> and their operations.
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Resources
         internal ArmDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ArmDeploymentResource.ResourceType, out string armDeploymentApiVersion);
-            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
+            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
+            _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentApiVersion ?? "2026-06-01");
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentsGetAtScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentDataAsyncCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.ToString(),
                 filter,
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentsGetAtScopeCollectionResultOfT(
+            return new PageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentDataCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.ToString(),
                 filter,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

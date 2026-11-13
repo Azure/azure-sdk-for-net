@@ -297,7 +297,7 @@ namespace Azure.Monitor.Query.Logs
             Argument.AssertNotNull(batch, nameof(batch));
 
             TimeSpan? timeout = null;
-            Response<BatchResponse> response = null;
+            Response<BatchResult> response = null;
 
             foreach (var item in batch.Requests)
             {
@@ -323,12 +323,12 @@ namespace Azure.Monitor.Query.Logs
 
                 context.AddPolicy(new NetworkTimeoutPolicy(timeout.Value), HttpPipelinePosition.PerCall);
 
-                var result = QueryBatch(new BatchRequest(batch.Requests), context);
-                response = Response.FromValue((BatchResponse)result, result);
+                var result = QueryBatch(new BatchContent(batch.Requests), context);
+                response = Response.FromValue((BatchResult)result, result);
             }
             else
             {
-                response = QueryBatch(new BatchRequest(batch.Requests), cancellationToken);
+                response = QueryBatch(new BatchContent(batch.Requests), cancellationToken);
             }
 
             var rawResponse = response.GetRawResponse();
@@ -377,7 +377,7 @@ namespace Azure.Monitor.Query.Logs
             Argument.AssertNotNull(batch, nameof(batch));
 
             TimeSpan? timeout = null;
-            Response<BatchResponse> response = null;
+            Response<BatchResult> response = null;
 
             foreach (var item in batch.Requests)
             {
@@ -403,12 +403,12 @@ namespace Azure.Monitor.Query.Logs
 
                 context.AddPolicy(new NetworkTimeoutPolicy(timeout.Value), HttpPipelinePosition.PerCall);
 
-                var result = await QueryBatchAsync(new BatchRequest(batch.Requests), context).ConfigureAwait(false);
-                response = Response.FromValue((BatchResponse)result, result);
+                var result = await QueryBatchAsync(new BatchContent(batch.Requests), context).ConfigureAwait(false);
+                response = Response.FromValue((BatchResult)result, result);
             }
             else
             {
-                response = await QueryBatchAsync(new BatchRequest(batch.Requests), cancellationToken).ConfigureAwait(false);
+                response = await QueryBatchAsync(new BatchContent(batch.Requests), cancellationToken).ConfigureAwait(false);
             }
 
             var rawResponse = response.GetRawResponse();
@@ -766,7 +766,7 @@ namespace Azure.Monitor.Query.Logs
             return queryBody;
         }
 
-        private static Response<LogsBatchQueryResultCollection> ConvertBatchResponse(BatchResponse response, Response rawResponse, LogsBatchQuery batch)
+        private static Response<LogsBatchQueryResultCollection> ConvertBatchResponse(BatchResult response, Response rawResponse, LogsBatchQuery batch)
         {
             List<LogsBatchQueryResult> batchResponses = new List<LogsBatchQueryResult>();
             foreach (var innerResponse in response.Responses)

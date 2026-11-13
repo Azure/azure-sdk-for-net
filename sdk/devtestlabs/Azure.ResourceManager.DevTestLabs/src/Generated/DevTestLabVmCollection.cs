@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabVmResource.ResourceType, out string devTestLabVmApiVersion);
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabVmResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, devTestLabVmApiVersion ?? "2018-09-15");
+            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVmApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabVmData, DevTestLabVmResource>(new VirtualMachinesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabVmData, DevTestLabVmResource>(new DevTestLabVmDataAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabVmData, DevTestLabVmResource>(new VirtualMachinesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabVmData, DevTestLabVmResource>(new DevTestLabVmDataCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

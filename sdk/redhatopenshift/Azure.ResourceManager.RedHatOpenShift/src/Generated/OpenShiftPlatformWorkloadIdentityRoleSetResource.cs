@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         {
             TryGetApiVersion(ResourceType, out string openShiftPlatformWorkloadIdentityRoleSetApiVersion);
             _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 

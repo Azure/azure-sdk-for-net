@@ -74,8 +74,8 @@ namespace Azure.Provisioning.Communication
         {
             base.DefineProvisionableProperties();
             _listName = DefineProperty<string>(nameof(ListName), new string[] { "listName" });
-            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTimeStamp" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdTimeStamp" }, isOutput: true);
+            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTimeStamp" }, isOutput: true, format: "O");
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdTimeStamp" }, isOutput: true, format: "O");
             _dataLocation = DefineProperty<string>(nameof(DataLocation), new string[] { "dataLocation" }, isOutput: true);
             DefineAdditionalProperties();
         }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(DynatraceSingleSignOnResource.ResourceType, out string dynatraceSingleSignOnApiVersion);
             _singleSignOnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceSingleSignOnResource.ResourceType.Namespace, Diagnostics);
-            _singleSignOnRestClient = new SingleSignOn(_singleSignOnClientDiagnostics, Pipeline, Endpoint, dynatraceSingleSignOnApiVersion ?? "2024-04-24");
+            _singleSignOnRestClient = new SingleSignOn(_singleSignOnClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceSingleSignOnApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new DynatraceSingleSignOnDataAsyncCollectionResultOfT(
                 _singleSignOnRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllCollectionResultOfT(
+            return new PageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new DynatraceSingleSignOnDataCollectionResultOfT(
                 _singleSignOnRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

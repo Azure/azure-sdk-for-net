@@ -11,7 +11,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for functions that can modify document scores during ranking. </summary>
+    /// <summary>
+    /// Base type for functions that can modify document scores during ranking.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/>, and <see cref="TagScoringFunction"/>.
+    /// </summary>
     public partial class ScoringFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisFirewallRuleApiVersion);
             _redisFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _redisFirewallRulesRestClient = new RedisFirewallRules(_redisFirewallRulesClientDiagnostics, Pipeline, Endpoint, redisFirewallRuleApiVersion ?? "2025-08-01-preview");
+            _redisFirewallRulesRestClient = new RedisFirewallRules(_redisFirewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisFirewallRuleApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

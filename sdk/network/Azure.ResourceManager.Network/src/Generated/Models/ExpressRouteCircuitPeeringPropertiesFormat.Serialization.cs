@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ExpressRouteConnection))
             {
                 writer.WritePropertyName("expressRouteConnection"u8);
-                writer.WriteStringValue(ExpressRouteConnection);
+                writer.WriteObjectValue(ExpressRouteConnection, options);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -243,8 +242,8 @@ namespace Azure.ResourceManager.Network.Models
             string gatewayManagerETag = default;
             string lastModifiedBy = default;
             NetworkSubResource routeFilter = default;
-            IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig = default;
-            ResourceIdentifier expressRouteConnection = default;
+            IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
+            ExpressRouteConnectionId expressRouteConnection = default;
             IList<ExpressRouteCircuitConnectionData> connections = default;
             IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    iPv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
+                    ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("expressRouteConnection"u8))
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    expressRouteConnection = new ResourceIdentifier(prop.Value.GetString());
+                    expressRouteConnection = Models.ExpressRouteConnectionId.DeserializeExpressRouteConnectionId(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connections"u8))
@@ -414,7 +413,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExpressRouteCircuitPeeringPropertiesFormat(
@@ -434,7 +433,7 @@ namespace Azure.ResourceManager.Network.Models
                 gatewayManagerETag,
                 lastModifiedBy,
                 routeFilter,
-                iPv6PeeringConfig,
+                ipv6PeeringConfig,
                 expressRouteConnection,
                 connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>(),
                 peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>(),

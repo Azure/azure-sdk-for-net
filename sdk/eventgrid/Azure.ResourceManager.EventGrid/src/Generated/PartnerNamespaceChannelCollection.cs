@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(PartnerNamespaceChannelResource.ResourceType, out string partnerNamespaceChannelApiVersion);
             _channelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespaceChannelResource.ResourceType.Namespace, Diagnostics);
-            _channelsRestClient = new Channels(_channelsClientDiagnostics, Pipeline, Endpoint, partnerNamespaceChannelApiVersion ?? "2025-07-15-preview");
+            _channelsRestClient = new Channels(_channelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerNamespaceChannelApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerNamespaceChannelData, PartnerNamespaceChannelResource>(new ChannelsGetByPartnerNamespaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerNamespaceChannelData, PartnerNamespaceChannelResource>(new PartnerNamespaceChannelDataAsyncCollectionResultOfT(
                 _channelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerNamespaceChannelData, PartnerNamespaceChannelResource>(new ChannelsGetByPartnerNamespaceCollectionResultOfT(
+            return new PageableWrapper<PartnerNamespaceChannelData, PartnerNamespaceChannelResource>(new PartnerNamespaceChannelDataCollectionResultOfT(
                 _channelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

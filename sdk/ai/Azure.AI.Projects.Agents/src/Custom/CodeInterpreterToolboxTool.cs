@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
+
 public partial class CodeInterpreterToolboxTool
 {
     [CodeGenMember("Container")]
@@ -14,5 +15,5 @@ public partial class CodeInterpreterToolboxTool
     /// <summary>
     /// Code container, used by the tool.
     /// </summary>
-    public CodeInterpreterToolContainer Container { get => ModelReaderWriter.Read<CodeInterpreterToolContainer>(InternalContainer, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); set => InternalContainer = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);}
+    public CodeInterpreterToolContainer Container { get => ModelReaderWriter.Read<CodeInterpreterToolContainer>(InternalContainer, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); set => InternalContainer = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); }
 }

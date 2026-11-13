@@ -13,7 +13,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Attestation.Tests
 {
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     public class PrivateEndpointConnectionTests : AttestationManagementTestBase
     {
         public PrivateEndpointConnectionTests(bool isAsync)
@@ -23,6 +22,7 @@ namespace Azure.ResourceManager.Attestation.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task PrivateEndpointConnectionApiTest()
         {
             //Prepare

@@ -15,11 +15,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of a UserRate metric definition. Calculates the percentage of users who encounter a start event and subsequently an end event. Users must encounter events in the specified order. </summary>
     public partial class UserRateMetricDefinition : ExperimentMetricDefinition, IJsonModel<UserRateMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="UserRateMetricDefinition"/> for deserialization. </summary>
-        internal UserRateMetricDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -133,7 +128,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UserRateMetricDefinition(@type, additionalBinaryDataProperties, startEvent, endEvent);

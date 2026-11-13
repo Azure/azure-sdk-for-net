@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetHostName"> The host name of the target. </param>
         /// <param name="targetResourceGroup"> The resource group of the target. </param>
         /// <param name="userName"> The user name who is active on this session. </param>
-        /// <param name="targetIpAddress"> The IP Address of the target. </param>
+        /// <param name="targetIPAddress"> The IP Address of the target. </param>
         /// <param name="protocol"> The protocol used to connect to the target. </param>
         /// <param name="targetResourceId"> The resource id of the target. </param>
         /// <param name="sessionDurationInMins"> Duration in mins the session has been active. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BastionActiveSession(string sessionId, BinaryData startTime, string targetSubscriptionId, string resourceType, string targetHostName, string targetResourceGroup, string userName, string targetIpAddress, BastionConnectProtocol? protocol, string targetResourceId, float? sessionDurationInMins, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BastionActiveSession(string sessionId, BinaryData startTime, string targetSubscriptionId, string resourceType, string targetHostName, string targetResourceGroup, string userName, string targetIPAddress, BastionConnectProtocol? protocol, string targetResourceId, float? sessionDurationInMins, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionId = sessionId;
             StartTime = startTime;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             TargetHostName = targetHostName;
             TargetResourceGroup = targetResourceGroup;
             UserName = userName;
-            TargetIpAddress = targetIpAddress;
+            TargetIPAddress = targetIPAddress;
             Protocol = protocol;
             TargetResourceId = targetResourceId;
             SessionDurationInMins = sessionDurationInMins;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IP Address of the target. </summary>
         [WirePath("targetIpAddress")]
-        public string TargetIpAddress { get; }
+        public string TargetIPAddress { get; }
 
         /// <summary> The protocol used to connect to the target. </summary>
         [WirePath("protocol")]

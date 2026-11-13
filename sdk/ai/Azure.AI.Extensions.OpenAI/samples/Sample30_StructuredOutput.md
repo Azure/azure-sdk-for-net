@@ -94,11 +94,11 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_StructuredOutput_Sync
-ProjectConversationCreationOptions options = new()
+ConversationCreationOptions options = new()
 {
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
-ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
+ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = responseClient.CreateResponse(options: new());
 Console.WriteLine(response.GetOutputText());
@@ -106,11 +106,11 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_StructuredOutput_Async
-ProjectConversationCreationOptions options = new()
+ConversationCreationOptions options = new()
 {
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = await responseClient.CreateResponseAsync(options: new());
 Console.WriteLine(response.GetOutputText());

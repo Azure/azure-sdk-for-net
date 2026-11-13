@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (options.Format != "W" && Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteBase64StringValue(Content.ToArray(), "D");
+                writer.WriteBase64StringValue(Content, "D");
             }
             if (options.Format != "W" && Optional.IsDefined(Filepath))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NginxDeploymentDefaultWafPolicyProperties(content, filepath, additionalBinaryDataProperties);

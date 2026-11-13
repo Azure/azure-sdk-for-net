@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(NetworkServiceDesignGroupResource.ResourceType, out string networkServiceDesignGroupApiVersion);
             _networkServiceDesignGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignGroupResource.ResourceType.Namespace, Diagnostics);
-            _networkServiceDesignGroupsRestClient = new NetworkServiceDesignGroups(_networkServiceDesignGroupsClientDiagnostics, Pipeline, Endpoint, networkServiceDesignGroupApiVersion ?? "2025-03-30");
+            _networkServiceDesignGroupsRestClient = new NetworkServiceDesignGroups(_networkServiceDesignGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignGroupApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkServiceDesignGroupData, NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupsGetByPublisherAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkServiceDesignGroupData, NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupDataAsyncCollectionResultOfT(
                 _networkServiceDesignGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkServiceDesignGroupData, NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupsGetByPublisherCollectionResultOfT(
+            return new PageableWrapper<NetworkServiceDesignGroupData, NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupDataCollectionResultOfT(
                 _networkServiceDesignGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

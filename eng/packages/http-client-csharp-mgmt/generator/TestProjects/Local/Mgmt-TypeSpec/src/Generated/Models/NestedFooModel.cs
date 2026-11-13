@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
@@ -14,27 +17,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// <summary> The NestedFooModel. </summary>
     internal partial class NestedFooModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        [Experimental("SCME0001")]
+        private JsonPatch _patch;
 
         /// <summary> Initializes a new instance of <see cref="NestedFooModel"/>. </summary>
         /// <param name="properties"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         public NestedFooModel(FooProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Initializes a new instance of <see cref="NestedFooModel"/>. </summary>
         /// <param name="properties"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NestedFooModel(FooProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="patch"></param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        internal NestedFooModel(FooProperties properties, in JsonPatch patch)
         {
             Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _patch = patch;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> Gets the Patch. </summary>
+        [JsonIgnore]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Experimental("SCME0001")]
+        public ref JsonPatch Patch => ref _patch;
 
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]

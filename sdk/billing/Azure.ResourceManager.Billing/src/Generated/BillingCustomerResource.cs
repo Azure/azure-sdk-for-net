@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingCustomerApiVersion);
             _customersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _customersRestClient = new Customers(_customersClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _customersRestClient = new Customers(_customersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             _customerOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _customerOperationGroupRestClient = new CustomerOperationGroup(_customerOperationGroupClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _customerOperationGroupRestClient = new CustomerOperationGroup(_customerOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByCustomerAtBillingAccountAsyncCollectionResultOfT(
+            return new BillingSubscriptionDataAsync2CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByCustomerAtBillingAccountCollectionResultOfT(
+            return new BillingSubscriptionData2CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByCustomerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new BillingProductDataAsync1CollectionResultOfT(
                 _productsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByCustomerCollectionResultOfT(
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new BillingProductData1CollectionResultOfT(
                 _productsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomerOperationGroupGetBillingPermissionsByCustomerAtBillingAccountAsyncCollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
+            return new BillingPermissionAsync4CollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomerOperationGroupGetBillingPermissionsByCustomerAtBillingAccountCollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
+            return new BillingPermission4CollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
         }
 
         /// <summary> Gets an object representing a <see cref="BillingCustomerPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="BillingCustomerResource"/>. </summary>

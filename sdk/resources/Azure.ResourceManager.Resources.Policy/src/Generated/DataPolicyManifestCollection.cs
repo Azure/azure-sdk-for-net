@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             TryGetApiVersion(DataPolicyManifestResource.ResourceType, out string dataPolicyManifestApiVersion);
             _dataPolicyManifestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", DataPolicyManifestResource.ResourceType.Namespace, Diagnostics);
-            _dataPolicyManifestsRestClient = new DataPolicyManifests(_dataPolicyManifestsClientDiagnostics, Pipeline, Endpoint, dataPolicyManifestApiVersion ?? "2025-12-01-preview");
+            _dataPolicyManifestsRestClient = new DataPolicyManifests(_dataPolicyManifestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataPolicyManifestApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestsGetAllAsyncCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context, "DataPolicyManifestCollection.GetAll"), data => new DataPolicyManifestResource(Client, data));
+            return new AsyncPageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestDataAsyncCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context, "DataPolicyManifestCollection.GetAll"), data => new DataPolicyManifestResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestsGetAllCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context, "DataPolicyManifestCollection.GetAll"), data => new DataPolicyManifestResource(Client, data));
+            return new PageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestDataCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context, "DataPolicyManifestCollection.GetAll"), data => new DataPolicyManifestResource(Client, data));
         }
 
         /// <summary>

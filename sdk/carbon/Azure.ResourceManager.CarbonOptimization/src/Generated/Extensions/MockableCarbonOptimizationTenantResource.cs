@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
 
         private ClientDiagnostics CarbonServiceClientDiagnostics => _carbonServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CarbonOptimization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CarbonService CarbonServiceRestClient => _carbonServiceRestClient ??= new CarbonService(CarbonServiceClientDiagnostics, Pipeline, Endpoint, "2025-04-01");
+        private CarbonService CarbonServiceRestClient => _carbonServiceRestClient ??= new CarbonService(CarbonServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01");
 
         /// <summary>
         /// API for Carbon Emissions Reports

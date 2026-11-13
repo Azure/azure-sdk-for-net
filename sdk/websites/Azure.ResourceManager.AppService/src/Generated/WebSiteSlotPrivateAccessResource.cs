@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteSlotPrivateAccessApiVersion);
             _privateAccessOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _privateAccessOperationGroupRestClient = new PrivateAccessOperationGroup(_privateAccessOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotPrivateAccessApiVersion ?? "2026-03-15");
+            _privateAccessOperationGroupRestClient = new PrivateAccessOperationGroup(_privateAccessOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotPrivateAccessApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

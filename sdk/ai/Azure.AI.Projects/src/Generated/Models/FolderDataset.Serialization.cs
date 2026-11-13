@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> FileDatasetVersion Definition. </summary>
     public partial class FolderDataset : AIProjectDataset, IJsonModel<FolderDataset>
     {
-        /// <summary> Initializes a new instance of <see cref="FolderDataset"/> for deserialization. </summary>
-        internal FolderDataset()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AIProjectDataset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -182,7 +177,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FolderDataset(

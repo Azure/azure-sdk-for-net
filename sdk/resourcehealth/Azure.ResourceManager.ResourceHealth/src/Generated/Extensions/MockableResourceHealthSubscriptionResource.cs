@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         /// <summary> Gets a collection of ResourceHealthEvents in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of ResourceHealthEvents and their operations over a ResourceHealthEventResource. </returns>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesBySubscriptionAsyncCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusAsyncCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 filter,
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesBySubscriptionCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 filter,

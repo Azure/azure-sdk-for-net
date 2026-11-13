@@ -15,9 +15,9 @@ namespace Azure.AI.Translation.Document
     {
         private readonly string _value;
         /// <summary> Document type file format. </summary>
-        private const string DocumentValue = "document";
+        private const string DocumentValue = "Document";
         /// <summary> Glossary type file format. </summary>
-        private const string GlossaryValue = "glossary";
+        private const string GlossaryValue = "Glossary";
 
         /// <summary> Initializes a new instance of <see cref="FileFormatType"/>. </summary>
         /// <param name="value"> The value. </param>

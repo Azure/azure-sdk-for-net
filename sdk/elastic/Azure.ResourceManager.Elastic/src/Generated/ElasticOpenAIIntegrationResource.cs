@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ResourceType, out string elasticOpenAIIntegrationApiVersion);
             _openAIIntegrationRPModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
-            _openAIIntegrationRPModelsRestClient = new OpenAIIntegrationRPModels(_openAIIntegrationRPModelsClientDiagnostics, Pipeline, Endpoint, elasticOpenAIIntegrationApiVersion ?? "2025-06-01");
+            _openAIIntegrationRPModelsRestClient = new OpenAIIntegrationRPModels(_openAIIntegrationRPModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticOpenAIIntegrationApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

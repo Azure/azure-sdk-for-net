@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string dnsName = default;
             string rdpAuthority = default;
             string sshAuthority = default;
-            SharedPublicIpAddressConfiguration sharedPublicIPAddressConfiguration = default;
+            SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sharedPublicIPAddressConfiguration = SharedPublicIpAddressConfiguration.DeserializeSharedPublicIpAddressConfiguration(prop.Value, options);
+                    sharedPublicIPAddressConfiguration = SharedPublicIPAddressConfiguration.DeserializeSharedPublicIPAddressConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DevTestLabNetworkInterface(

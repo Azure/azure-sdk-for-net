@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary> The WorkbookCategoryType. </summary>
+    /// <summary></summary>
     public readonly partial struct WorkbookCategoryType : IEquatable<WorkbookCategoryType>
     {
         private readonly string _value;
+        /// <summary> workbook. </summary>
+        private const string WorkbookValue = "workbook";
+        /// <summary> TSG. </summary>
+        private const string TsgValue = "TSG";
+        /// <summary> performance. </summary>
+        private const string PerformanceValue = "performance";
+        /// <summary> retention. </summary>
+        private const string RetentionValue = "retention";
 
         /// <summary> Initializes a new instance of <see cref="WorkbookCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkbookCategoryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WorkbookValue = "workbook";
-        private const string TsgValue = "TSG";
-        private const string PerformanceValue = "performance";
-        private const string RetentionValue = "retention";
+            _value = value;
+        }
 
         /// <summary> workbook. </summary>
         public static WorkbookCategoryType Workbook { get; } = new WorkbookCategoryType(WorkbookValue);
+
         /// <summary> TSG. </summary>
         public static WorkbookCategoryType Tsg { get; } = new WorkbookCategoryType(TsgValue);
+
         /// <summary> performance. </summary>
         public static WorkbookCategoryType Performance { get; } = new WorkbookCategoryType(PerformanceValue);
+
         /// <summary> retention. </summary>
         public static WorkbookCategoryType Retention { get; } = new WorkbookCategoryType(RetentionValue);
+
         /// <summary> Determines if two <see cref="WorkbookCategoryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkbookCategoryType left, WorkbookCategoryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkbookCategoryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkbookCategoryType left, WorkbookCategoryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkbookCategoryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkbookCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkbookCategoryType(string value) => new WorkbookCategoryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkbookCategoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkbookCategoryType?(string value) => value == null ? null : new WorkbookCategoryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkbookCategoryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkbookCategoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

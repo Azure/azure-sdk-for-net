@@ -6,8 +6,10 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
+    /// <summary> Options for creating a streaming run against an existing thread. </summary>
     public class CreateRunStreamingOptions
     {
+        /// <summary> Initializes a new instance of the <see cref="CreateRunStreamingOptions"/> class. </summary>
         public CreateRunStreamingOptions() { }
         /// <summary> The overridden model name that the Agent should use to run the thread. </summary>
         public string OverrideModelName { get; set; } = default;

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AggregateRoutePatchConfiguration"/>. </summary>
-        /// <param name="iPv4Routes"> List of IPv4 Route prefixes. </param>
-        /// <param name="iPv6Routes"> List of Ipv6Routes prefixes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Route prefixes. </param>
+        /// <param name="ipv6Routes"> List of Ipv6Routes prefixes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AggregateRoutePatchConfiguration(IList<AggregateRoute> iPv4Routes, IList<AggregateRoute> iPv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AggregateRoutePatchConfiguration(IList<AggregateRoute> ipv4Routes, IList<AggregateRoute> ipv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPv4Routes = iPv4Routes;
-            IPv6Routes = iPv6Routes;
+            IPv4Routes = ipv4Routes;
+            IPv6Routes = ipv6Routes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

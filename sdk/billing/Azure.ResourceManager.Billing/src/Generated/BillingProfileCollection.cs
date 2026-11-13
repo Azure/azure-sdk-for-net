@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingProfileResource.ResourceType, out string billingProfileApiVersion);
             _billingProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingProfileResource.ResourceType.Namespace, Diagnostics);
-            _billingProfilesRestClient = new BillingProfiles(_billingProfilesClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
+            _billingProfilesRestClient = new BillingProfiles(_billingProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfilesGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfileDataAsyncCollectionResultOfT(
                 _billingProfilesRestClient,
                 Id.Name,
                 includeDeleted,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfilesGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfileDataCollectionResultOfT(
                 _billingProfilesRestClient,
                 Id.Name,
                 includeDeleted,

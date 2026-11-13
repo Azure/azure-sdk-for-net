@@ -97,21 +97,6 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(WitnessType))
-            {
-                writer.WritePropertyName("witnessType"u8);
-                writer.WriteStringValue(WitnessType.Value.ToString());
-            }
-            if (Optional.IsDefined(WitnessPath))
-            {
-                writer.WritePropertyName("witnessPath"u8);
-                writer.WriteStringValue(WitnessPath);
-            }
-            if (Optional.IsDefined(CloudAccountName))
-            {
-                writer.WritePropertyName("cloudAccountName"u8);
-                writer.WriteStringValue(CloudAccountName);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -143,16 +128,13 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             HciJobStatus? status = default;
-            JobReportedProperties reportedProperties = default;
+            HciClusterJobReportedProperties reportedProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<AddServerJobServerDetails> addServerJobServerDetails = default;
             IList<EceDeploymentSecrets> secrets = default;
-            WitnessType? witnessType = default;
-            string witnessPath = default;
-            string cloudAccountName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobType"u8))
@@ -189,7 +171,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -198,7 +180,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -216,7 +198,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = JobReportedProperties.DeserializeJobReportedProperties(prop.Value, options);
+                    reportedProperties = HciClusterJobReportedProperties.DeserializeHciClusterJobReportedProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addServerJobServerDetails"u8))
@@ -243,28 +225,9 @@ namespace Azure.ResourceManager.Hci.Models
                     secrets = array;
                     continue;
                 }
-                if (prop.NameEquals("witnessType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    witnessType = new WitnessType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("witnessPath"u8))
-                {
-                    witnessPath = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("cloudAccountName"u8))
-                {
-                    cloudAccountName = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciAddServerJobProperties(
@@ -272,16 +235,13 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 status,
                 reportedProperties,
                 additionalBinaryDataProperties,
-                addServerJobServerDetails,
-                secrets ?? new ChangeTrackingList<EceDeploymentSecrets>(),
-                witnessType,
-                witnessPath,
-                cloudAccountName);
+                addServerJobServerDetails ?? new ChangeTrackingList<AddServerJobServerDetails>(),
+                secrets ?? new ChangeTrackingList<EceDeploymentSecrets>());
         }
     }
 }

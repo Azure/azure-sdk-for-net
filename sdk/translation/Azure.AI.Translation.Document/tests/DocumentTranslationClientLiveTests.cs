@@ -93,6 +93,7 @@ namespace Azure.AI.Translation.Document.Tests
                 Assert.IsFalse(string.IsNullOrEmpty(fileFormat.Format));
                 Assert.IsNotNull(fileFormat.FileExtensions);
                 Assert.IsNotNull(fileFormat.FormatVersions);
+                Assert.AreEqual(FileFormatType.Document, fileFormat.Type);
             }
         }
 
@@ -111,6 +112,7 @@ namespace Azure.AI.Translation.Document.Tests
                 Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.Format));
                 Assert.IsNotNull(glossaryFormat.FileExtensions);
                 Assert.IsNotNull(glossaryFormat.FormatVersions);
+                Assert.AreEqual(FileFormatType.Glossary, glossaryFormat.Type);
 
                 if (glossaryFormat.Format == "XLIFF")
                 {

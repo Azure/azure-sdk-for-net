@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The CosmosDB (MongoDB API) database dataset. </summary>
     public partial class CosmosDBMongoDBApiCollectionDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
+        public CosmosDBMongoDBApiCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base("CosmosDbMongoDbApiCollection", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(collection, nameof(collection));
+
+            TypeProperties = new CosmosDBMongoDBApiCollectionDatasetTypeProperties(collection);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
@@ -25,13 +38,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> CosmosDB (MongoDB API) database dataset properties. </param>
-        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, CosmosDbMongoDbApiCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, CosmosDBMongoDBApiCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> CosmosDB (MongoDB API) database dataset properties. </summary>
-        internal CosmosDbMongoDbApiCollectionDatasetTypeProperties TypeProperties { get; set; }
+        internal CosmosDBMongoDBApiCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Collection
@@ -44,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new CosmosDbMongoDbApiCollectionDatasetTypeProperties();
+                    TypeProperties = new CosmosDBMongoDBApiCollectionDatasetTypeProperties();
                 }
                 TypeProperties.Collection = value;
             }

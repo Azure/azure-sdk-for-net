@@ -64,6 +64,7 @@ namespace Azure.AI.ContentUnderstanding
             string path = default;
             string markdown = default;
             IDictionary<string, ContentField> fields = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long startTimeMs = default;
             long endTimeMs = default;
@@ -117,6 +118,20 @@ namespace Azure.AI.ContentUnderstanding
                         dictionary.Add(prop0.Name, ContentField.DeserializeContentField(prop0.Value, options));
                     }
                     fields = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("metadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, prop0.Value.GetString());
+                    }
+                    metadata = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("startTimeMs"u8))
@@ -221,6 +236,7 @@ namespace Azure.AI.ContentUnderstanding
                 path,
                 markdown,
                 fields ?? new ChangeTrackingDictionary<string, ContentField>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,
                 startTimeMs,
                 endTimeMs,

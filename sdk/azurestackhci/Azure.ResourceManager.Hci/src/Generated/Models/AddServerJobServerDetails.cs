@@ -20,30 +20,30 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="AddServerJobServerDetails"/>. </summary>
         /// <param name="serverName"> Name of server to be added to cluster. </param>
-        /// <param name="hostIpv4Address"> Ip address of server to be added to cluster. </param>
+        /// <param name="hostIPv4Address"> Ip address of server to be added to cluster. </param>
         /// <param name="serverResourceId"> Azure resource id of machine part of cluster for which job will be triggered. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="hostIpv4Address"/> or <paramref name="serverResourceId"/> is null. </exception>
-        public AddServerJobServerDetails(string serverName, string hostIpv4Address, ResourceIdentifier serverResourceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="hostIPv4Address"/> or <paramref name="serverResourceId"/> is null. </exception>
+        public AddServerJobServerDetails(string serverName, string hostIPv4Address, ResourceIdentifier serverResourceId)
         {
             Argument.AssertNotNull(serverName, nameof(serverName));
-            Argument.AssertNotNull(hostIpv4Address, nameof(hostIpv4Address));
+            Argument.AssertNotNull(hostIPv4Address, nameof(hostIPv4Address));
             Argument.AssertNotNull(serverResourceId, nameof(serverResourceId));
 
             ServerName = serverName;
-            HostIpv4Address = hostIpv4Address;
+            HostIPv4Address = hostIPv4Address;
             ServerResourceId = serverResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="AddServerJobServerDetails"/>. </summary>
         /// <param name="serverName"> Name of server to be added to cluster. </param>
-        /// <param name="hostIpv4Address"> Ip address of server to be added to cluster. </param>
+        /// <param name="hostIPv4Address"> Ip address of server to be added to cluster. </param>
         /// <param name="localAvailabilityZoneName"> Local availability zone name of server to be added to rack aware cluster. </param>
         /// <param name="serverResourceId"> Azure resource id of machine part of cluster for which job will be triggered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddServerJobServerDetails(string serverName, string hostIpv4Address, string localAvailabilityZoneName, ResourceIdentifier serverResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddServerJobServerDetails(string serverName, string hostIPv4Address, string localAvailabilityZoneName, ResourceIdentifier serverResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerName = serverName;
-            HostIpv4Address = hostIpv4Address;
+            HostIPv4Address = hostIPv4Address;
             LocalAvailabilityZoneName = localAvailabilityZoneName;
             ServerResourceId = serverResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Ip address of server to be added to cluster. </summary>
         [WirePath("hostIpv4Address")]
-        public string HostIpv4Address { get; set; }
+        public string HostIPv4Address { get; set; }
 
         /// <summary> Local availability zone name of server to be added to rack aware cluster. </summary>
         [WirePath("localAvailabilityZoneName")]

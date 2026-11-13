@@ -52,7 +52,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The pages of QuestionAnsweringAuthoringClientGetQnasCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringAuthoringContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAILanguageQuestionAnsweringAuthoringContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

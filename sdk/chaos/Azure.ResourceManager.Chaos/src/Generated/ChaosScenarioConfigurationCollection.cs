@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ChaosScenarioConfigurationResource.ResourceType, out string chaosScenarioConfigurationApiVersion);
             _scenarioConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosScenarioConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _scenarioConfigurationsRestClient = new ScenarioConfigurations(_scenarioConfigurationsClientDiagnostics, Pipeline, Endpoint, chaosScenarioConfigurationApiVersion ?? "2026-05-01-preview");
+            _scenarioConfigurationsRestClient = new ScenarioConfigurations(_scenarioConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosScenarioConfigurationApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ScenarioConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ChaosScenarioConfigurationDataAsyncCollectionResultOfT(
                 _scenarioConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ScenarioConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ChaosScenarioConfigurationDataCollectionResultOfT(
                 _scenarioConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

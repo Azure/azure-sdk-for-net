@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Models;
 
@@ -19,12 +18,10 @@ namespace Azure.ResourceManager.EdgeActions
     [ModelReaderWriterBuildable(typeof(EdgeActionAttachment))]
     [ModelReaderWriterBuildable(typeof(EdgeActionData))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterData))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterListResult))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterPatch))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterResource))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionListResult))]
     [ModelReaderWriterBuildable(typeof(EdgeActionPatch))]
     [ModelReaderWriterBuildable(typeof(EdgeActionProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeActionPropertiesUpdate))]
@@ -33,12 +30,10 @@ namespace Azure.ResourceManager.EdgeActions
     [ModelReaderWriterBuildable(typeof(EdgeActionSkuTypeUpdate))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionCode))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionData))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionVersionListResult))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionPatch))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionResource))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerEdgeActionsContext : ModelReaderWriterContext
     {

@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("processorType"u8);
                 writer.WriteStringValue(ProcessorType);
             }
+            if (options.Format != "W" && Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture"u8);
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +163,7 @@ namespace Azure.ResourceManager.Hci.Models
             string manufacturer = default;
             string serialNumber = default;
             string processorType = default;
+            HciCpuArchitecture? architecture = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,9 +214,18 @@ namespace Azure.ResourceManager.Hci.Models
                     processorType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("architecture"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    architecture = new HciCpuArchitecture(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciDeploymentHardwareProfile(
@@ -221,6 +236,7 @@ namespace Azure.ResourceManager.Hci.Models
                 manufacturer,
                 serialNumber,
                 processorType,
+                architecture,
                 additionalBinaryDataProperties);
         }
     }

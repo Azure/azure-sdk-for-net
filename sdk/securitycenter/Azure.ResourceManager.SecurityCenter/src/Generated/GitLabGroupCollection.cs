@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(GitLabGroupResource.ResourceType, out string gitLabGroupApiVersion);
             _gitLabGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitLabGroupResource.ResourceType.Namespace, Diagnostics);
-            _gitLabGroupsRestClient = new GitLabGroups(_gitLabGroupsClientDiagnostics, Pipeline, Endpoint, gitLabGroupApiVersion ?? "2025-11-01-preview");
+            _gitLabGroupsRestClient = new GitLabGroups(_gitLabGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitLabGroupApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupDataAsyncCollectionResultOfT(
                 _gitLabGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupsGetAllCollectionResultOfT(
+            return new PageableWrapper<GitLabGroupData, GitLabGroupResource>(new GitLabGroupDataCollectionResultOfT(
                 _gitLabGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

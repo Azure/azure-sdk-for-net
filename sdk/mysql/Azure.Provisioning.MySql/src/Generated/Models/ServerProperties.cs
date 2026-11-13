@@ -376,7 +376,7 @@ namespace Azure.Provisioning.MySql
             _availabilityZone = DefineProperty<string>(nameof(AvailabilityZone), new string[] { "availabilityZone" });
             _createMode = DefineProperty<MySqlFlexibleServerCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             _sourceServerResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceServerResourceId), new string[] { "sourceServerResourceId" });
-            _restorePointInOn = DefineProperty<DateTimeOffset>(nameof(RestorePointInOn), new string[] { "restorePointInTime" });
+            _restorePointInOn = DefineProperty<DateTimeOffset>(nameof(RestorePointInOn), new string[] { "restorePointInTime" }, format: "O");
             _replicationRole = DefineProperty<MySqlFlexibleServerReplicationRole>(nameof(ReplicationRole), new string[] { "replicationRole" });
             _replicaCapacity = DefineProperty<int>(nameof(ReplicaCapacity), new string[] { "replicaCapacity" }, isOutput: true);
             _dataEncryption = DefineModelProperty<MySqlFlexibleServerDataEncryption>(nameof(DataEncryption), new string[] { "dataEncryption" });

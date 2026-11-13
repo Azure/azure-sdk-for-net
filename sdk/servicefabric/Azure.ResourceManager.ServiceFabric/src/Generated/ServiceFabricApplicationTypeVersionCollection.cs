@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             TryGetApiVersion(ServiceFabricApplicationTypeVersionResource.ResourceType, out string serviceFabricApplicationTypeVersionApiVersion);
             _applicationTypeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricApplicationTypeVersionResource.ResourceType.Namespace, Diagnostics);
-            _applicationTypeVersionsRestClient = new ApplicationTypeVersions(_applicationTypeVersionsClientDiagnostics, Pipeline, Endpoint, serviceFabricApplicationTypeVersionApiVersion ?? "2026-03-01-preview");
+            _applicationTypeVersionsRestClient = new ApplicationTypeVersions(_applicationTypeVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricApplicationTypeVersionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricApplicationTypeVersionData, ServiceFabricApplicationTypeVersionResource>(new ApplicationTypeVersionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceFabricApplicationTypeVersionData, ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionDataAsyncCollectionResultOfT(
                 _applicationTypeVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricApplicationTypeVersionData, ServiceFabricApplicationTypeVersionResource>(new ApplicationTypeVersionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ServiceFabricApplicationTypeVersionData, ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionDataCollectionResultOfT(
                 _applicationTypeVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

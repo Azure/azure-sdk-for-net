@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> Compute role. </summary>
+    /// <summary>
+    /// Compute role.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/>, and <see cref="MecRole"/>.
+    /// </summary>
     public partial class DataBoxEdgeRoleData : ResourceData, IJsonModel<DataBoxEdgeRoleData>
     {
         /// <param name="data"> The data to parse. </param>

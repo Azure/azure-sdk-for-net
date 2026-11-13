@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Hci.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fromDate"u8);
-            writer.WriteStringValue(CollectionStartOn, "O");
+            writer.WriteStringValue(CollectionStartsOn, "O");
             writer.WritePropertyName("toDate"u8);
-            writer.WriteStringValue(CollectionEndOn, "O");
+            writer.WriteStringValue(CollectionEndsOn, "O");
             if (options.Format != "W" && Optional.IsDefined(LastLogGeneratedOn))
             {
                 writer.WritePropertyName("lastLogGenerated"u8);
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             HciJobStatus? status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset collectionStartOn = default;
-            DateTimeOffset collectionEndOn = default;
+            DateTimeOffset collectionStartsOn = default;
+            DateTimeOffset collectionEndsOn = default;
             DateTimeOffset? lastLogGeneratedOn = default;
             EdgeMachineCollectLogJobReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("fromDate"u8))
                 {
-                    collectionStartOn = prop.Value.GetDateTimeOffset("O");
+                    collectionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("toDate"u8))
                 {
-                    collectionEndOn = prop.Value.GetDateTimeOffset("O");
+                    collectionEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastLogGenerated"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EdgeMachineCollectLogJobProperties(
@@ -240,13 +240,13 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 status,
                 error,
                 additionalBinaryDataProperties,
-                collectionStartOn,
-                collectionEndOn,
+                collectionStartsOn,
+                collectionEndsOn,
                 lastLogGeneratedOn,
                 reportedProperties);
         }

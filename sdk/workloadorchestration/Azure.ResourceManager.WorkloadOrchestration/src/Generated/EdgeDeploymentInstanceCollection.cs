@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeDeploymentInstanceResource.ResourceType, out string edgeDeploymentInstanceApiVersion);
             _instancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDeploymentInstanceResource.ResourceType.Namespace, Diagnostics);
-            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Endpoint, edgeDeploymentInstanceApiVersion ?? "2025-06-01");
+            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDeploymentInstanceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDeploymentInstanceData, EdgeDeploymentInstanceResource>(new InstancesGetBySolutionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeDeploymentInstanceData, EdgeDeploymentInstanceResource>(new EdgeDeploymentInstanceDataAsyncCollectionResultOfT(
                 _instancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDeploymentInstanceData, EdgeDeploymentInstanceResource>(new InstancesGetBySolutionCollectionResultOfT(
+            return new PageableWrapper<EdgeDeploymentInstanceData, EdgeDeploymentInstanceResource>(new EdgeDeploymentInstanceDataCollectionResultOfT(
                 _instancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

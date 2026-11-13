@@ -20,30 +20,30 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Initializes a new instance of <see cref="ImpactDetails"/>. </summary>
         /// <param name="impactedResourceId"> List of impacted Azure resources. </param>
-        /// <param name="startOn"> Time at which impact was started according to reported impact. </param>
+        /// <param name="startsOn"> Time at which impact was started according to reported impact. </param>
         /// <param name="impactId"> Azure Id of the impact. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceId"/> or <paramref name="impactId"/> is null. </exception>
-        public ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startOn, ResourceIdentifier impactId)
+        public ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startsOn, ResourceIdentifier impactId)
         {
             Argument.AssertNotNull(impactedResourceId, nameof(impactedResourceId));
             Argument.AssertNotNull(impactId, nameof(impactId));
 
             ImpactedResourceId = impactedResourceId;
-            StartOn = startOn;
+            StartsOn = startsOn;
             ImpactId = impactId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ImpactDetails"/>. </summary>
         /// <param name="impactedResourceId"> List of impacted Azure resources. </param>
-        /// <param name="startOn"> Time at which impact was started according to reported impact. </param>
-        /// <param name="endOn"> Time at which impact was ended according to reported impact. </param>
+        /// <param name="startsOn"> Time at which impact was started according to reported impact. </param>
+        /// <param name="endsOn"> Time at which impact was ended according to reported impact. </param>
         /// <param name="impactId"> Azure Id of the impact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startsOn, DateTimeOffset? endsOn, ResourceIdentifier impactId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImpactedResourceId = impactedResourceId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ImpactId = impactId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ResourceIdentifier ImpactedResourceId { get; set; }
 
         /// <summary> Time at which impact was started according to reported impact. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> Time at which impact was ended according to reported impact. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Azure Id of the impact. </summary>
         public ResourceIdentifier ImpactId { get; set; }

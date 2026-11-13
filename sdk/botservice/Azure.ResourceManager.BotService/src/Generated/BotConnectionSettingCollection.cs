@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(BotConnectionSettingResource.ResourceType, out string botConnectionSettingApiVersion);
             _connectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotConnectionSettingResource.ResourceType.Namespace, Diagnostics);
-            _connectionSettingsRestClient = new ConnectionSettings(_connectionSettingsClientDiagnostics, Pipeline, Endpoint, botConnectionSettingApiVersion ?? "2023-09-15-preview");
+            _connectionSettingsRestClient = new ConnectionSettings(_connectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botConnectionSettingApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new BotConnectionSettingDataAsyncCollectionResultOfT(
                 _connectionSettingsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceCollectionResultOfT(
+            return new PageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new BotConnectionSettingDataCollectionResultOfT(
                 _connectionSettingsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

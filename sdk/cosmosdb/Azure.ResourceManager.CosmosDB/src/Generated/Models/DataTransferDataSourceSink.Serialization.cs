@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Base class for all DataTransfer source/sink
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/>, <see cref="CosmosMongoVCoreDataTransferDataSourceSink"/>, <see cref="CosmosSqlDataTransferDataSourceSink"/>, and <see cref="AzureBlobDataTransferDataSourceSink"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/>, <see cref="CosmosMongoVCoreDataTransferDataSourceSink"/>, and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataTransferDataSourceSink))]
     public abstract partial class DataTransferDataSourceSink : IJsonModel<DataTransferDataSourceSink>
@@ -130,6 +130,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AzureBlobStorage":
+                        return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element, options);
                     case "BaseCosmosDataTransferDataSourceSink":
                         return BaseCosmosDataTransferDataSourceSink.DeserializeBaseCosmosDataTransferDataSourceSink(element, options);
                     case "CosmosDBCassandra":
@@ -140,8 +142,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return CosmosMongoVCoreDataTransferDataSourceSink.DeserializeCosmosMongoVCoreDataTransferDataSourceSink(element, options);
                     case "CosmosDBSql":
                         return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element, options);
-                    case "AzureBlobStorage":
-                        return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element, options);
                 }
             }
             return UnknownDataTransferDataSourceSink.DeserializeUnknownDataTransferDataSourceSink(element, options);

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Total amount of payments on accounts. </summary>
-    public partial class AvailableBalancePropertiesTotalPaymentsOnAccount : BillingAmount
+    internal partial class AvailableBalancePropertiesTotalPaymentsOnAccount : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="AvailableBalancePropertiesTotalPaymentsOnAccount"/>. </summary>
         public AvailableBalancePropertiesTotalPaymentsOnAccount()

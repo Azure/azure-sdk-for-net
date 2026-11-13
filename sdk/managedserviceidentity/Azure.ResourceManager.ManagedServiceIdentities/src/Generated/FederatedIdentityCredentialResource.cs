@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             TryGetApiVersion(ResourceType, out string federatedIdentityCredentialApiVersion);
             _federatedIdentityCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", ResourceType.Namespace, Diagnostics);
-            _federatedIdentityCredentialsRestClient = new FederatedIdentityCredentials(_federatedIdentityCredentialsClientDiagnostics, Pipeline, Endpoint, federatedIdentityCredentialApiVersion ?? "2025-05-31-preview");
+            _federatedIdentityCredentialsRestClient = new FederatedIdentityCredentials(_federatedIdentityCredentialsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, federatedIdentityCredentialApiVersion ?? "2025-05-31-preview");
             ValidateResourceId(id);
         }
 

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Family = family;
             VCPUs = vcpUs;
             Gpus = gpus;
-            OsVhdSizeMB = osVhdSizeMB;
+            OSVhdSizeMB = osVhdSizeMB;
             MaxResourceVolumeMB = maxResourceVolumeMB;
             MemoryGB = memoryGB;
             LowPriorityCapable = lowPriorityCapable;
@@ -67,10 +67,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The number of gPUs supported by the virtual machine size. </summary>
         [WirePath("gpus")]
         public int? Gpus { get; }
-
-        /// <summary> The OS VHD disk size, in MB, allowed by the virtual machine size. </summary>
-        [WirePath("osVhdSizeMB")]
-        public int? OsVhdSizeMB { get; }
 
         /// <summary> The resource volume size, in MB, allowed by the virtual machine size. </summary>
         [WirePath("maxResourceVolumeMB")]

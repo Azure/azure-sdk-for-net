@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(SharedConfigResource.ResourceType, out string sharedConfigApiVersion);
             _sharedConfigsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SharedConfigResource.ResourceType.Namespace, Diagnostics);
-            _sharedConfigsRestClient = new SharedConfigs(_sharedConfigsClientDiagnostics, Pipeline, Endpoint, sharedConfigApiVersion ?? "2024-05-01");
+            _sharedConfigsRestClient = new SharedConfigs(_sharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sharedConfigApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigsGetAllAsyncCollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SharedConfigCollection.GetAll"), data => new SharedConfigResource(Client, data));
+            return new AsyncPageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigDataAsync0CollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SharedConfigCollection.GetAll"), data => new SharedConfigResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigsGetAllCollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SharedConfigCollection.GetAll"), data => new SharedConfigResource(Client, data));
+            return new PageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigData0CollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SharedConfigCollection.GetAll"), data => new SharedConfigResource(Client, data));
         }
 
         /// <summary>

@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Subscription.Mocking
 
         private ClientDiagnostics SubscriptionOperationGroupClientDiagnostics => _subscriptionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionOperationGroup SubscriptionOperationGroupRestClient => _subscriptionOperationGroupRestClient ??= new SubscriptionOperationGroup(SubscriptionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private SubscriptionOperationGroup SubscriptionOperationGroupRestClient => _subscriptionOperationGroupRestClient ??= new SubscriptionOperationGroup(SubscriptionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01-preview");
 
         private ClientDiagnostics SubscriptionsOperationGroupClientDiagnostics => _subscriptionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionsOperationGroup SubscriptionsOperationGroupRestClient => _subscriptionsOperationGroupRestClient ??= new SubscriptionsOperationGroup(SubscriptionsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private SubscriptionsOperationGroup SubscriptionsOperationGroupRestClient => _subscriptionsOperationGroupRestClient ??= new SubscriptionsOperationGroup(SubscriptionsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01-preview");
 
         /// <summary> Gets a collection of SubscriptionAliases in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of SubscriptionAliases and their operations over a SubscriptionAliasResource. </returns>

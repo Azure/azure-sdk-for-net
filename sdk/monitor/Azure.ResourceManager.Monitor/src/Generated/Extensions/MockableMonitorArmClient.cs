@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics MetricNamespacesClientDiagnostics => _metricNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricNamespaces MetricNamespacesRestClient => _metricNamespacesRestClient ??= new MetricNamespaces(MetricNamespacesClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private MetricNamespaces MetricNamespacesRestClient => _metricNamespacesRestClient ??= new MetricNamespaces(MetricNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics BaselinesClientDiagnostics => _baselinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Baselines BaselinesRestClient => _baselinesRestClient ??= new Baselines(BaselinesClientDiagnostics, Pipeline, Endpoint, "2019-03-01");
+        private Baselines BaselinesRestClient => _baselinesRestClient ??= new Baselines(BaselinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2019-03-01");
 
         /// <summary> Gets an object representing a <see cref="MonitorPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -227,6 +227,122 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new ActionGroupResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TenantActionGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantActionGroupResource"/> object. </returns>
+        public virtual TenantActionGroupResource GetTenantActionGroupResource(ResourceIdentifier id)
+        {
+            TenantActionGroupResource.ValidateResourceId(id);
+            return new TenantActionGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
+        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(ResourceIdentifier id)
+        {
+            VmInsightsOnboardingStatusResource.ValidateResourceId(id);
+            return new VmInsightsOnboardingStatusResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
+        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(ResourceIdentifier scope)
+        {
+            return new VmInsightsOnboardingStatusResource(Client, scope.AppendProviderResource("Microsoft.Insights", "vmInsightsOnboardingStatuses", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="DiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
+        public virtual DiagnosticSettingResource GetDiagnosticSettingResource(ResourceIdentifier id)
+        {
+            DiagnosticSettingResource.ValidateResourceId(id);
+            return new DiagnosticSettingResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DiagnosticSettingCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DiagnosticSettingResource"/> objects. </returns>
+        public virtual DiagnosticSettingCollection GetDiagnosticSettings(ResourceIdentifier scope)
+        {
+            return new DiagnosticSettingCollection(Client, scope);
+        }
+
+        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DiagnosticSettingResource> GetDiagnosticSetting(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDiagnosticSettings(scope).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDiagnosticSettings(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
+        public virtual DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(ResourceIdentifier id)
+        {
+            DiagnosticSettingsCategoryResource.ValidateResourceId(id);
+            return new DiagnosticSettingsCategoryResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DiagnosticSettingsCategoryCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DiagnosticSettingsCategoryResource"/> objects. </returns>
+        public virtual DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(ResourceIdentifier scope)
+        {
+            return new DiagnosticSettingsCategoryCollection(Client, scope);
+        }
+
+        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDiagnosticSettingsCategories(scope).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDiagnosticSettingsCategories(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Lists the metric definitions for the resource.
         /// <list type="bullet">
@@ -257,7 +373,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricDefinitionsGetMonitorMetricDefinitionsAsyncCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
+            return new MonitorMetricDefinitionAsyncCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
         }
 
         /// <summary>
@@ -290,7 +406,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricDefinitionsGetMonitorMetricDefinitionsCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
+            return new MonitorMetricDefinitionCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
         }
 
         /// <summary>
@@ -323,7 +439,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricNamespacesGetMonitorMetricNamespacesAsyncCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
+            return new MonitorMetricNamespaceAsyncCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
         }
 
         /// <summary>
@@ -356,7 +472,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricNamespacesGetMonitorMetricNamespacesCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
+            return new MonitorMetricNamespaceCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
         }
 
         /// <summary>
@@ -544,7 +660,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BaselinesGetMonitorMetricBaselinesAsyncCollectionResultOfT(
+            return new MonitorSingleMetricBaselineAsyncCollectionResultOfT(
                 BaselinesRestClient,
                 scope.ToString(),
                 metricnames,
@@ -596,7 +712,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BaselinesGetMonitorMetricBaselinesCollectionResultOfT(
+            return new MonitorSingleMetricBaselineCollectionResultOfT(
                 BaselinesRestClient,
                 scope.ToString(),
                 metricnames,

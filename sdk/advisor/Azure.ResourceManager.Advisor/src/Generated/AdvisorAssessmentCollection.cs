@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorAssessmentResource.ResourceType, out string advisorAssessmentApiVersion);
             _assessmentResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorAssessmentResource.ResourceType.Namespace, Diagnostics);
-            _assessmentResultsRestClient = new AssessmentResults(_assessmentResultsClientDiagnostics, Pipeline, Endpoint, advisorAssessmentApiVersion ?? "2025-05-01-preview");
+            _assessmentResultsRestClient = new AssessmentResults(_assessmentResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorAssessmentApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AdvisorAssessmentDataAsyncCollectionResultOfT(
                 _assessmentResultsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllCollectionResultOfT(
+            return new PageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AdvisorAssessmentDataCollectionResultOfT(
                 _assessmentResultsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,

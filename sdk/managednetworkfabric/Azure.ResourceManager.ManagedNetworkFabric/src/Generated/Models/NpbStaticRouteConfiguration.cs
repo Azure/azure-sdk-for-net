@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NpbStaticRouteConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NpbStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> iPv4Routes, IList<StaticRouteProperties> iPv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NpbStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BfdConfiguration = bfdConfiguration;
-            IPv4Routes = iPv4Routes;
-            IPv6Routes = iPv6Routes;
+            IPv4Routes = ipv4Routes;
+            IPv6Routes = ipv6Routes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

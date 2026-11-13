@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Provisioning.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -8,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -19,14 +21,17 @@ namespace Azure.Generator.Provisioning.Providers
     /// Generates a simple C# enum from an InputEnumType.
     /// Provisioning enums are plain enums (not extensible structs) with optional
     /// [DataMember(Name = "...")] attributes when the serialized value differs
-    /// from the C# member name.
+    /// from the C# member name. Accessibility follows the base enum provider pattern,
+    /// allowing the reference map analyzer to internalize enums not exposed by the public API.
     /// </summary>
     internal class ProvisioningEnumProvider : EnumProvider
     {
         private readonly EnumProvider _baseEnumProvider;
+        private readonly InputEnumType _inputEnum;
 
         public ProvisioningEnumProvider(InputEnumType inputEnum) : base(inputEnum)
         {
+            _inputEnum = inputEnum;
             _baseEnumProvider = EnumProvider.Create(inputEnum, null);
         }
 
@@ -39,7 +44,14 @@ namespace Azure.Generator.Provisioning.Providers
             => Path.Combine("src", "Generated", "Models", $"{Name}.cs");
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
-            => TypeSignatureModifiers.Public | TypeSignatureModifiers.Enum;
+        {
+            var modifiers = TypeSignatureModifiers.Enum;
+            if (_inputEnum.Access == "internal")
+            {
+                modifiers |= TypeSignatureModifiers.Internal;
+            }
+            return modifiers;
+        }
 
         protected override bool GetIsEnum() => true;
 
@@ -64,7 +76,7 @@ namespace Azure.Generator.Provisioning.Providers
                     ? (FormattableString)$"{memberName}."
                     : baseField.Description;
 
-                var field = CreateEnumField(memberName, serializedValue, fieldOrdinal, description, baseField.Attributes);
+                var field = CreateEnumField(memberName, serializedValue, fieldOrdinal, description, baseField.Attributes, customization);
 
                 fields.Add(field);
             }
@@ -76,24 +88,39 @@ namespace Azure.Generator.Provisioning.Providers
                     customization.WireName,
                     customization.Value,
                     (FormattableString)$"{customization.MemberName}.",
-                    []));
+                    [],
+                    customization));
             }
 
             return [.. fields];
         }
 
-        private FieldProvider CreateEnumField(string memberName, string? serializedValue, int fieldOrdinal, FormattableString description, IEnumerable<AttributeStatement> existingAttributes)
+        private FieldProvider CreateEnumField(
+            string memberName,
+            string? serializedValue,
+            int fieldOrdinal,
+            FormattableString description,
+            IEnumerable<AttributeStatement> existingAttributes,
+            EnumValueCustomizationResolver.EnumValueCustomization? customization)
         {
+            var attributes = existingAttributes.ToList();
+            if (customization?.EditorBrowsableNever == true)
+            {
+                attributes.Add(new AttributeStatement(
+                    typeof(EditorBrowsableAttribute),
+                    [new MemberExpression(typeof(EditorBrowsableState), nameof(EditorBrowsableState.Never))]));
+            }
+            if (customization?.ObsoleteMessage is not null)
+            {
+                attributes.Add(new AttributeStatement(typeof(ObsoleteAttribute), [Literal(customization.ObsoleteMessage)]));
+            }
+
             // Add [DataMember(Name = "...")] when the serialized value differs from the member name.
-            IEnumerable<AttributeStatement>? attributes = existingAttributes;
             if (serializedValue != null && serializedValue != memberName)
             {
-                attributes =
-                [
-                    .. existingAttributes,
-                    new AttributeStatement(typeof(DataMemberAttribute),
-                        [new KeyValuePair<string, ValueExpression>("Name", Literal(serializedValue))])
-                ];
+                attributes.Add(new AttributeStatement(
+                    typeof(DataMemberAttribute),
+                    [new KeyValuePair<string, ValueExpression>("Name", Literal(serializedValue))]));
             }
 
             return new FieldProvider(

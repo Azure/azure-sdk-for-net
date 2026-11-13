@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,14 +27,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Network Virtual Appliance. </param>
         /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkVirtualAppliancePropertiesFormat properties, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkVirtualAppliancePropertiesFormat properties, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -76,6 +78,16 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.AddressPrefix;
+            }
+        }
+
+        /// <summary> Address Prefix for Dual-Stack NVAs. </summary>
+        [WirePath("properties.addressPrefixV6")]
+        public string AddressPrefixV6
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefixV6;
             }
         }
 
@@ -189,6 +201,62 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
+        [WirePath("properties.internetIngressPublicIps")]
+        public IList<WritableSubResource> InternetIngressPublicIPs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.InternetIngressPublicIPs;
+            }
+        }
+
+        /// <summary> List of references to VirtualApplianceSite. </summary>
+        [WirePath("properties.virtualApplianceSites")]
+        public IReadOnlyList<WritableSubResource> VirtualApplianceSites
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.VirtualApplianceSites;
+            }
+        }
+
+        /// <summary> List of references to VirtualApplianceConnections. </summary>
+        [WirePath("properties.virtualApplianceConnections")]
+        public IReadOnlyList<WritableSubResource> VirtualApplianceConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.VirtualApplianceConnections;
+            }
+        }
+
+        /// <summary> List of references to InboundSecurityRules. </summary>
+        [WirePath("properties.inboundSecurityRules")]
+        public IReadOnlyList<WritableSubResource> InboundSecurityRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.InboundSecurityRules;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
@@ -256,6 +324,50 @@ namespace Azure.ResourceManager.Network
                     Properties = new NetworkVirtualAppliancePropertiesFormat();
                 }
                 return Properties.NvaInterfaceConfigurations;
+            }
+        }
+
+        /// <summary> The address families to deploy the NVA in. ["IPv4", "IPv6"] deploys a dual-stack NVA (the vHub/VNet must also be dual-stack). ["IPv4"], an empty array, or omitting the field deploys an IPv4-only NVA. The value "IPv6" may only appear in combination with "IPv4"; standalone ["IPv6"] is reserved for future use and is rejected by the service today. </summary>
+        [WirePath("properties.addressFamily")]
+        public IList<NetworkIPVersion> AddressFamily
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.AddressFamily;
+            }
+        }
+
+        /// <summary> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </summary>
+        [WirePath("properties.privateIpAddress")]
+        public IPAddress PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+        }
+
+        /// <summary> An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. This field appears in dual-stack NVAs. </summary>
+        [WirePath("properties.privateIpAddressV6")]
+        public string PrivateIPAddressV6
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressV6;
+            }
+        }
+
+        /// <summary> The migration status of the Network Virtual Appliance. </summary>
+        [WirePath("properties.migrationStatus")]
+        public NetworkVirtualApplianceMigrationStatus MigrationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrationStatus;
             }
         }
 

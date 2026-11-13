@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku, bool? linuxWorkersEnabled, bool? xenonWorkersEnabled, bool? linuxDynamicWorkersEnabled , CancellationToken cancellationToken)
+        public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku, bool? linuxWorkersEnabled, bool? xenonWorkersEnabled, bool? linuxDynamicWorkersEnabled, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

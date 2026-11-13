@@ -105,7 +105,10 @@ public class BicepValue<T> : BicepValue
         _source = null;
     }
 
-    // Move strongly typed literal values when assigning
+    /// <summary>
+    /// Assigns a source value to this instance, copying its literal or expression state.
+    /// </summary>
+    /// <param name="source">The source value to assign from.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepValue<T> source) => Assign((BicepValue)source);
     internal override void Assign(IBicepValue source)
@@ -119,7 +122,10 @@ public class BicepValue<T> : BicepValue
         base.Assign(source);
     }
 
-    // Convert literals, raw expressions, and vars/params/outputs
+    /// <summary>
+    /// Implicitly converts a literal value of type <typeparamref name="T"/> to a <see cref="BicepValue{T}"/>.
+    /// </summary>
+    /// <param name="value">The literal value.</param>
     public static implicit operator BicepValue<T>(T value)
     {
         if (value is IBicepValue e)
@@ -150,11 +156,22 @@ public class BicepValue<T> : BicepValue
         // Otherwise just wrap the literal
         return new(value);
     }
+    /// <summary>
+    /// Implicitly converts a <see cref="BicepExpression"/> to a <see cref="BicepValue{T}"/>.
+    /// </summary>
+    /// <param name="expression">The Bicep expression.</param>
     public static implicit operator BicepValue<T>(BicepExpression? expression) => new(expression ?? BicepSyntax.Null());
+    /// <summary>
+    /// Implicitly converts a <see cref="ProvisioningVariable"/> to a <see cref="BicepValue{T}"/>.
+    /// </summary>
+    /// <param name="reference">The provisioning variable or parameter.</param>
     public static implicit operator BicepValue<T>(ProvisioningVariable reference) =>
         new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.BicepIdentifier)) { _isSecure = reference is ProvisioningParameter p && p.IsSecure };
 
-    // Special case conversions to string for things like Uri, AzureLocation, etc.
+    /// <summary>
+    /// Implicitly converts a <see cref="BicepValue{T}"/> to a <see cref="BicepValue{String}"/> using the value's string representation.
+    /// </summary>
+    /// <param name="value">The typed Bicep value to convert.</param>
     public static implicit operator BicepValue<string>(BicepValue<T> value) =>
         value._kind switch
         {
@@ -164,28 +181,11 @@ public class BicepValue<T> : BicepValue
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
 
-    private protected override BicepExpression CompileLiteralValue() => Value switch
+    private protected override BicepExpression CompileLiteralValue(string? format) => Value switch
     {
         null => BicepSyntax.Null(),
+        BicepValue v => v.Compile(format),
         IBicepValue v => v.Compile(),
-        bool b => BicepSyntax.Value(b),
-        int i => BicepSyntax.Value(i),
-        long l => BicepSyntax.Value(l),
-        float f => BicepSyntax.Value(f),
-        double d => BicepSyntax.Value(d),
-        string s => BicepSyntax.Value(s),
-        Uri u => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(u, Format)),
-        DateTimeOffset d => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(d, Format)),
-        TimeSpan t => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(t, Format)),
-        Guid g => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(g, Format)),
-        IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, Format)),
-        ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
-        ResourceIdentifier i => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(i, Format)),
-        AzureLocation azureLocation => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(azureLocation, Format)),
-        ResourceType rt => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(rt, Format)),
-        Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
-        // Other extensible enums like AzureLocation (AzureLocation has been handled above)
-        ValueType ee => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(ee, Format)),
-        _ => throw new InvalidOperationException($"Cannot convert {Value} to a Bicep expression.")
+        _ => BicepTypeMapping.ToLiteralExpression(Value, format)
     };
 }

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="BgpPatchConfiguration"/>. </summary>
         public BgpPatchConfiguration()
         {
-            Ipv4ListenRangePrefixes = new ChangeTrackingList<string>();
-            Ipv6ListenRangePrefixes = new ChangeTrackingList<string>();
-            Ipv4NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
-            Ipv6NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
+            IPv4ListenRangePrefixes = new ChangeTrackingList<string>();
+            IPv6ListenRangePrefixes = new ChangeTrackingList<string>();
+            IPv4NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
+            IPv6NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BgpPatchConfiguration"/>. </summary>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AllowASOverride = allowASOverride;
             FabricAsn = fabricAsn;
             PeerAsn = peerAsn;
-            Ipv4ListenRangePrefixes = ipv4ListenRangePrefixes;
-            Ipv6ListenRangePrefixes = ipv6ListenRangePrefixes;
-            Ipv4NeighborAddress = ipv4NeighborAddress;
-            Ipv6NeighborAddress = ipv6NeighborAddress;
+            IPv4ListenRangePrefixes = ipv4ListenRangePrefixes;
+            IPv6ListenRangePrefixes = ipv6ListenRangePrefixes;
+            IPv4NeighborAddress = ipv4NeighborAddress;
+            IPv6NeighborAddress = ipv6NeighborAddress;
             BmpConfiguration = bmpConfiguration;
             V4OverV6BgpSession = v4OverV6BgpSession;
             V6OverV4BgpSession = v6OverV4BgpSession;
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public long? PeerAsn { get; set; }
 
         /// <summary> List of BGP IPv4 Listen Range prefixes. </summary>
-        public IList<string> Ipv4ListenRangePrefixes { get; }
+        public IList<string> IPv4ListenRangePrefixes { get; }
 
         /// <summary> List of BGP IPv6 Listen Ranges prefixes. </summary>
-        public IList<string> Ipv6ListenRangePrefixes { get; }
+        public IList<string> IPv6ListenRangePrefixes { get; }
 
         /// <summary> List with stringified IPv4 Neighbor Addresses. </summary>
-        public IList<NeighborAddressPatch> Ipv4NeighborAddress { get; }
+        public IList<NeighborAddressPatch> IPv4NeighborAddress { get; }
 
         /// <summary> List with stringified IPv6 Neighbor Address. </summary>
-        public IList<NeighborAddressPatch> Ipv6NeighborAddress { get; }
+        public IList<NeighborAddressPatch> IPv6NeighborAddress { get; }
 
         /// <summary> InternalNetwork BMP Configuration. </summary>
         public InternalNetworkBmpPatchProperties BmpConfiguration { get; set; }

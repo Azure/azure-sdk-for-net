@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs
             TryGetApiVersion(DevTestLabPolicyResource.ResourceType, out string devTestLabPolicyApiVersion);
             _policySetName = policySetName;
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabPolicyResource.ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, devTestLabPolicyApiVersion ?? "2018-09-15");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabPolicyApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabPolicyData, DevTestLabPolicyResource>(new PoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabPolicyData, DevTestLabPolicyResource>(new DevTestLabPolicyDataAsyncCollectionResultOfT(
                 _policiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabPolicyData, DevTestLabPolicyResource>(new PoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabPolicyData, DevTestLabPolicyResource>(new DevTestLabPolicyDataCollectionResultOfT(
                 _policiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

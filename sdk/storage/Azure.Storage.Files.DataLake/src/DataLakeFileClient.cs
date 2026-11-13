@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -2516,8 +2516,10 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
+
+                    Argument.AssertNotNull(content, nameof(content));
                     Errors.VerifyStreamPosition(content, nameof(content));
-                    ResponseWithHeaders<PathAppendDataHeaders> response;
+                    Response response;
 
                     long? leaseDurationLong = null;
                     if (leaseDuration.HasValue)
@@ -2530,46 +2532,46 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.AppendDataAsync(
-                            body: content,
+                            content: RequestContent.Create(content),
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5AsArray,
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentHash: hashResult?.MD5AsArray != null ? new BinaryData(hashResult.MD5AsArray) : null,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray != null ? new BinaryData(hashResult.StorageCrc64AsArray) : null,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
                             leaseId: leaseId,
-                            leaseAction: leaseAction,
+                            leaseAction: leaseAction?.ToSerialString(),
                             leaseDuration: leaseDurationLong,
                             proposedLeaseId: proposedLeaseId,
                             flush: flush,
-                            cancellationToken: cancellationToken)
+                            context: cancellationToken.ToRequestContext())
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = PathRestClient.AppendData(
-                            body: content,
+                            content: RequestContent.Create(content),
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5AsArray,
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentHash: hashResult?.MD5AsArray != null ? new BinaryData(hashResult.MD5AsArray) : null,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray != null ? new BinaryData(hashResult.StorageCrc64AsArray) : null,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
                             leaseId: leaseId,
-                            leaseAction: leaseAction,
+                            leaseAction: leaseAction?.ToSerialString(),
                             leaseDuration: leaseDurationLong,
                             proposedLeaseId: proposedLeaseId,
                             flush: flush,
-                            cancellationToken: cancellationToken);
+                            context: cancellationToken.ToRequestContext());
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -2922,7 +2924,7 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathFlushDataHeaders> response;
+                    Response response;
 
                     long? leaseDurationLong = null;
                     if (leaseDuration.HasValue)
@@ -2939,9 +2941,9 @@ namespace Azure.Storage.Files.DataLake
                             retainUncommittedData: retainUncommittedData,
                             close: close,
                             contentLength: 0,
-                            contentMD5: httpHeaders?.ContentHash,
+                            contentMD5: httpHeaders?.ContentHash != null ? new BinaryData(httpHeaders.ContentHash) : null,
                             leaseId: conditions?.LeaseId,
-                            leaseAction: leaseAction,
+                            leaseAction: leaseAction?.ToSerialString(),
                             leaseDuration: leaseDurationLong,
                             proposedLeaseId: proposedLeaseId,
                             cacheControl: httpHeaders?.CacheControl,
@@ -2949,14 +2951,11 @@ namespace Azure.Storage.Files.DataLake
                             contentDisposition: httpHeaders?.ContentDisposition,
                             contentEncoding: httpHeaders?.ContentEncoding,
                             contentLanguage: httpHeaders?.ContentLanguage,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            cancellationToken: cancellationToken)
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            context: cancellationToken.ToRequestContext())
                             .ConfigureAwait(false);
                     }
                     else
@@ -2966,9 +2965,9 @@ namespace Azure.Storage.Files.DataLake
                             retainUncommittedData: retainUncommittedData,
                             close: close,
                             contentLength: 0,
-                            contentMD5: httpHeaders?.ContentHash,
+                            contentMD5: httpHeaders?.ContentHash != null ? new BinaryData(httpHeaders.ContentHash) : null,
                             leaseId: conditions?.LeaseId,
-                            leaseAction: leaseAction,
+                            leaseAction: leaseAction?.ToSerialString(),
                             leaseDuration: leaseDurationLong,
                             proposedLeaseId: proposedLeaseId,
                             cacheControl: httpHeaders?.CacheControl,
@@ -2976,19 +2975,16 @@ namespace Azure.Storage.Files.DataLake
                             contentDisposition: httpHeaders?.ContentDisposition,
                             contentEncoding: httpHeaders?.ContentEncoding,
                             contentLanguage: httpHeaders?.ContentLanguage,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            cancellationToken: cancellationToken);
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            context: cancellationToken.ToRequestContext());
                     }
 
                     return Response.FromValue(
                         response.ToPathInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -5516,7 +5512,7 @@ namespace Azure.Storage.Files.DataLake
                         }
                     }
 
-                    ResponseWithHeaders<PathSetExpiryHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -5536,7 +5532,7 @@ namespace Azure.Storage.Files.DataLake
 
                     return Response.FromValue(
                         response.ToPathInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -6194,6 +6190,74 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion OpenWrite
 
+        #region GetLayout
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
+        /// <summary>
+        /// The <see cref="GetLayout"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the file.
+        /// In addition, it may optionally return the layout of the file.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeFileGetLayoutOptions"/> for shaping the request.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{DataLakeFileLayoutInfo}"/> describing the
+        /// file's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Pageable<DataLakeFileLayoutInfo> GetLayout(
+            DataLakeFileGetLayoutOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                _blockBlobClient,
+                options.ToBlobGetLayoutOptions())
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the file.
+        /// In addition, it may optionally return the layout of the file.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeFileGetLayoutOptions"/> for shaping the request.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{DataLakeFileLayoutInfo}"/> describing the
+        /// file's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<DataLakeFileLayoutInfo> GetLayoutAsync(
+            DataLakeFileGetLayoutOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                _blockBlobClient,
+                options.ToBlobGetLayoutOptions())
+            .ToAsyncCollection(cancellationToken);
+        */
+
+        #endregion GetLayout
+
         #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
@@ -6223,8 +6287,8 @@ namespace Azure.Storage.Files.DataLake
                         accessControlList: default,
                         leaseId: default,
                         leaseDuration: default,
-                        timeToExpire: default,
-                        expiresOn: default,
+                        timeToExpire: args.ScheduleDeletionOptions?.TimeToExpire,
+                        expiresOn: args.ScheduleDeletionOptions?.ExpiresOn,
                         encryptionContext: args.EncryptionContext,
                         conditions: args.Conditions,
                         async: async,

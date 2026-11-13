@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(TopicTypeResource.ResourceType, out string topicTypeApiVersion);
             _topicTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", TopicTypeResource.ResourceType.Namespace, Diagnostics);
-            _topicTypesRestClient = new TopicTypes(_topicTypesClientDiagnostics, Pipeline, Endpoint, topicTypeApiVersion ?? "2025-07-15-preview");
+            _topicTypesRestClient = new TopicTypes(_topicTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topicTypeApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypesGetAllAsyncCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
+            return new AsyncPageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypeDataAsyncCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypesGetAllCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
+            return new PageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypeDataCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
         }
 
         /// <summary>

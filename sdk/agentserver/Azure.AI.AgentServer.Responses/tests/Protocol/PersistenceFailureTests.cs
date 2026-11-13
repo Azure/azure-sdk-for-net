@@ -44,7 +44,6 @@ public class PersistenceFailureTests : IDisposable
             {
                 services.AddSingleton<ResponsesProvider>(_provider);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(_provider.AsCancellationProvider());
-                services.AddSingleton<ResponsesStreamProvider>(_provider.AsStreamProvider());
             });
         _client = _factory.CreateClient();
     }
@@ -471,7 +470,6 @@ public class PersistenceFailureTests : IDisposable
             => await _inner.GetHistoryItemIdsAsync(previousResponseId, conversationId, limit, isolation, cancellationToken);
 
         internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(_inner);
-        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(_inner);
 
         private sealed class CancellationAdapter(InMemoryResponsesProvider inner) : ResponsesCancellationSignalProvider
         {
@@ -479,14 +477,6 @@ public class PersistenceFailureTests : IDisposable
                 => inner.CancelResponseAsync(responseId, cancellationToken);
             public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken cancellationToken = default)
                 => inner.GetResponseCancellationTokenAsync(responseId, cancellationToken);
-        }
-
-        private sealed class StreamAdapter(InMemoryResponsesProvider inner) : ResponsesStreamProvider
-        {
-            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken cancellationToken = default)
-                => inner.CreateEventPublisherAsync(responseId, cancellationToken);
-            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken cancellationToken = default)
-                => inner.SubscribeToEventsAsync(responseId, observer, cursor, cancellationToken);
         }
 
         public void Dispose()

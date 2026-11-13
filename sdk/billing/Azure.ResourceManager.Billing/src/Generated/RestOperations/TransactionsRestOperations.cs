@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Billing
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of Transactions for mocking. </summary>
         protected Transactions()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of Transactions. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Transactions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Transactions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(Transactions).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -82,6 +85,7 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -105,6 +109,7 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -126,6 +131,7 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -155,11 +161,12 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -172,8 +179,8 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartDate, SerializationFormat.Date_ISO8601), true);
-            uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndDate, SerializationFormat.Date_ISO8601), true);
+            uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartsOn, SerializationFormat.Date_ISO8601), true);
+            uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndsOn, SerializationFormat.Date_ISO8601), true);
             uri.AppendQuery("type", @type, true);
             if (filter != null)
             {
@@ -203,11 +210,12 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -226,11 +234,12 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateGetByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -245,8 +254,8 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartDate, SerializationFormat.Date_ISO8601), true);
-            uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndDate, SerializationFormat.Date_ISO8601), true);
+            uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartsOn, SerializationFormat.Date_ISO8601), true);
+            uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndsOn, SerializationFormat.Date_ISO8601), true);
             uri.AppendQuery("type", @type, true);
             if (filter != null)
             {
@@ -276,11 +285,12 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetByCustomerRequest(Uri nextPage, string billingAccountName, string billingProfileName, string customerName, DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetByCustomerRequest(Uri nextPage, string billingAccountName, string billingProfileName, string customerName, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -299,11 +309,12 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateGetByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -318,8 +329,8 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartDate, SerializationFormat.Date_ISO8601), true);
-            uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndDate, SerializationFormat.Date_ISO8601), true);
+            uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartsOn, SerializationFormat.Date_ISO8601), true);
+            uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndsOn, SerializationFormat.Date_ISO8601), true);
             uri.AppendQuery("type", @type, true);
             if (filter != null)
             {
@@ -349,11 +360,12 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetByInvoiceSectionRequest(Uri nextPage, string billingAccountName, string billingProfileName, string invoiceSectionName, DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetByInvoiceSectionRequest(Uri nextPage, string billingAccountName, string billingProfileName, string invoiceSectionName, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -372,6 +384,7 @@ namespace Azure.ResourceManager.Billing
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

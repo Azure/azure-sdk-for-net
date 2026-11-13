@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Billing address. </summary>
-    public partial class BillingProfilePropertiesBillTo : BillingAddressDetails
+    internal partial class BillingProfilePropertiesBillTo : BillingAddressDetails
     {
         /// <summary> Initializes a new instance of <see cref="BillingProfilePropertiesBillTo"/>. </summary>
         /// <param name="addressLine1"> Address line 1. </param>

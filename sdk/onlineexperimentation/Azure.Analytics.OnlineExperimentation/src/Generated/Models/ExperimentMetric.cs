@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 
 namespace Azure.Analytics.OnlineExperimentation
@@ -19,26 +18,9 @@ namespace Azure.Analytics.OnlineExperimentation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/>. </summary>
-        /// <param name="lifecycle"> Determines whether it is included in experiment analysis. </param>
-        /// <param name="displayName"> A user-friendly display name for the experiment metric shown in reports and dashboards. </param>
-        /// <param name="description"> A detailed description of the experiment metric. </param>
-        /// <param name="categories"> Categories associated with the experiment metric. Used for organizing and filtering metrics. </param>
-        /// <param name="desiredDirection"> The desired direction for changes in the metric value. </param>
-        /// <param name="definition"> The metric definition specifying how the metric value is calculated from event data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="description"/>, <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
-        public ExperimentMetric(LifecycleStage lifecycle, string displayName, string description, IEnumerable<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition)
+        public ExperimentMetric()
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(categories, nameof(categories));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            Lifecycle = lifecycle;
-            DisplayName = displayName;
-            Description = description;
-            Categories = categories.ToList();
-            DesiredDirection = desiredDirection;
-            Definition = definition;
+            Categories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/>. </summary>
@@ -50,9 +32,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="desiredDirection"> The desired direction for changes in the metric value. </param>
         /// <param name="definition"> The metric definition specifying how the metric value is calculated from event data. </param>
         /// <param name="eTag"> ETag of the experiment metric. </param>
-        /// <param name="lastModifiedAt"> The timestamp (UTC) of the last modification to the experiment metric resource. </param>
+        /// <param name="lastModifiedOn"> The timestamp (UTC) of the last modification to the experiment metric resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentMetric(string id, LifecycleStage lifecycle, string displayName, string description, IList<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition, ETag eTag, DateTimeOffset lastModifiedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentMetric(string id, LifecycleStage lifecycle, string displayName, string description, IList<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition, ETag eTag, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Lifecycle = lifecycle;
@@ -62,7 +44,7 @@ namespace Azure.Analytics.OnlineExperimentation
             DesiredDirection = desiredDirection;
             Definition = definition;
             ETag = eTag;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,6 +73,6 @@ namespace Azure.Analytics.OnlineExperimentation
         public ETag ETag { get; }
 
         /// <summary> The timestamp (UTC) of the last modification to the experiment metric resource. </summary>
-        public DateTimeOffset LastModifiedAt { get; }
+        public DateTimeOffset LastModifiedOn { get; }
     }
 }

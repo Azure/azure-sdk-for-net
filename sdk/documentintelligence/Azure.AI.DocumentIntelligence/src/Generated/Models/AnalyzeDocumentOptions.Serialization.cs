@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(BytesSource))
             {
                 writer.WritePropertyName("base64Source"u8);
-                writer.WriteBase64StringValue(BytesSource.ToArray(), "D");
+                writer.WriteBase64StringValue(BytesSource, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,7 +161,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AnalyzeDocumentOptions(uriSource, bytesSource, additionalBinaryDataProperties);

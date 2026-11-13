@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementIssueResource.ResourceType, out string apiManagementIssueApiVersion);
             _issueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementIssueResource.ResourceType.Namespace, Diagnostics);
-            _issueRestClient = new Issue(_issueClientDiagnostics, Pipeline, Endpoint, apiManagementIssueApiVersion ?? "2025-09-01-preview");
+            _issueRestClient = new Issue(_issueClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementIssueApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueContractDataAsyncCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueGetByServiceCollectionResultOfT(
+            return new PageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueContractDataCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

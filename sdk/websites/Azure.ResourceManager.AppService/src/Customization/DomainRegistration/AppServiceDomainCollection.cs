@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(AppServiceDomainResource.ResourceType, out string appServiceDomainDomainsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

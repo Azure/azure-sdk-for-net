@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSiteLinkedBackendResource.ResourceType, out string staticSiteLinkedBackendApiVersion);
             _staticSiteLinkedBackendARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteLinkedBackendResource.ResourceType.Namespace, Diagnostics);
-            _staticSiteLinkedBackendARMResourcesRestClient = new StaticSiteLinkedBackendARMResources(_staticSiteLinkedBackendARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteLinkedBackendApiVersion ?? "2026-03-15");
+            _staticSiteLinkedBackendARMResourcesRestClient = new StaticSiteLinkedBackendARMResources(_staticSiteLinkedBackendARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteLinkedBackendApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteLinkedBackendData, StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendARMResourcesGetLinkedBackendsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteLinkedBackendData, StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendDataAsyncCollectionResultOfT(
                 _staticSiteLinkedBackendARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteLinkedBackendData, StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendARMResourcesGetLinkedBackendsCollectionResultOfT(
+            return new PageableWrapper<StaticSiteLinkedBackendData, StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendDataCollectionResultOfT(
                 _staticSiteLinkedBackendARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

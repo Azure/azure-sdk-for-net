@@ -1261,7 +1261,7 @@ namespace Azure.Storage.Test.Shared
         [Test, Combinatorial]
         public virtual async Task ParallelDownloadSuccessfulHashVerification(
             [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
-            [Values(512, 2 * Constants.KB)] int chunkSize)
+            [Values(512, 2 * Constants.KB, 123)] int chunkSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 

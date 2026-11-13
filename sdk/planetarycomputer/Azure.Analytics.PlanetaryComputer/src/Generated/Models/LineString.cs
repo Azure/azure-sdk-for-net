@@ -15,13 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class LineString : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="LineString"/>. </summary>
-        /// <param name="coordinates"> The coordinates of the linestring. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public LineString(IEnumerable<IList<float>> coordinates) : base(GeometryType.LineString)
+        public LineString() : base(GeometryKind.LineString)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
-
-            Coordinates = coordinates.ToList();
+            Coordinates = new ChangeTrackingList<IList<float>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LineString"/>. </summary>
@@ -29,9 +25,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the linestring. </param>
-        internal LineString(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<float>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal LineString(GeometryKind @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<float>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LineString"/>. </summary>
+        /// <param name="coordinates"> The coordinates of the linestring. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public LineString(IEnumerable<IList<float>> coordinates) : this()
+        {
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
+
+            Coordinates = coordinates.ToList();
         }
 
         /// <summary> The coordinates of the linestring. </summary>

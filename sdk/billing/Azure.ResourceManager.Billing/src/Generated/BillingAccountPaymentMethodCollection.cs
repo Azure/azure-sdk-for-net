@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingAccountPaymentMethodResource.ResourceType, out string billingAccountPaymentMethodApiVersion);
             _paymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingAccountPaymentMethodResource.ResourceType.Namespace, Diagnostics);
-            _paymentMethodsRestClient = new PaymentMethods(_paymentMethodsClientDiagnostics, Pipeline, Endpoint, billingAccountPaymentMethodApiVersion ?? "2024-04-01");
+            _paymentMethodsRestClient = new PaymentMethods(_paymentMethodsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountPaymentMethodApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingPaymentMethodData, BillingAccountPaymentMethodResource>(new PaymentMethodsGetByBillingAccountAsyncCollectionResultOfT(_paymentMethodsRestClient, Id.Name, context, "BillingAccountPaymentMethodCollection.GetAll"), data => new BillingAccountPaymentMethodResource(Client, data));
+            return new AsyncPageableWrapper<BillingPaymentMethodData, BillingAccountPaymentMethodResource>(new BillingPaymentMethodDataAsyncCollectionResultOfT(_paymentMethodsRestClient, Id.Name, context, "BillingAccountPaymentMethodCollection.GetAll"), data => new BillingAccountPaymentMethodResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingPaymentMethodData, BillingAccountPaymentMethodResource>(new PaymentMethodsGetByBillingAccountCollectionResultOfT(_paymentMethodsRestClient, Id.Name, context, "BillingAccountPaymentMethodCollection.GetAll"), data => new BillingAccountPaymentMethodResource(Client, data));
+            return new PageableWrapper<BillingPaymentMethodData, BillingAccountPaymentMethodResource>(new BillingPaymentMethodDataCollectionResultOfT(_paymentMethodsRestClient, Id.Name, context, "BillingAccountPaymentMethodCollection.GetAll"), data => new BillingAccountPaymentMethodResource(Client, data));
         }
 
         /// <summary>

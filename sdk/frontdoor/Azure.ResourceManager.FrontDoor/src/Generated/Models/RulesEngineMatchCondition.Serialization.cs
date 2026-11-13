@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RulesEngineMatchCondition(
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 selector,
                 rulesEngineOperator,
                 isNegateCondition,
-                rulesEngineMatchValue,
+                rulesEngineMatchValue ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>(),
                 additionalBinaryDataProperties);
         }

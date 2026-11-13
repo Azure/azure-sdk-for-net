@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -28,11 +27,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     [ModelReaderWriterBuildable(typeof(ImageBoundingBox))]
     [ModelReaderWriterBuildable(typeof(ImageMetadata))]
     [ModelReaderWriterBuildable(typeof(ImagePoint))]
-    [ModelReaderWriterBuildable(typeof(ImageUrl))]
     [ModelReaderWriterBuildable(typeof(ObjectsResult))]
     [ModelReaderWriterBuildable(typeof(PeopleResult))]
     [ModelReaderWriterBuildable(typeof(ReadResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SmartCropsResult))]
     [ModelReaderWriterBuildable(typeof(TagsResult))]
     public partial class AzureAIVisionImageAnalysisContext : ModelReaderWriterContext

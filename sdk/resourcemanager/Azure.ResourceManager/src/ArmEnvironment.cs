@@ -17,6 +17,9 @@ namespace Azure.ResourceManager
         /// <summary> Azure Public Cloud. </summary>
         public static readonly ArmEnvironment AzurePublicCloud = new(new Uri("https://management.azure.com"), "https://management.azure.com/");
 
+        /// <summary> Bleu Cloud, the national partner cloud for France. </summary>
+        public static readonly ArmEnvironment AzureBleuCloud = new(new Uri("https://management.sovcloud-api.fr"), "https://management.sovcloud-api.fr/");
+
         /// <summary> Azure China Cloud. </summary>
         public static readonly ArmEnvironment AzureChina = new(new Uri("https://management.chinacloudapi.cn"), "https://management.chinacloudapi.cn");
 

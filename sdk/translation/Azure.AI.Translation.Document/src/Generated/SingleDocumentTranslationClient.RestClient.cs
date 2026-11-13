@@ -17,7 +17,7 @@ namespace Azure.AI.Translation.Document
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateTranslateRequest(string targetLanguage, RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, bool? translateTextWithinImage, RequestContext context)
+        internal HttpMessage CreateTranslateRequest(string targetLanguage, RequestContent content, string contentType, string sourceLanguage, string category, string deploymentName, bool? allowFallback, bool? translateTextWithinImage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -35,6 +35,10 @@ namespace Azure.AI.Translation.Document
             if (category != null)
             {
                 uri.AppendQuery("category", category, true);
+            }
+            if (deploymentName != null)
+            {
+                uri.AppendQuery("deploymentName", deploymentName, true);
             }
             if (allowFallback != null)
             {

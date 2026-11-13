@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroupAggregatedCostProperties"/>. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the aggregated cost belongs to. </param>
-        /// <param name="usageStartOn"> The start of the date time range covered by aggregated cost. </param>
-        /// <param name="usageEndOn"> The end of the date time range covered by the aggregated cost. </param>
+        /// <param name="usageStartsOn"> The start of the date time range covered by aggregated cost. </param>
+        /// <param name="usageEndsOn"> The end of the date time range covered by the aggregated cost. </param>
         /// <param name="azureCharges"> Azure Charges. </param>
         /// <param name="marketplaceCharges"> Marketplace Charges. </param>
         /// <param name="chargesBilledSeparately"> Charges Billed Separately. </param>
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="includedSubscriptions"> List of subscription Guids included in the calculation of aggregated cost. </param>
         /// <param name="excludedSubscriptions"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementGroupAggregatedCostProperties(string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IList<ConsumptionAggregatedCostResult> children, IList<string> includedSubscriptions, IList<string> excludedSubscriptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagementGroupAggregatedCostProperties(string billingPeriodId, DateTimeOffset? usageStartsOn, DateTimeOffset? usageEndsOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IList<ConsumptionAggregatedCostResult> children, IList<string> includedSubscriptions, IList<string> excludedSubscriptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPeriodId = billingPeriodId;
-            UsageStartOn = usageStartOn;
-            UsageEndOn = usageEndOn;
+            UsageStartsOn = usageStartsOn;
+            UsageEndsOn = usageEndsOn;
             AzureCharges = azureCharges;
             MarketplaceCharges = marketplaceCharges;
             ChargesBilledSeparately = chargesBilledSeparately;
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public string BillingPeriodId { get; }
 
         /// <summary> The start of the date time range covered by aggregated cost. </summary>
-        public DateTimeOffset? UsageStartOn { get; }
+        public DateTimeOffset? UsageStartsOn { get; }
 
         /// <summary> The end of the date time range covered by the aggregated cost. </summary>
-        public DateTimeOffset? UsageEndOn { get; }
+        public DateTimeOffset? UsageEndsOn { get; }
 
         /// <summary> Azure Charges. </summary>
         public decimal? AzureCharges { get; }

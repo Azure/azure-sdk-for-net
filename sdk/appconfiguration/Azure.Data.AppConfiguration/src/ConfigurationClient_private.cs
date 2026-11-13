@@ -123,6 +123,7 @@ namespace Azure.Data.AppConfiguration
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);

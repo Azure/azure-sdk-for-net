@@ -1,31 +1,39 @@
-# Sample for use of `BrowserAutomationPreviewTool` and Agents in Azure.AI.Extensions.OpenAI.
+# Sample for use of `BrowserAutomationTool` and Agents in Azure.AI.Extensions.OpenAI.
 
-Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationPreviewTool.
-
-**Note:** This feature is in the preview.
+Playwright is an open-source framework for end-to-end testing and browser automation. Microsoft Playwright Workspaces provides managed cloud browsers that an agent can access through the BrowserAutomationTool.
 
 ## Create Azure Playwright workspace
 
-1. Deploy an Azure Playwright workspace.
-2. In the **Get started** section, open **2. Set up authentication**.
-3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+1. In the Azure portal, open your Playwright workspace.
+2. Under **Settings**, select **Access Management**.
+3. Enable **Playwright Service Access Token**.
+4. Select **Generate token**.
+5. Enter a name and expiration date, and then generate the token.
+6. Copy the token immediately. You can't retrieve its value later.
+
+> **Warning:** Prefer Microsoft Entra ID authentication when supported by the Browser Automation connection. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
 
 ## Configure Microsoft Foundry
 
-1. On the left panel select **Management center**.
-2. Choose **Connected resources**.
-3. Create a new connection of type **Serverless Model**.
-4. Provide a name, then paste your Access Token into the **Key** field.
-5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
+**Note:** `BrowserAutomationTool` uses a Browser Automation project connection as opposed to `BrowserAutomationPreviewTool`, which uses a Serverless connection type.
+
+Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace:
+
+1. Open your project in the Microsoft Foundry portal and select **Build** > **Tools**.
+2. Select **Create a toolbox** and enter a name and description.
+3. Under **Tools**, select **Add**, choose **Browser Automation**, and select **Add tool**.
+4. Enter a connection name, select your **Playwright Workspace**, and choose the authentication method.
+5. Select **Connect**, then **Publish** to save the toolbox.
+6. Set `BROWSER_AUTOMATION_NAME` to the connection name you entered. The sample looks up the connection and passes its ID to the tool.
 
 ## Run this sample.
 
-1. Begin by creating the Agent client and reading the required environment variables. Please note that the Browser automation operations may take longer than usual and requiring request timeout to be at least 5 minutes.
+1. Create an `AIProjectClient` and read the required environment variables. Browser automation operations can take longer than other requests, so configure a network timeout of at least five minutes.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
 AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
@@ -33,34 +41,13 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Create an Agent with  `BrowserAutomationPreviewTool`. Use the serverless connection name to get the connection from the project and use the connection ID to create the tool.
+2. Look up the Browser Automation connection by name, create an agent with a `BrowserAutomationTool`, and pass the returned connection ID to `BrowserAutomationToolConnectionOptions`.
 
-Synchronous sample:
-```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
-AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
-    ));
-
-DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-{
-    Instructions = "You are an Agent helping with browser automation tasks.\n" +
-    "You can answer questions, provide information, and assist with various tasks\n" +
-    "related to web browsing using the Browser Automation tool available to you.",
-    Tools = { playwrightTool }
-};
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-    agentName: "myAgent",
-    options: new(agentDefinition));
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
+BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -75,7 +62,9 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-3. To parse the stream, obtained from the Agent, we will create a helper method `ParseResponse`.
+3. Create a `ParseResponse` helper method to process streaming response updates from the agent. Handle failed or incomplete responses using the SDK's typed updates.
+
+> **Warning:** Streaming text and complete messages can include a live-view URL that grants access to the browser session. Treat that URL as sensitive: use it only in a trusted local terminal and redact it before sharing output or saving logs.
 
 ```C# Snippet:Sample_ParseResponse_BrowserAutomotion
 private static void ParseResponse(StreamingResponseUpdate streamResponse)
@@ -94,39 +83,24 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
     }
     else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
     {
-        throw new InvalidOperationException($"The stream has failed with the error: {errorUpdate.Message}");
+        throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
     }
-}
-```
-
-4. Create the response stream. We also make sure that the agent using tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on the `CreateResponseOptions`.
-
-Synchronous sample:
-```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-CreateResponseOptions responseOptions = new()
-{
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    StreamingEnabled = true,
-    InputItems =
+    else if (streamResponse is StreamingResponseFailedUpdate failedUpdate)
     {
-        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-            "To do that, go to the website finance.yahoo.com.\n" +
-            "At the top of the page, you will find a search bar.\n" +
-            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+        throw new InvalidOperationException($"The response has failed: {failedUpdate.Response.Error?.Message}, error code: {failedUpdate.Response.Error?.Code}");
     }
-};
-foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
-{
-    ParseResponse(update);
+    else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
+    {
+        throw new InvalidOperationException($"The response cannot be completed. Check the request for safety or guardrail requirements and review response {incompleteUpdate.Response.Id} for details, including output limits.");
+    }
 }
 ```
 
-Asynchronous sample:
+4. Create a streaming response. Require the agent to use a tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on `CreateResponseOptions`.
+
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+    new AgentReference(agentVersion.Name, agentVersion.Version));
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -141,20 +115,14 @@ CreateResponseOptions responseOptions = new()
             "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+await foreach (StreamingResponseUpdate update in await responseClient.CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(update);
 }
 ```
 
-9. After the sample is completed, delete the Agent we have created.
+5. After the sample completes, delete the agent version that you created. Agents can be reused across responses. Delete an agent version only when it is no longer needed.
 
-Synchronous sample:
-```C# Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
 await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

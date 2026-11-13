@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Response<PublisherResource> Get(string publisherName, CancellationToken cancellationToken)
+        public virtual new Response<PublisherResource> Get(string publisherName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<Response<PublisherResource>> GetAsync(string publisherName, CancellationToken cancellationToken)
+        public virtual new async Task<Response<PublisherResource>> GetAsync(string publisherName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> List Publishers available across publishers for the HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Pageable<PublisherResource> GetAll(CancellationToken cancellationToken)
+        public virtual new Pageable<PublisherResource> GetAll(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> List Publishers available across publishers for the HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new AsyncPageable<PublisherResource> GetAllAsync(CancellationToken cancellationToken)
+        public virtual new AsyncPageable<PublisherResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new NullableResponse<PublisherResource> GetIfExists(string publisherName, CancellationToken cancellationToken)
+        public virtual new NullableResponse<PublisherResource> GetIfExists(string publisherName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<NullableResponse<PublisherResource>> GetIfExistsAsync(string publisherName, CancellationToken cancellationToken)
+        public virtual new async Task<NullableResponse<PublisherResource>> GetIfExistsAsync(string publisherName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }

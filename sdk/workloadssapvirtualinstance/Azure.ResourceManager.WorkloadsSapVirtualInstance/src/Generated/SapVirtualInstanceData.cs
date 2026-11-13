@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             get
             {
-                return Properties is null ? default : Properties.Environment;
+                return Properties is null ? (SapEnvironmentType?)default : Properties.Environment;
             }
             set
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             get
             {
-                return Properties is null ? default : Properties.SapProduct;
+                return Properties is null ? (SapProductType?)default : Properties.SapProduct;
             }
             set
             {

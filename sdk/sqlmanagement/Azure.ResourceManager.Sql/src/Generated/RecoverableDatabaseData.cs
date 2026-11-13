@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Sql
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseData"/>. </summary>
+        public RecoverableDatabaseData()
+        {
+        }
+
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal RecoverableDatabaseProperties Properties { get; }

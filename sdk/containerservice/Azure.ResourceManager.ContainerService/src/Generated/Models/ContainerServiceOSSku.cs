@@ -41,6 +41,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string Ubuntu2404Value = "Ubuntu2404";
         /// <summary> Use Azure Container Linux as the OS for node images. Azure Container Linux is a container-optimized, security-focused Linux OS built on Azure Linux, with an immutable filesystem. ACL is derived from the Flatcar Container Linux project, building on Flatcar's proven container-first, immutable design, while adding Azure Linux packages, servicing, and deep integration with the Azure and AKS lifecycle. For more information, see https://aka.ms/azurecontainerlinux. </summary>
         private const string AzureContainerLinuxValue = "AzureContainerLinux";
+        /// <summary> Use Ubuntu2604 as the OS for node images. For limitations and supported Kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
+        private const string Ubuntu2604Value = "Ubuntu2604";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceOSSku"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -90,6 +92,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Use Azure Container Linux as the OS for node images. Azure Container Linux is a container-optimized, security-focused Linux OS built on Azure Linux, with an immutable filesystem. ACL is derived from the Flatcar Container Linux project, building on Flatcar's proven container-first, immutable design, while adding Azure Linux packages, servicing, and deep integration with the Azure and AKS lifecycle. For more information, see https://aka.ms/azurecontainerlinux. </summary>
         public static ContainerServiceOSSku AzureContainerLinux { get; } = new ContainerServiceOSSku(AzureContainerLinuxValue);
+
+        /// <summary> Use Ubuntu2604 as the OS for node images. For limitations and supported Kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
+        public static ContainerServiceOSSku Ubuntu2604 { get; } = new ContainerServiceOSSku(Ubuntu2604Value);
 
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

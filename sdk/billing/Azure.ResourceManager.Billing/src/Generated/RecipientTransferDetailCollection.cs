@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(RecipientTransferDetailResource.ResourceType, out string recipientTransferDetailApiVersion);
             _recipientTransfersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", RecipientTransferDetailResource.ResourceType.Namespace, Diagnostics);
-            _recipientTransfersRestClient = new RecipientTransfers(_recipientTransfersClientDiagnostics, Pipeline, Endpoint, recipientTransferDetailApiVersion ?? "2024-04-01");
+            _recipientTransfersRestClient = new RecipientTransfers(_recipientTransfersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recipientTransferDetailApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecipientTransferDetailData, RecipientTransferDetailResource>(new RecipientTransfersGetAllAsyncCollectionResultOfT(_recipientTransfersRestClient, context, "RecipientTransferDetailCollection.GetAll"), data => new RecipientTransferDetailResource(Client, data));
+            return new AsyncPageableWrapper<RecipientTransferDetailData, RecipientTransferDetailResource>(new RecipientTransferDetailDataAsyncCollectionResultOfT(_recipientTransfersRestClient, context, "RecipientTransferDetailCollection.GetAll"), data => new RecipientTransferDetailResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecipientTransferDetailData, RecipientTransferDetailResource>(new RecipientTransfersGetAllCollectionResultOfT(_recipientTransfersRestClient, context, "RecipientTransferDetailCollection.GetAll"), data => new RecipientTransferDetailResource(Client, data));
+            return new PageableWrapper<RecipientTransferDetailData, RecipientTransferDetailResource>(new RecipientTransferDetailDataCollectionResultOfT(_recipientTransfersRestClient, context, "RecipientTransferDetailCollection.GetAll"), data => new RecipientTransferDetailResource(Client, data));
         }
 
         /// <summary>

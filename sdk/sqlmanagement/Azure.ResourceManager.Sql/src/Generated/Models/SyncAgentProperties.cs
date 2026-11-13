@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lastAliveOn"> Last alive time of the sync agent. </param>
         /// <param name="state"> State of the sync agent. </param>
         /// <param name="isUpToDate"> If the sync agent version is up to date. </param>
-        /// <param name="expireOn"> Expiration time of the sync agent version. </param>
+        /// <param name="expiresOn"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SyncAgentProperties(string syncAgentName, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SyncAgentProperties(string syncAgentName, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expiresOn, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SyncAgentName = syncAgentName;
             SyncDatabaseId = syncDatabaseId;
             LastAliveOn = lastAliveOn;
             State = state;
             IsUpToDate = isUpToDate;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Expiration time of the sync agent version. </summary>
         [WirePath("expiryTime")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Version of the sync agent. </summary>
         [WirePath("version")]

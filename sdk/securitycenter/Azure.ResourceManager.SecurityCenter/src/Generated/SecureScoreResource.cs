@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string secureScoreApiVersion);
             _secureScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Endpoint, secureScoreApiVersion ?? "2020-01-01");
+            _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secureScoreApiVersion ?? "2020-01-01");
             _secureScoreControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _secureScoreControlsRestClient = new SecureScoreControls(_secureScoreControlsClientDiagnostics, Pipeline, Endpoint, secureScoreApiVersion ?? "2020-01-01");
+            _secureScoreControlsRestClient = new SecureScoreControls(_secureScoreControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secureScoreApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlsGetBySecureScoreAsyncCollectionResultOfT(
+            return new SecureScoreControlDetailsAsyncCollectionResultOfT(
                 _secureScoreControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlsGetBySecureScoreCollectionResultOfT(
+            return new SecureScoreControlDetailsCollectionResultOfT(
                 _secureScoreControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

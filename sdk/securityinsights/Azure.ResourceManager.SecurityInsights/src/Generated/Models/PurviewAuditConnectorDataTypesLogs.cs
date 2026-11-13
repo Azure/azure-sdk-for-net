@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class PurviewAuditConnectorDataTypesLogs : DataConnectorDataTypeCommon
+    internal partial class PurviewAuditConnectorDataTypesLogs : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="PurviewAuditConnectorDataTypesLogs"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _firewallPublicIPAddress;
+        private bool _firewallPublicIPAddressIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         public ManagedNetworkSettings()
@@ -31,9 +33,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkSettings(bool? enableNetworkMonitor, IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedNetworkSettings(bool? enableNetworkMonitor, IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableNetworkMonitor = enableNetworkMonitor;
             IsolationMode = isolationMode;
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
             FirewallSku = firewallSku;
             ManagedNetworkKind = managedNetworkKind;
-            FirewallPublicIpAddress = firewallPublicIpAddress;
+            _firewallPublicIPAddress = firewallPublicIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -76,6 +78,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Public IP address assigned to the Azure Firewall. </summary>
         [WirePath("firewallPublicIpAddress")]
-        public string FirewallPublicIpAddress { get; }
+        public string FirewallPublicIPAddress
+        {
+            get
+            {
+                return _firewallPublicIPAddress;
+            }
+        }
     }
 }

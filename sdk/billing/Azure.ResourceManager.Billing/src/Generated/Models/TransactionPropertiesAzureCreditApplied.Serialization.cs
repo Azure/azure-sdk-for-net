@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
-    public partial class TransactionPropertiesAzureCreditApplied : BillingAmount, IJsonModel<TransactionPropertiesAzureCreditApplied>
+    internal partial class TransactionPropertiesAzureCreditApplied : BillingAmount, IJsonModel<TransactionPropertiesAzureCreditApplied>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TransactionPropertiesAzureCreditApplied(currency, value, additionalBinaryDataProperties);

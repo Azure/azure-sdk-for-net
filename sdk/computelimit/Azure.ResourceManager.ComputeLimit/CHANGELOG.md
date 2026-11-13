@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2026-07-26)
+
+### Features Added
+
+- Upgraded API version to `2026-07-31`.
+- Added `TrustedHostSubscriptionResource`, `TrustedHostSubscriptionCollection`, and `TrustedHostSubscriptionData` for managing trusted host subscriptions per region (`/locations/{location}/trustedHostSubscriptions/{hostSubscriptionId}`).
 
 ## 1.3.0 (2026-07-07)
 

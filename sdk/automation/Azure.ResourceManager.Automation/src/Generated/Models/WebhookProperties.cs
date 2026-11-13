@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _lastInvokedOn;
+        private bool _lastInvokedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebhookProperties"/>. </summary>
         public WebhookProperties()
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="WebhookProperties"/>. </summary>
         /// <param name="isEnabled"> Gets or sets the value of the enabled flag of the webhook. </param>
         /// <param name="uri"> Gets or sets the webhook uri. </param>
-        /// <param name="expireOn"> Gets or sets the expiry time. </param>
+        /// <param name="expiresOn"> Gets or sets the expiry time. </param>
         /// <param name="lastInvokedOn"> Gets or sets the last invoked time. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with. </param>
         /// <param name="runbook"> Gets or sets the runbook the webhook is associated with. </param>
@@ -36,12 +38,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedBy"> Details of the user who last modified the Webhook. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookProperties(bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebhookProperties(bool? isEnabled, Uri uri, DateTimeOffset? expiresOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Uri = uri;
-            ExpireOn = expireOn;
-            LastInvokedOn = lastInvokedOn;
+            ExpiresOn = expiresOn;
+            _lastInvokedOn = lastInvokedOn;
             Parameters = parameters;
             Runbook = runbook;
             RunOn = runOn;
@@ -59,10 +61,21 @@ namespace Azure.ResourceManager.Automation.Models
         public Uri Uri { get; set; }
 
         /// <summary> Gets or sets the expiry time. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Gets or sets the last invoked time. </summary>
-        public DateTimeOffset? LastInvokedOn { get; set; }
+        public DateTimeOffset? LastInvokedOn
+        {
+            get
+            {
+                return _lastInvokedOn;
+            }
+            set
+            {
+                _lastInvokedOn = value;
+                _lastInvokedOnIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with. </summary>
         public IDictionary<string, string> Parameters { get; } = new ChangeTrackingDictionary<string, string>();

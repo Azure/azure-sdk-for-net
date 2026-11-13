@@ -348,6 +348,12 @@ namespace Azure.AI.Agents.Persistent
             return _filesClient.GetVectorStoreFile(vectorStoreId: vectorStoreId, fileId: fileId, cancellationToken: cancellationToken);
         }
 
+        /// <summary> Deletes a vector store file asynchronously. This removes the file-to-store link (does not delete the file itself). </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="fileId"> Identifier of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             return await _filesClient.DeleteVectorStoreFileAsync(vectorStoreId: vectorStoreId, fileId: fileId, cancellationToken: cancellationToken).ConfigureAwait(false);

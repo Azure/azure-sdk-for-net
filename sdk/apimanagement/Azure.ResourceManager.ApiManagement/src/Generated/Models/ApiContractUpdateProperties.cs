@@ -13,7 +13,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API update contract properties. </summary>
-    public partial class ApiContractUpdateProperties : ApiEntityBaseContract
+    internal partial class ApiContractUpdateProperties : ApiEntityBaseContract
     {
         /// <summary> Initializes a new instance of <see cref="ApiContractUpdateProperties"/>. </summary>
         public ApiContractUpdateProperties()

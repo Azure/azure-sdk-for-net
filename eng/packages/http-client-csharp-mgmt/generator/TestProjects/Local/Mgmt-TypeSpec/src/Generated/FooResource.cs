@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -60,13 +61,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string fooApiVersion);
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/foos", out string foosApiVersionOverride) ? foosApiVersionOverride : "2024-05-01");
             _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _grandparentFlattenReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _sharedParamReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -409,7 +410,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// FooAction
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -469,7 +470,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// FooAction
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -569,7 +570,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
                     foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
                     {
-                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                        valueResult.Add(valueResultProperty.Name, valueResultProperty.Value.GetUtf8Bytes());
                     }
                     value = valueResult;
                 }
@@ -628,7 +629,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
                     foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
                     {
-                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                        valueResult.Add(valueResultProperty.Name, valueResultProperty.Value.GetUtf8Bytes());
                     }
                     value = valueResult;
                 }
@@ -771,7 +772,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT(
+            return new FooResourceGetDependenciesAsyncCollectionResultOfT(
                 _foosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -809,7 +810,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new MgmtTypeSpecFoosListDependenciesCollectionResultOfT(
+            return new FooResourceGetDependenciesCollectionResultOfT(
                 _foosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -819,7 +820,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// SplitDependencies
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -875,7 +876,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// SplitDependencies
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1438,10 +1439,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1480,10 +1480,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

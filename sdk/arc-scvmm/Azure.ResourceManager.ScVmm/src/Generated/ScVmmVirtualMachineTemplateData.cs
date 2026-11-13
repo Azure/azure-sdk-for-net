@@ -14,46 +14,14 @@ using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
 {
-    /// <summary>
-    /// A class representing the ScVmmVirtualMachineTemplate data model.
-    /// The VirtualMachineTemplates resource definition.
-    /// </summary>
+    /// <summary> The VirtualMachineTemplates resource definition. </summary>
     public partial class ScVmmVirtualMachineTemplateData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public ScVmmVirtualMachineTemplateData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
@@ -61,103 +29,223 @@ namespace Azure.ResourceManager.ScVmm
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            NetworkInterfaces = new ChangeTrackingList<ScVmmNetworkInterface>();
-            Disks = new ChangeTrackingList<ScVmmVirtualDisk>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extended location. </param>
-        /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
-        /// <param name="uuid"> Unique ID of the virtual machine template. </param>
-        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
-        /// <param name="osType"> Gets the type of the os. </param>
-        /// <param name="osName"> Gets os name. </param>
-        /// <param name="computerName"> Gets computer name. </param>
-        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
-        /// <param name="cpuCount"> Gets the desired number of vCPUs for the vm. </param>
-        /// <param name="limitCpuForMigration"> Gets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
-        /// <param name="dynamicMemoryEnabled"> Gets a value indicating whether to enable dynamic memory or not. </param>
-        /// <param name="isCustomizable"> Gets a value indicating whether the vm template is customizable or not. </param>
-        /// <param name="dynamicMemoryMaxMB"> Gets the max dynamic memory for the vm. </param>
-        /// <param name="dynamicMemoryMinMB"> Gets the min dynamic memory for the vm. </param>
-        /// <param name="isHighlyAvailable"> Gets highly available property. </param>
-        /// <param name="generation"> Gets the generation for the vm. </param>
-        /// <param name="networkInterfaces"> Gets the network interfaces of the template. </param>
-        /// <param name="disks"> Gets the disks of the template. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, ScVmmOSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable, int? generation, IReadOnlyList<ScVmmNetworkInterface> networkInterfaces, IReadOnlyList<ScVmmVirtualDisk> disks, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineTemplateProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            InventoryItemId = inventoryItemId;
-            Uuid = uuid;
-            VmmServerId = vmmServerId;
-            OSType = osType;
-            OSName = osName;
-            ComputerName = computerName;
-            MemoryMB = memoryMB;
-            CpuCount = cpuCount;
-            LimitCpuForMigration = limitCpuForMigration;
-            DynamicMemoryEnabled = dynamicMemoryEnabled;
-            IsCustomizable = isCustomizable;
-            DynamicMemoryMaxMB = dynamicMemoryMaxMB;
-            DynamicMemoryMinMB = dynamicMemoryMinMB;
-            IsHighlyAvailable = isHighlyAvailable;
-            Generation = generation;
-            NetworkInterfaces = networkInterfaces;
-            Disks = disks;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/> for deserialization. </summary>
-        internal ScVmmVirtualMachineTemplateData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal VirtualMachineTemplateProperties Properties { get; set; }
 
         /// <summary> The extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> Gets or sets the inventory Item ID for the resource. </summary>
-        public string InventoryItemId { get; set; }
+        public string InventoryItemId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InventoryItemId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineTemplateProperties();
+                }
+                Properties.InventoryItemId = value;
+            }
+        }
+
         /// <summary> Unique ID of the virtual machine template. </summary>
-        public string Uuid { get; set; }
+        public string Uuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uuid;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineTemplateProperties();
+                }
+                Properties.Uuid = value;
+            }
+        }
+
         /// <summary> ARM Id of the vmmServer resource in which this resource resides. </summary>
-        public ResourceIdentifier VmmServerId { get; set; }
+        public ResourceIdentifier VmmServerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmmServerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineTemplateProperties();
+                }
+                Properties.VmmServerId = value;
+            }
+        }
+
         /// <summary> Gets the type of the os. </summary>
-        public ScVmmOSType? OSType { get; }
+        public ScVmmOSType? OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+        }
+
         /// <summary> Gets os name. </summary>
-        public string OSName { get; }
+        public string OSName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSName;
+            }
+        }
+
         /// <summary> Gets computer name. </summary>
-        public string ComputerName { get; }
+        public string ComputerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputerName;
+            }
+        }
+
         /// <summary> MemoryMB is the desired size of a virtual machine's memory, in MB. </summary>
-        public int? MemoryMB { get; }
+        public int? MemoryMB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemoryMB;
+            }
+        }
+
         /// <summary> Gets the desired number of vCPUs for the vm. </summary>
-        public int? CpuCount { get; }
+        public int? CpuCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CpuCount;
+            }
+        }
+
         /// <summary> Gets a value indicating whether to enable processor compatibility mode for live migration of VMs. </summary>
-        public LimitCpuForMigration? LimitCpuForMigration { get; }
+        public LimitCpuForMigration? LimitCpuForMigration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LimitCpuForMigration;
+            }
+        }
+
         /// <summary> Gets a value indicating whether to enable dynamic memory or not. </summary>
-        public DynamicMemoryEnabled? DynamicMemoryEnabled { get; }
+        public DynamicMemoryEnabled? DynamicMemoryEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DynamicMemoryEnabled;
+            }
+        }
+
         /// <summary> Gets a value indicating whether the vm template is customizable or not. </summary>
-        public IsCustomizable? IsCustomizable { get; }
+        public IsCustomizable? IsCustomizable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCustomizable;
+            }
+        }
+
         /// <summary> Gets the max dynamic memory for the vm. </summary>
-        public int? DynamicMemoryMaxMB { get; }
+        public int? DynamicMemoryMaxMB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DynamicMemoryMaxMB;
+            }
+        }
+
         /// <summary> Gets the min dynamic memory for the vm. </summary>
-        public int? DynamicMemoryMinMB { get; }
+        public int? DynamicMemoryMinMB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DynamicMemoryMinMB;
+            }
+        }
+
         /// <summary> Gets highly available property. </summary>
-        public IsHighlyAvailable? IsHighlyAvailable { get; }
+        public IsHighlyAvailable? IsHighlyAvailable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHighlyAvailable;
+            }
+        }
+
         /// <summary> Gets the generation for the vm. </summary>
-        public int? Generation { get; }
+        public int? Generation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Generation;
+            }
+        }
+
         /// <summary> Gets the network interfaces of the template. </summary>
-        public IReadOnlyList<ScVmmNetworkInterface> NetworkInterfaces { get; }
+        public IReadOnlyList<ScVmmNetworkInterface> NetworkInterfaces
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineTemplateProperties();
+                }
+                return Properties.NetworkInterfaces;
+            }
+        }
+
         /// <summary> Gets the disks of the template. </summary>
-        public IReadOnlyList<ScVmmVirtualDisk> Disks { get; }
+        public IReadOnlyList<ScVmmVirtualDisk> Disks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineTemplateProperties();
+                }
+                return Properties.Disks;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public ScVmmProvisioningState? ProvisioningState { get; }
+        public ScVmmProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

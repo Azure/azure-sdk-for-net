@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string diagnosticRemoteSupportSettingApiVersion);
             _diagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _diagnosticSettingsRestClient = new DiagnosticSettings(_diagnosticSettingsClientDiagnostics, Pipeline, Endpoint, diagnosticRemoteSupportSettingApiVersion ?? "2023-12-01");
+            _diagnosticSettingsRestClient = new DiagnosticSettings(_diagnosticSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticRemoteSupportSettingApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

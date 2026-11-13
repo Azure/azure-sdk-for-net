@@ -24,7 +24,6 @@
             "$id": "3",
             "name": "myOp",
             "isExactName": false,
-            "resourceName": "Single",
             "accessibility": "public",
             "parameters": [],
             "responses": [

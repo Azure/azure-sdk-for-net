@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network Interface Patch properties. </summary>
-    public partial class NetworkInterfacePatchProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfacePatchProperties>
+    internal partial class NetworkInterfacePatchProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfacePatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkInterfacePatchProperties(annotation, additionalBinaryDataProperties, additionalDescription);

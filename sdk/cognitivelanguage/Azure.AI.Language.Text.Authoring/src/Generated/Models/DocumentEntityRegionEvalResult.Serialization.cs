@@ -177,10 +177,10 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentEntityRegionEvalResult(expectedEntities, predictedEntities, regionOffset, regionLength, additionalBinaryDataProperties);
+            return new DocumentEntityRegionEvalResult(expectedEntities ?? new ChangeTrackingList<DocumentEntityLabelEvalResult>(), predictedEntities ?? new ChangeTrackingList<DocumentEntityLabelEvalResult>(), regionOffset, regionLength, additionalBinaryDataProperties);
         }
     }
 }

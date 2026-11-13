@@ -18,38 +18,38 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleProperties"/>. </summary>
-        /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
-        /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startIpAddress"/> or <paramref name="endIpAddress"/> is null. </exception>
-        public HorizonDBFirewallRuleProperties(string startIpAddress, string endIpAddress)
+        /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
+        public HorizonDBFirewallRuleProperties(string startIPAddress, string endIPAddress)
         {
-            Argument.AssertNotNull(startIpAddress, nameof(startIpAddress));
-            Argument.AssertNotNull(endIpAddress, nameof(endIpAddress));
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
-            StartIpAddress = startIpAddress;
-            EndIpAddress = endIpAddress;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleProperties"/>. </summary>
-        /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
-        /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <param name="description"> The description of the HorizonDB firewall rule. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBFirewallRuleProperties(string startIpAddress, string endIpAddress, string description, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBFirewallRuleProperties(string startIPAddress, string endIPAddress, string description, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartIpAddress = startIpAddress;
-            EndIpAddress = endIpAddress;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
             Description = description;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start IP address of the firewall rule (IPv4). </summary>
-        public string StartIpAddress { get; set; }
+        public string StartIPAddress { get; set; }
 
         /// <summary> The end IP address of the firewall rule (IPv4). </summary>
-        public string EndIpAddress { get; set; }
+        public string EndIPAddress { get; set; }
 
         /// <summary> The description of the HorizonDB firewall rule. </summary>
         public string Description { get; set; }

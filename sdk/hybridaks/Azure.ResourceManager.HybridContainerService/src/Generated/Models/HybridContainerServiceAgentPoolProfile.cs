@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Profile for agent pool properties specified during creation. </summary>
     public partial class HybridContainerServiceAgentPoolProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolProfile"/>. </summary>
         public HybridContainerServiceAgentPoolProfile()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
         /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
         /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridContainerServiceAgentPoolProfile(HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceAgentPoolProfile(HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             OSSku = osSku;
@@ -72,23 +44,30 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             MinCount = minCount;
             EnableAutoScaling = enableAutoScaling;
             MaxPods = maxPods;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
         public HybridContainerServiceOSType? OSType { get; set; }
+
         /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
         public HybridContainerServiceOSSku? OSSku { get; set; }
+
         /// <summary> The node labels to be persisted across all nodes in agent pool. </summary>
         public IDictionary<string, string> NodeLabels { get; }
+
         /// <summary> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
         public IList<string> NodeTaints { get; }
+
         /// <summary> The maximum number of nodes for auto-scaling. </summary>
         public int? MaxCount { get; set; }
+
         /// <summary> The minimum number of nodes for auto-scaling. </summary>
         public int? MinCount { get; set; }
+
         /// <summary> Whether to enable auto-scaler. Default value is false. </summary>
         public bool? EnableAutoScaling { get; set; }
+
         /// <summary> The maximum number of pods that can run on a node. </summary>
         public int? MaxPods { get; set; }
     }

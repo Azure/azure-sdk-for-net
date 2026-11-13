@@ -26,14 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deviceState"> edge device state. </param>
         /// <param name="extensionProfile"> Extensions details for edge device. </param>
         /// <param name="lastSyncedOn"> Most recent edge device sync timestamp in UTC. </param>
-        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncedOn, ConfidentialVmProfile confidentialVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceState = deviceState;
             ExtensionProfile = extensionProfile;
             LastSyncedOn = lastSyncedOn;
-            ConfidentialVmProfile = confidentialVmProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,10 +46,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Most recent edge device sync timestamp in UTC. </summary>
         [WirePath("lastSyncTimestamp")]
         public DateTimeOffset? LastSyncedOn { get; }
-
-        /// <summary> CVM support details for edge device. </summary>
-        [WirePath("confidentialVmProfile")]
-        public ConfidentialVmProfile ConfidentialVmProfile { get; }
 
         /// <summary> List of Arc extensions installed on edge device. </summary>
         [WirePath("extensionProfile.extensions")]

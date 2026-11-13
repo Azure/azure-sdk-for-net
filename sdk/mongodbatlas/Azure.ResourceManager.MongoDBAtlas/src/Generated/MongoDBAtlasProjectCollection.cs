@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
             TryGetApiVersion(MongoDBAtlasProjectResource.ResourceType, out string mongoDBAtlasProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", MongoDBAtlasProjectResource.ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasProjectApiVersion ?? "2026-03-01-preview");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBAtlasProjectApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new ProjectsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new MongoDBAtlasProjectDataAsyncCollectionResultOfT(
                 _projectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new ProjectsGetAllCollectionResultOfT(
+            return new PageableWrapper<MongoDBAtlasProjectData, MongoDBAtlasProjectResource>(new MongoDBAtlasProjectDataCollectionResultOfT(
                 _projectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

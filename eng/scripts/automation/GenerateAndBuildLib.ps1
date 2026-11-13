@@ -919,6 +919,42 @@ function New-MgmtPackageScaffolding()
     Write-Host "Management SDK scaffolding complete for $packageName"
 }
 
+function Get-SDKValidationBuildArguments()
+{
+    param(
+        [string]$sdkRootPath,
+        [string]$service,
+        [string]$packageName
+    )
+
+    return @(
+        "build",
+        "/p:Scope=$service",
+        "/p:Project=$packageName",
+        "/p:RunApiCompat=false",
+        "/p:IncludeSamples=false",
+        "/p:IncludePerf=false",
+        "/p:IncludeStress=false",
+        (Join-Path $sdkRootPath "eng" "service.proj")
+    )
+}
+
+function Get-SDKPackageResult()
+{
+    param(
+        [bool]$isGenerateSuccess,
+        [bool]$hasValidationWarning
+    )
+
+    if (!$isGenerateSuccess) {
+        return "failed"
+    }
+    if ($hasValidationWarning) {
+        return "warning"
+    }
+    return "succeeded"
+}
+
 function GeneratePackage()
 {
     param(
@@ -942,8 +978,8 @@ function GeneratePackage()
     $hasBreakingChange = $false
     $breakingChangeItems = @()
     $content = ""
-    $result = "succeeded"
     $isGenerateSuccess = $true
+    $hasValidationWarning = $false
     $version = ""
 
     # Generate Code
@@ -958,7 +994,6 @@ function GeneratePackage()
         }
         if ( !$?) {
             Write-Host "[ERROR] Failed to generate sdk for package:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            $result = "failed"
             $isGenerateSuccess = $false
         }
     }
@@ -984,23 +1019,21 @@ function GeneratePackage()
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
             Write-Host "[WARNING] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            $result = "warning"
+            $hasValidationWarning = $true
         } else {
-            # Build the whole solution and generate artifacts if the project build successfully
-            # Build the whole solution
-            Write-Host "Start to build sdk solution: $projectFolder"
-            $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
-            dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
+            Write-Host "Start to build sdk validation target: $projectFolder"
+            $validationBuildArguments = Get-SDKValidationBuildArguments -sdkRootPath $sdkRootPath -service $service -packageName $packageName
+            dotnet @validationBuildArguments
             if ( !$? ) {
-                Write-Host "[WARNING] Failed to build sdk solution:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "warning"
+                Write-Host "[WARNING] Failed to build sdk validation target: $packageName. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $hasValidationWarning = $true
             }
             # pack
             Write-Host "Start to pack sdk"
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
                 Write-Host "[WARNING] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "warning"
+                $hasValidationWarning = $true
             } else {
                 # artifacts
                 Push-Location $sdkRootPath
@@ -1041,7 +1074,7 @@ function GeneratePackage()
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
                 Write-Host "[WARNING] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "warning"
+                $hasValidationWarning = $true
             }
             # breaking change validation
             Write-Host "Start to validate breaking change. srcPath:$srcPath"
@@ -1084,11 +1117,7 @@ function GeneratePackage()
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
 
-    # For management plane, result is purely based on generation success — no "warning" option.
-    # Build/pack/Export-API failures should not downgrade a successful generation to "warning".
-    if ($serviceType -eq "resource-manager" -and $isGenerateSuccess) {
-        $result = "succeeded"
-    }
+    $result = Get-SDKPackageResult -isGenerateSuccess $isGenerateSuccess -hasValidationWarning $hasValidationWarning
 
     $packageDetails = @{
         version=$version;
@@ -1156,11 +1185,37 @@ function UpdateExistingSDKByInputFiles()
 
 }
 
+function Get-TypeSpecEmitterPackageJsonPath {
+    param(
+        [string]$typespecEmitter,
+        [string]$sdkRepoRoot
+    )
+
+    if ([string]::IsNullOrWhiteSpace($typespecEmitter)) {
+        return
+    }
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    $configPath = Join-Path $sdkRepoRoot "eng" "tsp-client-config.yaml"
+    $config = ConvertFrom-Yaml (Get-Content $configPath -Raw -ErrorAction Stop)
+    $emitter = $config["supportedEmitters"] | Where-Object { $_["name"] -ceq $typespecEmitter } | Select-Object -First 1
+    if (-not $emitter -or [string]::IsNullOrWhiteSpace($emitter["path"])) {
+        throw "[ERROR] TypeSpec emitter '$typespecEmitter' is not supported. Configure it in '$configPath' with an emitter package JSON path."
+    }
+
+    $packageJsonPath = Join-Path $sdkRepoRoot $emitter["path"]
+    if (-not (Test-Path $packageJsonPath -PathType Leaf)) {
+        throw "[ERROR] Emitter package JSON for '$typespecEmitter' was not found at '$packageJsonPath'."
+    }
+    return $packageJsonPath
+}
+
 function GetSDKProjectFolder()
 {
     param(
         [string]$typespecConfigurationFile,
-        [string]$sdkRepoRoot
+        [string]$sdkRepoRoot,
+        [string]$typespecEmitter
     )
     $tspConfigYaml = Get-Content -Path $typespecConfigurationFile -Raw
 
@@ -1180,8 +1235,15 @@ function GetSDKProjectFolder()
         $csharpOptionKeys = @(
             "@azure-tools/typespec-csharp",
             "@azure-typespec/http-client-csharp",
-            "@azure-typespec/http-client-csharp-mgmt"
+            "@azure-typespec/http-client-csharp-mgmt",
+            "@typespec/http-client-csharp"
         )
+        if (-not [string]::IsNullOrWhiteSpace($typespecEmitter)) {
+            $csharpOptionKeys = @($typespecEmitter)
+            if (-not $yml["options"] -or -not $yml["options"][$typespecEmitter]) {
+                throw "[ERROR] Options for TypeSpec emitter '$typespecEmitter' were not found in '$typespecConfigurationFile'."
+            }
+        }
 
         $csharpOpts = $null
         if ($yml["options"]) {

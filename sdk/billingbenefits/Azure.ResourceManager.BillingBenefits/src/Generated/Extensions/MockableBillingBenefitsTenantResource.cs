@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
         private ClientDiagnostics SavingsPlanOperationGroupClientDiagnostics => _savingsPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SavingsPlanOperationGroup SavingsPlanOperationGroupRestClient => _savingsPlanOperationGroupRestClient ??= new SavingsPlanOperationGroup(SavingsPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private SavingsPlanOperationGroup SavingsPlanOperationGroupRestClient => _savingsPlanOperationGroupRestClient ??= new SavingsPlanOperationGroup(SavingsPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics BenefitClientDiagnostics => _benefitClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Benefit BenefitRestClient => _benefitRestClient ??= new Benefit(BenefitClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private Benefit BenefitRestClient => _benefitRestClient ??= new Benefit(BenefitClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics SellerResourceClientDiagnostics => _sellerResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SellerResource SellerResourceRestClient => _sellerResourceRestClient ??= new SellerResource(SellerResourceClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private SellerResource SellerResourceRestClient => _sellerResourceRestClient ??= new SellerResource(SellerResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliases in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliases and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new BillingBenefitsSavingsPlanDataAsync0CollectionResultOfT(
                 SavingsPlanOperationGroupRestClient,
                 filter,
                 @orderby,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansCollectionResultOfT(
+            return new PageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new BillingBenefitsSavingsPlanData0CollectionResultOfT(
                 SavingsPlanOperationGroupRestClient,
                 filter,
                 @orderby,
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BenefitValidateResponse>> ValidateAsync(BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BenefitValidateResult>> ValidateAsync(BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
                 };
                 HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BenefitValidateResponse> response = Response.FromValue(BenefitValidateResponse.FromResponse(result), result);
+                Response<BenefitValidateResult> response = Response.FromValue(BenefitValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BenefitValidateResponse> Validate(BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<BenefitValidateResult> Validate(BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
                 };
                 HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BenefitValidateResponse> response = Response.FromValue(BenefitValidateResponse.FromResponse(result), result);
+                Response<BenefitValidateResult> response = Response.FromValue(BenefitValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaccData, MaccResource>(new MicrosoftBillingBenefitsSellerResourceOperationGroupListAsyncCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
+            return new AsyncPageableWrapper<MaccData, MaccResource>(new MockableBillingBenefitsTenantResourceGetAllAsyncCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaccData, MaccResource>(new MicrosoftBillingBenefitsSellerResourceOperationGroupListCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
+            return new PageableWrapper<MaccData, MaccResource>(new MockableBillingBenefitsTenantResourceGetAllCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
         }
     }
 }

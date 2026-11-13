@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementPrivateEndpointConnectionResource.ResourceType, out string apiManagementPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementPrivateEndpointConnectionData, ApiManagementPrivateEndpointConnectionResource>(new PrivateEndpointConnectionGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementPrivateEndpointConnectionData, ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementPrivateEndpointConnectionData, ApiManagementPrivateEndpointConnectionResource>(new PrivateEndpointConnectionGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementPrivateEndpointConnectionData, ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

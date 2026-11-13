@@ -1,0 +1,48 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.AlertsManagement.Models
+{
+    /// <summary> Smart group state. </summary>
+    [Obsolete("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public readonly partial struct SmartGroupState : IEquatable<SmartGroupState>
+    {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance. </summary>
+        /// <param name="value"> The value. </param>
+        public SmartGroupState(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
+
+        /// <summary> New. </summary>
+        public static SmartGroupState New => throw new NotSupportedException();
+        /// <summary> Acknowledged. </summary>
+        public static SmartGroupState Acknowledged => throw new NotSupportedException();
+        /// <summary> Closed. </summary>
+        public static SmartGroupState Closed => throw new NotSupportedException();
+
+        /// <summary> Converts a string. </summary>
+        public static implicit operator SmartGroupState(string value) => new SmartGroupState(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is SmartGroupState other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(SmartGroupState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
+
+        /// <summary> Equality operator. </summary>
+        public static bool operator ==(SmartGroupState left, SmartGroupState right) => left.Equals(right);
+        /// <summary> Inequality operator. </summary>
+        public static bool operator !=(SmartGroupState left, SmartGroupState right) => !left.Equals(right);
+    }
+}

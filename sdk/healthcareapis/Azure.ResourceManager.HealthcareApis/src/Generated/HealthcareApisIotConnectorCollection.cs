@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(HealthcareApisIotConnectorResource.ResourceType, out string healthcareApisIotConnectorApiVersion);
             _healthcareApisIotConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisIotConnectorResource.ResourceType.Namespace, Diagnostics);
-            _healthcareApisIotConnectorsRestClient = new HealthcareApisIotConnectors(_healthcareApisIotConnectorsClientDiagnostics, Pipeline, Endpoint, healthcareApisIotConnectorApiVersion ?? "2025-04-01-preview");
+            _healthcareApisIotConnectorsRestClient = new HealthcareApisIotConnectors(_healthcareApisIotConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisIotConnectorApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisIotConnectorData, HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisIotConnectorData, HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorDataAsyncCollectionResultOfT(
                 _healthcareApisIotConnectorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisIotConnectorData, HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisIotConnectorData, HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorDataCollectionResultOfT(
                 _healthcareApisIotConnectorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

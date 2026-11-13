@@ -38,7 +38,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             StacCatalogCollections collections = response.Value;
 
             Console.WriteLine($"Found {collections.Collections.Count} collections:");
-            foreach (StacCollectionResource collection in collections.Collections)
+            foreach (StacCollection collection in collections.Collections)
             {
                 Console.WriteLine($"  - {collection.Id}: {collection.Title}");
             }
@@ -61,8 +61,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a specific collection by ID
             string collectionId = "naip";
-            Response<StacCollectionResource> response = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = response.Value;
+            Response<StacCollection> response = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = response.Value;
 
             Console.WriteLine($"Collection: {collection.Id}");
             Console.WriteLine($"Title: {collection.Title}");
@@ -82,7 +82,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             StacClient stacClient = client.GetStacClient();
 
             // Get STAC conformance classes
-            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassAsync();
+            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassesAsync();
             StacConformanceClasses conformance = response.Value;
 
             Console.WriteLine("STAC Conformance Classes:");
@@ -104,8 +104,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get partition type for a collection
             string collectionId = "naip";
-            Response<PartitionType> response = await stacClient.GetPartitionTypeAsync(collectionId);
-            PartitionType partitionType = response.Value;
+            Response<PartitionKind> response = await stacClient.GetPartitionTypeAsync(collectionId);
+            PartitionKind partitionType = response.Value;
 
             Console.WriteLine($"Partition scheme: {partitionType.Scheme}");
             #endregion
@@ -258,7 +258,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get collection thumbnail
             string collectionId = "naip";
-            Response response = await stacClient.GetCollectionThumbnailAsync(collectionId, new RequestContext());
+            Response response = await stacClient.GetCollectionThumbnailAsync(new GetCollectionThumbnailOptions(collectionId), new RequestContext());
 
             // Read the thumbnail data
             System.IO.Stream contentStream = response.ContentStream;
@@ -283,7 +283,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             // Create a new render option
             var renderOption = new RenderConfiguration("custom-render", "Custom Natural Color")
             {
-                Type = RenderOptionType.RasterTile,
+                Kind = RenderOptionKind.RasterTile,
                 Options = "assets=image&asset_bidx=image|1,2,3",
                 MinZoom = 6,
                 Description = "Custom RGB rendering"

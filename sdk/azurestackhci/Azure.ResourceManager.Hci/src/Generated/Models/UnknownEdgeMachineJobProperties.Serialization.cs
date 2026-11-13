@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             HciJobStatus? status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownEdgeMachineJobProperties(
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 status,
                 error,
                 additionalBinaryDataProperties);

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryLinkedServiceResource.ResourceType, out string dataFactoryLinkedServiceApiVersion);
             _linkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryLinkedServiceResource.ResourceType.Namespace, Diagnostics);
-            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Endpoint, dataFactoryLinkedServiceApiVersion ?? "2018-06-01");
+            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryLinkedServiceApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryLinkedServiceData, DataFactoryLinkedServiceResource>(new LinkedServicesGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryLinkedServiceData, DataFactoryLinkedServiceResource>(new DataFactoryLinkedServiceDataAsyncCollectionResultOfT(
                 _linkedServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryLinkedServiceData, DataFactoryLinkedServiceResource>(new LinkedServicesGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryLinkedServiceData, DataFactoryLinkedServiceResource>(new DataFactoryLinkedServiceDataCollectionResultOfT(
                 _linkedServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptionClient))
             {
                 writer.WritePropertyName("encryptionClient"u8);
@@ -200,6 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> server = default;
             OracleAuthenticationType? authenticationType = default;
             DataFactoryElement<string> username = default;
+            DataFactoryKeyVaultSecret password = default;
             DataFactoryElement<string> encryptionClient = default;
             DataFactoryElement<string> encryptionTypesClient = default;
             DataFactoryElement<string> cryptoChecksumClient = default;
@@ -221,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("server"u8))
@@ -230,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    server = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    server = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))
@@ -247,13 +253,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUsername(prop, ref username);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptionClient"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptionClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    encryptionClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptionTypesClient"u8))
@@ -262,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    encryptionTypesClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    encryptionTypesClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("cryptoChecksumClient"u8))
@@ -271,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    cryptoChecksumClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    cryptoChecksumClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("cryptoChecksumTypesClient"u8))
@@ -280,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    cryptoChecksumTypesClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    cryptoChecksumTypesClient = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("initialLobFetchSize"u8))
@@ -289,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    initialLobFetchSize = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    initialLobFetchSize = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("fetchSize"u8))
@@ -298,7 +313,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fetchSize = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    fetchSize = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("statementCacheSize"u8))
@@ -307,7 +322,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    statementCacheSize = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    statementCacheSize = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("initializationString"u8))
@@ -316,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    initializationString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    initializationString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("enableBulkLoad"u8))
@@ -325,7 +340,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableBulkLoad = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    enableBulkLoad = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("supportV1DataTypes"u8))
@@ -334,7 +349,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    supportV1DataTypes = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    supportV1DataTypes = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("fetchTswtzAsTimestamp"u8))
@@ -343,7 +358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fetchTswtzAsTimestamp = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    fetchTswtzAsTimestamp = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -353,7 +368,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OracleLinkedServiceTypeProperties(
@@ -361,6 +376,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 server,
                 authenticationType,
                 username,
+                password,
                 encryptionClient,
                 encryptionTypesClient,
                 cryptoChecksumClient,

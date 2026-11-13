@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the route. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal RouteData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, RoutePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
+        internal RouteData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoutePropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.NextHopType;
+                return Properties is null ? (RouteNextHopType?)default : Properties.NextHopType;
             }
             set
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </summary>
         [WirePath("properties.nextHop.nextHopIpAddresses")]
-        public IList<string> NextHopIpAddresses
+        public IList<string> NextHopIPAddresses
         {
             get
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new RoutePropertiesFormat();
                 }
-                return Properties.NextHopIpAddresses;
+                return Properties.NextHopIPAddresses;
             }
         }
     }

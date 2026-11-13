@@ -1,0 +1,7 @@
+# Azure.ResourceManager.InformaticaDataManagement approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'ServerlessMetadataResponse' shipped in the GA 1.0.0 public API, so dropping the
+# 'Response' suffix the rule objects to would be a breaking change. The name is also the
+# one used by the Informatica service contract this model is generated from.
+nowarn:AZC0030 T:Azure.ResourceManager.InformaticaDataManagement.Models.ServerlessMetadataResponse

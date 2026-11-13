@@ -30,7 +30,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BestPracticeProperties properties, ExtendedLocationOptionalModel extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
@@ -43,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [WirePath("properties")]
         public BestPracticeProperties Properties { get; set; }
 
-        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        /// <summary> The extended location of the resource. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocationOptionalModel ExtendedLocation { get; set; }
     }

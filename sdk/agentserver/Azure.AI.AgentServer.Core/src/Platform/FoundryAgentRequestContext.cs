@@ -50,10 +50,10 @@ public sealed class FoundryAgentRequestContext
     public string? UserId { get; init; }
 
     /// <summary>
-    /// The session ID sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment variable
-    /// at process start (via <see cref="FoundryEnvironment.SessionId"/>). This is a process-level
-    /// value that does not reflect per-request overrides (e.g. the <c>agent_session_id</c> query
-    /// parameter); <see langword="null"/> when the variable is absent.
+    /// The process-level session ID sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment
+    /// variable via <see cref="FoundryEnvironment.SessionId"/>. The value is refreshed after
+    /// snapshot restoration and does not reflect per-request overrides (e.g. the
+    /// <c>agent_session_id</c> query parameter); <see langword="null"/> when the variable is absent.
     /// </summary>
     public string? SessionId { get; init; }
 
@@ -68,13 +68,6 @@ public sealed class FoundryAgentRequestContext
     /// <see cref="Current"/> when no request context has been established.
     /// </summary>
     public static FoundryAgentRequestContext Empty { get; } = new FoundryAgentRequestContext();
-
-    /// <summary>
-    /// Binds <paramref name="context"/> as the current request context. Called by
-    /// the SDK's request-context middleware at the start of request handling.
-    /// </summary>
-    /// <param name="context">The context to bind.</param>
-    internal static void Set(FoundryAgentRequestContext context) => CurrentContext.Value = context;
 
     /// <summary>
     /// Atomically binds <paramref name="context"/> as the current request context

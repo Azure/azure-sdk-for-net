@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> IP Prefix patchable properties. </param>
-        internal NetworkFabricIPPrefixPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpPrefixPatchProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricIPPrefixPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPPrefixPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> IP Prefix patchable properties. </summary>
-        internal IpPrefixPatchProperties Properties { get; set; }
+        internal IPPrefixPatchProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpPrefixPatchProperties();
+                    Properties = new IPPrefixPatchProperties();
                 }
                 Properties.Annotation = value;
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpPrefixPatchProperties();
+                    Properties = new IPPrefixPatchProperties();
                 }
                 return Properties.IPPrefixRules;
             }

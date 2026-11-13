@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CassandraRoleAssignmentResource.ResourceType, out string cassandraRoleAssignmentApiVersion);
             _cassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraRoleAssignmentApiVersion ?? "2026-04-01-preview");
+            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraRoleAssignmentApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CassandraRoleAssignmentData, CassandraRoleAssignmentResource>(new CassandraResourcesGetCassandraRoleAssignmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CassandraRoleAssignmentData, CassandraRoleAssignmentResource>(new CassandraRoleAssignmentDataAsyncCollectionResultOfT(
                 _cassandraResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CassandraRoleAssignmentData, CassandraRoleAssignmentResource>(new CassandraResourcesGetCassandraRoleAssignmentsCollectionResultOfT(
+            return new PageableWrapper<CassandraRoleAssignmentData, CassandraRoleAssignmentResource>(new CassandraRoleAssignmentDataCollectionResultOfT(
                 _cassandraResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

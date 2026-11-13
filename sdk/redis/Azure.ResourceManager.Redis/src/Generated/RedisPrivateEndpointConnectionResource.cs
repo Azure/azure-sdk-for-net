@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, redisPrivateEndpointConnectionApiVersion ?? "2025-08-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisPrivateEndpointConnectionApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

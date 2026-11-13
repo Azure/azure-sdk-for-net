@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityAssessmentResource.ResourceType, out string securityAssessmentApiVersion);
             _assessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAssessmentResource.ResourceType.Namespace, Diagnostics);
-            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Endpoint, securityAssessmentApiVersion ?? "2025-05-04");
+            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityAssessmentApiVersion ?? "2025-05-04");
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new AssessmentsGetAllAsyncCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new SecurityAssessmentDataAsyncCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new AssessmentsGetAllCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new SecurityAssessmentDataCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
         }
 
         /// <summary>

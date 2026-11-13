@@ -808,7 +808,7 @@ public class SdkRoundTripTests
         var httpClient = factory.CreateClient();
         return new ResponsesClient(
             new ApiKeyCredential("test-key"),
-            new OpenAIClientOptions
+            new ResponsesClientOptions
             {
                 Endpoint = new Uri("http://localhost"),
                 Transport = new HttpClientPipelineTransport(httpClient),

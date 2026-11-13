@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSiteBuildDatabaseConnectionResource.ResourceType, out string staticSiteBuildDatabaseConnectionApiVersion);
             _databaseConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildDatabaseConnectionResource.ResourceType.Namespace, Diagnostics);
-            _databaseConnectionsRestClient = new DatabaseConnections(_databaseConnectionsClientDiagnostics, Pipeline, Endpoint, staticSiteBuildDatabaseConnectionApiVersion ?? "2026-03-15");
+            _databaseConnectionsRestClient = new DatabaseConnections(_databaseConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildDatabaseConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new DatabaseConnectionsGetBuildDatabaseConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new StaticSiteDatabaseConnectionDataAsync2CollectionResultOfT(
                 _databaseConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new DatabaseConnectionsGetBuildDatabaseConnectionsCollectionResultOfT(
+            return new PageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new StaticSiteDatabaseConnectionData2CollectionResultOfT(
                 _databaseConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

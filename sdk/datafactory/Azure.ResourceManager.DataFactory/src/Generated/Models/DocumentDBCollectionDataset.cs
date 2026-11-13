@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Microsoft Azure Document Database Collection dataset. </summary>
     public partial class DocumentDBCollectionDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
+        public DocumentDBCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base("DocumentDbCollection", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(collectionName, nameof(collectionName));
+
+            TypeProperties = new DocumentDBCollectionDatasetTypeProperties(collectionName);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
@@ -25,13 +38,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> DocumentDB Collection dataset properties. </param>
-        internal DocumentDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DocumentDbCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DocumentDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DocumentDBCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> DocumentDB Collection dataset properties. </summary>
-        internal DocumentDbCollectionDatasetTypeProperties TypeProperties { get; set; }
+        internal DocumentDBCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> Document Database collection name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CollectionName
@@ -44,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new DocumentDbCollectionDatasetTypeProperties();
+                    TypeProperties = new DocumentDBCollectionDatasetTypeProperties();
                 }
                 TypeProperties.CollectionName = value;
             }

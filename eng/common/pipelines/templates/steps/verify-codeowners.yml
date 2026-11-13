@@ -25,14 +25,42 @@ parameters:
       - data
       - functions
       - datamovement
+  # Comma separated list of Microsoft emails allowed to skip codeowners
+  # validation on manually queued builds. Build.RequestedForEmail is empty on
+  # pull request builds, so use AllowSkipAliases for those.
+  - name: AllowSkipEmails
+    type: string
+    default: ''
+  # Comma separated list of GitHub aliases (logins) allowed to skip codeowners
+  # validation on pull request builds. Matched against the GitHub login of the
+  # pull request author. Pull requests opened by a coding agent report the agent
+  # as the author, so they are not exempt.
+  - name: AllowSkipAliases
+    type: string
+    default: ''
 
 steps:
   - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.EnablePrValidation, true)) }}:
+    - task: PowerShell@2
+      displayName: Evaluate Codeowners Skip
+      condition: succeeded()
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Set-VerifyCodeownersSkip.ps1
+        arguments: >-
+          -BuildReason '$(Build.Reason)'
+          -Repo '${{ parameters.Repo }}'
+          -PullRequestNumber '$(System.PullRequest.PullRequestNumber)'
+          -AdditionalSkipAliases '${{ parameters.AllowSkipAliases }}'
+        workingDirectory: $(Build.SourcesDirectory)
+
     - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+      parameters:
+        Condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
 
     - task: PowerShell@2
       displayName: Generate PR Diff for Codeowners
-      condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
       inputs:
         pwsh: true
         filePath: $(Build.SourcesDirectory)/eng/common/scripts/Generate-PR-Diff.ps1
@@ -43,7 +71,7 @@ steps:
 
     - task: PowerShell@2
       displayName: Verify Codeowners
-      condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
       inputs:
         pwsh: true
         filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
@@ -56,13 +84,26 @@ steps:
         workingDirectory: $(Build.SourcesDirectory)
 
   - ${{ elseif eq(variables['Build.Reason'], 'Manual') }}:
+    - task: PowerShell@2
+      displayName: Evaluate Codeowners Skip
+      condition: succeeded()
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Set-VerifyCodeownersSkip.ps1
+        arguments: >-
+          -RequestedForEmail '$(Build.RequestedForEmail)'
+          -SkipVerifyCodeowners '$(Skip.VerifyCodeowners)'
+          -BuildReason '$(Build.Reason)'
+          -AdditionalSkipEmails '${{ parameters.AllowSkipEmails }}'
+        workingDirectory: $(Build.SourcesDirectory)
+
     - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
       parameters:
-        Condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+        Condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
 
     - task: PowerShell@2
       displayName: Verify Codeowners
-      condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
       inputs:
         pwsh: true
         filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1

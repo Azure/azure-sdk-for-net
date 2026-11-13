@@ -10,8 +10,11 @@ commit, this script:
      'auto-release' label.
   2. Builds a PR diff object (New-GitHubPullRequestDiffObject) from the PR's changed files and reuses
      the repo's existing package-detection logic (Get-PrPkgProperties) to identify the changed packages
-     (honoring triggering paths, deleted files and service-level changes), excluding
-     validation-only packages. Get-PrPkgProperties delegates to each repo's own
+     (honoring triggering paths and deleted files while ignoring only files directly under
+     sdk/<service>/, not files in package subdirectories). Excludes validation-only packages and
+     requires an original PR changed or deleted file under each package's DirectoryPath; shared
+     triggering paths alone do not indicate release intent.
+     Get-PrPkgProperties delegates to each repo's own
      Get-AllPackageInfoFromRepo (language-settings.ps1), so this script works for any language repo.
   3. Intersects those packages with this pipeline's declared artifacts and emits Azure DevOps output
      variables consumed by the release stages. Both consumption styles are emitted:
@@ -47,10 +50,17 @@ The GitHub PR label that opts a merged PR into auto-release. Defaults to 'auto-r
 .PARAMETER BaseBranch
 The base branch a PR must have been merged into to qualify. Defaults to 'main'.
 
+.PARAMETER PipelineUrl
+The URL of the pipeline run, used for logging or linking back to the pipeline. Defaults to empty.
+
+.PARAMETER AzsdkExePath
+The path to the azsdk executable used for release operations. Defaults to the AZSDK environment variable.
+
 .OUTPUTS
 Azure DevOps output variables (reference cross-stage via dependencies.<stage>.outputs['<job>.<step>.<name>']):
   - HasAutoReleaseArtifacts    : 'true' if at least one declared package is releasable
   - AutoReleaseArtifactsJson   : JSON array of the matched declared-artifact objects (or '[]')
+  - AutoReleaseSdkPullRequestUrl : the SDK PR selected for this release, for release-stage status correlation
   - ReleaseArtifact_<safeName> : 'true'/'false' per declared artifact
 HasAutoReleaseArtifacts is the single eligibility gate: it is 'true' only when a merged, auto-release-labeled
 PR changed at least one declared package, and it is emitted last so any earlier failure fails closed.
@@ -63,7 +73,9 @@ param(
   [string] $Artifacts = $env:AUTORELEASE_ARTIFACTS,
   [string] $AuthToken = $env:GH_TOKEN,
   [string] $AutoReleaseLabel = 'auto-release',
-  [string] $BaseBranch = 'main'
+  [string] $BaseBranch = 'main',
+  [string] $PipelineUrl = '',
+  [string] $AzsdkExePath = $env:AZSDK
 )
 
 $ErrorActionPreference = 'Stop'
@@ -92,10 +104,17 @@ catch {
 # Fail-closed defaults: nothing releases unless we positively determine otherwise below.
 Set-PipelineVariable -Name 'HasAutoReleaseArtifacts' -Value 'false' -IsOutput
 Set-PipelineVariable -Name 'AutoReleaseArtifactsJson' -Value '[]' -IsOutput
+Set-PipelineVariable -Name 'AutoReleaseSdkPullRequestUrl' -Value '' -IsOutput
 foreach ($artifact in $declaredArtifacts) {
   if ($artifact.PSObject.Properties['safeName'] -and $artifact.safeName) {
     Set-PipelineVariable -Name "ReleaseArtifact_$($artifact.safeName)" -Value 'false' -IsOutput
   }
+}
+
+function ConvertTo-AutoReleaseRelativePath([string] $Path) {
+  # Resolve lexically rather than using Resolve-Path so deleted and renamed files need not exist.
+  $fullPath = [System.IO.Path]::GetFullPath($Path.Replace('\', '/'), $RepoRoot)
+  return [System.IO.Path]::GetRelativePath($RepoRoot, $fullPath).Replace('\', '/')
 }
 
 function Invoke-AutoReleaseResolution {
@@ -127,8 +146,19 @@ function Invoke-AutoReleaseResolution {
   # package-detection logic to identify the changed packages.
   Write-Host "Fetching changed files for PR $prLink..."
   $files = @(Get-GitHubPullRequestFiles -RepoId $RepoId -PullRequestNumber $pr.number -AuthToken $AuthToken)
-  $diff = New-GitHubPullRequestDiffObject -PullRequestNumber $pr.number -PullRequestFiles $files
+  $diff = New-GitHubPullRequestDiffObject `
+    -PullRequestNumber $pr.number `
+    -PullRequestFiles $files `
+    -ExcludeServiceRootFiles
   Write-Host "PR $prLink changed $($diff.ChangedFiles.Count) file(s) and deleted $($diff.DeletedFiles.Count) file(s)."
+
+  # Keep the original PR paths separate from CI detection's exclusions and expanded triggering paths.
+  $releaseDiff = New-GitHubPullRequestDiffObject -PullRequestNumber $pr.number -PullRequestFiles $files
+  $releasePaths = @(
+    foreach ($path in (@($releaseDiff.ChangedFiles) + @($releaseDiff.DeletedFiles))) {
+      ConvertTo-AutoReleaseRelativePath $path
+    }
+  )
 
   $diffPath = Join-Path ([System.IO.Path]::GetTempPath()) ("autorelease-diff-" + [System.Guid]::NewGuid().ToString('N') + ".json")
   $diff | ConvertTo-Json -Depth 10 | Set-Content -Path $diffPath -Encoding utf8
@@ -143,17 +173,62 @@ function Invoke-AutoReleaseResolution {
   # Build the releasable key set. Add each changed package's name and, when the group is known, a
   # 'group/name' composite so that pipelines whose declared artifacts carry a groupId (e.g. Java) match
   # the correct group and are not confused by name collisions across groups. Packages pulled in solely
-  # for validation are not releasable.
+  # for validation or shared CI triggers alone are not releasable.
   $releasableKeys = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+  $artifactNameToPackageName = [System.Collections.Generic.Dictionary[string, string]]::new([System.StringComparer]::OrdinalIgnoreCase)
   foreach ($package in $changedPackages) {
     if ($package.IncludedForValidation) { continue }
 
+    if ([string]::IsNullOrWhiteSpace($package.DirectoryPath)) {
+      LogWarning "Skipping auto-release for '$($package.Name)': package DirectoryPath is missing."
+      continue
+    }
+    $packageDirectory = ConvertTo-AutoReleaseRelativePath $package.DirectoryPath
+    $directoryPrefix = if ($packageDirectory -eq '.') { '' } else { $packageDirectory.TrimEnd('/') + '/' }
+    $hasDirectChange = $false
+    foreach ($path in $releasePaths) {
+      if ($path.StartsWith($directoryPrefix, [System.StringComparison]::Ordinal)) {
+        $hasDirectChange = $true
+        break
+      }
+    }
+    if (-not $hasDirectChange) {
+      Write-Host "  Skipping auto-release for '$($package.Name)': no changed or deleted files under '$packageDirectory'; shared CI triggers alone are not releasable."
+      continue
+    }
+
     $names = @()
-    if ($package.Name) { $names += [string]$package.Name }
-    if ($package.PSObject.Properties['ArtifactName'] -and $package.ArtifactName) { $names += [string]$package.ArtifactName }
+    $packageName = $null
+    $artifactName = $null
+    if ($package.Name)
+    {
+      $names += [string]$package.Name
+      $packageName = [string]$package.Name
+    }
+    if ($package.PSObject.Properties['ArtifactName'] -and $package.ArtifactName)
+    {
+      $names += [string]$package.ArtifactName
+      $artifactName = [string]$package.ArtifactName
+    }
 
     $group = $null
     if ($package.PSObject.Properties['Group'] -and $package.Group) { $group = [string]$package.Group }
+
+    # Map all relevant name variants to the canonical package name so later lookups work for both
+    # ungrouped and group-qualified artifact keys. This keeps the release-plan update aligned with the
+    # releasable key matching used above.
+    $lookupNames = @()
+    if ($packageName) { $lookupNames += [string]$packageName }
+    if ($artifactName) { $lookupNames += [string]$artifactName }
+    if ($group) {
+      if ($packageName) { $lookupNames += "$group/$packageName" }
+      if ($artifactName) { $lookupNames += "$group/$artifactName" }
+    }
+
+    foreach ($lookupName in ($lookupNames | Sort-Object -Unique)) {
+      if (-not $lookupName) { continue }
+      $artifactNameToPackageName[$lookupName] = $packageName
+    }
 
     foreach ($name in ($names | Sort-Object -Unique)) {
       [void]$releasableKeys.Add($name)
@@ -186,6 +261,46 @@ function Invoke-AutoReleaseResolution {
         Write-Host "  [$name] changed by PR $prLink -> releasable."
         Set-PipelineVariable -Name "ReleaseArtifact_$safeName" -Value 'true' -IsOutput
         $matchedArtifacts += $artifact
+
+        # Update release pending status and release pipeline URL in the release plan for this package.
+        # The release status is updated to "Released" after successful completion; until then, mark it as "Release In Progress" to indicate that the release is underway.
+        try
+        {
+          $packageName = $name
+          $lookupKey = if ($groupId) { "$groupId/$name" } else { $name }
+
+          if ($artifactNameToPackageName.ContainsKey($lookupKey)) {
+            $packageName = $artifactNameToPackageName[$lookupKey]
+          }
+          if($AzsdkExePath)
+          {
+            Write-Host "Updating release plan for package '$packageName' (artifact name: '$name', package name: '$packageName')"
+            $cliArgs = @("release-plan", "update-release-status", "--package-name", $packageName, "--language", $LanguageDisplayName, "--status", "Release In Progress", "--sdk-pull-request", $prLink)
+            if ($PipelineUrl)
+            {
+                $cliArgs += @("--release-pipeline", $PipelineUrl)
+            }
+            else
+            {
+              LogWarning "Pipeline URL is not set; Not setting release pipeline link for package '$packageName' in release plan."
+            }
+
+            & $AzsdkExePath @cliArgs
+            if ($LASTEXITCODE -ne 0)
+            {
+                ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
+              LogWarning "Failed to update release in progress status for package '$packageName' using azsdk. Exit code: $LASTEXITCODE"
+            }
+          }
+          else
+          {
+            Write-Host "AzsdkExePath is not set; skipping release plan update for package '$packageName'."
+          }          
+        }
+        catch
+        {
+          Write-Host "Failed to update release in progress status in release plan for package '$name'. $($_.Exception.Message)"
+        }
       }
       else {
         Write-Host "  [$name] not changed by PR $prLink."
@@ -200,6 +315,7 @@ function Invoke-AutoReleaseResolution {
     # Pipe (not -InputObject) with -AsArray so a single match still serializes as a JSON array, '[{...}]'.
     $artifactsJson = $matchedArtifacts | ConvertTo-Json -Depth 100 -Compress -AsArray
     Set-PipelineVariable -Name 'AutoReleaseArtifactsJson' -Value $artifactsJson -IsOutput
+    Set-PipelineVariable -Name 'AutoReleaseSdkPullRequestUrl' -Value $prLink -IsOutput
     Write-Host "Auto-release packages from PR ${prLink}: $((@($matchedArtifacts | ForEach-Object { $_.name })) -join ', ')"
     Set-PipelineVariable -Name 'HasAutoReleaseArtifacts' -Value 'true' -IsOutput
   }
@@ -218,6 +334,7 @@ catch {
   LogWarning "Auto-release resolution failed; skipping auto-release. $($_.Exception.Message)"
   Set-PipelineVariable -Name 'HasAutoReleaseArtifacts' -Value 'false' -IsOutput
   Set-PipelineVariable -Name 'AutoReleaseArtifactsJson' -Value '[]' -IsOutput
+  Set-PipelineVariable -Name 'AutoReleaseSdkPullRequestUrl' -Value '' -IsOutput
   foreach ($artifact in $declaredArtifacts) {
     if ($artifact.PSObject.Properties['safeName'] -and $artifact.safeName) {
       Set-PipelineVariable -Name "ReleaseArtifact_$($artifact.safeName)" -Value 'false' -IsOutput

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(RegulatoryComplianceControlResource.ResourceType, out string regulatoryComplianceControlApiVersion);
             _regulatoryComplianceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", RegulatoryComplianceControlResource.ResourceType.Namespace, Diagnostics);
-            _regulatoryComplianceControlsRestClient = new RegulatoryComplianceControls(_regulatoryComplianceControlsClientDiagnostics, Pipeline, Endpoint, regulatoryComplianceControlApiVersion ?? "2019-01-01-preview");
+            _regulatoryComplianceControlsRestClient = new RegulatoryComplianceControls(_regulatoryComplianceControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, regulatoryComplianceControlApiVersion ?? "2019-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlDataAsyncCollectionResultOfT(
                 _regulatoryComplianceControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlsGetAllCollectionResultOfT(
+            return new PageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlDataCollectionResultOfT(
                 _regulatoryComplianceControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

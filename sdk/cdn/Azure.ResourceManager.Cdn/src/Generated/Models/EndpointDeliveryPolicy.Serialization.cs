@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EndpointDeliveryPolicy(description, rules, additionalBinaryDataProperties);
+            return new EndpointDeliveryPolicy(description, rules ?? new ChangeTrackingList<DeliveryRule>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new CustomerCertificateProperties. </summary>
         public CustomerCertificateProperties()
         {
+            SecretType.Assign(Cdn.SecretType.CustomerCertificate);
         }
 
         /// <summary> Gets or sets the SecretSource. </summary>
@@ -144,12 +145,11 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "CustomerCertificate");
             _secretSource = DefineModelProperty<CdnResourceReference>(nameof(SecretSource), new string[] { "secretSource" }, isRequired: true);
             _secretVersion = DefineProperty<string>(nameof(SecretVersion), new string[] { "secretVersion" });
             _useLatestVersion = DefineProperty<bool>(nameof(UseLatestVersion), new string[] { "useLatestVersion" });
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isOutput: true);
-            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true);
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true, format: "O");
             _certificateAuthority = DefineProperty<string>(nameof(CertificateAuthority), new string[] { "certificateAuthority" }, isOutput: true);
             _subjectAlternativeNames = DefineListProperty<string>(nameof(SubjectAlternativeNames), new string[] { "subjectAlternativeNames" }, isOutput: true);
             _thumbprint = DefineProperty<string>(nameof(Thumbprint), new string[] { "thumbprint" }, isOutput: true);

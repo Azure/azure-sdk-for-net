@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SubscriptionSecurityAlertResource.ResourceType, out string subscriptionSecurityAlertApiVersion);
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionSecurityAlertResource.ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityAlertApiVersion ?? "2022-01-01");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityAlertApiVersion ?? "2022-01-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionAsyncCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new SecurityAlertDataAsyncCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
+            return new PageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new SecurityAlertDataCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
         }
 
         /// <summary>

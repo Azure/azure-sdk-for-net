@@ -13,7 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> L2Isolation Domain Properties defines the properties of the resource. </summary>
-    public partial class L2IsolationDomainProperties : AnnotationResourceProperties
+    internal partial class L2IsolationDomainProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="L2IsolationDomainProperties"/>. </summary>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>

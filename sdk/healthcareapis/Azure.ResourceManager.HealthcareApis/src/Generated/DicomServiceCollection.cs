@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(DicomServiceResource.ResourceType, out string dicomServiceApiVersion);
             _dicomServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", DicomServiceResource.ResourceType.Namespace, Diagnostics);
-            _dicomServicesRestClient = new DicomServices(_dicomServicesClientDiagnostics, Pipeline, Endpoint, dicomServiceApiVersion ?? "2025-04-01-preview");
+            _dicomServicesRestClient = new DicomServices(_dicomServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dicomServiceApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServicesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServiceDataAsyncCollectionResultOfT(
                 _dicomServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServicesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServiceDataCollectionResultOfT(
                 _dicomServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

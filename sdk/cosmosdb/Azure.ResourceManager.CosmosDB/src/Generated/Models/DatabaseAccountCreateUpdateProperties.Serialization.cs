@@ -309,10 +309,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("softDeleteConfiguration"u8);
                 writer.WriteObjectValue(SoftDeleteConfiguration, options);
             }
-            if (Optional.IsDefined(EnforceHierarchicalPartitionKeyIdLastLevel))
+            if (Optional.IsDefined(IsHierarchicalPartitionKeyIdLastLevelEnforced))
             {
                 writer.WritePropertyName("enforceHierarchicalPartitionKeyIdLastLevel"u8);
-                writer.WriteBooleanValue(EnforceHierarchicalPartitionKeyIdLastLevel.Value);
+                writer.WriteBooleanValue(IsHierarchicalPartitionKeyIdLastLevelEnforced.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? enablePerRegionPerPartitionAutoscale = default;
             bool? enableAllVersionsAndDeletesChangeFeed = default;
             SoftDeleteConfiguration softDeleteConfiguration = default;
-            bool? enforceHierarchicalPartitionKeyIdLastLevel = default;
+            bool? isHierarchicalPartitionKeyIdLastLevelEnforced = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -787,17 +787,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    enforceHierarchicalPartitionKeyIdLastLevel = prop.Value.GetBoolean();
+                    isHierarchicalPartitionKeyIdLastLevelEnforced = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DatabaseAccountCreateUpdateProperties(
                 consistencyPolicy,
-                locations,
+                locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
                 databaseAccountOfferType,
                 ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
                 isVirtualNetworkFilterEnabled,
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 enablePerRegionPerPartitionAutoscale,
                 enableAllVersionsAndDeletesChangeFeed,
                 softDeleteConfiguration,
-                enforceHierarchicalPartitionKeyIdLastLevel,
+                isHierarchicalPartitionKeyIdLastLevelEnforced,
                 additionalBinaryDataProperties);
         }
     }

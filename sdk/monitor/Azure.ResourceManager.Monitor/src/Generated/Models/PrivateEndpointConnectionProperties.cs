@@ -25,21 +25,27 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             Argument.AssertNotNull(connectionState, nameof(connectionState));
 
+            GroupIds = new ChangeTrackingList<string>();
             ConnectionState = connectionState;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, MonitorPrivateLinkServiceConnectionState connectionState, MonitorPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, MonitorPrivateLinkServiceConnectionState connectionState, MonitorPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The group ids for the private endpoint resource. </summary>
+        public IReadOnlyList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private endpoint resource. </summary>
         internal PrivateEndpoint PrivateEndpoint { get; set; }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteFunctionResource.ResourceType, out string siteFunctionApiVersion);
             _functionEnvelopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteFunctionResource.ResourceType.Namespace, Diagnostics);
-            _functionEnvelopesRestClient = new FunctionEnvelopes(_functionEnvelopesClientDiagnostics, Pipeline, Endpoint, siteFunctionApiVersion ?? "2026-03-15");
+            _functionEnvelopesRestClient = new FunctionEnvelopes(_functionEnvelopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteFunctionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopesGetFunctionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopeDataAsync0CollectionResultOfT(
                 _functionEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopesGetFunctionsCollectionResultOfT(
+            return new PageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopeData0CollectionResultOfT(
                 _functionEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

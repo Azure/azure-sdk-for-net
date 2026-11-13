@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SapSshPublicKey> PublicKeys { get; }
+        public IList<SapSshPublicKey> PublicKeys { get; } = new ChangeTrackingList<SapSshPublicKey>();
     }
 }

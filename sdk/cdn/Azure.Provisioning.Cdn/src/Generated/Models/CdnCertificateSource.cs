@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new CdnCertificateSource. </summary>
         public CdnCertificateSource()
         {
+            TypeName.Assign(CertificateSourceParametersType.CdnCertificateSourceParameters);
         }
 
         /// <summary> Gets or sets the CertificateType. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "CdnCertificateSourceParameters");
             _certificateType = DefineProperty<CdnManagedCertificateType>(nameof(CertificateType), new string[] { "certificateType" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ApiCollectionResource.ResourceType, out string apiCollectionApiVersion);
             _apiCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ApiCollectionResource.ResourceType.Namespace, Diagnostics);
-            _apiCollectionsRestClient = new APICollections(_apiCollectionsClientDiagnostics, Pipeline, Endpoint, apiCollectionApiVersion ?? "2023-11-15");
+            _apiCollectionsRestClient = new APICollections(_apiCollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiCollectionApiVersion ?? "2023-11-15");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetByAzureApiManagementServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new ApiCollectionDataAsyncCollectionResultOfT(
                 _apiCollectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetByAzureApiManagementServiceCollectionResultOfT(
+            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new ApiCollectionDataCollectionResultOfT(
                 _apiCollectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

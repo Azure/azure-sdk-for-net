@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultPatch))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultProperties))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultResource))]
+    [ModelReaderWriterBuildable(typeof(RegionOfChoiceSettings))]
     [ModelReaderWriterBuildable(typeof(ReplicationJobSummary))]
     [ModelReaderWriterBuildable(typeof(ReplicationUsage))]
     [ModelReaderWriterBuildable(typeof(ReplicationUsageList))]

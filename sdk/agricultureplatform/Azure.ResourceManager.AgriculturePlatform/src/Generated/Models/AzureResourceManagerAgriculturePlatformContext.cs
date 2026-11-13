@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.AgriculturePlatform.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,16 +24,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
     [ModelReaderWriterBuildable(typeof(AgricultureServiceProperties))]
     [ModelReaderWriterBuildable(typeof(AgricultureServiceResource))]
     [ModelReaderWriterBuildable(typeof(AgricultureSolution))]
-    [ModelReaderWriterBuildable(typeof(AgriServiceResourceListResult))]
     [ModelReaderWriterBuildable(typeof(AvailableAgriSolutionListResult))]
     [ModelReaderWriterBuildable(typeof(DataConnectorCredentialMap))]
     [ModelReaderWriterBuildable(typeof(DataConnectorCredentials))]
     [ModelReaderWriterBuildable(typeof(DataManagerForAgricultureSolution))]
     [ModelReaderWriterBuildable(typeof(InstalledSolutionMap))]
-    [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketPlaceOfferDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

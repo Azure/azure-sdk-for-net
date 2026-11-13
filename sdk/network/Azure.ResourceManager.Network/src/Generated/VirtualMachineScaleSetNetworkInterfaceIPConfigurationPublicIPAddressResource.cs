@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressApiVersion);
             _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(_virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(_virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressApiVersion ?? "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualmachineIndex"> The virtualmachineIndex. </param>
         /// <param name="networkInterfaceName"> The networkInterfaceName. </param>
         /// <param name="ipConfigurationName"> The ipConfigurationName. </param>
-        /// <param name="publicIpAddressName"> The publicIpAddressName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName)
+        /// <param name="publicIPAddressName"> The publicIPAddressName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIPAddressName}";
             return new ResourceIdentifier(resourceId);
         }
 

@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
 
         private ClientDiagnostics SecurityInsightsClientClientDiagnostics => _securityInsightsClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityInsightsClient SecurityInsightsClientRestClient => _securityInsightsClientRestClient ??= new SecurityInsightsClient(SecurityInsightsClientClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private SecurityInsightsClient SecurityInsightsClientRestClient => _securityInsightsClientRestClient ??= new SecurityInsightsClient(SecurityInsightsClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics ThreatIntelligenceIndicatorClientDiagnostics => _threatIntelligenceIndicatorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThreatIntelligenceIndicator ThreatIntelligenceIndicatorRestClient => _threatIntelligenceIndicatorRestClient ??= new ThreatIntelligenceIndicator(ThreatIntelligenceIndicatorClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private ThreatIntelligenceIndicator ThreatIntelligenceIndicatorRestClient => _threatIntelligenceIndicatorRestClient ??= new ThreatIntelligenceIndicator(ThreatIntelligenceIndicatorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DataConnectorsCheckRequirementsClientDiagnostics => _dataConnectorsCheckRequirementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataConnectorsCheckRequirements DataConnectorsCheckRequirementsRestClient => _dataConnectorsCheckRequirementsRestClient ??= new DataConnectorsCheckRequirements(DataConnectorsCheckRequirementsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private DataConnectorsCheckRequirements DataConnectorsCheckRequirementsRestClient => _dataConnectorsCheckRequirementsRestClient ??= new DataConnectorsCheckRequirements(DataConnectorsCheckRequirementsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics SourceControlClientDiagnostics => _sourceControlClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SourceControl SourceControlRestClient => _sourceControlRestClient ??= new SourceControl(SourceControlClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private SourceControl SourceControlRestClient => _sourceControlRestClient ??= new SourceControl(SourceControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics ThreatIntelligenceIndicatorMetricsClientDiagnostics => _threatIntelligenceIndicatorMetricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThreatIntelligenceIndicatorMetrics ThreatIntelligenceIndicatorMetricsRestClient => _threatIntelligenceIndicatorMetricsRestClient ??= new ThreatIntelligenceIndicatorMetrics(ThreatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private ThreatIntelligenceIndicatorMetrics ThreatIntelligenceIndicatorMetricsRestClient => _threatIntelligenceIndicatorMetricsRestClient ??= new ThreatIntelligenceIndicatorMetrics(ThreatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics ThreatIntelligenceClientDiagnostics => _threatIntelligenceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThreatIntelligence ThreatIntelligenceRestClient => _threatIntelligenceRestClient ??= new ThreatIntelligence(ThreatIntelligenceClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private ThreatIntelligence ThreatIntelligenceRestClient => _threatIntelligenceRestClient ??= new ThreatIntelligence(ThreatIntelligenceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary> Gets an object representing a <see cref="SecurityInsightsAlertRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1944,12 +1944,12 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EnrichmentIpGeodata>> GetGeodataByIpAsync(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnrichmentIPGeodata>> GetGeodataByIPAsync(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIp");
+            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIP");
             scope0.Start();
             try
             {
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 };
                 HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EnrichmentIpGeodata> response = Response.FromValue(EnrichmentIpGeodata.FromResponse(result), result);
+                Response<EnrichmentIPGeodata> response = Response.FromValue(EnrichmentIPGeodata.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1986,7 +1986,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1995,12 +1995,12 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<EnrichmentIpGeodata> GetGeodataByIp(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EnrichmentIPGeodata> GetGeodataByIP(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIp");
+            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIP");
             scope0.Start();
             try
             {
@@ -2010,7 +2010,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 };
                 HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EnrichmentIpGeodata> response = Response.FromValue(EnrichmentIpGeodata.FromResponse(result), result);
+                Response<EnrichmentIPGeodata> response = Response.FromValue(EnrichmentIPGeodata.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2088,7 +2088,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2139,7 +2139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2189,7 +2189,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2227,188 +2227,6 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Query threat intelligence indicators as per filtering criteria.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ThreatIntelligenceIndicatorOperationGroup_QueryIndicators. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
-        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new ThreatIntelligenceIndicatorQueryThreatIntelligenceIndicatorsAsyncCollectionResultOfT(
-                ThreatIntelligenceIndicatorRestClient,
-                Guid.Parse(scope.SubscriptionId),
-                scope.ResourceGroupName,
-                scope.Name,
-                ThreatIntelligenceFilteringCriteria.ToRequestContent(threatIntelligenceFilteringCriteria),
-                context,
-                "MockableSecurityInsightsArmClient.QueryThreatIntelligenceIndicators"), data => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, data));
-        }
-
-        /// <summary>
-        /// Query threat intelligence indicators as per filtering criteria.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ThreatIntelligenceIndicatorOperationGroup_QueryIndicators. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
-        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new ThreatIntelligenceIndicatorQueryThreatIntelligenceIndicatorsCollectionResultOfT(
-                ThreatIntelligenceIndicatorRestClient,
-                Guid.Parse(scope.SubscriptionId),
-                scope.ResourceGroupName,
-                scope.Name,
-                ThreatIntelligenceFilteringCriteria.ToRequestContent(threatIntelligenceFilteringCriteria),
-                context,
-                "MockableSecurityInsightsArmClient.QueryThreatIntelligenceIndicators"), data => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get requirements state for a data connector type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DataConnectorsCheckRequirementsOperationGroup_Post. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
-        public virtual async Task<Response<DataConnectorRequirementsState>> PostAsync(ResourceIdentifier scope, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
-
-            using DiagnosticScope scope0 = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.Post");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, Models.DataConnectorsCheckRequirements.ToRequestContent(dataConnectorsCheckRequirements), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataConnectorRequirementsState> response = Response.FromValue(DataConnectorRequirementsState.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get requirements state for a data connector type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DataConnectorsCheckRequirementsOperationGroup_Post. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
-        public virtual Response<DataConnectorRequirementsState> Post(ResourceIdentifier scope, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
-
-            using DiagnosticScope scope0 = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.Post");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, Models.DataConnectorsCheckRequirements.ToRequestContent(dataConnectorsCheckRequirements), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataConnectorRequirementsState> response = Response.FromValue(DataConnectorRequirementsState.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets a list of repositories metadata.
         /// <list type="bullet">
         /// <item>
@@ -2421,7 +2239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2439,7 +2257,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlGetRepositoriesAsyncCollectionResultOfT(
+            return new SourceControlRepoAsyncCollectionResultOfT(
                 SourceControlRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2462,7 +2280,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2480,7 +2298,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlGetRepositoriesCollectionResultOfT(
+            return new SourceControlRepoCollectionResultOfT(
                 SourceControlRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2503,7 +2321,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2551,7 +2369,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2599,7 +2417,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2649,7 +2467,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2699,7 +2517,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2717,7 +2535,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ThreatIntelligenceQueryAsyncCollectionResultOfT(
+            return new ThreatIntelligenceObjectAsyncCollectionResultOfT(
                 ThreatIntelligenceRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2741,7 +2559,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2759,7 +2577,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ThreatIntelligenceQueryCollectionResultOfT(
+            return new ThreatIntelligenceObjectCollectionResultOfT(
                 ThreatIntelligenceRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,

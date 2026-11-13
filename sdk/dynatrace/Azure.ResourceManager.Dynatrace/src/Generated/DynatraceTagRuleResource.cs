@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(ResourceType, out string dynatraceTagRuleApiVersion);
             _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 

@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
@@ -53,7 +54,13 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string hybridComputeLicenseApiVersion);
             _licensesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _licensesRestClient = new Licenses(_licensesClientDiagnostics, Pipeline, Endpoint, hybridComputeLicenseApiVersion ?? "2025-09-16-preview");
+            _licensesRestClient = new Licenses(
+                _licensesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hybridComputeLicenseApiVersion ?? "2026-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -106,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -154,7 +161,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -202,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -226,7 +233,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HybridComputeLicensePatch.ToRequestContent(patch), context);
+                HttpMessage message = _licensesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridComputeLicensePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
                     new HybridComputeLicenseResourceOperationSource(Client),
@@ -261,7 +268,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -285,7 +292,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HybridComputeLicensePatch.ToRequestContent(patch), context);
+                HttpMessage message = _licensesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridComputeLicensePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
                     new HybridComputeLicenseResourceOperationSource(Client),
@@ -320,7 +327,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -340,7 +347,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _licensesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation operation = new HybridComputeArmOperation(_licensesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -369,7 +376,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -389,7 +396,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _licensesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation operation = new HybridComputeArmOperation(_licensesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +435,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +483,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
@@ -515,15 +522,14 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
@@ -558,15 +564,14 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +613,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +659,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _licensesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridComputeLicenseData> response = Response.FromValue(HybridComputeLicenseData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeLicenseResource(Client, response.Value), response.GetRawResponse());

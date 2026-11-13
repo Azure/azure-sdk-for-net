@@ -1,18 +1,43 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using Azure.AI.AgentServer.Core.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenTelemetry;
 using NUnit.Framework;
+using OpenTelemetry;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Core.Tests;
 
 [TestFixture]
+[NonParallelizable]
 public class OpenTelemetryExtensionsTests
 {
+    private const string FakeConnectionString =
+        "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://localhost";
+
     [TearDown]
     public void TearDown()
     {
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_PROTOCOL", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
+        Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
+        Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
+        FoundryEnvironment.Reload();
     }
 
     [Test]
@@ -25,6 +50,51 @@ public class OpenTelemetryExtensionsTests
     public void AgentHostTelemetry_HasDefaultMeterName()
     {
         Assert.That(AgentHostTelemetry.ResponsesMeterName, Is.Not.Null.And.Not.Empty);
+    }
+
+    [TestCase(ExportProcessorType.Simple)]
+    [TestCase(ExportProcessorType.Batch)]
+    public void DefaultTelemetry_ExportsFoundryMarkerOnFrameworkSpansAndLogs(ExportProcessorType processorType)
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318");
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_PROTOCOL", "http/protobuf");
+        FoundryEnvironment.Reload();
+
+        using var source = new ActivitySource($"Test.Framework.{Guid.NewGuid():N}");
+        using var handler = new CapturingOtlpHandler();
+        var services = new ServiceCollection();
+        services.AddAgentHostTelemetry(tracing => tracing.AddSource(source.Name));
+        services.ConfigureAll<OtlpExporterOptions>(options =>
+        {
+            options.Protocol = OtlpExportProtocol.HttpProtobuf;
+            options.ExportProcessorType = processorType;
+            options.HttpClientFactory = () => new HttpClient(handler, disposeHandler: false);
+        });
+        services.ConfigureAll<LogRecordExportProcessorOptions>(options => options.ExportProcessorType = processorType);
+        using var provider = services.BuildServiceProvider();
+        var tracerProvider = provider.GetRequiredService<TracerProvider>();
+        var logger = provider.GetRequiredService<ILoggerFactory>().CreateLogger("framework");
+
+        logger.LogInformation("Log outside an activity");
+        using (var parent = source.StartActivity("parent")!)
+        {
+            Assert.That(parent.GetTagItem("microsoft.foundry"), Is.EqualTo("True"));
+            parent.SetTag("microsoft.foundry", "framework-value");
+            parent.SetTag("gen_ai.provider.name", "other-provider");
+            parent.SetBaggage("microsoft.foundry", "baggage-value");
+            using (var child = source.StartActivity("child")!)
+            {
+                child.SetTag("microsoft.foundry", "framework-value");
+                logger.LogInformation("Conflicting marker {microsoft.foundry}", "framework-value");
+            }
+        }
+
+        Assert.That(tracerProvider.ForceFlush(), Is.True);
+        var loggerProvider = provider.GetRequiredService<LoggerProvider>();
+        Assert.That(loggerProvider.ForceFlush(), Is.True);
+
+        AssertExportedFoundryMarkers(handler, "/v1/traces", attributeField: 9);
+        AssertExportedFoundryMarkers(handler, "/v1/logs", attributeField: 6);
     }
 
     [Test]
@@ -53,5 +123,278 @@ public class OpenTelemetryExtensionsTests
         var appInsights = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
         Assert.That(otlp, Is.Not.Null);
         Assert.That(appInsights, Is.Not.Null);
+    }
+
+    [Test]
+    public void AzureMonitorSampling_DefaultsToAllTraces()
+    {
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", FakeConnectionString);
+        FoundryEnvironment.Reload();
+
+        using var host = BuildHost();
+        var options = host.Services.GetRequiredService<IOptions<AzureMonitorOptions>>().Value;
+
+        Assert.That(options.SamplingRatio, Is.EqualTo(1.0F));
+        Assert.That(options.TracesPerSecond, Is.Null);
+    }
+
+    [Test]
+    public void AzureMonitorSampling_ExplicitRateLimitTakesPrecedence()
+    {
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", FakeConnectionString);
+        Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", "microsoft.rate_limited");
+        Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "7");
+        FoundryEnvironment.Reload();
+
+        var options = new AzureMonitorOptions { SamplingRatio = 0.25F };
+        OpenTelemetryExtensions.ConfigureAzureMonitorSampling(options);
+
+        Assert.That(options.SamplingRatio, Is.EqualTo(1.0F));
+        Assert.That(options.TracesPerSecond, Is.EqualTo(7));
+    }
+
+    [Test]
+    public void AzureMonitorSampling_ExplicitFixedPercentageTakesPrecedence()
+    {
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", FakeConnectionString);
+        Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", "microsoft.fixed_percentage");
+        Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "0.25");
+        FoundryEnvironment.Reload();
+
+        var options = new AzureMonitorOptions();
+        OpenTelemetryExtensions.ConfigureAzureMonitorSampling(options);
+
+        Assert.That(options.SamplingRatio, Is.EqualTo(0.25F));
+        Assert.That(options.TracesPerSecond, Is.Null);
+    }
+
+    [Test]
+    public void AzureMonitorSampling_InvalidExplicitSamplerFallsBackToAllTraces()
+    {
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", FakeConnectionString);
+        Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", "microsoft.rate_limited");
+        FoundryEnvironment.Reload();
+
+        var options = new AzureMonitorOptions();
+        OpenTelemetryExtensions.ConfigureAzureMonitorSampling(options);
+
+        Assert.That(options.SamplingRatio, Is.EqualTo(1.0F));
+        Assert.That(options.TracesPerSecond, Is.Null);
+    }
+
+    [Test]
+    public void AzureMonitorSampling_WithoutApplicationInsights_PreservesDistroDefault()
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317");
+        FoundryEnvironment.Reload();
+
+        using var host = BuildHost();
+        var options = host.Services.GetRequiredService<IOptions<AzureMonitorOptions>>().Value;
+
+        Assert.That(options.TracesPerSecond, Is.EqualTo(5));
+    }
+
+    [Test]
+    public void AzureSdkInstrumentation_DisabledByDefault()
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317");
+        FoundryEnvironment.Reload();
+
+        using var serviceProvider = BuildServiceProvider();
+        _ = serviceProvider.GetRequiredService<TracerProvider>();
+        using var azureSource = new ActivitySource("Azure.Core.Http");
+
+        using var activity = azureSource.StartActivity("AzureSdkDependency");
+
+        Assert.That(activity, Is.Null);
+    }
+
+    [Test]
+    public void AzureSdkInstrumentation_CanBeEnabledWithConfigureTracing()
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317");
+        FoundryEnvironment.Reload();
+
+        using var serviceProvider = BuildServiceProvider(tracing => tracing.AddSource("Azure.*"));
+        _ = serviceProvider.GetRequiredService<TracerProvider>();
+        using var azureSource = new ActivitySource("Azure.Core.Http");
+
+        using var activity = azureSource.StartActivity("AzureSdkDependency");
+
+        Assert.That(activity, Is.Not.Null);
+    }
+
+    [Test]
+    public async Task HttpClientInstrumentation_DisabledByDefault()
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317");
+        FoundryEnvironment.Reload();
+        var processor = new CapturingProcessor();
+
+        using var serviceProvider = BuildServiceProvider(tracing => tracing.AddProcessor(processor));
+        _ = serviceProvider.GetRequiredService<TracerProvider>();
+
+        await SendLocalRequestAsync();
+
+        Assert.That(
+            processor.Activities,
+            Has.None.Matches<Activity>(activity => activity.Source.Name == "System.Net.Http"));
+    }
+
+    [Test]
+    public void HttpClientMetrics_EnabledByDefault()
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317");
+        FoundryEnvironment.Reload();
+
+        using var serviceProvider = BuildServiceProvider();
+        _ = serviceProvider.GetRequiredService<MeterProvider>();
+        using var meter = new Meter("System.Net.Http");
+        var counter = meter.CreateCounter<long>("test.request.duration");
+
+        Assert.That(counter.Enabled, Is.True);
+    }
+
+    [Test]
+    public async Task HttpClientInstrumentation_CanBeEnabledWithConfigureTracing()
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317");
+        FoundryEnvironment.Reload();
+        var processor = new CapturingProcessor();
+
+        using var serviceProvider = BuildServiceProvider(tracing =>
+        {
+            tracing.AddHttpClientInstrumentation();
+            tracing.AddProcessor(processor);
+        });
+        _ = serviceProvider.GetRequiredService<TracerProvider>();
+
+        await SendLocalRequestAsync();
+
+        Assert.That(
+            processor.Activities,
+            Has.Some.Matches<Activity>(activity => activity.Source.Name == "System.Net.Http"));
+    }
+
+    private static ServiceProvider BuildServiceProvider(
+        Action<TracerProviderBuilder>? configureTracing = null)
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddAgentHostTelemetry(configureTracing);
+        return services.BuildServiceProvider();
+    }
+
+    private static IHost BuildHost()
+    {
+        var builder = Host.CreateApplicationBuilder();
+        builder.Services.AddAgentHostTelemetry();
+        return builder.Build();
+    }
+
+    private static async Task SendLocalRequestAsync()
+    {
+        var listener = new TcpListener(IPAddress.Loopback, 0);
+        listener.Start();
+
+        try
+        {
+            var endpoint = (IPEndPoint)listener.LocalEndpoint;
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            var cancellationToken = cancellationSource.Token;
+            using var client = new HttpClient();
+            var responseTask = client.GetAsync($"http://127.0.0.1:{endpoint.Port}/", cancellationToken);
+            using var connection = await listener.AcceptTcpClientAsync(cancellationToken);
+            await using var stream = connection.GetStream();
+            var requestBuffer = new byte[4096];
+            _ = await stream.ReadAsync(requestBuffer, cancellationToken);
+            var responseBytes = Encoding.ASCII.GetBytes(
+                "HTTP/1.1 200 OK\r\nContent-Length: 0\r\nConnection: close\r\n\r\n");
+            await stream.WriteAsync(responseBytes, cancellationToken);
+            using var response = await responseTask;
+            response.EnsureSuccessStatusCode();
+        }
+        finally
+        {
+            listener.Stop();
+        }
+    }
+
+    private sealed class CapturingProcessor : BaseProcessor<Activity>
+    {
+        public ConcurrentQueue<Activity> Activities { get; } = new();
+
+        public override void OnEnd(Activity data)
+        {
+            Activities.Enqueue(data);
+        }
+    }
+
+    private static void AssertExportedFoundryMarkers(CapturingOtlpHandler handler, string path, int attributeField)
+    {
+        // Both signals nest records inside resource (field 1) and scope (field 2) messages.
+        var records = handler.Requests.Where(request => request.Path == path)
+            .SelectMany(request => ReadMessages(request.Body, 1))
+            .SelectMany(resource => ReadMessages(resource, 2))
+            .SelectMany(scope => ReadMessages(scope, 2))
+            .ToList();
+        Assert.That(records, Has.Count.EqualTo(2),
+            $"{path}; captured requests: {string.Join(", ", handler.Requests.Select(request => request.Path))}");
+
+        foreach (var record in records)
+        {
+            var markers = ReadMessages(record, attributeField)
+                .Where(attribute => Encoding.UTF8.GetString(ReadMessages(attribute, 1).Single()) == "microsoft.foundry")
+                .ToList();
+            Assert.That(markers, Has.Count.EqualTo(1), path);
+            var value = ReadMessages(markers[0], 2).Single();
+            Assert.That(Encoding.UTF8.GetString(ReadMessages(value, 1).Single()), Is.EqualTo("True"), path);
+        }
+    }
+
+    private static IEnumerable<byte[]> ReadMessages(byte[] message, int fieldNumber)
+    {
+        using var reader = new BinaryReader(new MemoryStream(message));
+        while (reader.BaseStream.Position < reader.BaseStream.Length)
+        {
+            var tag = reader.Read7BitEncodedInt();
+            switch (tag & 7)
+            {
+                case 0:
+                    reader.Read7BitEncodedInt64();
+                    break;
+                case 1:
+                    reader.ReadBytes(8);
+                    break;
+                case 2:
+                    var bytes = reader.ReadBytes(reader.Read7BitEncodedInt());
+                    if (tag >> 3 == fieldNumber)
+                    {
+                        yield return bytes;
+                    }
+                    break;
+                case 5:
+                    reader.ReadBytes(4);
+                    break;
+                default:
+                    throw new InvalidDataException($"Unsupported protobuf wire type {tag & 7}.");
+            }
+        }
+    }
+
+    private sealed class CapturingOtlpHandler : HttpMessageHandler
+    {
+        public ConcurrentQueue<(string Path, byte[] Body)> Requests { get; } = new();
+
+        protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            using var body = new MemoryStream();
+            request.Content!.CopyTo(body, null, cancellationToken);
+            Requests.Enqueue((request.RequestUri!.AbsolutePath, body.ToArray()));
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(Array.Empty<byte>()) };
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
+            Task.FromResult(Send(request, cancellationToken));
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Maps
         {
             TryGetApiVersion(MapsPrivateLinkResource.ResourceType, out string mapsPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", MapsPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, mapsPrivateLinkResourceApiVersion ?? "2025-10-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mapsPrivateLinkResourceApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new MapsPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountCollectionResultOfT(
+            return new PageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new MapsPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

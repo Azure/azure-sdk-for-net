@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceId"> Id of the resource this recommendation refers to. </param>
         /// <param name="additionalProperties"> Collection of additional properties for the recommendation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationProperties(string recommendationTypeId, RecommendationState state, string title, string description, DateTimeOffset createdOn, DateTimeOffset lastEvaluatedOn, DateTimeOffset lastModifiedOn, IList<RecommendedSuggestion> suggestions, string resourceId, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendationProperties(string recommendationTypeId, RecommendationState state, string title, string description, DateTimeOffset createdOn, DateTimeOffset lastEvaluatedOn, DateTimeOffset lastModifiedOn, IList<RecommendedSuggestion> suggestions, ResourceIdentifier resourceId, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecommendationTypeId = recommendationTypeId;
             State = state;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Id of the resource this recommendation refers to. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Collection of additional properties for the recommendation. </summary>
         [WirePath("additionalProperties")]

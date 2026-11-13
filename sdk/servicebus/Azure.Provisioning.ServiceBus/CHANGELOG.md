@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2026-08-19)
+
+### Features Added
+
+- Migrated the library to TypeSpec generation and updated the Service Bus API version to `2026-01-01`.
 
 ## 1.1.0 (2025-06-16)
 

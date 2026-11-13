@@ -94,6 +94,28 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return Task.FromResult(result);
         }
 
+        public virtual SecureWrapResult SecureWrapKey(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default)
+        {
+            throw CreateOperationNotSupported(nameof(SecureWrapKey));
+        }
+
+        public virtual Task<SecureWrapResult> SecureWrapKeyAsync(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default)
+        {
+            SecureWrapResult result = SecureWrapKey(algorithm, cancellationToken);
+            return Task.FromResult(result);
+        }
+
+        public virtual SecureUnwrapResult SecureUnwrapKey(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default)
+        {
+            throw CreateOperationNotSupported(nameof(SecureUnwrapKey));
+        }
+
+        public virtual Task<SecureUnwrapResult> SecureUnwrapKeyAsync(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default)
+        {
+            SecureUnwrapResult result = SecureUnwrapKey(algorithm, encryptedKey, targetAttestationToken, cancellationToken);
+            return Task.FromResult(result);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static NotSupportedException CreateOperationNotSupported(string name, Exception innerException = null) =>
             new NotSupportedException($"Operation {name} not supported with the given key", innerException);

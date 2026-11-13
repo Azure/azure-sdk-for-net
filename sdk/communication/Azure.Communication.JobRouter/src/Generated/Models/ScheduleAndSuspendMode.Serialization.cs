@@ -15,11 +15,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a matching mode used for scheduling jobs to be queued at a future time. At the specified time, matching worker to a job will not start automatically. </summary>
     public partial class ScheduleAndSuspendMode : JobMatchingMode, IJsonModel<ScheduleAndSuspendMode>
     {
-        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/> for deserialization. </summary>
-        internal ScheduleAndSuspendMode()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override JobMatchingMode PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -125,7 +120,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduleAndSuspendMode(kind, additionalBinaryDataProperties, scheduleAt);

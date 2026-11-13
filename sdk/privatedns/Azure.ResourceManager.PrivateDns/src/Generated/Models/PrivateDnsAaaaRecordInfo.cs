@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDnsAaaaRecordInfo"/>. </summary>
-        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsAaaaRecordInfo(IPAddress iPv6Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateDnsAaaaRecordInfo(IPAddress ipv6Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPv6Address = iPv6Address;
+            IPv6Address = ipv6Address;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

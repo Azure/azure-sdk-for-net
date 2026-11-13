@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteSlotNetworkConfigApiVersion);
             _swiftVirtualNetworkOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _swiftVirtualNetworkOperationGroupRestClient = new SwiftVirtualNetworkOperationGroup(_swiftVirtualNetworkOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotNetworkConfigApiVersion ?? "2026-03-15");
+            _swiftVirtualNetworkOperationGroupRestClient = new SwiftVirtualNetworkOperationGroup(_swiftVirtualNetworkOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotNetworkConfigApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

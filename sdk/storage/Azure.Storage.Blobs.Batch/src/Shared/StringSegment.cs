@@ -13,6 +13,7 @@ namespace Azure.Core.Http.Multipart
     /// <summary>
     /// An optimized representation of a substring.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal readonly struct StringSegment : IEquatable<StringSegment>, IEquatable<string>
     {
         /// <summary>

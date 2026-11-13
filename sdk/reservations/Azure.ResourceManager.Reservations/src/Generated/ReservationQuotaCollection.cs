@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations
     /// <summary>
     /// A class representing a collection of <see cref="ReservationQuotaResource"/> and their operations.
     /// Each <see cref="ReservationQuotaResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ReservationQuotaCollection"/> instance call the GetReservationQuotas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ReservationQuotaCollection"/> instance call the GetAllReservationQuota method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ReservationQuotaCollection : ArmCollection, IEnumerable<ReservationQuotaResource>, IAsyncEnumerable<ReservationQuotaResource>
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Reservations
             _providerId = providerId;
             _location = location;
             _quotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationQuotaResource.ResourceType.Namespace, Diagnostics);
-            _quotaRestClient = new Quota(_quotaClientDiagnostics, Pipeline, Endpoint, reservationQuotaApiVersion ?? "2020-10-25");
+            _quotaRestClient = new Quota(_quotaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationQuotaApiVersion ?? "2020-10-25");
             ValidateResourceId(id);
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new QuotaGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new ReservationQuotaDataAsyncCollectionResultOfT(
                 _quotaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _providerId,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new QuotaGetAllCollectionResultOfT(
+            return new PageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new ReservationQuotaDataCollectionResultOfT(
                 _quotaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _providerId,

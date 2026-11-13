@@ -17,7 +17,8 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
+    // Method-level ignores do not prevent the shared OneTimeSetUp from failing on subnet-policy recordings.
+    [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;

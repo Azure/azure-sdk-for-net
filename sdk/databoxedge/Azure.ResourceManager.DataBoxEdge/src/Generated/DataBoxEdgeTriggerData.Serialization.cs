@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> Trigger details. </summary>
+    /// <summary>
+    /// Trigger details.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EdgeFileEventTrigger"/> and <see cref="PeriodicTimerEventTrigger"/>.
+    /// </summary>
     public partial class DataBoxEdgeTriggerData : ResourceData, IJsonModel<DataBoxEdgeTriggerData>
     {
         /// <param name="data"> The data to parse. </param>

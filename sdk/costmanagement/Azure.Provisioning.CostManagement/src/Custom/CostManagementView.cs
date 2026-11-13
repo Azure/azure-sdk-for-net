@@ -3,10 +3,10 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CostManagement
 {

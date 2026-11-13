@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for indicators connection. </summary>
-    public partial class TiDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon
+    internal partial class TiDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="TiDataConnectorDataTypesIndicators"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

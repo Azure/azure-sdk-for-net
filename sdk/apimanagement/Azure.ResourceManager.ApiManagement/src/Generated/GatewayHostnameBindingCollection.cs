@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(GatewayHostnameBindingResource.ResourceType, out string gatewayHostnameBindingApiVersion);
             _apiGatewayHostnameBindingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GatewayHostnameBindingResource.ResourceType.Namespace, Diagnostics);
-            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingApiVersion ?? "2025-09-01-preview");
+            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gatewayHostnameBindingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new GatewayHostnameBindingDataAsyncCollectionResultOfT(
                 _apiGatewayHostnameBindingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayCollectionResultOfT(
+            return new PageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new GatewayHostnameBindingDataCollectionResultOfT(
                 _apiGatewayHostnameBindingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

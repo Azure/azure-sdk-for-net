@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Azure/azure-sdk-for-net/.github/skills/auto-build-repair/telemetry-schema.v1.json",
+  "title": "SDK build repair telemetry report (v1)",
+  "description": "Machine-readable telemetry payload embedded in the auto-build-repair PR summary comment. Emitted by emit-repair-report.ps1 on EVERY terminal state and mirrored by CloudMine from the GitHub issues/comments stream. Kept intentionally tiny: only the fields needed to compute (or key the joins for) the in-scope success metrics. Values are sourced from the engine result files, git, and $GITHUB_* env - never authored by the model.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "repo",
+    "pr",
+    "head_sha",
+    "eligible",
+    "status",
+    "repaired_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "v1",
+      "description": "Contract version. Bump to v2 for any breaking field change so downstream Kusto queries can pin."
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique run identity: gha-<github.run_id>-<github.run_attempt>."
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^[^/]+/[^/]+$",
+      "description": "owner/name of the repository, from $GITHUB_REPOSITORY."
+    },
+    "pr": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Pull request number the repair ran against. Join key for CloudMine outcome metrics."
+    },
+    "head_sha": {
+      "type": "string",
+      "minLength": 7,
+      "description": "PR head sha at the time the repair ran."
+    },
+    "eligible": {
+      "type": "boolean",
+      "description": "Whether the PR passed the Auto SDK PR eligibility gate. Denominator input for metric 1."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["repaired", "failed", "ineligible", "skipped_already_green"],
+      "description": "Terminal outcome. repaired = build green after repair; failed = still red at a stop condition and attempted changes were not committed; ineligible = not an Auto SDK PR (no engine run); skipped_already_green = package already built, no repair needed."
+    },
+    "repaired_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "UTC ISO-8601 timestamp of the green build. Set ONLY when status=repaired; null otherwise. Anchors metric 2 (subsequent human correction) and metric 3 (time-to-green) in CloudMine joins."
+    }
+  }
+}

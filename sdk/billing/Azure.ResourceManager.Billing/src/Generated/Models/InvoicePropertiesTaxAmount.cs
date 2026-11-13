@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of tax charged for the billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesTaxAmount : BillingAmount
+    internal partial class InvoicePropertiesTaxAmount : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesTaxAmount"/>. </summary>
         public InvoicePropertiesTaxAmount()

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string staticSiteCustomDomainOverviewApiVersion);
             _staticSiteCustomDomainOverviewARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _staticSiteCustomDomainOverviewARMResourcesRestClient = new StaticSiteCustomDomainOverviewARMResources(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteCustomDomainOverviewApiVersion ?? "2026-03-15");
+            _staticSiteCustomDomainOverviewARMResourcesRestClient = new StaticSiteCustomDomainOverviewARMResources(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteCustomDomainOverviewApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

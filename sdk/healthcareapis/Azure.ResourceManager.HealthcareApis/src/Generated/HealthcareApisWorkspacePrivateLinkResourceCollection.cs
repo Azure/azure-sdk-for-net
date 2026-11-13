@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(HealthcareApisWorkspacePrivateLinkResource.ResourceType, out string healthcareApisWorkspacePrivateLinkResourceApiVersion);
             _healthcareApisWorkspacePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspacePrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _healthcareApisWorkspacePrivateLinkResourcesRestClient = new HealthcareApisWorkspacePrivateLinkResources(_healthcareApisWorkspacePrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, healthcareApisWorkspacePrivateLinkResourceApiVersion ?? "2025-04-01-preview");
+            _healthcareApisWorkspacePrivateLinkResourcesRestClient = new HealthcareApisWorkspacePrivateLinkResources(_healthcareApisWorkspacePrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspacePrivateLinkResourceApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisWorkspacePrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisPrivateLinkResourceDataAsync0CollectionResultOfT(
                 _healthcareApisWorkspacePrivateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisWorkspacePrivateLinkResourcesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisPrivateLinkResourceData0CollectionResultOfT(
                 _healthcareApisWorkspacePrivateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

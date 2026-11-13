@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,10 +10,17 @@
 
 ### Other Changes
 
-## 1.0.0-beta.3 (2026-06-03)
+## 1.0.0 (2026-07-30)
+
+This is the first stable release of the Azure Connected Cache management library.
+
+### Features Added
+
+- Upgraded api-version to `2026-06-01`.
 
 ### Other Changes
 
+- This package was migrated from beta to stable.
 - Upgraded dependent Azure.Core to 1.57.0.
 - Upgraded dependent Azure.ResourceManager to 1.14.0.
 
@@ -21,7 +28,7 @@
 
 ### Features Added
 
-- Updated to api-version to `2024-11-30-preview`
+- Updated api-version to `2024-11-30-preview`.
 
 ## 1.0.0-beta.1 (2025-06-20)
 
@@ -34,7 +41,5 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - HTTP pipeline with custom policies.
     - Better error-handling.
     - Support uniform telemetry across all languages.
-
-This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

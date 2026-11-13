@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             TryGetApiVersion(ApiCenterMetadataSchemaResource.ResourceType, out string apiCenterMetadataSchemaApiVersion);
             _metadataSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterMetadataSchemaResource.ResourceType.Namespace, Diagnostics);
-            _metadataSchemasRestClient = new MetadataSchemas(_metadataSchemasClientDiagnostics, Pipeline, Endpoint, apiCenterMetadataSchemaApiVersion ?? "2024-06-01-preview");
+            _metadataSchemasRestClient = new MetadataSchemas(_metadataSchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterMetadataSchemaApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterMetadataSchemaData, ApiCenterMetadataSchemaResource>(new MetadataSchemasGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiCenterMetadataSchemaData, ApiCenterMetadataSchemaResource>(new ApiCenterMetadataSchemaDataAsyncCollectionResultOfT(
                 _metadataSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterMetadataSchemaData, ApiCenterMetadataSchemaResource>(new MetadataSchemasGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiCenterMetadataSchemaData, ApiCenterMetadataSchemaResource>(new ApiCenterMetadataSchemaDataCollectionResultOfT(
                 _metadataSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

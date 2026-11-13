@@ -111,24 +111,52 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
 
-            var expectTenantId = expectedTenantId != null;
-            if (expectTenantId)
+            // Azure CLI does not support both --tenant and --subscription simultaneously.
+            // A requested tenant is authoritative and takes precedence; --subscription is only used
+            // when no tenant is requested.
+            if (expectedTenantId != null)
             {
-                Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"-tenant {expectedTenantId}"));
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--tenant {expectedTenantId}"));
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--subscription"), "Azure CLI does not support --tenant and --subscription together");
             }
-            else
-            {
-                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("-tenant"));
-            }
-
-            if (subscription != null)
+            else if (subscription != null)
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--subscription \"{subscription}\""));
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--tenant"));
             }
             else
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--subscription"));
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--tenant"));
             }
+        }
+
+        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58949.
+        // Reproduces the reported scenario: only AzureCliCredentialOptions.Subscription is set (no explicit
+        // TenantId and no AdditionallyAllowedTenants), and a service such as Key Vault triggers challenge-based
+        // authentication that surfaces a tenant on the TokenRequestContext. Previously the credential passed both
+        // "--tenant" and "--subscription" to the Azure CLI, which rejects that combination with
+        // "ERROR: Please specify only one of subscription and tenant, not both". The requested (challenge) tenant
+        // is authoritative for the resource, so it must take precedence and "--subscription" must be omitted.
+        [Test]
+        public async Task AuthenticateWithCliCredential_SubscriptionSet_ChallengeTenant_OmitsSubscription()
+        {
+            const string subscription = "1a7eed92-726e-46c0-b21d-a3db74b3b58c";
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+
+            var testProcess = new TestProcess { Output = processOutput };
+            // Only Subscription is configured; no explicit TenantId and no AdditionallyAllowedTenants.
+            var credential = CreateCredential(new TestProcessService(testProcess, true), subscription: subscription);
+
+            // The challenge-driven tenant arrives on the request context, mirroring Key Vault tenant discovery.
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantIdHint);
+            AccessToken actualToken = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(expectedToken, actualToken.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+
+            Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--tenant {TenantIdHint}"));
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--subscription"), "Azure CLI does not support --tenant and --subscription together");
         }
 
         [Test]

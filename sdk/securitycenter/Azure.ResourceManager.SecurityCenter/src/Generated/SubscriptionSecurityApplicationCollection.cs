@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SubscriptionSecurityApplicationResource.ResourceType, out string subscriptionSecurityApplicationApiVersion);
             _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionSecurityApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationRestClient = new Application(_applicationClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityApplicationApiVersion ?? "2022-07-01-preview");
+            _applicationRestClient = new Application(_applicationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityApplicationApiVersion ?? "2022-07-01-preview");
             _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionSecurityApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityApplicationApiVersion ?? "2022-07-01-preview");
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityApplicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityApplicationData, SubscriptionSecurityApplicationResource>(new ApplicationsGetAllAsyncCollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionSecurityApplicationCollection.GetAll"), data => new SubscriptionSecurityApplicationResource(Client, data));
+            return new AsyncPageableWrapper<SecurityApplicationData, SubscriptionSecurityApplicationResource>(new SecurityApplicationDataAsync0CollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionSecurityApplicationCollection.GetAll"), data => new SubscriptionSecurityApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityApplicationData, SubscriptionSecurityApplicationResource>(new ApplicationsGetAllCollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionSecurityApplicationCollection.GetAll"), data => new SubscriptionSecurityApplicationResource(Client, data));
+            return new PageableWrapper<SecurityApplicationData, SubscriptionSecurityApplicationResource>(new SecurityApplicationData0CollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionSecurityApplicationCollection.GetAll"), data => new SubscriptionSecurityApplicationResource(Client, data));
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(DscNodeResource.ResourceType, out string dscNodeApiVersion);
             _dscNodeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", DscNodeResource.ResourceType.Namespace, Diagnostics);
-            _dscNodeRestClient = new DscNode(_dscNodeClientDiagnostics, Pipeline, Endpoint, dscNodeApiVersion ?? "2024-10-23");
+            _dscNodeRestClient = new DscNode(_dscNodeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscNodeApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DscNodeData, DscNodeResource>(new DscNodeGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DscNodeData, DscNodeResource>(new DscNodeDataAsyncCollectionResultOfT(
                 _dscNodeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DscNodeData, DscNodeResource>(new DscNodeGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<DscNodeData, DscNodeResource>(new DscNodeDataCollectionResultOfT(
                 _dscNodeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

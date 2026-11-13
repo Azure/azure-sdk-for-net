@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string scmSiteBasicPublishingCredentialsPolicyApiVersion);
             _csmPublishingCredentialsPoliciesEntityOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _csmPublishingCredentialsPoliciesEntityOperationGroupRestClient = new CsmPublishingCredentialsPoliciesEntityOperationGroup(_csmPublishingCredentialsPoliciesEntityOperationGroupClientDiagnostics, Pipeline, Endpoint, scmSiteBasicPublishingCredentialsPolicyApiVersion ?? "2026-03-15");
+            _csmPublishingCredentialsPoliciesEntityOperationGroupRestClient = new CsmPublishingCredentialsPoliciesEntityOperationGroup(_csmPublishingCredentialsPoliciesEntityOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scmSiteBasicPublishingCredentialsPolicyApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

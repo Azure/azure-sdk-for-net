@@ -15,7 +15,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> Security ML Analytics Setting. </summary>
+    /// <summary>
+    /// Security ML Analytics Setting
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AnomalySecurityMLAnalyticsSettings"/>.
+    /// </summary>
     public partial class SecurityMLAnalyticsSettingData : ResourceData, IJsonModel<SecurityMLAnalyticsSettingData>
     {
         /// <param name="data"> The data to parse. </param>

@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Target resource. </summary>
     public partial class TargetResource : IJsonModel<TargetResource>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TargetResource)} does not support writing '{options.Format}' format.");
             }
@@ -117,6 +117,21 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("symbolicName"u8);
                 writer.WriteStringValue(SymbolicName);
             }
+            if (Optional.IsCollectionDefined(SymbolicNamePath))
+            {
+                writer.WritePropertyName("symbolicNamePath"u8);
+                writer.WriteStartArray();
+                foreach (string item in SymbolicNamePath)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,6 +181,7 @@ namespace Azure.ResourceManager.Resources.Models
             BinaryData identifiers = default;
             string apiVersion = default;
             string symbolicName = default;
+            IList<string> symbolicNamePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -203,7 +219,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identifiers = BinaryData.FromString(prop.Value.GetRawText());
+                    identifiers = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("apiVersion"u8))
@@ -216,9 +232,30 @@ namespace Azure.ResourceManager.Resources.Models
                     symbolicName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("symbolicNamePath"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    symbolicNamePath = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TargetResource(
@@ -229,6 +266,7 @@ namespace Azure.ResourceManager.Resources.Models
                 identifiers,
                 apiVersion,
                 symbolicName,
+                symbolicNamePath ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

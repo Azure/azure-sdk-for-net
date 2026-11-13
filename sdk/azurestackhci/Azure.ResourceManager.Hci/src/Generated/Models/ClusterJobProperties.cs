@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// Cluster Job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciConfigureSdnIntegrationJobProperties"/>, <see cref="HciConfigureCvmJobProperties"/>, <see cref="HciAddServerJobProperties"/>, <see cref="HciRepairServerJobProperties"/>, <see cref="GpuCreatePartitionJobProperties"/>, <see cref="GpuSwitchModeJobProperties"/>, <see cref="VmConnectProvisionJobProperties"/>, and <see cref="VmConnectRemoveJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciAddServerJobProperties"/>, <see cref="HciConfigureSdnIntegrationJobProperties"/>, and <see cref="HciRepairServerJobProperties"/>.
     /// </summary>
     public abstract partial class ClusterJobProperties
     {
@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startOn"> The UTC date and time at which the job started. </param>
-        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Cluster job. </param>
         /// <param name="reportedProperties"> Reported properties for job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, HciClusterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             DeploymentMode = deploymentMode;
             ProvisioningState = provisioningState;
             JobId = jobId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             ReportedProperties = reportedProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The UTC date and time at which the job started. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The UTC date and time at which the job completed. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Status of Cluster job. </summary>
         [WirePath("status")]
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Reported properties for job. </summary>
         [WirePath("reportedProperties")]
-        public JobReportedProperties ReportedProperties { get; }
+        public HciClusterJobReportedProperties ReportedProperties { get; }
     }
 }

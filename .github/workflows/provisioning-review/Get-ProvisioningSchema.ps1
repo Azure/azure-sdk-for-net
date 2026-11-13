@@ -103,6 +103,19 @@ function Get-PropertyKind
     }
 }
 
+function Get-DefaultValue
+{
+    param([AllowEmptyString()][string] $Arguments)
+
+    $defaultValueMatch = [regex]::Match($Arguments, '\bdefaultValue\s*:\s*(?<value>"(?:[^"\\]|\\.)*"|[^,\)]+)')
+    if (!$defaultValueMatch.Success)
+    {
+        return ''
+    }
+
+    return ($defaultValueMatch.Groups['value'].Value -replace '\s+', ' ').Trim()
+}
+
 function Get-ResourceProperties
 {
     param(
@@ -133,6 +146,7 @@ function Get-ResourceProperties
             Type = $type
             IsRequired = $args -match '\bisRequired\s*:\s*true\b'
             IsSettable = $isSettable
+            DefaultValue = Get-DefaultValue -Arguments $args
             IsMetadata = $isMetadata
         })
     }
@@ -254,12 +268,12 @@ else
             $lines.Add("- Additional source files: ``$($resource.AdditionalSourcePaths -join '`, ``')``")
         }
         $lines.Add("")
-        $lines.Add("| Property | Path | Kind | Type | Required | Settable | Metadata |")
-        $lines.Add("| --- | --- | --- | --- | --- | --- | --- |")
+        $lines.Add("| Property | Path | Kind | Type | Required | Settable | Default | Metadata |")
+        $lines.Add("| --- | --- | --- | --- | --- | --- | --- | --- |")
         foreach ($property in $resource.Properties)
         {
             $path = if ($property.SerializedPath.Count -gt 0) { $property.SerializedPath -join '.' } else { '' }
-            $lines.Add("| ``$($property.Name)`` | ``$path`` | $($property.Kind) | ``$($property.Type)`` | $($property.IsRequired) | $($property.IsSettable) | $($property.IsMetadata) |")
+            $lines.Add("| ``$($property.Name)`` | ``$path`` | $($property.Kind) | ``$($property.Type)`` | $($property.IsRequired) | $($property.IsSettable) | ``$($property.DefaultValue)`` | $($property.IsMetadata) |")
         }
         $lines.Add("")
     }

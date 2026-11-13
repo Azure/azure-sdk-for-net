@@ -78,7 +78,7 @@ namespace Azure.Provisioning.ResourceGraph
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "timeModified" }, isOutput: true);
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "timeModified" }, isOutput: true, format: "O");
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _query = DefineProperty<string>(nameof(Query), new string[] { "query" }, isRequired: true);
             _resultKind = DefineProperty<ResultKind>(nameof(ResultKind), new string[] { "resultKind" }, isOutput: true);

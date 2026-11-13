@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary> Deployment information. </summary>
     public partial class ArmDeploymentData : ResourceData

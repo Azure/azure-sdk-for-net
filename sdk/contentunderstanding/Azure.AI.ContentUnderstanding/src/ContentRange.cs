@@ -11,7 +11,8 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary>
     /// Represents a range of content to analyze. Use this type with the
     /// <see cref="ContentUnderstandingClient.AnalyzeBinaryAsync(WaitUntil, string, BinaryData, ContentRange?, string, ProcessingLocation?, System.Threading.CancellationToken)"/>
-    /// method for a self-documenting API.
+    /// convenience overload, or set <see cref="AnalyzeBinaryOptions.ContentRange"/> when calling
+    /// <see cref="ContentUnderstandingClient.AnalyzeBinaryAsync(WaitUntil, AnalyzeBinaryOptions, System.Threading.CancellationToken)"/>.
     /// <para>
     /// For documents, ranges use 1-based page numbers (e.g., <c>"1-3"</c>, <c>"5"</c>, <c>"9-"</c>).
     /// For audio/video, ranges use integer milliseconds (e.g., <c>"0-5000"</c>, <c>"5000-"</c>).
@@ -60,7 +61,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="pageNumber"/> is less than 1. </exception>
         public static ContentRange Page(int pageNumber)
         {
-            if (pageNumber < 1) throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number must be >= 1.");
+            if (pageNumber < 1)
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number must be >= 1.");
             return new ContentRange(pageNumber.ToString());
         }
 
@@ -71,8 +73,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="start"/> is less than 1, or <paramref name="end"/> is less than <paramref name="start"/>. </exception>
         public static ContentRange Pages(int start, int end)
         {
-            if (start < 1) throw new ArgumentOutOfRangeException(nameof(start), "Start page must be >= 1.");
-            if (end < start) throw new ArgumentOutOfRangeException(nameof(end), "End page must be >= start page.");
+            if (start < 1)
+                throw new ArgumentOutOfRangeException(nameof(start), "Start page must be >= 1.");
+            if (end < start)
+                throw new ArgumentOutOfRangeException(nameof(end), "End page must be >= start page.");
             return new ContentRange($"{start}-{end}");
         }
 
@@ -82,7 +86,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="startPage"/> is less than 1. </exception>
         public static ContentRange PagesFrom(int startPage)
         {
-            if (startPage < 1) throw new ArgumentOutOfRangeException(nameof(startPage), "Start page must be >= 1.");
+            if (startPage < 1)
+                throw new ArgumentOutOfRangeException(nameof(startPage), "Start page must be >= 1.");
             return new ContentRange($"{startPage}-");
         }
 
@@ -93,8 +98,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="startMs"/> is negative, or <paramref name="endMs"/> is less than <paramref name="startMs"/>. </exception>
         internal static ContentRange TimeRange(long startMs, long endMs)
         {
-            if (startMs < 0) throw new ArgumentOutOfRangeException(nameof(startMs), "Start time must be >= 0.");
-            if (endMs < startMs) throw new ArgumentOutOfRangeException(nameof(endMs), "End time must be >= start time.");
+            if (startMs < 0)
+                throw new ArgumentOutOfRangeException(nameof(startMs), "Start time must be >= 0.");
+            if (endMs < startMs)
+                throw new ArgumentOutOfRangeException(nameof(endMs), "End time must be >= start time.");
             return new ContentRange($"{startMs}-{endMs}");
         }
 
@@ -104,7 +111,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="startMs"/> is negative. </exception>
         internal static ContentRange TimeRangeFrom(long startMs)
         {
-            if (startMs < 0) throw new ArgumentOutOfRangeException(nameof(startMs), "Start time must be >= 0.");
+            if (startMs < 0)
+                throw new ArgumentOutOfRangeException(nameof(startMs), "Start time must be >= 0.");
             return new ContentRange($"{startMs}-");
         }
 
@@ -115,8 +123,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="start"/> is negative, or <paramref name="end"/> is less than <paramref name="start"/>. </exception>
         public static ContentRange TimeRange(TimeSpan start, TimeSpan end)
         {
-            if (start < TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(start), "Start time must be non-negative.");
-            if (end < start) throw new ArgumentOutOfRangeException(nameof(end), "End time must be >= start time.");
+            if (start < TimeSpan.Zero)
+                throw new ArgumentOutOfRangeException(nameof(start), "Start time must be non-negative.");
+            if (end < start)
+                throw new ArgumentOutOfRangeException(nameof(end), "End time must be >= start time.");
             return TimeRange((long)start.TotalMilliseconds, (long)end.TotalMilliseconds);
         }
 
@@ -126,7 +136,8 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentOutOfRangeException"> <paramref name="start"/> is negative. </exception>
         public static ContentRange TimeRangeFrom(TimeSpan start)
         {
-            if (start < TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(start), "Start time must be non-negative.");
+            if (start < TimeSpan.Zero)
+                throw new ArgumentOutOfRangeException(nameof(start), "Start time must be non-negative.");
             return TimeRangeFrom((long)start.TotalMilliseconds);
         }
 
@@ -138,7 +149,8 @@ namespace Azure.AI.ContentUnderstanding
         public static ContentRange Combine(params ContentRange[] ranges)
         {
             Argument.AssertNotNull(ranges, nameof(ranges));
-            if (ranges.Length == 0) throw new ArgumentException("At least one range must be provided.", nameof(ranges));
+            if (ranges.Length == 0)
+                throw new ArgumentException("At least one range must be provided.", nameof(ranges));
             return new ContentRange(string.Join(",", ranges.Select(r => r._value)));
         }
 

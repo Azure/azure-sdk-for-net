@@ -14,8 +14,12 @@ namespace Azure.Core.Tests
     {
         private readonly Func<string, bool> _sourceNameFilter;
         private readonly AsyncLocal<bool> _collectThisStack;
+        private readonly object _operationToken;
+
+        private static readonly AsyncLocal<object> s_currentOperation = new AsyncLocal<object>();
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
+        private readonly IDisposable _allListenersSubscription;
         private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
@@ -26,15 +30,36 @@ namespace Azure.Core.Tests
         }
 
         public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
+            : this(filter, asyncLocal, scopeStartCallback, null)
         {
+        }
+
+        /// <summary>
+        /// Creates a listener that only collects events raised while <paramref name="operationToken"/> is the
+        /// current operation. Execution-context isolation alone is not enough for deferred operations such as
+        /// async iterators, because several of them can be created on, and interleaved within, the same flow.
+        /// </summary>
+        internal ClientDiagnosticListener(
+            Func<string, bool> filter,
+            bool asyncLocal,
+            Action<ProducedDiagnosticScope> scopeStartCallback,
+            object operationToken)
+        {
+            _operationToken = operationToken;
             if (asyncLocal)
             {
                 _collectThisStack = new AsyncLocal<bool> { Value = true };
             }
             _sourceNameFilter = filter;
             _scopeStartCallback = scopeStartCallback;
-            DiagnosticListener.AllListeners.Subscribe(this);
+            _allListenersSubscription = DiagnosticListener.AllListeners.Subscribe(this);
         }
+
+        /// <summary>
+        /// Marks the calling asynchronous frame as belonging to <paramref name="operationToken"/>. The value only
+        /// flows into work started by that frame, so it does not leak back out to the caller.
+        /// </summary>
+        internal static void EnterOperation(object operationToken) => s_currentOperation.Value = operationToken;
 
         public void OnCompleted()
         {
@@ -47,6 +72,9 @@ namespace Azure.Core.Tests
         public void OnNext(KeyValuePair<string, object> value)
         {
             if (_collectThisStack?.Value == false)
+                return;
+
+            if (_operationToken != null && !ReferenceEquals(s_currentOperation.Value, _operationToken))
                 return;
 
             lock (Scopes)
@@ -79,30 +107,40 @@ namespace Azure.Core.Tests
                 else if (value.Key.EndsWith(stopSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
-                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                    ProducedDiagnosticScope scope = null;
+                    string activityId = Activity.Current?.Id;
+                    if (activityId != null)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
-                        {
-                            producedDiagnosticScope.IsCompleted = true;
-                            return;
-                        }
+                        scope = Scopes.FirstOrDefault(s => s.Activity.Id == activityId && s.Name == name);
+                    }
+
+                    scope ??= Scopes.LastOrDefault(s => !s.IsCompleted && s.Name == name);
+                    if (scope != null)
+                    {
+                        scope.IsCompleted = true;
+                        return;
                     }
                     throw new InvalidOperationException($"Event '{name}' was not started");
                 }
                 else if (value.Key.EndsWith(exceptionSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
-                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                    ProducedDiagnosticScope scope = null;
+                    string activityId = Activity.Current?.Id;
+                    if (activityId != null)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
-                        {
-                            if (producedDiagnosticScope.IsCompleted)
-                            {
-                                throw new InvalidOperationException("Scope should not be stopped when calling Failed");
-                            }
+                        scope = Scopes.FirstOrDefault(s => s.Activity.Id == activityId && s.Name == name);
+                    }
 
-                            producedDiagnosticScope.Exception = (Exception)value.Value;
-                        }
+                    scope ??= Scopes.LastOrDefault(s => !s.IsCompleted && s.Name == name);
+                    if (scope?.IsCompleted == true)
+                    {
+                        throw new InvalidOperationException("Scope should not be stopped when calling Failed");
+                    }
+
+                    if (scope != null)
+                    {
+                        scope.Exception = (Exception)value.Value;
                     }
                 }
             }
@@ -140,6 +178,10 @@ namespace Azure.Core.Tests
             {
                 subscription.Dispose();
             }
+
+            // AllListeners is a process-wide observable, so failing to release this would keep the
+            // listener and every scope it captured alive for the lifetime of the process.
+            _allListenersSubscription?.Dispose();
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SingletonSettingProperties _properties;
-        private ResourceReference<ConfigurationStore> _parent;
+        private ProvisioningResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new SingletonSetting. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -39,13 +39,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -114,7 +119,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SingletonSettingProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ConfigurationStore>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -141,8 +146,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             /// <summary> API version "2024-05-01". </summary>
             public static readonly string V2024_05_01 = "2024-05-01";
-            /// <summary> API version "2024-04-01". </summary>
-            public static readonly string V2024_04_01 = "2024-04-01";
+            /// <summary> API version "2024-01-01". </summary>
+            public static readonly string V2024_01_01 = "2024-01-01";
         }
     }
 }

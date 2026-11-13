@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(DiskRestorePointResource.ResourceType, out string diskRestorePointApiVersion);
             _diskRestorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskRestorePointResource.ResourceType.Namespace, Diagnostics);
-            _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Endpoint, diskRestorePointApiVersion ?? "2026-03-02");
+            _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diskRestorePointApiVersion ?? "2026-03-02");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointsGetByRestorePointAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointDataAsyncCollectionResultOfT(
                 _diskRestorePointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointsGetByRestorePointCollectionResultOfT(
+            return new PageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointDataCollectionResultOfT(
                 _diskRestorePointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

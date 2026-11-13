@@ -166,10 +166,10 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedTestProfileRun(value, nextLink, additionalBinaryDataProperties);
+            return new PagedTestProfileRun(value ?? new ChangeTrackingList<TestProfileRun>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

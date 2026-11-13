@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the express route connection. </param>
-        internal NetworkVirtualApplianceConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, NetworkVirtualApplianceConnectionProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
+        internal NetworkVirtualApplianceConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, NetworkVirtualApplianceConnectionProperties properties) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
         }
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("properties.routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration ConnectionRoutingConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.RoutingConfiguration;
+                return Properties is null ? default : Properties.ConnectionRoutingConfiguration;
             }
             set
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new NetworkVirtualApplianceConnectionProperties();
                 }
-                Properties.RoutingConfiguration = value;
+                Properties.ConnectionRoutingConfiguration = value;
             }
         }
     }

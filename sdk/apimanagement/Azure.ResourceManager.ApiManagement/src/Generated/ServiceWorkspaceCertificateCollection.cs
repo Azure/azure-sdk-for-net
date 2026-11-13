@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceCertificateResource.ResourceType, out string serviceWorkspaceCertificateApiVersion);
             _workspaceCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceCertificateResource.ResourceType.Namespace, Diagnostics);
-            _workspaceCertificateRestClient = new WorkspaceCertificate(_workspaceCertificateClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceCertificateApiVersion ?? "2025-09-01-preview");
+            _workspaceCertificateRestClient = new WorkspaceCertificate(_workspaceCertificateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceCertificateApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new WorkspaceCertificateGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new ApiManagementCertificateDataAsyncCollectionResultOfT(
                 _workspaceCertificateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new WorkspaceCertificateGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new ApiManagementCertificateDataCollectionResultOfT(
                 _workspaceCertificateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

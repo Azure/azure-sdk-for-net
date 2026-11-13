@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotDetectorResource.ResourceType, out string siteSlotDetectorApiVersion);
             _detectorResponseOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDetectorResource.ResourceType.Namespace, Diagnostics);
-            _detectorResponseOperationGroupRestClient = new DetectorResponseOperationGroup(_detectorResponseOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotDetectorApiVersion ?? "2026-03-15");
+            _detectorResponseOperationGroupRestClient = new DetectorResponseOperationGroup(_detectorResponseOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDetectorApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceDetectorData, SiteSlotDetectorResource>(new DetectorResponseOperationGroupGetSiteDetectorResponsesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceDetectorData, SiteSlotDetectorResource>(new AppServiceDetectorDataAsync0CollectionResultOfT(
                 _detectorResponseOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceDetectorData, SiteSlotDetectorResource>(new DetectorResponseOperationGroupGetSiteDetectorResponsesSlotCollectionResultOfT(
+            return new PageableWrapper<AppServiceDetectorData, SiteSlotDetectorResource>(new AppServiceDetectorData0CollectionResultOfT(
                 _detectorResponseOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

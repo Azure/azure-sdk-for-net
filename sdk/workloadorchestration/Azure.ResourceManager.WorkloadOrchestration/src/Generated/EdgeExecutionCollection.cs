@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeExecutionResource.ResourceType, out string edgeExecutionApiVersion);
             _executionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeExecutionResource.ResourceType.Namespace, Diagnostics);
-            _executionsRestClient = new Executions(_executionsClientDiagnostics, Pipeline, Endpoint, edgeExecutionApiVersion ?? "2025-06-01");
+            _executionsRestClient = new Executions(_executionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeExecutionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeExecutionData, EdgeExecutionResource>(new ExecutionsGetByWorkflowVersionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeExecutionData, EdgeExecutionResource>(new EdgeExecutionDataAsyncCollectionResultOfT(
                 _executionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeExecutionData, EdgeExecutionResource>(new ExecutionsGetByWorkflowVersionCollectionResultOfT(
+            return new PageableWrapper<EdgeExecutionData, EdgeExecutionResource>(new EdgeExecutionDataCollectionResultOfT(
                 _executionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

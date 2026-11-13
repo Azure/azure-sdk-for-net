@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="azureResourceId"> The bookmark azure resource id. </param>
         /// <param name="displayName"> The bookmark display name. </param>
         /// <param name="notes"> The notes of the bookmark. </param>
-        /// <param name="endOn"> The bookmark end time. </param>
-        /// <param name="startOn"> The bookmark start time. </param>
+        /// <param name="endsOn"> The bookmark end time. </param>
+        /// <param name="startsOn"> The bookmark start time. </param>
         /// <param name="eventOn"> The bookmark event time. </param>
         /// <param name="createdBy"> Describes a user that created the bookmark. </param>
         /// <param name="labels"> List of labels relevant to this bookmark. </param>
-        internal BookmarkTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId, string displayName, string notes, DateTimeOffset? endOn, DateTimeOffset? startOn, DateTimeOffset? eventOn, SecurityInsightsUserInfo createdBy, IList<string> labels) : base(kind, additionalBinaryDataProperties)
+        internal BookmarkTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId, string displayName, string notes, DateTimeOffset? endsOn, DateTimeOffset? startsOn, DateTimeOffset? eventOn, SecurityInsightsUserInfo createdBy, IList<string> labels) : base(kind, additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             DisplayName = displayName;
             Notes = notes;
-            EndOn = endOn;
-            StartOn = startOn;
+            EndsOn = endsOn;
+            StartsOn = startsOn;
             EventOn = eventOn;
             CreatedBy = createdBy;
             Labels = labels;
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The bookmark end time. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The bookmark start time. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The bookmark event time. </summary>
         [WirePath("eventTime")]

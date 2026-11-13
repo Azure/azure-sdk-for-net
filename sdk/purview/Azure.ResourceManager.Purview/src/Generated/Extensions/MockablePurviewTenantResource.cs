@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Purview.Mocking
 
         private ClientDiagnostics DefaultAccountsClientDiagnostics => _defaultAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DefaultAccounts DefaultAccountsRestClient => _defaultAccountsRestClient ??= new DefaultAccounts(DefaultAccountsClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
+        private DefaultAccounts DefaultAccountsRestClient => _defaultAccountsRestClient ??= new DefaultAccounts(DefaultAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01-preview");
 
         /// <summary>
         /// Get the default account for the scope.

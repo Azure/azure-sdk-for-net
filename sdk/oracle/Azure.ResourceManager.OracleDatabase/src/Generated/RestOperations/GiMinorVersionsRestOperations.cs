@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of GiMinorVersions for mocking. </summary>
         protected GiMinorVersions()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> Initializes a new instance of GiMinorVersions. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal GiMinorVersions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal GiMinorVersions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(GiMinorVersions).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByParentRequest(Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context)
+        internal HttpMessage CreateGetByParentRequest(Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, string shape, bool? isGiVersionForProvisioning, string sortOrder, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,15 +67,28 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.AppendQuery("zone", zone, true);
             }
+            if (shape != null)
+            {
+                uri.AppendQuery("shape", shape, true);
+            }
+            if (isGiVersionForProvisioning != null)
+            {
+                uri.AppendQuery("isGiVersionForProvisioning", TypeFormatters.ConvertToString(isGiVersionForProvisioning), true);
+            }
+            if (sortOrder != null)
+            {
+                uri.AppendQuery("sortOrder", sortOrder, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context)
+        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, string shape, bool? isGiVersionForProvisioning, string sortOrder, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -91,6 +107,7 @@ namespace Azure.ResourceManager.OracleDatabase
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -115,6 +132,7 @@ namespace Azure.ResourceManager.OracleDatabase
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

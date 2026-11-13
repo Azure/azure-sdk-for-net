@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedLocation"u8);
                 ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
-            if (Optional.IsDefined(SecuredVMDetails))
+            if (Optional.IsDefined(SecuredVmDetails))
             {
                 writer.WritePropertyName("securedVMDetails"u8);
-                writer.WriteObjectValue(SecuredVMDetails, options);
+                writer.WriteObjectValue(SecuredVmDetails, options);
             }
             if (Optional.IsDefined(TargetDiskNetworkAccessSettings))
             {

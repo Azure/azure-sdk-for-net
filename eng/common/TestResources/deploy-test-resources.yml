@@ -12,6 +12,7 @@ parameters:
   UseFederatedAuth: true
   PersistOidcToken: false
   SelfContainedPostScript: self-contained-test-resources-post.ps1
+  SkipEnvironmentSetup: false
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -42,7 +43,8 @@ parameters:
 steps:
   - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
-  - template: /eng/common/TestResources/setup-environments.yml
+  - ${{ if eq(parameters.SkipEnvironmentSetup, false) }}:
+    - template: /eng/common/TestResources/setup-environments.yml
 
   - ${{ if eq(parameters.PersistOidcToken, true) }}:
     - task: AzureCLI@2

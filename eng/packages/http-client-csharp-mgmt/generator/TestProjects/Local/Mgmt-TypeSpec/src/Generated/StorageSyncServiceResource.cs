@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string storageSyncServiceApiVersion);
             _storageSyncServicesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Endpoint, storageSyncServiceApiVersion ?? "2024-05-01");
+            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncServiceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

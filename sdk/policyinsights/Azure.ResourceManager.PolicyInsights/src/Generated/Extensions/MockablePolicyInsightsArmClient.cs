@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
         private ClientDiagnostics PolicyEventsClientDiagnostics => _policyEventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyEvents PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEvents(PolicyEventsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
+        private PolicyEvents PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEvents(PolicyEventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-01");
 
         private ClientDiagnostics PolicyStatesClientDiagnostics => _policyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyStates PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStates(PolicyStatesClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
+        private PolicyStates PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStates(PolicyStatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-01");
 
         private ClientDiagnostics PolicyRestrictionsClientDiagnostics => _policyRestrictionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyRestrictions PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictions(PolicyRestrictionsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
+        private PolicyRestrictions PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictions(PolicyRestrictionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-01");
 
         private ClientDiagnostics ComponentPolicyStatesClientDiagnostics => _componentPolicyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ComponentPolicyStates ComponentPolicyStatesRestClient => _componentPolicyStatesRestClient ??= new ComponentPolicyStates(ComponentPolicyStatesClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
+        private ComponentPolicyStates ComponentPolicyStatesRestClient => _componentPolicyStatesRestClient ??= new ComponentPolicyStates(ComponentPolicyStatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-01");
 
         private ClientDiagnostics PolicyTrackedResourcesClientDiagnostics => _policyTrackedResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyTrackedResources PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResources(PolicyTrackedResourcesClientDiagnostics, Pipeline, Endpoint, "2018-07-01-preview");
+        private PolicyTrackedResources PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResources(PolicyTrackedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-07-01-preview");
 
         /// <summary> Gets an object representing a <see cref="PolicyRemediationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

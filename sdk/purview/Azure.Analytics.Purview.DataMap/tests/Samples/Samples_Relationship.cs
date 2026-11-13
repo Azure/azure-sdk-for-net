@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             AtlasRelationship body = new AtlasRelationship
             {
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             AtlasRelationship body = new AtlasRelationship
             {
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -254,7 +254,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             AtlasRelationship body = new AtlasRelationship
             {
@@ -293,7 +293,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             AtlasRelationship body = new AtlasRelationship
             {
@@ -332,7 +332,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             Response response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
 
@@ -346,7 +346,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             Response response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
 
@@ -360,7 +360,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
@@ -371,7 +371,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
@@ -382,7 +382,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             Response response = client.Delete("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
 
@@ -395,7 +395,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+            DataMapRelationship client = new DataMapClient(endpoint, credential).GetDataMapRelationshipClient();
 
             Response response = await client.DeleteAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
 

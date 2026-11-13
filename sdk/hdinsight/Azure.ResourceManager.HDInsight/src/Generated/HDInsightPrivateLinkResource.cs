@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             TryGetApiVersion(ResourceType, out string hdInsightPrivateLinkResourceApiVersion);
             _hdInsightPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", ResourceType.Namespace, Diagnostics);
-            _hdInsightPrivateLinkResourcesRestClient = new HDInsightPrivateLinkResources(_hdInsightPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hdInsightPrivateLinkResourceApiVersion ?? "2025-01-15-preview");
+            _hdInsightPrivateLinkResourcesRestClient = new HDInsightPrivateLinkResources(_hdInsightPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightPrivateLinkResourceApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 

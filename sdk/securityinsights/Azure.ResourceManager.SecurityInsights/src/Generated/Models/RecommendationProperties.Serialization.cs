@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -107,19 +108,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(AdditionalProperties))
             {
-                writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in AdditionalProperties)
+                if (AdditionalProperties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("additionalProperties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in AdditionalProperties)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("additionalProperties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -171,8 +179,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DateTimeOffset lastEvaluatedOn = default;
             DateTimeOffset lastModifiedOn = default;
             IList<RecommendedSuggestion> suggestions = default;
-            string resourceId = default;
-            IDictionary<string, string> additionalProperties = default;
+            ResourceIdentifier resourceId = default;
+            IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -225,16 +233,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceId = null;
                         continue;
                     }
-                    resourceId = prop.Value.GetString();
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("additionalProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        additionalProperties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -254,7 +262,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RecommendationProperties(
@@ -265,9 +273,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 createdOn,
                 lastEvaluatedOn,
                 lastModifiedOn,
-                suggestions,
+                suggestions ?? new ChangeTrackingList<RecommendedSuggestion>(),
                 resourceId,
-                additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
+                additionalProperties,
                 additionalBinaryDataProperties);
         }
     }

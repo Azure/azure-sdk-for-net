@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(GarnetClusterResourcePropertiesEndPointsItem)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(Port))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GarnetClusterResourcePropertiesEndPointsItem(ipAddress, port, additionalBinaryDataProperties);

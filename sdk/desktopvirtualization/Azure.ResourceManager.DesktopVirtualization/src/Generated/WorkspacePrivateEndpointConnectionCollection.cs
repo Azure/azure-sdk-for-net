@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(WorkspacePrivateEndpointConnectionResource.ResourceType, out string workspacePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", WorkspacePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, workspacePrivateEndpointConnectionApiVersion ?? "2026-03-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workspacePrivateEndpointConnectionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new DesktopVirtualizationPrivateEndpointConnectionDataDataAsync0CollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new DesktopVirtualizationPrivateEndpointConnectionDataData0CollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

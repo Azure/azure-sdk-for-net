@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 
@@ -65,12 +65,17 @@ public class Sample_SessionsCRUD : SamplesBase
         ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
         #endregion
+        #region Snippet:Sample_Stop_SessionsCRUD_Async
+        await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
+        #endregion
         #region Snippet:Sample_List_SessionsCRUD_Async
         List<ProjectAgentSession> sessions = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).ToListAsync();
         Console.WriteLine($"Found {sessions.Count} sessions.");
         foreach (ProjectAgentSession item in sessions)
         {
-            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Async
@@ -129,12 +134,17 @@ public class Sample_SessionsCRUD : SamplesBase
         ProjectAgentSession session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
         #endregion
+        #region Snippet:Sample_Stop_SessionsCRUD_Sync
+        agentsClient.StopSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
+        #endregion
         #region Snippet:Sample_List_SessionsCRUD_Sync
-        List<ProjectAgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];
+        List<ProjectAgentSession> sessions = [.. agentsClient.GetSessions(agentName: agentVersion.Name)];
         Console.WriteLine($"Found {sessions.Count} sessions.");
         foreach (ProjectAgentSession item in sessions)
         {
-            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Sync

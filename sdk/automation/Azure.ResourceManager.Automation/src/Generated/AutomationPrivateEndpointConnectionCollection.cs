@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationPrivateEndpointConnectionResource.ResourceType, out string automationPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, automationPrivateEndpointConnectionApiVersion ?? "2024-10-23");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationPrivateEndpointConnectionApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationPrivateEndpointConnectionData, AutomationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationPrivateEndpointConnectionData, AutomationPrivateEndpointConnectionResource>(new AutomationPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationPrivateEndpointConnectionData, AutomationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationPrivateEndpointConnectionData, AutomationPrivateEndpointConnectionResource>(new AutomationPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

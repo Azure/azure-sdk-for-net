@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             TryGetApiVersion(ResourceType, out string availabilityGroupListenerApiVersion);
             _availabilityGroupListenersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", ResourceType.Namespace, Diagnostics);
-            _availabilityGroupListenersRestClient = new AvailabilityGroupListeners(_availabilityGroupListenersClientDiagnostics, Pipeline, Endpoint, availabilityGroupListenerApiVersion ?? "2023-10-01");
+            _availabilityGroupListenersRestClient = new AvailabilityGroupListeners(_availabilityGroupListenersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, availabilityGroupListenerApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 

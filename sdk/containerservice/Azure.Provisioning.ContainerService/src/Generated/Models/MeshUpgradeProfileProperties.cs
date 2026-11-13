@@ -5,60 +5,20 @@
 
 #nullable disable
 
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Mesh upgrade profile properties for a major.minor release. </summary>
-    public partial class MeshUpgradeProfileProperties : ProvisionableConstruct
+    public partial class MeshUpgradeProfileProperties : MeshRevision
     {
-        private BicepValue<string> _revision;
-        private BicepList<string> _upgrades;
-        private BicepList<CompatibleVersions> _compatibleWith;
-
         /// <summary> Creates a new MeshUpgradeProfileProperties. </summary>
         public MeshUpgradeProfileProperties()
         {
-        }
-
-        /// <summary> Gets the Revision. </summary>
-        public BicepValue<string> Revision
-        {
-            get
-            {
-                Initialize();
-                return _revision;
-            }
-        }
-
-        /// <summary> Gets the Upgrades. </summary>
-        public BicepList<string> Upgrades
-        {
-            get
-            {
-                Initialize();
-                return _upgrades;
-            }
-        }
-
-        /// <summary> Gets the CompatibleWith. </summary>
-        public BicepList<CompatibleVersions> CompatibleWith
-        {
-            get
-            {
-                Initialize();
-                return _compatibleWith;
-            }
         }
 
         /// <summary> Define all the provisionable properties for MeshUpgradeProfileProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _revision = DefineProperty<string>(nameof(Revision), new string[] { "revision" });
-            _upgrades = DefineListProperty<string>(nameof(Upgrades), new string[] { "upgrades" });
-            _compatibleWith = DefineListProperty<CompatibleVersions>(nameof(CompatibleWith), new string[] { "compatibleWith" });
             DefineAdditionalProperties();
         }
 

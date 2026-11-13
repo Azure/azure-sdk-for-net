@@ -4,7 +4,11 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
@@ -35,7 +39,7 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
         ResponseItem item = ModelReaderWriter.Read<ResponseItem>(BinaryData.FromString(rawStructuredInputsItem));
         Assert.That(item, Is.Not.Null);
 
-        AgentResponseItem agentResponseItem = item.AsAgentResponseItem();
+        ResponseItem agentResponseItem = item.AsAgentResponseItem();
         Assert.That(agentResponseItem, Is.Not.Null);
 
         ResponseItem revertedResponseItem = agentResponseItem;

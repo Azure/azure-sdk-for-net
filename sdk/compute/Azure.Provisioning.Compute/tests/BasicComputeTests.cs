@@ -15,6 +15,7 @@ public class BasicComputeTests
         return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:ComputeAvailabilitySetBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter availabilitySetName = new(nameof(availabilitySetName), typeof(string))
@@ -46,6 +47,7 @@ public class BasicComputeTests
                     PlatformUpdateDomainCount = updateDomainCount
                 };
                 infra.Add(avset);
+                #endregion
 
                 return infra;
             });
@@ -149,7 +151,7 @@ public class BasicComputeTests
                 };
                 infra.Add(vnet);
 
-                NetworkInterface nic = new(nameof(nic));
+                NetworkInterface nic = new(nameof(nic), NetworkInterface.ResourceVersions.V2025_05_01);
                 infra.Add(nic);
 
                 VirtualMachine vm = new(nameof(vm), VirtualMachine.ResourceVersions.V2025_04_01)
@@ -244,6 +246,7 @@ public class BasicComputeTests
 
             resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
               name: take('vnet-${uniqueString(resourceGroup().id)}', 64)
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -259,7 +262,6 @@ public class BasicComputeTests
                   }
                 ]
               }
-              location: location
             }
 
             resource nic 'Microsoft.Network/networkInterfaces@2025-05-01' = {
@@ -282,14 +284,14 @@ public class BasicComputeTests
                   ]
                 }
                 osProfile: {
-                  computerName: 'myVM'
-                  adminUsername: adminUsername
                   adminPassword: adminPassword
+                  adminUsername: adminUsername
+                  computerName: 'myVM'
                 }
                 storageProfile: {
                   imageReference: {
-                    publisher: 'MicrosoftWindowsServer'
                     offer: 'WindowsServer'
+                    publisher: 'MicrosoftWindowsServer'
                     sku: '2022-datacenter-azure-edition'
                     version: 'latest'
                   }

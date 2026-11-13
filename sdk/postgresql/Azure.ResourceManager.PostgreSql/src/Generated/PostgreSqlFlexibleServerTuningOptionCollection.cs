@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(PostgreSqlFlexibleServerTuningOptionResource.ResourceType, out string postgreSqlFlexibleServerTuningOptionApiVersion);
             _tuningOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerTuningOptionResource.ResourceType.Namespace, Diagnostics);
-            _tuningOptionsRestClient = new TuningOptions(_tuningOptionsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerTuningOptionApiVersion ?? "2026-04-01-preview");
+            _tuningOptionsRestClient = new TuningOptions(_tuningOptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerTuningOptionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerTuningOptionData, PostgreSqlFlexibleServerTuningOptionResource>(new TuningOptionsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerTuningOptionData, PostgreSqlFlexibleServerTuningOptionResource>(new PostgreSqlFlexibleServerTuningOptionDataAsyncCollectionResultOfT(
                 _tuningOptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerTuningOptionData, PostgreSqlFlexibleServerTuningOptionResource>(new TuningOptionsGetByServerCollectionResultOfT(
+            return new PageableWrapper<PostgreSqlFlexibleServerTuningOptionData, PostgreSqlFlexibleServerTuningOptionResource>(new PostgreSqlFlexibleServerTuningOptionDataCollectionResultOfT(
                 _tuningOptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

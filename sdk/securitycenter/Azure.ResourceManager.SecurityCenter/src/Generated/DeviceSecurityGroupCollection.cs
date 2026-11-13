@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(DeviceSecurityGroupResource.ResourceType, out string deviceSecurityGroupApiVersion);
             _deviceSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DeviceSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-            _deviceSecurityGroupsRestClient = new DeviceSecurityGroups(_deviceSecurityGroupsClientDiagnostics, Pipeline, Endpoint, deviceSecurityGroupApiVersion ?? "2019-08-01");
+            _deviceSecurityGroupsRestClient = new DeviceSecurityGroups(_deviceSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceSecurityGroupApiVersion ?? "2019-08-01");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceSecurityGroupData, DeviceSecurityGroupResource>(new DeviceSecurityGroupsGetAllAsyncCollectionResultOfT(_deviceSecurityGroupsRestClient, Id.ToString(), context, "DeviceSecurityGroupCollection.GetAll"), data => new DeviceSecurityGroupResource(Client, data));
+            return new AsyncPageableWrapper<DeviceSecurityGroupData, DeviceSecurityGroupResource>(new DeviceSecurityGroupDataAsyncCollectionResultOfT(_deviceSecurityGroupsRestClient, Id.ToString(), context, "DeviceSecurityGroupCollection.GetAll"), data => new DeviceSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceSecurityGroupData, DeviceSecurityGroupResource>(new DeviceSecurityGroupsGetAllCollectionResultOfT(_deviceSecurityGroupsRestClient, Id.ToString(), context, "DeviceSecurityGroupCollection.GetAll"), data => new DeviceSecurityGroupResource(Client, data));
+            return new PageableWrapper<DeviceSecurityGroupData, DeviceSecurityGroupResource>(new DeviceSecurityGroupDataCollectionResultOfT(_deviceSecurityGroupsRestClient, Id.ToString(), context, "DeviceSecurityGroupCollection.GetAll"), data => new DeviceSecurityGroupResource(Client, data));
         }
 
         /// <summary>

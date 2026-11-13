@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationJobResource.ResourceType, out string automationJobApiVersion);
             _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationJobResource.ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, automationJobApiVersion ?? "2024-10-23");
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationJobApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

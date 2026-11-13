@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// This is an extensible enum; additional voice names may be accepted by the
     /// service in the future.
     /// </summary>
-    public readonly partial struct AzureRealtimeNativeVoiceName : IEquatable<AzureRealtimeNativeVoiceName>
+    internal readonly partial struct AzureRealtimeNativeVoiceName : IEquatable<AzureRealtimeNativeVoiceName>
     {
         private readonly string _value;
         /// <summary> Aarti voice. </summary>

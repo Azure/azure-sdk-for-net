@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of JitNetworkAccessPolicies for mocking. </summary>
         protected JitNetworkAccessPolicies()
@@ -25,14 +27,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of JitNetworkAccessPolicies. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal JitNetworkAccessPolicies(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal JitNetworkAccessPolicies(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
+            _userAgent = new TelemetryDetails(typeof(JitNetworkAccessPolicies).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -53,14 +59,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies/", false);
             uri.AppendPath(jitNetworkAccessPolicyName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -77,14 +81,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies/", false);
             uri.AppendPath(jitNetworkAccessPolicyName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -103,14 +105,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies/", false);
             uri.AppendPath(jitNetworkAccessPolicyName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -125,14 +125,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -148,14 +146,12 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -169,14 +165,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -192,14 +186,12 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -218,14 +210,12 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(jitNetworkAccessPolicyName, true);
             uri.AppendPath("/", false);
             uri.AppendPath("initiate", true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Security/locations/jitNetworkAccessPolicies") ?? "2020-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -247,6 +237,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -270,6 +261,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -291,6 +283,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -314,6 +307,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

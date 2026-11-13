@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 new ServiceBusAdministrationClient(
                     TestEnvironment.FullyQualifiedNamespace,
                     credential,
-                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions(ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05))));
         }
 
         [RecordedTest]
@@ -692,6 +692,52 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual(runtimeInfo.ScheduledMessageCount, singleTopicRI.ScheduledMessageCount);
 
             await client.DeleteTopicAsync(topicName);
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task GetTopicFilterCounts()
+        {
+            // The topic-level SqlFilterCount / CorrelationFilterCount runtime properties
+            // are served by the 2024-05 service API version, so use an explicit V2024_05
+            // client regardless of the fixture's parameterized version.
+            var client = InstrumentClient(new ServiceBusAdministrationClient(
+                GetNamespace(),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ServiceBusAdministrationClientOptions(
+                    ServiceBusAdministrationClientOptions.ServiceVersion.V2024_05))));
+
+            var topicName = nameof(GetTopicFilterCounts).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+
+            await client.CreateTopicAsync(topicName);
+            try
+            {
+                await client.CreateSubscriptionAsync(topicName, subscriptionName);
+
+                // A new subscription carries a default $Default rule (a SQL TrueFilter). Add an
+                // explicit SQL rule and a correlation rule so the topic-level counts are non-zero.
+                await client.CreateRuleAsync(topicName, subscriptionName, new CreateRuleOptions
+                {
+                    Name = "sqlRule",
+                    Filter = new SqlRuleFilter("1=1")
+                });
+                await client.CreateRuleAsync(topicName, subscriptionName, new CreateRuleOptions
+                {
+                    Name = "correlationRule",
+                    Filter = new CorrelationRuleFilter { CorrelationId = "abc" }
+                });
+
+                TopicRuntimeProperties runtimeProperties = await client.GetTopicRuntimePropertiesAsync(topicName);
+
+                // $Default (TrueFilter) + sqlRule = 2 SQL filters; correlationRule = 1 correlation filter.
+                Assert.AreEqual(2, runtimeProperties.SqlFilterCount);
+                Assert.AreEqual(1, runtimeProperties.CorrelationFilterCount);
+            }
+            finally
+            {
+                await client.DeleteTopicAsync(topicName);
+            }
         }
 
         [RecordedTest]

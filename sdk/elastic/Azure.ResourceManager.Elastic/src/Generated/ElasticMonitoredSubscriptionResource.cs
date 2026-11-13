@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ResourceType, out string elasticMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, elasticMonitoredSubscriptionApiVersion ?? "2025-06-01");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitoredSubscriptionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

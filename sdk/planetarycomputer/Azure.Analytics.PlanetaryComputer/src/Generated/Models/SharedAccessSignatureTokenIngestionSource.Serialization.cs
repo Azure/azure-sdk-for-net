@@ -109,8 +109,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             Guid id = default;
-            DateTimeOffset? created = default;
-            IngestionSourceType kind = default;
+            DateTimeOffset? createdOn = default;
+            IngestionSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SharedAccessSignatureTokenConnection connectionInfo = default;
             foreach (var prop in element.EnumerateObject())
@@ -126,12 +126,12 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    created = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new IngestionSourceType(prop.Value.GetString());
+                    kind = new IngestionSourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionInfo"u8))
@@ -141,10 +141,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedAccessSignatureTokenIngestionSource(id, created, kind, additionalBinaryDataProperties, connectionInfo);
+            return new SharedAccessSignatureTokenIngestionSource(id, createdOn, kind, additionalBinaryDataProperties, connectionInfo);
         }
     }
 }

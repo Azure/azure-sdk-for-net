@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidateOwnershipVouchersResult(ownershipVoucherValidationDetails, additionalBinaryDataProperties);
+            return new ValidateOwnershipVouchersResult(ownershipVoucherValidationDetails ?? new ChangeTrackingList<OwnershipVoucherValidationDetails>(), additionalBinaryDataProperties);
         }
     }
 }

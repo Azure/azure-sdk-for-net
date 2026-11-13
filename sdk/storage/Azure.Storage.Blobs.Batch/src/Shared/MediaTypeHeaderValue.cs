@@ -24,6 +24,7 @@ namespace Azure.Core.Http.Multipart
     /// <summary>
     /// Representation of the media type header. See <see href="https://tools.ietf.org/html/rfc6838">Media Type Specifications and Registration Procedures</see>.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal class MediaTypeHeaderValue
     {
         private const string BoundaryString = "boundary";

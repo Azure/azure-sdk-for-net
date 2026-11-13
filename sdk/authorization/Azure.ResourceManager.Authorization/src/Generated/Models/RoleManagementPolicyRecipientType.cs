@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleManagementPolicyRecipientType : IEquatable<RoleManagementPolicyRecipientType>
     {
         private readonly string _value;
+        /// <summary> Requestor. </summary>
+        private const string RequestorValue = "Requestor";
+        /// <summary> Approver. </summary>
+        private const string ApproverValue = "Approver";
+        /// <summary> Admin. </summary>
+        private const string AdminValue = "Admin";
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRecipientType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleManagementPolicyRecipientType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RequestorValue = "Requestor";
-        private const string ApproverValue = "Approver";
-        private const string AdminValue = "Admin";
+            _value = value;
+        }
 
         /// <summary> Requestor. </summary>
         public static RoleManagementPolicyRecipientType Requestor { get; } = new RoleManagementPolicyRecipientType(RequestorValue);
+
         /// <summary> Approver. </summary>
         public static RoleManagementPolicyRecipientType Approver { get; } = new RoleManagementPolicyRecipientType(ApproverValue);
+
         /// <summary> Admin. </summary>
         public static RoleManagementPolicyRecipientType Admin { get; } = new RoleManagementPolicyRecipientType(AdminValue);
+
         /// <summary> Determines if two <see cref="RoleManagementPolicyRecipientType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementPolicyRecipientType left, RoleManagementPolicyRecipientType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementPolicyRecipientType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementPolicyRecipientType left, RoleManagementPolicyRecipientType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementPolicyRecipientType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementPolicyRecipientType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementPolicyRecipientType(string value) => new RoleManagementPolicyRecipientType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementPolicyRecipientType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementPolicyRecipientType?(string value) => value == null ? null : new RoleManagementPolicyRecipientType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementPolicyRecipientType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementPolicyRecipientType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

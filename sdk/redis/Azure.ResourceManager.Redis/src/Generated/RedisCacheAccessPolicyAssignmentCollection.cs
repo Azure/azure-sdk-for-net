@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(RedisCacheAccessPolicyAssignmentResource.ResourceType, out string redisCacheAccessPolicyAssignmentApiVersion);
             _redisCacheAccessPolicyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisCacheAccessPolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _redisCacheAccessPolicyAssignmentsRestClient = new RedisCacheAccessPolicyAssignments(_redisCacheAccessPolicyAssignmentsClientDiagnostics, Pipeline, Endpoint, redisCacheAccessPolicyAssignmentApiVersion ?? "2025-08-01-preview");
+            _redisCacheAccessPolicyAssignmentsRestClient = new RedisCacheAccessPolicyAssignments(_redisCacheAccessPolicyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyAssignmentApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisCacheAccessPolicyAssignmentData, RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisCacheAccessPolicyAssignmentData, RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentDataAsyncCollectionResultOfT(
                 _redisCacheAccessPolicyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisCacheAccessPolicyAssignmentData, RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisCacheAccessPolicyAssignmentData, RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentDataCollectionResultOfT(
                 _redisCacheAccessPolicyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

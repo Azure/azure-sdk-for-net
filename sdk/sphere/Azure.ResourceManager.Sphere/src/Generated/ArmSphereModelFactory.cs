@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere;
@@ -43,6 +42,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the Catalog. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SphereCatalogPatch"/> instance for mocking. </returns>
         public static SphereCatalogPatch SphereCatalogPatch(IDictionary<string, string> tags = default)
@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereCatalogPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Response to the action call for count devices in a catalog. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
         /// <returns> A new <see cref="Models.CountDevicesResult"/> instance for mocking. </returns>
         public static CountDevicesResult CountDevicesResult(int value = default)
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new CountDevicesResult(value, default);
         }
 
+        /// <summary> Response of the count for elements. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
         /// <returns> A new <see cref="Models.CountElementsResult"/> instance for mocking. </returns>
         public static CountElementsResult CountElementsResult(int value = default)
@@ -121,6 +123,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 default);
         }
 
+        /// <summary> Request of the action to list device groups for a catalog. </summary>
         /// <param name="deviceGroupName"> Device Group name. </param>
         /// <returns> A new <see cref="Models.ListSphereDeviceGroupsContent"/> instance for mocking. </returns>
         public static ListSphereDeviceGroupsContent ListSphereDeviceGroupsContent(string deviceGroupName = default)
@@ -159,6 +162,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 default);
         }
 
+        /// <summary> Device insight report. </summary>
         /// <param name="deviceId"> Device ID. </param>
         /// <param name="description"> Event description. </param>
         /// <param name="startTimestampUtc"> Event start timestamp. </param>
@@ -244,6 +248,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 default);
         }
 
+        /// <summary> The properties of certificate. </summary>
         /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
         /// <param name="status"> The certificate status. </param>
         /// <param name="subject"> The certificate subject. </param>
@@ -265,6 +270,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 default);
         }
 
+        /// <summary> The certificate chain response. </summary>
         /// <param name="certificateChain"> The certificate chain. </param>
         /// <returns> A new <see cref="Models.SphereCertificateChainResult"/> instance for mocking. </returns>
         public static SphereCertificateChainResult SphereCertificateChainResult(string certificateChain = default)
@@ -272,6 +278,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereCertificateChainResult(certificateChain, default);
         }
 
+        /// <summary> Request for the proof of possession nonce. </summary>
         /// <param name="proofOfPossessionNonce"> The proof of possession nonce. </param>
         /// <returns> A new <see cref="Models.ProofOfPossessionNonceContent"/> instance for mocking. </returns>
         public static ProofOfPossessionNonceContent ProofOfPossessionNonceContent(string proofOfPossessionNonce = default)
@@ -279,6 +286,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new ProofOfPossessionNonceContent(proofOfPossessionNonce, default);
         }
 
+        /// <summary> Result of the action to generate a proof of possession nonce. </summary>
         /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
         /// <param name="status"> The certificate status. </param>
         /// <param name="subject"> The certificate subject. </param>
@@ -342,6 +350,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 default), default);
         }
 
+        /// <summary> Request to the action call to bulk claim devices. </summary>
         /// <param name="deviceIdentifiers"> Device identifiers of the devices to be claimed. </param>
         /// <returns> A new <see cref="Models.ClaimSphereDevicesContent"/> instance for mocking. </returns>
         public static ClaimSphereDevicesContent ClaimSphereDevicesContent(IEnumerable<string> deviceIdentifiers = default)
@@ -358,6 +367,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereDevicePatch(deviceGroupId is null ? default : new DeviceUpdateProperties(deviceGroupId, default), default);
         }
 
+        /// <summary> Request of the action to create a signed device capability image. </summary>
         /// <param name="capabilities"> List of capabilities to create. </param>
         /// <returns> A new <see cref="Models.GenerateCapabilityImageContent"/> instance for mocking. </returns>
         public static GenerateCapabilityImageContent GenerateCapabilityImageContent(IEnumerable<SphereCapabilityType> capabilities = default)
@@ -367,6 +377,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new GenerateCapabilityImageContent((capabilities ?? new ChangeTrackingList<SphereCapabilityType>()).ToList(), default);
         }
 
+        /// <summary> Signed device capability image response. </summary>
         /// <param name="image"> The signed device capability image as a UTF-8 encoded base 64 string. </param>
         /// <returns> A new <see cref="Models.SignedCapabilityImageResponse"/> instance for mocking. </returns>
         public static SignedCapabilityImageResponse SignedCapabilityImageResponse(string image = default)

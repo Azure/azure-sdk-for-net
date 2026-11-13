@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Hci.Models
                 throw new FormatException($"The model {nameof(HciIPAddressRange)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startIp"u8);
-            writer.WriteStringValue(StartIp);
+            writer.WriteStringValue(StartIP);
             writer.WritePropertyName("endIp"u8);
-            writer.WriteStringValue(EndIp);
+            writer.WriteStringValue(EndIP);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,27 +125,27 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            string startIp = default;
-            string endIp = default;
+            string startIP = default;
+            string endIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startIp"u8))
                 {
-                    startIp = prop.Value.GetString();
+                    startIP = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("endIp"u8))
                 {
-                    endIp = prop.Value.GetString();
+                    endIP = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HciIPAddressRange(startIp, endIp, additionalBinaryDataProperties);
+            return new HciIPAddressRange(startIP, endIP, additionalBinaryDataProperties);
         }
     }
 }

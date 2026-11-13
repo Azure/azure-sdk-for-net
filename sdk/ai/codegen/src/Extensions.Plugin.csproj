@@ -14,12 +14,6 @@
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Azure.AI.Projects.Agents_experimental.csv" LogicalName="Azure.AI.Projects.Agents_experimental.csv" />
-    <EmbeddedResource Include="Azure.AI.Projects_experimental.csv" LogicalName="Azure.AI.Projects_experimental.csv" />
-    <EmbeddedResource Include="Azure.AI.Extensions.OpenAI_experimental.csv" LogicalName="Azure.AI.Extensions.OpenAI_experimental.csv" />
-  </ItemGroup>
-
   <!-- Copy output to package dist path for npm package consumption -->
   <Target Name="CopyForNpmPackage" AfterTargets="Build">
     <Message Text="Copying Extensions.Plugin output to dist path" Importance="high" />

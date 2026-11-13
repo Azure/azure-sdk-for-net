@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The paid amount. </summary>
-    public partial class PaymentAmount : BillingAmount
+    internal partial class PaymentAmount : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="PaymentAmount"/>. </summary>
         internal PaymentAmount()

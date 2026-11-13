@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostManagementExportResource.ResourceType, out string costManagementExportApiVersion);
             _exportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementExportResource.ResourceType.Namespace, Diagnostics);
-            _exportsRestClient = new Exports(_exportsClientDiagnostics, Pipeline, Endpoint, costManagementExportApiVersion ?? "2025-03-01");
+            _exportsRestClient = new Exports(_exportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementExportApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllAsyncCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementExportData, CostManagementExportResource>(new CostManagementExportDataAsyncCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
+            return new PageableWrapper<CostManagementExportData, CostManagementExportResource>(new CostManagementExportDataCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
         }
 
         /// <summary>

@@ -44,26 +44,32 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-01-01");
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-01-01");
 
         private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(
+            JitNetworkAccessPoliciesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2020-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
+        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-11-15");
 
         /// <summary> Gets a collection of ResourceGroupSecurityAlerts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityAlerts and their operations over a ResourceGroupSecurityAlertResource. </returns>
         public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(AzureLocation ascLocation)
         {
-            return GetCachedClient(client => new ResourceGroupSecurityAlertCollection(client, Id, ascLocation));
+            return new ResourceGroupSecurityAlertCollection(Client, Id, ascLocation);
         }
 
         /// <summary>
@@ -328,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of JitNetworkAccessPolicies and their operations over a JitNetworkAccessPolicyResource. </returns>
         public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(AzureLocation ascLocation)
         {
-            return GetCachedClient(client => new JitNetworkAccessPolicyCollection(client, Id, ascLocation));
+            return new JitNetworkAccessPolicyCollection(Client, Id, ascLocation);
         }
 
         /// <summary>
@@ -660,7 +666,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
         public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(AzureLocation ascLocation)
         {
-            return GetCachedClient(client => new ResourceGroupSecurityTaskCollection(client, Id, ascLocation));
+            return new ResourceGroupSecurityTaskCollection(Client, Id, ascLocation);
         }
 
         /// <summary>
@@ -937,7 +943,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertsGetByResourceGroupAsyncCollectionResultOfT(AlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetByResourceGroup");
+            return new SecurityAlertDataAsync2CollectionResultOfT(AlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetByResourceGroup");
         }
 
         /// <summary>
@@ -965,7 +971,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertsGetByResourceGroupCollectionResultOfT(AlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetByResourceGroup");
+            return new SecurityAlertData2CollectionResultOfT(AlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetByResourceGroup");
         }
 
         /// <summary>
@@ -1093,7 +1099,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesByResourceGroupAsyncCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
+            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyDataAsync2CollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1121,7 +1127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesByResourceGroupCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
+            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyData2CollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1149,7 +1155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetApiCollectionsAsyncCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetApiCollections"), data => new ApiCollectionResource(Client, data));
+            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new ApiCollectionDataAsync1CollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetApiCollections"), data => new ApiCollectionResource(Client, data));
         }
 
         /// <summary>
@@ -1177,7 +1183,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetApiCollectionsCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetApiCollections"), data => new ApiCollectionResource(Client, data));
+            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new ApiCollectionData1CollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetApiCollections"), data => new ApiCollectionResource(Client, data));
         }
     }
 }

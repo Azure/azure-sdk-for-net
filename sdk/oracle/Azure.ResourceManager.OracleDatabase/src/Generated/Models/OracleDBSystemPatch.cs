@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBSystemPatch(IList<string> zones, IDictionary<string, string> tags, DbSystemUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OracleDBSystemPatch(IList<string> zones, IDictionary<string, string> tags, DBSystemUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Zones = zones;
             Tags = tags;
@@ -44,23 +44,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal DbSystemUpdateProperties Properties { get; set; }
-
-        /// <summary> The source of the database for creating a new database. </summary>
-        public DBSystemSourceType? DbSystemUpdateSource
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Source;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DbSystemUpdateProperties();
-                }
-                Properties.Source = value;
-            }
-        }
+        internal DBSystemUpdateProperties Properties { get; set; }
     }
 }

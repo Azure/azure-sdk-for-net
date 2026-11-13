@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Properties for the container service agent pool profile. </summary>
-    internal partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
+    public partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
     {
         private BicepValue<ETag> _eTag;
         private BicepValue<int> _count;
@@ -42,7 +42,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _provisioningState;
         private ContainerServicePowerState _powerState;
         private BicepList<string> _availabilityZones;
-        private BicepValue<bool> _isNodePublicIpEnabled;
+        private BicepValue<bool> _isNodePublicIPEnabled;
         private BicepValue<ResourceIdentifier> _nodePublicIPPrefixId;
         private BicepValue<ScaleSetPriority> _scaleSetPriority;
         private BicepValue<ScaleSetEvictionPolicy> _scaleSetEvictionPolicy;
@@ -65,6 +65,7 @@ namespace Azure.Provisioning.ContainerService
         private AgentPoolSecurityProfile _securityProfile;
         private AgentPoolGpuProfile _gpuProfile;
         private AgentPoolGatewayProfile _gatewayProfile;
+        private AgentPoolArtifactStreamingProfile _artifactStreamingProfile;
         private VirtualMachinesProfile _virtualMachinesProfile;
         private BicepList<AgentPoolVirtualMachineNodes> _virtualMachineNodesStatus;
         private AgentPoolStatus _status;
@@ -395,13 +396,18 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the NodeImageVersion. </summary>
+        /// <summary> Gets or sets the NodeImageVersion. </summary>
         public BicepValue<string> NodeImageVersion
         {
             get
             {
                 Initialize();
                 return _nodeImageVersion;
+            }
+            set
+            {
+                Initialize();
+                _nodeImageVersion.Assign(value);
             }
         }
 
@@ -460,18 +466,18 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the IsNodePublicIpEnabled. </summary>
-        public BicepValue<bool> IsNodePublicIpEnabled
+        /// <summary> Gets or sets the IsNodePublicIPEnabled. </summary>
+        public BicepValue<bool> IsNodePublicIPEnabled
         {
             get
             {
                 Initialize();
-                return _isNodePublicIpEnabled;
+                return _isNodePublicIPEnabled;
             }
             set
             {
                 Initialize();
-                _isNodePublicIpEnabled.Assign(value);
+                _isNodePublicIPEnabled.Assign(value);
             }
         }
 
@@ -805,6 +811,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ArtifactStreamingProfile. </summary>
+        internal AgentPoolArtifactStreamingProfile ArtifactStreamingProfile
+        {
+            get
+            {
+                Initialize();
+                return _artifactStreamingProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _artifactStreamingProfile, value);
+            }
+        }
+
         /// <summary> Gets or sets the VirtualMachinesProfile. </summary>
         internal VirtualMachinesProfile VirtualMachinesProfile
         {
@@ -950,12 +971,29 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Manual. </summary>
-        public BicepList<ManualScaleProfile> VirtualMachinesScaleManual
+        /// <summary> Gets or sets the IsArtifactStreamingEnabled. </summary>
+        public BicepValue<bool> IsArtifactStreamingEnabled
         {
             get
             {
-                return VirtualMachinesProfile is null ? default : VirtualMachinesProfile.ScaleManual;
+                return ArtifactStreamingProfile is null ? default : ArtifactStreamingProfile.IsArtifactStreamingEnabled;
+            }
+            set
+            {
+                if (ArtifactStreamingProfile is null)
+                {
+                    ArtifactStreamingProfile = new AgentPoolArtifactStreamingProfile();
+                }
+                ArtifactStreamingProfile.IsArtifactStreamingEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Scale. </summary>
+        public AgentPoolScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return VirtualMachinesProfile is null ? default : VirtualMachinesProfile.Scale;
             }
             set
             {
@@ -963,7 +1001,7 @@ namespace Azure.Provisioning.ContainerService
                 {
                     VirtualMachinesProfile = new VirtualMachinesProfile();
                 }
-                VirtualMachinesProfile.ScaleManual = value;
+                VirtualMachinesProfile.Scale = value;
             }
         }
 
@@ -1006,12 +1044,12 @@ namespace Azure.Provisioning.ContainerService
             _mode = DefineProperty<AgentPoolMode>(nameof(Mode), new string[] { "mode" });
             _orchestratorVersion = DefineProperty<string>(nameof(OrchestratorVersion), new string[] { "orchestratorVersion" });
             _currentOrchestratorVersion = DefineProperty<string>(nameof(CurrentOrchestratorVersion), new string[] { "currentOrchestratorVersion" }, isOutput: true);
-            _nodeImageVersion = DefineProperty<string>(nameof(NodeImageVersion), new string[] { "nodeImageVersion" }, isOutput: true);
+            _nodeImageVersion = DefineProperty<string>(nameof(NodeImageVersion), new string[] { "nodeImageVersion" });
             _upgradeSettings = DefineModelProperty<AgentPoolUpgradeSettings>(nameof(UpgradeSettings), new string[] { "upgradeSettings" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _powerState = DefineModelProperty<ContainerServicePowerState>(nameof(PowerState), new string[] { "powerState" });
             _availabilityZones = DefineListProperty<string>(nameof(AvailabilityZones), new string[] { "availabilityZones" });
-            _isNodePublicIpEnabled = DefineProperty<bool>(nameof(IsNodePublicIpEnabled), new string[] { "enableNodePublicIP" });
+            _isNodePublicIPEnabled = DefineProperty<bool>(nameof(IsNodePublicIPEnabled), new string[] { "enableNodePublicIP" });
             _nodePublicIPPrefixId = DefineProperty<ResourceIdentifier>(nameof(NodePublicIPPrefixId), new string[] { "nodePublicIPPrefixID" });
             _scaleSetPriority = DefineProperty<ScaleSetPriority>(nameof(ScaleSetPriority), new string[] { "scaleSetPriority" });
             _scaleSetEvictionPolicy = DefineProperty<ScaleSetEvictionPolicy>(nameof(ScaleSetEvictionPolicy), new string[] { "scaleSetEvictionPolicy" });
@@ -1034,6 +1072,7 @@ namespace Azure.Provisioning.ContainerService
             _securityProfile = DefineModelProperty<AgentPoolSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _gpuProfile = DefineModelProperty<AgentPoolGpuProfile>(nameof(GpuProfile), new string[] { "gpuProfile" });
             _gatewayProfile = DefineModelProperty<AgentPoolGatewayProfile>(nameof(GatewayProfile), new string[] { "gatewayProfile" });
+            _artifactStreamingProfile = DefineModelProperty<AgentPoolArtifactStreamingProfile>(nameof(ArtifactStreamingProfile), new string[] { "artifactStreamingProfile" });
             _virtualMachinesProfile = DefineModelProperty<VirtualMachinesProfile>(nameof(VirtualMachinesProfile), new string[] { "virtualMachinesProfile" });
             _virtualMachineNodesStatus = DefineListProperty<AgentPoolVirtualMachineNodes>(nameof(VirtualMachineNodesStatus), new string[] { "virtualMachineNodesStatus" });
             _status = DefineModelProperty<AgentPoolStatus>(nameof(Status), new string[] { "status" });

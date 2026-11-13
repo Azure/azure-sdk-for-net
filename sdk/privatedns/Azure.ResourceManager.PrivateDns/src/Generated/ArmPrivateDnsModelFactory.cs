@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -22,20 +21,23 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public static partial class ArmPrivateDnsModelFactory
     {
 
-        /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
+        /// <summary> An A record. </summary>
+        /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsARecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsARecordInfo PrivateDnsARecordInfo(IPAddress iPv4Address = default)
+        public static PrivateDnsARecordInfo PrivateDnsARecordInfo(IPAddress ipv4Address = default)
         {
-            return new PrivateDnsARecordInfo(iPv4Address, default);
+            return new PrivateDnsARecordInfo(ipv4Address, default);
         }
 
-        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <summary> An AAAA record. </summary>
+        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsAaaaRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(IPAddress iPv6Address = default)
+        public static PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(IPAddress ipv6Address = default)
         {
-            return new PrivateDnsAaaaRecordInfo(iPv6Address, default);
+            return new PrivateDnsAaaaRecordInfo(ipv6Address, default);
         }
 
+        /// <summary> An MX record. </summary>
         /// <param name="preference"> The preference value for this MX record. </param>
         /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsMXRecordInfo"/> instance for mocking. </returns>
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsMXRecordInfo(preference, exchange, default);
         }
 
+        /// <summary> A PTR record. </summary>
         /// <param name="ptrDomainName"> The PTR target domain name for this PTR record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsPtrRecordInfo"/> instance for mocking. </returns>
         public static PrivateDnsPtrRecordInfo PrivateDnsPtrRecordInfo(string ptrDomainName = default)
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsPtrRecordInfo(ptrDomainName, default);
         }
 
+        /// <summary> An SOA record. </summary>
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
         /// <param name="email"> The email contact for this SOA record. </param>
         /// <param name="serialNumber"> The serial number for this SOA record. </param>
@@ -72,6 +76,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 default);
         }
 
+        /// <summary> An SRV record. </summary>
         /// <param name="priority"> The priority value for this SRV record. </param>
         /// <param name="weight"> The weight value for this SRV record. </param>
         /// <param name="port"> The port value for this SRV record. </param>
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsSrvRecordInfo(priority, weight, port, target, default);
         }
 
+        /// <summary> A TXT record. </summary>
         /// <param name="values"> The text value of this TXT record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsTxtRecordInfo"/> instance for mocking. </returns>
         public static PrivateDnsTxtRecordInfo PrivateDnsTxtRecordInfo(IEnumerable<string> values = default)
@@ -89,6 +95,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
             values ??= new ChangeTrackingList<string>();
 
             return new PrivateDnsTxtRecordInfo((values ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Reference to another subresource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsSubResourceInfo"/> instance for mocking. </returns>
+        public static PrivateDnsSubResourceInfo PrivateDnsSubResourceInfo(ResourceIdentifier id = default)
+        {
+            return new PrivateDnsSubResourceInfo(id, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -132,13 +146,37 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateDns.PrivateDnsZoneData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="targetResources"> A list of references to azure resources for which referencing private DNS records need to be queried. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceContent"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReferenceContent PrivateDnsResourceReferenceContent(IEnumerable<PrivateDnsSubResourceInfo> targetResources = default)
+        {
+            return new PrivateDnsResourceReferenceContent(targetResources is null ? default : new PrivateDnsResourceReferenceRequestProperties((targetResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>()).ToList(), default), default);
+        }
+
+        /// <param name="privateDnsResourceReferences"> The result of private dns resource reference request. A list of private dns resource references for each of the azure resource in the request. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceResult"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReferenceResult PrivateDnsResourceReferenceResult(IEnumerable<PrivateDnsResourceReference> privateDnsResourceReferences = default)
+        {
+            return new PrivateDnsResourceReferenceResult(privateDnsResourceReferences is null ? default : new PrivateDnsResourceReferenceResultProperties((privateDnsResourceReferences ?? new ChangeTrackingList<PrivateDnsResourceReference>()).ToList(), default), default);
+        }
+
+        /// <param name="privateDnsResources"> A list of private DNS record sets that reference the target resource. </param>
+        /// <param name="targetResourceId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReference"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReference PrivateDnsResourceReference(IEnumerable<PrivateDnsSubResourceInfo> privateDnsResources = default, ResourceIdentifier targetResourceId = default)
+        {
+            privateDnsResources ??= new ChangeTrackingList<PrivateDnsSubResourceInfo>();
+
+            return new PrivateDnsResourceReference((privateDnsResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>()).ToList(), targetResourceId is null ? default : new PrivateDnsSubResourceInfo(targetResourceId, default), default);
+        }
+
+        /// <summary> Describes a Private DNS zone. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> The ETag of the zone. </param>
         /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="numberOfRecords"> The current number of record sets in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
@@ -150,7 +188,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="internalId"> Private zone internal Id. </param>
         /// <returns> A new <see cref="PrivateDns.PrivateDnsZoneData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? maxNumberOfRecords = default, long? numberOfRecords = default, long? maxNumberOfVirtualNetworkLinks = default, long? numberOfVirtualNetworkLinks = default, long? maxNumberOfVirtualNetworkLinksWithRegistration = default, long? numberOfVirtualNetworkLinksWithRegistration = default, PrivateDnsProvisioningState? privateDnsProvisioningState = default, string internalId = default)
+        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId)
         {
             return new PrivateDnsZoneData(
                 id,

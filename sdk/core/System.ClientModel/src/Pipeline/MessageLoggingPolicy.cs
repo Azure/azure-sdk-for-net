@@ -352,24 +352,17 @@ public class MessageLoggingPolicy : PipelinePolicy
                 return;
             }
 
-            byte[] bytes;
-            if (bytesToLog == numBytesReadIntoBuffer && offset == 0)
-            {
-                bytes = buffer;
-            }
-            else
-            {
-                bytes = new byte[bytesToLog];
-                Buffer.BlockCopy(buffer, offset, bytes, 0, bytesToLog);
-            }
-
+            // The buffer is owned by the caller and is frequently larger than the payload -- often a
+            // pooled array whose remainder holds unrelated in-process content. Only the slice that
+            // was actually read may be logged.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/61399.
             if (_error)
             {
-                _messageLogger.LogErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+                _messageLogger.LogErrorResponseContentBlock(_requestId, _blockNumber, buffer, offset, bytesToLog, _textEncoding);
             }
             else
             {
-                _messageLogger.LogResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+                _messageLogger.LogResponseContentBlock(_requestId, _blockNumber, buffer, offset, bytesToLog, _textEncoding);
             }
 
             _blockNumber++;

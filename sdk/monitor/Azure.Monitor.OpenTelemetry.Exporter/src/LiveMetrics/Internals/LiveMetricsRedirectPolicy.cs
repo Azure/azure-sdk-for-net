@@ -7,13 +7,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
     internal sealed class LiveMetricsRedirectPolicy : HttpPipelinePolicy
     {
-        private string? _redirectHostValue;
+        private Uri? _redirectUri;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -38,9 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             Request request = message.Request;
 
             // If we have a cached redirect, apply it
-            if (_redirectHostValue is not null)
+            if (_redirectUri is not null)
             {
-                request.Uri.Host = _redirectHostValue;
+                ApplyRedirect(request, _redirectUri);
             }
 
             // Process the request
@@ -54,10 +55,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             // Check for redirection and retry
-            if (IsRedirection(message.Response, out string? redirectionValue))
+            if (IsRedirection(message.Response, out string? redirectionValue)
+                && Uri.TryCreate(redirectionValue, UriKind.Absolute, out Uri? redirectUri)
+                && RedirectPolicyHelper.IsTrustedLiveMetricsRedirect(redirectUri!))
             {
                 Debug.WriteLine($"OnPing: Received Redirection: {redirectionValue}");
-                AzureMonitorLiveMetricsEventSource.Log.LiveMetricsRedirectReceived(redirectionValue);
+                AzureMonitorLiveMetricsEventSource.Log.LiveMetricsRedirectReceived(redirectionValue!);
 
                 message.Response.Dispose();
 
@@ -70,11 +73,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 // FINAL VALUE:
                 // https://westus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=00000000-0000-0000-0000-000000000000
 
-                // Extract the host value from the redirection URI
-                _redirectHostValue = new Uri(redirectionValue).Host;
+                _redirectUri = redirectUri;
 
                 // Apply redirect
-                request.Uri.Host = _redirectHostValue;
+                ApplyRedirect(request, redirectUri!);
 
                 // Issue the redirected request.
                 if (async)
@@ -89,6 +91,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             message.SetProperty("redirectionComplete", true);
             return;
+        }
+
+        private static void ApplyRedirect(Request request, Uri redirectUri)
+        {
+            request.Uri.Scheme = redirectUri.Scheme;
+            request.Uri.Host = redirectUri.Host;
+            request.Uri.Port = redirectUri.Port;
         }
 
         private static bool IsRedirection(Response response, [NotNullWhen(true)] out string? redirectValue)

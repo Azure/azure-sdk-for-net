@@ -111,6 +111,28 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         [Test]
+        public void AudioVisualContent_DeserializesMetadataFromPayload()
+        {
+            string json = @"{
+                ""kind"": ""audioVisual"",
+                ""mimeType"": ""video/mp4"",
+                ""startTimeMs"": 0,
+                ""endTimeMs"": 1000,
+                ""metadata"": {
+                    ""title"": ""demo"",
+                    ""language"": null
+                }
+            }";
+
+            var content = DeserializeFromJson<AudioVisualContent>(json);
+
+            Assert.IsNotNull(content.Metadata);
+            Assert.AreEqual(2, content.Metadata.Count);
+            Assert.AreEqual("demo", content.Metadata["title"]);
+            Assert.IsNull(content.Metadata["language"]);
+        }
+
+        [Test]
         public void AudioVisualContent_ZeroMs_ReturnsTimeSpanZero()
         {
             var content = DeserializeAudioVisualContent(startTimeMs: 0, endTimeMs: 0);

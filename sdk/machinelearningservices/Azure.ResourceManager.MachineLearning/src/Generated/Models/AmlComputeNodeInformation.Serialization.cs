@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress.ToString());
+                writer.WriteStringValue(PublicIPAddress.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Port))
             {
@@ -100,10 +100,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("nodeState"u8);
                 writer.WriteStringValue(NodeState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RunId))
+            if (options.Format != "W" && Optional.IsDefined(RunId, _runIdIsDefined))
             {
-                writer.WritePropertyName("runId"u8);
-                writer.WriteStringValue(RunId);
+                if (RunId != null)
+                {
+                    writer.WritePropertyName("runId"u8);
+                    writer.WriteStringValue(RunId);
+                }
+                else
+                {
+                    writer.WriteNull("runId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,10 +155,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string nodeId = default;
-            IPAddress privateIpAddress = default;
-            IPAddress publicIpAddress = default;
+            IPAddress privateIPAddress = default;
+            IPAddress publicIPAddress = default;
             int? port = default;
             MachineLearningNodeState? nodeState = default;
+            bool runIdIsDefined = false;
             string runId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    privateIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
@@ -176,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    publicIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    publicIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -199,6 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("runId"u8))
                 {
+                    runIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         runId = null;
@@ -209,17 +218,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AmlComputeNodeInformation(
                 nodeId,
-                privateIpAddress,
-                publicIpAddress,
+                privateIPAddress,
+                publicIPAddress,
                 port,
                 nodeState,
                 runId,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _runIdIsDefined = runIdIsDefined
+            };
         }
     }
 }

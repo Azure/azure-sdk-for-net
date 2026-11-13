@@ -89,15 +89,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (Optional.IsDefined(Published))
+            if (Optional.IsDefined(Published, _publishedIsDefined))
             {
-                writer.WritePropertyName("published"u8);
-                writer.WriteNumberValue(Published.Value);
+                if (Published != null)
+                {
+                    writer.WritePropertyName("published"u8);
+                    writer.WriteNumberValue(Published.Value);
+                }
+                else
+                {
+                    writer.WriteNull("published"u8);
+                }
             }
-            if (Optional.IsDefined(HostIp))
+            if (Optional.IsDefined(HostIP))
             {
                 writer.WritePropertyName("hostIp"u8);
-                writer.WriteStringValue(HostIp);
+                writer.WriteStringValue(HostIP);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,8 +151,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ContainerCommunicationProtocol? protocol = default;
             string name = default;
             int? target = default;
+            bool publishedIsDefined = false;
             int? published = default;
-            string hostIp = default;
+            string hostIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,6 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("published"u8))
                 {
+                    publishedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         published = null;
@@ -186,15 +195,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        hostIp = null;
+                        hostIP = null;
                         continue;
                     }
-                    hostIp = prop.Value.GetString();
+                    hostIP = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerEndpoint(
@@ -202,8 +211,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 name,
                 target,
                 published,
-                hostIp,
-                additionalBinaryDataProperties);
+                hostIP,
+                additionalBinaryDataProperties)
+            {
+                _publishedIsDefined = publishedIsDefined
+            };
         }
     }
 }

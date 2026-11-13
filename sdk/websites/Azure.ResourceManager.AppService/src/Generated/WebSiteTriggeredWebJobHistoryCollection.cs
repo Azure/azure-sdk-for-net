@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteTriggeredWebJobHistoryResource.ResourceType, out string webSiteTriggeredWebJobHistoryApiVersion);
             _triggeredJobHistoryOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteTriggeredWebJobHistoryResource.ResourceType.Namespace, Diagnostics);
-            _triggeredJobHistoryOperationGroupRestClient = new TriggeredJobHistoryOperationGroup(_triggeredJobHistoryOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
+            _triggeredJobHistoryOperationGroupRestClient = new TriggeredJobHistoryOperationGroup(_triggeredJobHistoryOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TriggeredJobHistoryData, WebSiteTriggeredWebJobHistoryResource>(new TriggeredJobHistoryOperationGroupGetTriggeredWebJobHistoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TriggeredJobHistoryData, WebSiteTriggeredWebJobHistoryResource>(new TriggeredJobHistoryDataAsync0CollectionResultOfT(
                 _triggeredJobHistoryOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TriggeredJobHistoryData, WebSiteTriggeredWebJobHistoryResource>(new TriggeredJobHistoryOperationGroupGetTriggeredWebJobHistoryCollectionResultOfT(
+            return new PageableWrapper<TriggeredJobHistoryData, WebSiteTriggeredWebJobHistoryResource>(new TriggeredJobHistoryData0CollectionResultOfT(
                 _triggeredJobHistoryOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

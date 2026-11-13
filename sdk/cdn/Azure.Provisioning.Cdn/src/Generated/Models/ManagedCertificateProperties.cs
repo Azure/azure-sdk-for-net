@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new ManagedCertificateProperties. </summary>
         public ManagedCertificateProperties()
         {
+            SecretType.Assign(Cdn.SecretType.ManagedCertificate);
         }
 
         /// <summary> Gets the Subject. </summary>
@@ -45,9 +46,8 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "ManagedCertificate");
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isOutput: true);
-            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true);
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

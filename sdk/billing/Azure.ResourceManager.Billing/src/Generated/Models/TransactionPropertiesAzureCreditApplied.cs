@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
-    public partial class TransactionPropertiesAzureCreditApplied : BillingAmount
+    internal partial class TransactionPropertiesAzureCreditApplied : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesAzureCreditApplied"/>. </summary>
         public TransactionPropertiesAzureCreditApplied()

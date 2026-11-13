@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure ML Studio Web Service linked service. </summary>
     public partial class AzureMLLinkedService : DataFactoryLinkedServiceProperties
     {
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
+        /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
+        /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
+        public AzureMLLinkedService(DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey) : base("AzureML")
+        {
+            Argument.AssertNotNull(mlEndpoint, nameof(mlEndpoint));
+            Argument.AssertNotNull(apiKey, nameof(apiKey));
+
+            TypeProperties = new AzureMLLinkedServiceTypeProperties(mlEndpoint, apiKey);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ResourceType, out string resourceHealthEventApiVersion);
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
             _securityAdvisoryImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
+            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdAsyncCollectionResultOfT(
+            return new ResourceHealthEventImpactedResourceDataAsync1CollectionResultOfT(
                 _securityAdvisoryImpactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT(
+            return new ResourceHealthEventImpactedResourceData1CollectionResultOfT(
                 _securityAdvisoryImpactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,

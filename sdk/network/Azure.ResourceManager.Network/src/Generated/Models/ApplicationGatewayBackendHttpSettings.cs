@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the application gateway backend HTTP settings. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayBackendHttpSettingsPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayBackendHttpSettingsPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -111,6 +112,34 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
                 }
                 Properties.RequestTimeoutInSeconds = value;
+            }
+        }
+
+        /// <summary> Array of references to application gateway authentication certificates. </summary>
+        [WirePath("properties.authenticationCertificates")]
+        public IList<WritableSubResource> AuthenticationCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                return Properties.AuthenticationCertificates;
+            }
+        }
+
+        /// <summary> Array of references to application gateway trusted root certificates. </summary>
+        [WirePath("properties.trustedRootCertificates")]
+        public IList<WritableSubResource> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                return Properties.TrustedRootCertificates;
             }
         }
 

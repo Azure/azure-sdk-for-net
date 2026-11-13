@@ -27,11 +27,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeMachineNetworkProfile"/>. </summary>
         /// <param name="nicDetails"> List of Network Interface Card (NIC) Details of edge machine. </param>
         /// <param name="switchDetails"> List of switch Details of edge machine. </param>
+        /// <param name="hostNetwork"> HostNetwork configuration reported for the edge machine. </param>
+        /// <param name="sdnProperties"> Software Defined Networking (SDN) properties reported for the edge machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineNetworkProfile(IReadOnlyList<EdgeMachineNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineNetworkProfile(IReadOnlyList<EdgeMachineNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, EdgeMachineHostNetwork hostNetwork, SdnProperties sdnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicDetails = nicDetails;
             SwitchDetails = switchDetails;
+            HostNetwork = hostNetwork;
+            SdnProperties = sdnProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +46,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> List of switch Details of edge machine. </summary>
         [WirePath("switchDetails")]
         public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
+
+        /// <summary> HostNetwork configuration reported for the edge machine. </summary>
+        [WirePath("hostNetwork")]
+        public EdgeMachineHostNetwork HostNetwork { get; }
+
+        /// <summary> Software Defined Networking (SDN) properties reported for the edge machine. </summary>
+        [WirePath("sdnProperties")]
+        public SdnProperties SdnProperties { get; }
     }
 }

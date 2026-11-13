@@ -53,9 +53,11 @@ namespace TestProjects.Spector.Tests.Http.Azure.Versioning.PreviewVersion.V2
         {
             var response = await new PreviewVersionClient(host, new PreviewVersionClientOptions(PreviewVersionClientOptions.ServiceVersion.V2024_12_01_Preview)).GetWidgetAsync("widget-123");
             Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("widget-123", response.Value.Id);
-            Assert.AreEqual("Sample Widget", response.Value.Name);
-            Assert.AreEqual("blue", response.Value.Color);
+            Assert.IsTrue(response.HasValue);
+            var widget = response.Value!;
+            Assert.AreEqual("widget-123", widget.Id);
+            Assert.AreEqual("Sample Widget", widget.Name);
+            Assert.AreEqual("blue", widget.Color);
         });
 
         [SpectorTest]

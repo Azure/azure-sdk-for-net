@@ -87,6 +87,8 @@ function Get-GitHubAutoReleasePullRequestForCommit {
 #   PullRequestNumber : the PR number recorded in the diff object.
 #   PullRequestFiles  : the file entries returned by Get-GitHubPullRequestFiles.
 #   ExcludePaths      : optional paths to record on the diff object.
+#   ExcludeServiceRootFiles : excludes files directly under sdk/<service> so they do not resolve every
+#                             package in that service.
 #
 # Returns a PSCustomObject with ChangedFiles, ChangedServices, ExcludePaths, DeletedFiles, PRNumber.
 function New-GitHubPullRequestDiffObject {
@@ -97,7 +99,8 @@ function New-GitHubPullRequestDiffObject {
     [AllowEmptyCollection()]
     [array] $PullRequestFiles,
     [AllowEmptyCollection()]
-    [array] $ExcludePaths = @()
+    [array] $ExcludePaths = @(),
+    [switch] $ExcludeServiceRootFiles
   )
 
   $changedFiles = @()
@@ -117,6 +120,12 @@ function New-GitHubPullRequestDiffObject {
     if ($file.status -eq 'renamed' -and $file.previous_filename) {
       $deletedFiles += ("$($file.previous_filename)" -replace '\\', '/')
     }
+  }
+
+  if ($ExcludeServiceRootFiles) {
+    $serviceRootFilePattern = '^sdk/[^/]+/[^/]+$'
+    $changedFiles = @($changedFiles | Where-Object { $_ -notmatch $serviceRootFilePattern })
+    $deletedFiles = @($deletedFiles | Where-Object { $_ -notmatch $serviceRootFilePattern })
   }
 
   $changedFiles = @($changedFiles | Where-Object { $_ } | Sort-Object -Unique)

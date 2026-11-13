@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(IotOperationsAkriConnectorResource.ResourceType, out string iotOperationsAkriConnectorApiVersion);
             _akriConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsAkriConnectorResource.ResourceType.Namespace, Diagnostics);
-            _akriConnectorRestClient = new AkriConnector(_akriConnectorClientDiagnostics, Pipeline, Endpoint, iotOperationsAkriConnectorApiVersion ?? "2025-10-01");
+            _akriConnectorRestClient = new AkriConnector(_akriConnectorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsAkriConnectorApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsAkriConnectorData, IotOperationsAkriConnectorResource>(new AkriConnectorGetByTemplateAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotOperationsAkriConnectorData, IotOperationsAkriConnectorResource>(new IotOperationsAkriConnectorDataAsyncCollectionResultOfT(
                 _akriConnectorRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsAkriConnectorData, IotOperationsAkriConnectorResource>(new AkriConnectorGetByTemplateCollectionResultOfT(
+            return new PageableWrapper<IotOperationsAkriConnectorData, IotOperationsAkriConnectorResource>(new IotOperationsAkriConnectorDataCollectionResultOfT(
                 _akriConnectorRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

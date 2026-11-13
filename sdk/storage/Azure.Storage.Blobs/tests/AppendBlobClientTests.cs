@@ -896,6 +896,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task AppendBlockAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -906,18 +907,17 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(Constants.KB);
 
             // Act
-            using (var stream = new MemoryStream(data))
-            {
-                Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
-                    content: stream,
-                    transactionalContentHash: MD5.Create().ComputeHash(data),
-                    conditions: null,
-                    progressHandler: null,
-                    cancellationToken: CancellationToken.None);
+            using Stream stream = new MemoryStream(data);
+            Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                content: stream,
+                transactionalContentHash: MD5.Create().ComputeHash(data),
+                conditions: null,
+                progressHandler: null,
+                cancellationToken: CancellationToken.None);
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]
@@ -1566,32 +1566,36 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task AppendBlockFromUriAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            var data = GetRandomBuffer(Constants.KB);
+            byte[] data = GetRandomBuffer(Constants.KB);
 
-            using (var stream = new MemoryStream(data))
+            using Stream stream = new MemoryStream(data);
+
+            AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync();
+            await sourceBlob.AppendBlockAsync(stream);
+
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync();
+
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
             {
-                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await sourceBlob.CreateIfNotExistsAsync();
-                await sourceBlob.AppendBlockAsync(stream);
+                SourceContentHash = MD5.Create().ComputeHash(data)
+            };
 
-                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await destBlob.CreateIfNotExistsAsync();
+            // Act
+            Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
+                sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                options: options);
 
-                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
-                {
-                    SourceContentHash = MD5.Create().ComputeHash(data)
-                };
-
-                // Act
-                await destBlob.AppendBlockFromUriAsync(
-                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
-                    options: options);
-            }
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]

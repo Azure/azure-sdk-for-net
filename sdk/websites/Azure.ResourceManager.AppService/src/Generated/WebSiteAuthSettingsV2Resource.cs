@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteAuthSettingsV2ApiVersion);
             _siteAuthSettingsV2sClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _siteAuthSettingsV2sRestClient = new SiteAuthSettingsV2s(_siteAuthSettingsV2sClientDiagnostics, Pipeline, Endpoint, webSiteAuthSettingsV2ApiVersion ?? "2026-03-15");
+            _siteAuthSettingsV2sRestClient = new SiteAuthSettingsV2s(_siteAuthSettingsV2sClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteAuthSettingsV2ApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CostManagement
         private ManagedServiceIdentity _identity;
         private BicepValue<AzureLocation> _location;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementExport. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -140,23 +140,6 @@ namespace Azure.Provisioning.CostManagement
             {
                 Initialize();
                 _scope.Value = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Schedule. </summary>
-        public ExportSchedule Schedule
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Schedule;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportProperties();
-                }
-                Properties.Schedule = value;
             }
         }
 
@@ -314,6 +297,23 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
+        /// <summary> Gets or sets the Schedule. </summary>
+        public ExportSchedule Schedule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schedule;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.Schedule = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CostManagementExport. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -325,7 +325,7 @@ namespace Azure.Provisioning.CostManagement
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

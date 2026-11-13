@@ -4,13 +4,17 @@
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.SourceInput;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Provisioning.Primitives;
+using Azure.Provisioning;
 
 namespace Azure.Generator.Provisioning.Tests.TestHelpers
 {
@@ -26,7 +30,10 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
             Func<ArmProviderSchema>? armProviderSchema = null,
-            string? primaryNamespace = null)
+            string? primaryNamespace = null,
+            IEnumerable<string>? customizationSources = null,
+            IReadOnlyDictionary<string, bool>? modelSettableUsage = null,
+            IEnumerable<string>? lastContractSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -45,9 +52,17 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
             if (armProviderSchema is not null)
             {
-                typeof(ManagementInputLibrary)
-                    .GetField("_providerSchema", BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .SetValue(mockInputLibrary.Object, armProviderSchema());
+                typeof(ProvisioningInputLibrary)
+                    .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(
+                        mockInputLibrary.Object,
+                        armProviderSchema().Resources.Select(CreateProjection).ToArray());
+                typeof(ProvisioningInputLibrary)
+                    .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(
+                        mockInputLibrary.Object,
+                        modelSettableUsage ??
+                            inputNsModels.ToDictionary(model => model.CrossLanguageDefinitionId, _ => true));
             }
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
@@ -56,11 +71,55 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             var mockGenerator = new Mock<ProvisioningGenerator>(mockGeneratorContext.Object) { CallBase = true };
 
             mockGenerator.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
-            mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(null, null));
+            var customizationCompilation = customizationSources is null
+                ? null
+                : CSharpCompilation.Create(
+                    "Customizations",
+                    customizationSources.Select(source => CSharpSyntaxTree.ParseText(source)),
+                    [
+                        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                        MetadataReference.CreateFromFile(typeof(BicepValue<>).Assembly.Location)
+                    ],
+                    new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            var lastContractCompilation = lastContractSources is null
+                ? null
+                : CSharpCompilation.Create(
+                    "LastContract",
+                    lastContractSources.Select(source => CSharpSyntaxTree.ParseText(source)),
+                    [
+                        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                        MetadataReference.CreateFromFile(typeof(BicepValue<>).Assembly.Location)
+                    ],
+                    new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(customizationCompilation, lastContractCompilation));
             var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             codeModelInstance!.SetValue(null, mockGenerator.Object);
 
             return mockGenerator;
+        }
+
+        private static ProvisioningResourceProjection CreateProjection(ArmResourceMetadata metadata)
+        {
+            var readableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Read)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            var writableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Create)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            return new(
+                metadata.ResourceModel,
+                metadata.ResourceName,
+                metadata.ResourceType,
+                metadata.SingletonResourceName,
+                metadata.ParentResourceId,
+                metadata.NameConstraints,
+                [metadata.ResourceIdPattern],
+                metadata.ApiVersions,
+                metadata.Methods,
+                metadata.RbacRoles,
+                readableScopes,
+                writableScopes,
+                writableScopes.Contains(ResourceScope.Extension));
         }
     }
 }

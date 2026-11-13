@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkDeviceSkuResource.ResourceType, out string networkDeviceSkuApiVersion);
             _networkDeviceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkDeviceSkuResource.ResourceType.Namespace, Diagnostics);
-            _networkDeviceSkusRestClient = new NetworkDeviceSkus(_networkDeviceSkusClientDiagnostics, Pipeline, Endpoint, networkDeviceSkuApiVersion ?? "2025-07-15");
+            _networkDeviceSkusRestClient = new NetworkDeviceSkus(_networkDeviceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceSkuApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkDeviceSkuData, NetworkDeviceSkuResource>(new NetworkDeviceSkusGetBySubscriptionAsyncCollectionResultOfT(_networkDeviceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkDeviceSkuCollection.GetAll"), data => new NetworkDeviceSkuResource(Client, data));
+            return new AsyncPageableWrapper<NetworkDeviceSkuData, NetworkDeviceSkuResource>(new NetworkDeviceSkuDataAsyncCollectionResultOfT(_networkDeviceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkDeviceSkuCollection.GetAll"), data => new NetworkDeviceSkuResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkDeviceSkuData, NetworkDeviceSkuResource>(new NetworkDeviceSkusGetBySubscriptionCollectionResultOfT(_networkDeviceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkDeviceSkuCollection.GetAll"), data => new NetworkDeviceSkuResource(Client, data));
+            return new PageableWrapper<NetworkDeviceSkuData, NetworkDeviceSkuResource>(new NetworkDeviceSkuDataCollectionResultOfT(_networkDeviceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkDeviceSkuCollection.GetAll"), data => new NetworkDeviceSkuResource(Client, data));
         }
 
         /// <summary>

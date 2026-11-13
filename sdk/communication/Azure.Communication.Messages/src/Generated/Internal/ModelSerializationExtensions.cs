@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Buffers;
+using System.Buffers.Text;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -161,6 +164,59 @@ namespace Azure.Communication.Messages
             }
         }
 
+        public static void WriteBase64StringValue(this Utf8JsonWriter writer, BinaryData value, string format)
+        {
+            if (value == null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+            switch (format)
+            {
+                case "U":
+                    writer.WriteBase64UrlStringValue(value.ToMemory().Span);
+                    break;
+                case "D":
+                    writer.WriteBase64StringValue(value.ToMemory().Span);
+                    break;
+                default:
+                    throw new ArgumentException($"Format is not supported: '{format}'", nameof(format));
+            }
+        }
+
+        public static void WriteBase64UrlStringValue(this Utf8JsonWriter writer, ReadOnlySpan<byte> source)
+        {
+            byte[] encoded = new byte[Base64.GetMaxEncodedToUtf8Length(source.Length)];
+            OperationStatus status = Base64.EncodeToUtf8(source, encoded, out int bytesConsumed, out int bytesWritten);
+            if (status != OperationStatus.Done || bytesConsumed != source.Length)
+            {
+                throw new InvalidOperationException("Base64Url encoding did not complete.");
+            }
+            for (int index = 0; index < bytesWritten; index++)
+            {
+                if (encoded[index] == (byte)'+')
+                {
+                    encoded[index] = (byte)'-';
+                }
+                else
+                {
+                    if (encoded[index] == (byte)'/')
+                    {
+                        encoded[index] = (byte)'_';
+                    }
+                    else
+                    {
+                        if (encoded[index] == (byte)'=')
+                        {
+                            bytesWritten = index;
+                            break;
+                        }
+                    }
+                }
+            }
+            writer.WriteStringValue(encoded.AsSpan(0, bytesWritten));
+        }
+
         public static void WriteNumberValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)
         {
             if (format != "U")
@@ -191,6 +247,18 @@ namespace Azure.Communication.Messages
                     break;
                 case int i:
                     writer.WriteNumberValue(i);
+                    break;
+                case short shortValue:
+                    writer.WriteNumberValue(shortValue);
+                    break;
+                case ushort ushortValue:
+                    writer.WriteNumberValue(ushortValue);
+                    break;
+                case uint uintValue:
+                    writer.WriteNumberValue(uintValue);
+                    break;
+                case ulong ulongValue:
+                    writer.WriteNumberValue(ulongValue);
                     break;
                 case decimal d:
                     writer.WriteNumberValue(d);
@@ -235,7 +303,7 @@ namespace Azure.Communication.Messages
                     }
                     writer.WriteEndObject();
                     break;
-                case IEnumerable<object> objectEnumerable:
+                case IEnumerable objectEnumerable:
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {

@@ -195,7 +195,7 @@ ReleasePackage -PackageName <package-name> -Language dotnet
 
 ### Required Tools
 
-- **.NET 10.0.103 SDK** (or higher within 10.0.* band)
+- **.NET 10.0.401 SDK** (or higher within 10.0.* band)
 - **PowerShell 7+** for scripts and code generation
 - **Node.js 22.x.x** for TypeSpec and code generation
 - **Git** with proper line ending configuration (see Configuration section below)
@@ -219,8 +219,8 @@ Clone to short paths (e.g., `C:\git`) to avoid 260-character path limit. Paths i
 
 ### Target Frameworks
 
-- **Client Libraries**: Use `$(RequiredTargetFrameworks)` from `eng/Directory.Build.Data.props`
-- **Management Libraries**: Use `$(SdkTargetFx)` from `AzSdk.reference.props`
+- **Client and Management Libraries**: Use `$(RequiredTargetFrameworks)` from `eng/Directory.Build.Common.props`
+- See the [target framework guidelines](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/TargetFrameworkGuidelines.md) for what each package type targets and how targets change with each .NET release
 
 ### Dependency Management
 
@@ -299,6 +299,11 @@ See [eng/common/instructions/azsdk-tools/](https://github.com/Azure/azure-sdk-fo
 This repository includes agent-specific instructions in `.github/copilot-instructions.md` for GitHub Copilot integration. For the most current Copilot-specific guidance, refer to:
 
 **[.github/copilot-instructions.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/copilot-instructions.md)**
+
+For pull request or local code review in any agent harness, load and follow
+[`.github/skills/code-review/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/code-review/SKILL.md).
+It preserves general bug and correctness analysis while adding the repository-specific review
+rules.
 
 ### Community and Support
 

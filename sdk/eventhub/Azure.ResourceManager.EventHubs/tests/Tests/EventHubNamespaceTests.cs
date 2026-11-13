@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             var updateNamespaceParameter = eventHubNamespace.Data;
             updateNamespaceParameter.Tags.Add("key1", "value1");
             updateNamespaceParameter.Tags.Add("key2", "value2");
-            var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(WaitUntil.Completed, updateNamespaceParameter);
+            var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(updateNamespaceParameter);
 
             //validate
             Assert.AreEqual(eventHubNamespace2.Value.Data.Tags.Count, 2);
@@ -222,6 +222,37 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             VerifyNamespaceProperties(eventHubNamespace, false);
             Assert.IsTrue(eventHubNamespace.Data.KafkaEnabled);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateNamespaceWithIPAddressType()
+        {
+            // Validates the 2026-01-01 'ipAddressType' property (replaces the legacy 'ipV6Enabled' boolean).
+            // Covers both enum values: create with DualStack, then update to IPv4 via the synchronous PATCH.
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+
+            // create with dual-stack (IPv4 + IPv6)
+            EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
+            {
+                IPAddressType = EventHubsIPAddressType.DualStack
+            };
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameter)).Value;
+            VerifyNamespaceProperties(eventHubNamespace, false);
+            Assert.AreEqual(EventHubsIPAddressType.DualStack, eventHubNamespace.Data.IPAddressType);
+
+            // re-fetch to confirm the value is persisted on the service
+            eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
+            Assert.AreEqual(EventHubsIPAddressType.DualStack, eventHubNamespace.Data.IPAddressType);
+
+            // update to IPv4 via the synchronous namespace PATCH and assert the round-trip
+            eventHubNamespace.Data.IPAddressType = EventHubsIPAddressType.IPv4;
+            eventHubNamespace = (await eventHubNamespace.UpdateAsync(eventHubNamespace.Data)).Value;
+            Assert.AreEqual(EventHubsIPAddressType.IPv4, eventHubNamespace.Data.IPAddressType);
+
+            await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]

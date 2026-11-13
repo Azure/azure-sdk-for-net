@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementPrivateLinkResource.ResourceType, out string apiManagementPrivateLinkResourceApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateLinkResourceApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPrivateLinkResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new PrivateEndpointConnectionGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new ApiManagementPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new PrivateEndpointConnectionGetPrivateLinkResourcesCollectionResultOfT(
+            return new PageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new ApiManagementPrivateLinkResourceDataCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

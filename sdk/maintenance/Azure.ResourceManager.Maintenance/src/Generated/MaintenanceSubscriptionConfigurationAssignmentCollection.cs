@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(MaintenanceSubscriptionConfigurationAssignmentResource.ResourceType, out string maintenanceSubscriptionConfigurationAssignmentApiVersion);
             _configurationAssignmentsForSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceSubscriptionConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _configurationAssignmentsForSubscriptionsRestClient = new ConfigurationAssignmentsForSubscriptions(_configurationAssignmentsForSubscriptionsClientDiagnostics, Pipeline, Endpoint, maintenanceSubscriptionConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
+            _configurationAssignmentsForSubscriptionsRestClient = new ConfigurationAssignmentsForSubscriptions(_configurationAssignmentsForSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceSubscriptionConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
             _configurationAssignmentsWithinSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceSubscriptionConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _configurationAssignmentsWithinSubscriptionRestClient = new ConfigurationAssignmentsWithinSubscription(_configurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, Endpoint, maintenanceSubscriptionConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
+            _configurationAssignmentsWithinSubscriptionRestClient = new ConfigurationAssignmentsWithinSubscription(_configurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceSubscriptionConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionAsyncCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new MaintenanceConfigurationAssignmentDataAsyncCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new MaintenanceConfigurationAssignmentDataCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>

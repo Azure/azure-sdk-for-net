@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
@@ -21,6 +23,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         [DataMember(Name = "Premium_P1")]
         PremiumP1 = 1,
         /// <summary> LegacyTier. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use StandardS1 instead.")]
         [DataMember(Name = "legacy_tier")]
         LegacyTier = 3
     }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The pre-tax amount due. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesSubTotal : BillingAmount
+    internal partial class InvoicePropertiesSubTotal : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesSubTotal"/>. </summary>
         public InvoicePropertiesSubTotal()

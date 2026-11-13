@@ -1,6 +1,6 @@
 # Release History
 
-## 2.2.0-beta.1 (Unreleased)
+## 2.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -13,9 +13,21 @@
 ### Bugs Fixed
 
 ### Other Changes
-
 - Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
 - Updated `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, and `Microsoft.Azure.SignalR.Protocols` dependencies to 1.34.0.
+
+## 2.3.0 (2026-11-02)
+
+### Other Changes
+
+- Updated `MessagePack` to 2.5.307 and `Microsoft.Azure.SignalR.Serverless.Protocols` to 1.11.1 to address GHSA-qhrr-8q5h-9q3h, including the protocol assembly's embedded MessagePack reader.
+
+## 2.2.0 (2026-08-12)
+
+### Other Changes
+
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.15.0
+- Updated `MessagePack` dependency to 2.5.302
 
 ## 2.1.0 (2025-07-25)
 
@@ -174,4 +186,3 @@
 ### Bugs Fixed
 * Fixed the bug that the function host could not be shutdown locally on Functions V3 runtime.
 * Fixed the package restoring issue on .NET 5 and above.
-

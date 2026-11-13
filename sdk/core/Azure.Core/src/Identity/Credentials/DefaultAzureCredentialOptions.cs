@@ -115,6 +115,11 @@ namespace Azure.Identity
                 DisableInstanceDiscovery = disableInstanceDiscovery;
             }
 
+            if (bool.TryParse(section[nameof(EnableMtlsProofOfPossession)], out bool enableMtlsProofOfPossession))
+            {
+                EnableMtlsProofOfPossession = enableMtlsProofOfPossession;
+            }
+
             if (section[nameof(AzureCliCredentialOptions.Subscription)] is string subscription)
             {
                 Subscription = subscription;
@@ -468,6 +473,7 @@ namespace Azure.Identity
         /// <remarks>
         /// If neither the <see cref="ManagedIdentityClientId"/> nor the <see cref="ManagedIdentityResourceId"/> property is set, then a system-assigned managed identity is used.
         /// Defaults to the value of environment variable <c>AZURE_CLIENT_ID</c>.
+        /// Supported on Azure Arc-enabled servers with user-assigned managed identity support.
         /// </remarks>
         public string ManagedIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
 
@@ -476,6 +482,7 @@ namespace Azure.Identity
         /// </summary>
         /// <remarks>
         /// If neither the <see cref="ManagedIdentityClientId"/> nor the <see cref="ManagedIdentityResourceId"/> property is set, then a system-assigned managed identity is used.
+        /// Supported on Azure Arc-enabled servers with user-assigned managed identity support.
         /// </remarks>
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
@@ -585,6 +592,8 @@ namespace Azure.Identity
 
         internal bool IsAzureProxyEnabled { get; set; }
 
+        internal bool EnableMtlsProofOfPossession { get; set; } = true;
+
         /// <summary>
         /// Specifies the client ID of the application the credential will authenticate.
         /// </summary>
@@ -692,6 +701,7 @@ namespace Azure.Identity
                     dacClone.Subscription = Subscription;
                 }
                 dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
+                dacClone.EnableMtlsProofOfPossession = EnableMtlsProofOfPossession;
                 dacClone.ClientId = ClientId;
                 dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
                 dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;

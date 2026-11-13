@@ -18,10 +18,10 @@ namespace Azure.Provisioning.CostManagement
         private BicepValue<ExportRunExecutionStatus> _status;
         private BicepValue<string> _submittedBy;
         private BicepValue<DateTimeOffset> _submittedOn;
-        private BicepValue<DateTimeOffset> _processingStartOn;
-        private BicepValue<DateTimeOffset> _processingEndOn;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _processingStartsOn;
+        private BicepValue<DateTimeOffset> _processingEndsOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<string> _fileName;
         private BicepValue<string> _manifestFile;
         private CommonExportProperties _runSettings;
@@ -72,43 +72,43 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets the ProcessingStartOn. </summary>
-        public BicepValue<DateTimeOffset> ProcessingStartOn
+        /// <summary> Gets the ProcessingStartsOn. </summary>
+        public BicepValue<DateTimeOffset> ProcessingStartsOn
         {
             get
             {
                 Initialize();
-                return _processingStartOn;
+                return _processingStartsOn;
             }
         }
 
-        /// <summary> Gets the ProcessingEndOn. </summary>
-        public BicepValue<DateTimeOffset> ProcessingEndOn
+        /// <summary> Gets the ProcessingEndsOn. </summary>
+        public BicepValue<DateTimeOffset> ProcessingEndsOn
         {
             get
             {
                 Initialize();
-                return _processingEndOn;
+                return _processingEndsOn;
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -159,11 +159,11 @@ namespace Azure.Provisioning.CostManagement
             _executionType = DefineProperty<ExportRunExecutionType>(nameof(ExecutionType), new string[] { "executionType" });
             _status = DefineProperty<ExportRunExecutionStatus>(nameof(Status), new string[] { "status" });
             _submittedBy = DefineProperty<string>(nameof(SubmittedBy), new string[] { "submittedBy" });
-            _submittedOn = DefineProperty<DateTimeOffset>(nameof(SubmittedOn), new string[] { "submittedTime" });
-            _processingStartOn = DefineProperty<DateTimeOffset>(nameof(ProcessingStartOn), new string[] { "processingStartTime" });
-            _processingEndOn = DefineProperty<DateTimeOffset>(nameof(ProcessingEndOn), new string[] { "processingEndTime" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" });
+            _submittedOn = DefineProperty<DateTimeOffset>(nameof(SubmittedOn), new string[] { "submittedTime" }, format: "O");
+            _processingStartsOn = DefineProperty<DateTimeOffset>(nameof(ProcessingStartsOn), new string[] { "processingStartTime" }, format: "O");
+            _processingEndsOn = DefineProperty<DateTimeOffset>(nameof(ProcessingEndsOn), new string[] { "processingEndTime" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startDate" }, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endDate" }, format: "O");
             _fileName = DefineProperty<string>(nameof(FileName), new string[] { "fileName" });
             _manifestFile = DefineProperty<string>(nameof(ManifestFile), new string[] { "manifestFile" });
             _runSettings = DefineModelProperty<CommonExportProperties>(nameof(RunSettings), new string[] { "runSettings" });

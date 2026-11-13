@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         {
             Name = name;
             Visibility = visibility;
-            Ip = ip;
+            IP = ip;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public OpenShiftVisibility? Visibility { get; set; }
 
         /// <summary> The IP of the ingress. </summary>
-        public IPAddress Ip { get; }
+        public IPAddress IP { get; }
     }
 }

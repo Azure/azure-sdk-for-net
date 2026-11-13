@@ -90,10 +90,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             QueueServiceClient client = _queueServiceClientProvider.Get(queueTrigger.Connection, _nameResolver);
             var queue = client.GetQueueClient(queueName);
 
+            // Scale metrics only; never used for message processing.
+            var rawQueue = _queueServiceClientProvider.GetRaw(queueTrigger.Connection, _nameResolver).GetQueueClient(queueName);
+
             ITriggerBinding binding = new QueueTriggerBinding(
                 parameter.Name,
                 client,
                 queue,
+                rawQueue,
                 argumentBinding,
                 _queueOptions,
                 _exceptionHandler,

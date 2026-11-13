@@ -35,6 +35,15 @@ namespace Azure.SdkAnalyzers
             true,
             "Methods that accept a CancellationToken should propagate it to RequestContext parameters in Azure SDK method calls to ensure proper cancellation support.");
 
+        public static readonly DiagnosticDescriptor AZC0032 = new(
+            nameof(AZC0032),
+            "Improper model name suffix",
+            "Model name '{0}' ends with '{1}'. Suggest to rename it to an appropriate name.",
+            DiagnosticCategory.Naming,
+            DiagnosticSeverity.Warning,
+            true,
+            "Suffix is not recommended. Consider to remove or modify it.");
+
         public static readonly DiagnosticDescriptor AZC0034 = new(
             nameof(AZC0034),
             "Avoid duplicate type names",
@@ -52,6 +61,16 @@ namespace Azure.SdkAnalyzers
             DiagnosticSeverity.Warning,
             true,
             "Output model types returned from client methods should have corresponding model factory methods for mocking support.");
+
+        public static readonly DiagnosticDescriptor AZC0004 = new(
+            nameof(AZC0004),
+            "DO provide both asynchronous and synchronous variants for all service methods.",
+            "DO provide both asynchronous and synchronous variants for all service methods.",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Client service methods should provide both asynchronous and synchronous variants.",
+            "https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods");
 
         public static readonly DiagnosticDescriptor AZC0005 = new(
             nameof(AZC0005),
@@ -91,6 +110,15 @@ namespace Azure.SdkAnalyzers
             DiagnosticSeverity.Warning,
             true,
             "A constructor that takes a System.ClientModel.Primitives.ClientSettings-derived parameter should only take that single parameter.");
+
+        public static readonly DiagnosticDescriptor AZC0015 = new(
+            nameof(AZC0015),
+            "Unexpected client method return type.",
+            "Client methods should return one of: Response/Response<T>/NullableResponse<T>/Operation/Operation<T> (optionally Task-wrapped) or Pageable<T>/AsyncPageable<T> for Azure.Core clients, or ClientResult/ClientResult<T> (optionally Task-wrapped) or CollectionResult/CollectionResult<T>/AsyncCollectionResult/AsyncCollectionResult<T> for System.ClientModel clients; found {0} instead.",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Client methods should return an approved Azure.Core or System.ClientModel result type.");
 
         public static readonly DiagnosticDescriptor AZC0040 = new(
             nameof(AZC0040),

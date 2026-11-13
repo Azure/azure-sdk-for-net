@@ -56,8 +56,8 @@ namespace Azure.Storage.Blobs
         private readonly int _maxWorkerCount;
 
         /// <summary>
-        /// The size of the first range requested (which can be larger than the
-        /// other ranges).
+        /// The size of the first range requested. Defaults to the default size
+        /// of subsequent ranges.
         /// </summary>
         private readonly long _initialRangeSize;
 
@@ -75,6 +75,8 @@ namespace Azure.Storage.Blobs
         private bool UseMasterCrc => _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
         private StorageCrc64HashAlgorithm _masterCrcCalculator;
 
+        private BlobClientSideDecryptor _decryptor;
+
         /// <summary>
         /// The validation options to send to individual download requests.
         /// Tells the client not to perform the responseChecksum validation, leaving
@@ -91,6 +93,11 @@ namespace Azure.Storage.Blobs
 
         private readonly ArrayPool<byte> _arrayPool;
 
+        /// <summary>
+        /// Determines whether locality-aware routing is used for this download.
+        /// </summary>
+        private readonly LayoutAwareRouting _layoutAwareRouting;
+
         private readonly int DefaultConcurrentTransfersCount = Math.Min(Math.Max(Environment.ProcessorCount * 2, 8), 32);
 
         public PartitionedDownloader(
@@ -98,10 +105,12 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             DownloadTransferValidationOptions transferValidation = default,
             IProgress<long> progress = default,
-            ArrayPool<byte> arrayPool = default)
+            ArrayPool<byte> arrayPool = default,
+            LayoutAwareRouting layoutAwareRouting = LayoutAwareRouting.Auto)
         {
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
+            _layoutAwareRouting = layoutAwareRouting.ResolveAuto();
 
             // Set _maxWorkerCount
             if (transferOptions.MaximumConcurrency.HasValue
@@ -116,6 +125,10 @@ namespace Azure.Storage.Blobs
                     : DefaultConcurrentTransfersCount;
             }
 
+            long defaultRangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
+                ? Constants.MaxHashRequestDownloadRange
+                : Constants.DefaultBufferSize;
+
             // Set _rangeSize
             if (transferOptions.MaximumTransferSize.HasValue
                 && transferOptions.MaximumTransferSize.Value > 0)
@@ -124,9 +137,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _rangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
-                    ? Constants.MaxHashRequestDownloadRange
-                    : Constants.DefaultBufferSize;
+                _rangeSize = defaultRangeSize;
             }
 
             // Set _initialRangeSize
@@ -137,9 +148,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _initialRangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
-                    ? Constants.MaxHashRequestDownloadRange
-                    : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+                _initialRangeSize = defaultRangeSize;
             }
 
             Argument.AssertNotNull(transferValidation, nameof(transferValidation));
@@ -199,6 +208,8 @@ namespace Azure.Storage.Blobs
                         ValidationOptions,
                         _progress,
                         _innerOperationName,
+                        layoutCache: null,
+                        layoutEndpoint: null,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 }
@@ -217,6 +228,8 @@ namespace Azure.Storage.Blobs
                         validationOptionsNone,
                         _progress,
                         _innerOperationName,
+                        layoutCache: null,
+                        layoutEndpoint: null,
                         async,
                         cancellationToken).ConfigureAwait(false);
 
@@ -244,8 +257,9 @@ namespace Azure.Storage.Blobs
                 {
                     if (initialResponse.Value.Details.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
                     {
-                        destination = await new BlobClientSideDecryptor(
-                            new ClientSideDecryptor(_client.ClientSideEncryption)).DecryptWholeBlobWriteInternal(
+                        _decryptor ??= new BlobClientSideDecryptor(
+                            new ClientSideDecryptor(_client.ClientSideEncryption));
+                        destination = await _decryptor.DecryptWholeBlobWriteInternal(
                                 destination,
                                 initialResponse.Value.Details.Metadata,
                                 async,
@@ -289,6 +303,30 @@ namespace Azure.Storage.Blobs
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
                 IEnumerable<HttpRange> ranges = GetRanges(initialLength, totalLength);
 
+                AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null;
+
+                // When data locality is enabled and the service recommends it
+                // via the x-ms-download-hint header, build a cache that lazily
+                // fetches the blob layout so subsequent range requests can be
+                // routed to optimal endpoints.
+                if (_layoutAwareRouting == LayoutAwareRouting.Enabled
+                    && initialResponse.Value.Details.DownloadHint == DownloadHint.Layout)
+                {
+                    layoutCache = new AutoRefreshingCache<BlobLayoutSegmentCacheValue>(
+                        acquire: async (acquireAsync, ct) =>
+                        {
+#pragma warning disable AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
+                            (_, BlobLayoutSegment[] segments) = await _client.FetchLayoutInternal(
+                                new HttpRange(initialLength, totalLength - initialLength),
+                                conditionsWithEtag,
+                                acquireAsync,
+                                ct).ConfigureAwait(false);
+#pragma warning restore AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
+                            return new BlobLayoutSegmentCacheValue(segments);
+                        },
+                        backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+                }
+
                 // Rule checker cannot understand this section, but this
                 // massively reduces code duplication.
                 int effectiveWorkerCount = async ? _maxWorkerCount : 1;
@@ -296,14 +334,26 @@ namespace Azure.Storage.Blobs
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     await ParallelDownloadToAsync(
-                        destination, effectiveWorkerCount, initialResponse, ranges, conditionsWithEtag, cancellationToken)
+                        destination,
+                        effectiveWorkerCount,
+                        initialResponse,
+                        ranges,
+                        conditionsWithEtag,
+                        layoutCache,
+                        cancellationToken)
                         .ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
                 else
                 {
                     await SequentialDownloadToInternal(
-                        destination, initialResponse, ranges, conditionsWithEtag, async, cancellationToken)
+                        destination,
+                        initialResponse,
+                        ranges,
+                        conditionsWithEtag,
+                        layoutCache,
+                        async,
+                        cancellationToken)
                         .ConfigureAwait(false);
                 }
 
@@ -322,6 +372,7 @@ namespace Azure.Storage.Blobs
             Response<BlobDownloadStreamingResult> initialResponse,
             IEnumerable<HttpRange> ranges,
             BlobRequestConditions conditionsWithEtag,
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
             CancellationToken cancellationToken)
         {
             BlobErrors.VerifyParallelismGreaterThanOne(parallel);
@@ -339,10 +390,10 @@ namespace Azure.Storage.Blobs
             // until we are done with the initial response.
             using IEnumerator<HttpRange> remainingRanges = ranges.GetEnumerator();
             // -1 makes space for the initial response handles separately
-            while (bufferedTasks.Count < parallel-1 && remainingRanges.MoveNext())
+            while (bufferedTasks.Count < parallel - 1 && remainingRanges.MoveNext())
             {
                 bufferedTasks.Enqueue(DownloadAndBufferAsync(
-                    remainingRanges.Current, conditionsWithEtag, cancellationToken));
+                    remainingRanges.Current, conditionsWithEtag, layoutCache, cancellationToken));
             }
 
             // Stream the initial response directly to the destination
@@ -374,7 +425,7 @@ namespace Azure.Storage.Blobs
                     await ConsumeBufferedTask().ConfigureAwait(false);
                 }
                 bufferedTasks.Enqueue(DownloadAndBufferAsync(
-                    remainingRanges.Current, conditionsWithEtag, cancellationToken));
+                    remainingRanges.Current, conditionsWithEtag, layoutCache, cancellationToken));
             }
 
             while (bufferedTasks.Count > 0)
@@ -418,6 +469,7 @@ namespace Azure.Storage.Blobs
             Response<BlobDownloadStreamingResult> initialResponse,
             IEnumerable<HttpRange> ranges,
             BlobRequestConditions conditionsWithEtag,
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -434,6 +486,8 @@ namespace Azure.Storage.Blobs
                     ValidationOptions,
                     _progress,
                     _innerOperationName,
+                    layoutCache,
+                    layoutEndpoint: null,
                     async,
                     cancellationToken).ConfigureAwait(false)
                 ));
@@ -441,16 +495,17 @@ namespace Azure.Storage.Blobs
             foreach (Func<Task<Response<BlobDownloadStreamingResult>>> getResponse in allResponses)
             {
                 partitionChecksum.Clear();
-                await CopyToInternal(await getResponse().ConfigureAwait(false), destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
+                long copied = await CopyToInternal(await getResponse().ConfigureAwait(false), destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
                 if (UseMasterCrc)
                 {
                     StorageCrc64Composer.Compose(
                         (composedCrcBuf, 0L),
-                        (partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                            ?? initialResponse.Value.Details.ContentLength)
+                        (partitionChecksum, copied)
                     ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
                 }
             }
+            await FinalizeDownloadInternal(destination, composedCrcBuf?.AsMemory(0, Crc64Len) ?? default, async, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         private async Task HandleOneShotDownload(
@@ -490,7 +545,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task CopyToInternal(
+        private async Task<long> CopyToInternal(
             Response<BlobDownloadStreamingResult> response,
             Stream destination,
             Memory<byte> checksumBuffer,
@@ -506,7 +561,7 @@ namespace Azure.Storage.Blobs
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
                 : rawSource;
 
-            await source.CopyToInternal(
+            long copied = await source.CopyToInternal(
                 destination,
                 async,
                 cancellationToken)
@@ -528,6 +583,8 @@ namespace Azure.Storage.Blobs
                     throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                 }
             }
+
+            return copied;
         }
 
         /// <summary>
@@ -538,6 +595,7 @@ namespace Azure.Storage.Blobs
         private async Task<BufferedDownloadResult> DownloadAndBufferAsync(
             HttpRange range,
             BlobRequestConditions conditions,
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
             CancellationToken cancellationToken)
         {
             Response<BlobDownloadStreamingResult> response = await _client.DownloadStreamingInternal(
@@ -546,6 +604,8 @@ namespace Azure.Storage.Blobs
                 ValidationOptions,
                 _progress,
                 _innerOperationName,
+                layoutCache,
+                layoutEndpoint: null,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 

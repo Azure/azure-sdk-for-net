@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The security profile of a gallery image version. </summary>
-    internal partial class ImageVersionSecurityProfile
+    public partial class ImageVersionSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ImageVersionSecurityProfile"/>. </summary>
         /// <param name="uefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <param name="secretsProvisioningSettings"> Specifies the secrets provisioning settings for the gallery image version. Used on create or update to configure secrets provisioning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageVersionSecurityProfile(GalleryImageVersionUefiSettings uefiSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageVersionSecurityProfile(GalleryImageVersionUefiSettings uefiSettings, SecretsProvisioningSettings secretsProvisioningSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UefiSettings = uefiSettings;
+            SecretsProvisioningSettings = secretsProvisioningSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Contains UEFI settings for the image version. </summary>
         public GalleryImageVersionUefiSettings UefiSettings { get; set; }
+
+        /// <summary> Specifies the secrets provisioning settings for the gallery image version. Used on create or update to configure secrets provisioning. </summary>
+        public SecretsProvisioningSettings SecretsProvisioningSettings { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkBootstrapInterfaceResource.ResourceType, out string networkBootstrapInterfaceApiVersion);
             _networkBootstrapInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkBootstrapInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _networkBootstrapInterfacesRestClient = new NetworkBootstrapInterfaces(_networkBootstrapInterfacesClientDiagnostics, Pipeline, Endpoint, networkBootstrapInterfaceApiVersion ?? "2025-07-15");
+            _networkBootstrapInterfacesRestClient = new NetworkBootstrapInterfaces(_networkBootstrapInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkBootstrapInterfaceApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkBootstrapInterfaceData, NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfacesGetByNetworkBootstrapDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkBootstrapInterfaceData, NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfaceDataAsyncCollectionResultOfT(
                 _networkBootstrapInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkBootstrapInterfaceData, NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfacesGetByNetworkBootstrapDeviceCollectionResultOfT(
+            return new PageableWrapper<NetworkBootstrapInterfaceData, NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfaceDataCollectionResultOfT(
                 _networkBootstrapInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

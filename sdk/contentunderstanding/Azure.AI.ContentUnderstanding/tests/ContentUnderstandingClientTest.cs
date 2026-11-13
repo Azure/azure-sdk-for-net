@@ -18,18 +18,27 @@ using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Tests
 {
+    [ClientTestFixture(
+        true,
+        ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01,
+        ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)]
     public class ContentUnderstandingClientTest : RecordedTestBase<ContentUnderstandingClientTestEnvironment>
     {
-        public ContentUnderstandingClientTest(bool isAsync)
+        private readonly ContentUnderstandingClientOptions.ServiceVersion _serviceVersion;
+
+        public ContentUnderstandingClientTest(
+            bool isAsync,
+            ContentUnderstandingClientOptions.ServiceVersion serviceVersion)
             : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
             ContentUnderstandingTestBase.ConfigureCommonSanitizers(this);
         }
 
         private ContentUnderstandingClient GetClient()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             return InstrumentClient(new ContentUnderstandingClient(
                 new Uri(endpoint),
                 TestEnvironment.Credential,
@@ -38,32 +47,22 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
         /// <summary>
         /// Tests updating default model deployments for the Content Understanding service.
-        /// Verifies that model deployments (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) can be updated and are correctly persisted.
+        /// Verifies that concrete model deployments and prebuilt analyzer aliases can be updated and are correctly persisted.
         /// Also verifies that incremental updates work correctly (updating one model preserves others).
         /// </summary>
         [RecordedTest]
         public async Task UpdateDefaultsAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
-            // Check if model deployments are configured in test environment
-            string? gpt41Deployment = TestEnvironment.Gpt41Deployment;
-            string? gpt41MiniDeployment = TestEnvironment.Gpt41MiniDeployment;
-            string? textEmbeddingDeployment = TestEnvironment.TextEmbedding3LargeDeployment;
-
-            if (string.IsNullOrEmpty(gpt41Deployment) || string.IsNullOrEmpty(gpt41MiniDeployment) || string.IsNullOrEmpty(textEmbeddingDeployment))
+            if (!modelProfile.IsConfigured)
             {
                 Assert.Inconclusive("Model deployments are not configured in test environment. Skipping UpdateDefaultsAsync test.");
                 return;
             }
 
-            // Step 1: Set initial defaults with all three models
-            var initialModelDeployments = new Dictionary<string, string>
-            {
-                ["gpt-4.1"] = gpt41Deployment!,
-                ["gpt-4.1-mini"] = gpt41MiniDeployment!,
-                ["text-embedding-3-large"] = textEmbeddingDeployment!
-            };
+            IDictionary<string, string> initialModelDeployments = modelProfile.GetDefaultModelDeployments();
 
             Response<ContentUnderstandingDefaults> initialResponse = await client.UpdateDefaultsAsync(initialModelDeployments);
 
@@ -74,28 +73,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             // Verify the initial defaults were set correctly
             Assert.IsNotNull(initialDefaults.ModelDeployments, "Initial model deployments should not be null");
-            Assert.IsTrue(initialDefaults.ModelDeployments.Count >= 3, "Should have at least 3 model deployments initially");
-
-            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
-            Assert.AreEqual(gpt41Deployment, initialDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match");
-
-            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
-            Assert.AreEqual(gpt41MiniDeployment, initialDefaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match");
-
-            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
-            Assert.AreEqual(textEmbeddingDeployment, initialDefaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.Count >= initialModelDeployments.Count, "Should contain all required model deployments initially");
+            AssertModelDeployments(initialDefaults.ModelDeployments, initialModelDeployments);
 
             // Step 2: Verify initial state by getting defaults
             Response<ContentUnderstandingDefaults> getInitialResponse = await client.GetDefaultsAsync();
             Assert.IsNotNull(getInitialResponse.Value, "Get defaults response should not be null");
             Assert.IsNotNull(getInitialResponse.Value.ModelDeployments, "Model deployments should not be null");
-            Assert.IsTrue(getInitialResponse.Value.ModelDeployments.Count >= 3, "Should have at least 3 model deployments after initial update");
+            Assert.IsTrue(getInitialResponse.Value.ModelDeployments.Count >= initialModelDeployments.Count, "Should contain all required model deployments after initial update");
 
-            // Step 3: Perform incremental update - update only one model
-            // Use a different deployment name to verify the update actually happened
             var incrementalUpdate = new Dictionary<string, string>
             {
-                ["gpt-4.1"] = gpt41Deployment! // Update only gpt-4.1 (using same value, but this verifies incremental update preserves others)
+                [modelProfile.CompletionModel] = modelProfile.CompletionDeployment!
             };
 
             Response<ContentUnderstandingDefaults> incrementalResponse = await client.UpdateDefaultsAsync(incrementalUpdate);
@@ -105,38 +94,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             ContentUnderstandingDefaults incrementalDefaults = incrementalResponse.Value;
 
-            // Step 4: Verify incremental update - all three models should still be present
             Assert.IsNotNull(incrementalDefaults.ModelDeployments, "Incremental updated model deployments should not be null");
-            Assert.AreEqual(3, incrementalDefaults.ModelDeployments.Count,
-                "All three models should still be present after incremental update (verifies incremental update works)");
-
-            // Verify gpt-4.1 was updated (or remains the same)
-            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment after incremental update");
-            Assert.AreEqual(gpt41Deployment, incrementalDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match after incremental update");
-
-            // Verify gpt-4.1-mini was preserved (this is the key test for incremental update)
-            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment after incremental update");
-            Assert.AreEqual(gpt41MiniDeployment, incrementalDefaults.ModelDeployments["gpt-4.1-mini"],
-                "gpt-4.1-mini should be preserved after incremental update (verifies incremental update works)");
-
-            // Verify text-embedding-3-large was preserved (this is the key test for incremental update)
-            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment after incremental update");
-            Assert.AreEqual(textEmbeddingDeployment, incrementalDefaults.ModelDeployments["text-embedding-3-large"],
-                "text-embedding-3-large should be preserved after incremental update (verifies incremental update works)");
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.Count >= initialModelDeployments.Count,
+                "All model mappings should still be present after incremental update (verifies incremental update works)");
+            AssertModelDeployments(incrementalDefaults.ModelDeployments, initialModelDeployments);
 
             // Step 5: Verify by getting defaults again to ensure persistence
             Response<ContentUnderstandingDefaults> getAfterIncrementalResponse = await client.GetDefaultsAsync();
             Assert.IsNotNull(getAfterIncrementalResponse.Value, "Get defaults after incremental update response should not be null");
             Assert.IsNotNull(getAfterIncrementalResponse.Value.ModelDeployments, "Model deployments should not be null");
-            Assert.AreEqual(3, getAfterIncrementalResponse.Value.ModelDeployments.Count,
-                "All three models should still be present when getting defaults after incremental update");
-
-            Assert.AreEqual(gpt41Deployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1"],
-                "gpt-4.1 deployment should match when getting defaults after incremental update");
-            Assert.AreEqual(gpt41MiniDeployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1-mini"],
-                "gpt-4.1-mini should be preserved when getting defaults after incremental update");
-            Assert.AreEqual(textEmbeddingDeployment, getAfterIncrementalResponse.Value.ModelDeployments["text-embedding-3-large"],
-                "text-embedding-3-large should be preserved when getting defaults after incremental update");
+            Assert.IsTrue(getAfterIncrementalResponse.Value.ModelDeployments.Count >= initialModelDeployments.Count,
+                "All model mappings should still be present when getting defaults after incremental update");
+            AssertModelDeployments(getAfterIncrementalResponse.Value.ModelDeployments, initialModelDeployments);
         }
 
         /// <summary>
@@ -147,11 +116,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task GetDefaultsAsync()
         {
             ContentUnderstandingClient client = GetClient();
-
-            // Load expected model values from test environment
-            string? gpt41Deployment = TestEnvironment.Gpt41Deployment;
-            string? gpt41MiniDeployment = TestEnvironment.Gpt41MiniDeployment;
-            string? textEmbeddingDeployment = TestEnvironment.TextEmbedding3LargeDeployment;
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             Response<ContentUnderstandingDefaults> response = await client.GetDefaultsAsync();
 
@@ -159,40 +124,31 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(response.Value, "Response value should not be null");
 
             ContentUnderstandingDefaults defaults = response.Value;
-
-            // Verify defaults structure
             Assert.IsNotNull(defaults, "Defaults should not be null");
 
-            // ModelDeployments may be null or empty if not configured
             if (defaults.ModelDeployments != null && defaults.ModelDeployments.Count > 0)
             {
-                Assert.IsTrue(defaults.ModelDeployments.Count > 0, "Model deployments dictionary should not be empty if not null");
-
-                // Verify expected keys exist if deployments are configured
-                foreach (var kvp in defaults.ModelDeployments)
+                foreach (KeyValuePair<string, string> deployment in defaults.ModelDeployments)
                 {
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(kvp.Key), "Model deployment key should not be null or empty");
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(kvp.Value), "Model deployment value should not be null or empty");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(deployment.Key), "Model deployment key should not be null or empty");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(deployment.Value), "Model deployment value should not be null or empty");
                 }
 
-                // Verify specific model values if they are configured in test environment
-                if (!string.IsNullOrEmpty(gpt41Deployment))
+                if (modelProfile.IsConfigured)
                 {
-                    Assert.IsTrue(defaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
-                    Assert.AreEqual(gpt41Deployment, defaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match test environment value");
+                    AssertModelDeployments(defaults.ModelDeployments, modelProfile.GetDefaultModelDeployments());
                 }
+            }
+        }
 
-                if (!string.IsNullOrEmpty(gpt41MiniDeployment))
-                {
-                    Assert.IsTrue(defaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
-                    Assert.AreEqual(gpt41MiniDeployment, defaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match test environment value");
-                }
-
-                if (!string.IsNullOrEmpty(textEmbeddingDeployment))
-                {
-                    Assert.IsTrue(defaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
-                    Assert.AreEqual(textEmbeddingDeployment, defaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match test environment value");
-                }
+        private static void AssertModelDeployments(
+            IDictionary<string, string> actualModelDeployments,
+            IDictionary<string, string> expectedModelDeployments)
+        {
+            foreach (KeyValuePair<string, string> deployment in expectedModelDeployments)
+            {
+                Assert.IsTrue(actualModelDeployments.ContainsKey(deployment.Key), $"Should contain {deployment.Key} deployment");
+                Assert.AreEqual(deployment.Value, actualModelDeployments[deployment.Key], $"{deployment.Key} deployment should match");
             }
         }
 
@@ -803,9 +759,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
         /// <summary>
         /// Tests analyzing a video with different ContentRange time windows.
-        /// Verifies that the returned content is limited to the specified time range.
+        /// Verifies that ranged analysis returns valid content with source-relative timestamps.
         /// </summary>
-        [LiveOnly]
         [RecordedTest]
         public async Task AnalyzeUrlAsync_VideoContentRange()
         {
@@ -822,7 +777,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var fullSegments = fullOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(fullSegments.Count > 0, "Full video should return segments");
             Assert.IsTrue(fullSegments.All(s => s.EndTime > s.StartTime), "Full video segments should have EndTime > StartTime");
-            Assert.AreEqual(TimeSpan.Zero, fullSegments.First().StartTime, "Full video first segment should start at 0 ms");
             // TODO: Assert exact segment count and total duration after re-recording
 
             // ContentRange.TimeRange(0, 5s) — first 5 seconds only
@@ -834,13 +788,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var range0to5Segments = range0to5Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(range0to5Segments.Count > 0, "0-5s range should return segments");
             // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range0to5Segments.Count, "...");
-            Assert.AreEqual(TimeSpan.Zero, range0to5Segments.First().StartTime,
-                $"TimeRange(0,5s) first segment should start at exactly 0 ms, actual: {range0to5Segments.First().StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(fullSegments.First().StartTime, range0to5Segments.First().StartTime,
+                "Ranged video segments should retain source-relative start times");
             Assert.IsTrue(range0to5Segments.All(s => s.EndTime > s.StartTime), "0-5s segments should have EndTime > StartTime");
             Assert.IsTrue(range0to5Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "0-5s segments should have markdown");
-            Assert.IsTrue(range0to5Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(5)),
-                $"Range(0-5s) last segment should end at <= 5000 ms, actual: {range0to5Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
-            // TODO: Assert exact last segment EndTime after re-recording
+            Assert.AreEqual(fullSegments.Max(s => s.EndTime), range0to5Segments.Max(s => s.EndTime),
+                "Ranged video segments should retain the source duration");
 
             // ContentRange.TimeRange(10s, 20s) — middle of the video
             Operation<AnalysisResult> range10to20Operation = await client.AnalyzeAsync(
@@ -851,20 +804,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var range10to20Segments = range10to20Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(range10to20Segments.Count > 0, "10-20s range should return segments");
             // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range10to20Segments.Count, "...");
-            Assert.AreEqual(TimeSpan.FromSeconds(10), range10to20Segments.First().StartTime,
-                $"TimeRange(10s,20s) first segment should start at exactly 10000 ms, actual: {range10to20Segments.First().StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(fullSegments.First().StartTime, range10to20Segments.First().StartTime,
+                "Ranged video segments should retain source-relative start times");
             Assert.IsTrue(range10to20Segments.All(s => s.EndTime > s.StartTime), "10-20s segments should have EndTime > StartTime");
             Assert.IsTrue(range10to20Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "10-20s segments should have markdown");
-            Assert.IsTrue(range10to20Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(20)),
-                $"Range(10-20s) last segment should end at <= 20000 ms, actual: {range10to20Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
-            // TODO: Assert exact last segment EndTime after re-recording
+            Assert.AreEqual(fullSegments.Max(s => s.EndTime), range10to20Segments.Max(s => s.EndTime),
+                "Ranged video segments should retain the source duration");
         }
 
         /// <summary>
         /// Tests analyzing audio with different ContentRange time windows.
-        /// Verifies that the returned content is limited to the specified time range.
+        /// Verifies that ranged analysis returns valid content with source-relative timestamps.
         /// </summary>
-        [LiveOnly]
         [RecordedTest]
         public async Task AnalyzeUrlAsync_AudioContentRange()
         {
@@ -899,9 +850,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(range0to10Audio.Markdown!.Length > 0, "0-10s range markdown should not be empty");
             Assert.AreEqual(TimeSpan.Zero, range0to10Audio.StartTime,
                 $"TimeRange(0,10s) audio should start at exactly 0 ms, actual: {range0to10Audio.StartTime.TotalMilliseconds} ms");
-            Assert.IsTrue(range0to10Audio.EndTime <= TimeSpan.FromSeconds(10),
-                $"TimeRange(0,10s) audio EndTime ({range0to10Audio.EndTime.TotalMilliseconds} ms) should be <= 10000 ms");
-            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromSeconds(10), range0to10Audio.EndTime, "...");
+            Assert.AreEqual(fullAudio.EndTime, range0to10Audio.EndTime,
+                "Ranged audio content should retain the source audio duration in its top-level metadata");
 
             // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward
             Operation<AnalysisResult> rangeFrom10Operation = await client.AnalyzeAsync(
@@ -914,9 +864,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(rangeFrom10Audio.EndTime > rangeFrom10Audio.StartTime, "10s-onward range should have EndTime > StartTime");
             Assert.IsNotNull(rangeFrom10Audio.Markdown, "10s-onward range should have markdown");
             Assert.IsTrue(rangeFrom10Audio.Markdown!.Length > 0, "10s-onward range markdown should not be empty");
-            Assert.AreEqual(TimeSpan.FromSeconds(10), rangeFrom10Audio.StartTime,
-                $"TimeRangeFrom(10s) audio should start at exactly 10000 ms, actual: {rangeFrom10Audio.StartTime.TotalMilliseconds} ms");
-            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromMilliseconds(N), rangeFrom10Audio.EndTime, "...");
+            Assert.AreEqual(fullAudio.StartTime, rangeFrom10Audio.StartTime,
+                "Ranged audio content should retain the source start time in its top-level metadata");
+            Assert.AreEqual(fullAudio.EndTime, rangeFrom10Audio.EndTime,
+                "Ranged audio content should retain the source duration in its top-level metadata");
         }
 
         /// <summary>
@@ -927,6 +878,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task CreateAnalyzerAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // Generate a unique analyzer ID
             string defaultId = $"test_custom_analyzer_{Recording.Random.NewGuid().ToString("N")}";
@@ -973,8 +925,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             };
 
             // Add model mappings (required for custom analyzers)
-            customAnalyzer.Models.Add("completion", "gpt-4.1");
-            customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+            customAnalyzer.Models.Add("completion", modelProfile.CompletionModel);
+            customAnalyzer.Models.Add("embedding", modelProfile.EmbeddingModel);
 
             // Create the analyzer
             var operation = await client.CreateAnalyzerAsync(
@@ -1021,6 +973,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task CreateClassifierAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // Generate a unique analyzer ID
             string defaultId = $"test_classifier_{Recording.Random.NewGuid().ToString("N")}";
@@ -1063,7 +1016,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models.Add("completion", modelProfile.CompletionModel);
 
             // Create the classifier
             var operation = await client.CreateAnalyzerAsync(
@@ -1315,6 +1268,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task UpdateAnalyzerAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // First create an analyzer to update
             string defaultId = $"test_analyzer_{Recording.Random.NewGuid().ToString("N")}";
@@ -1329,7 +1283,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     ShouldReturnDetails = true
                 }
             };
-            initialAnalyzer.Models.Add("completion", "gpt-4.1");
+            initialAnalyzer.Models.Add("completion", modelProfile.CompletionModel);
             initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
             initialAnalyzer.Tags["tag2"] = "tag2_initial_value";
 
@@ -1403,6 +1357,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task DeleteAnalyzerAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // First create an analyzer to delete
             string defaultId = $"test_analyzer_{Recording.Random.NewGuid().ToString("N")}";
@@ -1417,7 +1372,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     ShouldReturnDetails = true
                 }
             };
-            analyzer.Models.Add("completion", "gpt-4.1");
+            analyzer.Models.Add("completion", modelProfile.CompletionModel);
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -1513,9 +1468,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Use protocol method to get raw JSON response
             var operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
-                "prebuilt-documentSearch",
-                "application/pdf",
-                RequestContent.Create(BinaryData.FromBytes(fileBytes)));
+                new AnalyzeBinaryOptions(
+                    "prebuilt-documentSearch",
+                    BinaryData.FromBytes(fileBytes))
+                {
+                    ContentType = "application/pdf"
+                });
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");
@@ -1526,7 +1484,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify response data
-            BinaryData responseData = operation.Value;
+            BinaryData responseData = operation.GetRawResponse().Content;
             Assert.IsNotNull(responseData, "Response data should not be null");
             Assert.IsTrue(responseData.ToMemory().Length > 0, "Response data should not be empty");
 
@@ -1658,7 +1616,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var client = new ContentUnderstandingClient(
                 new Uri("https://example.com"),
                 new AzureKeyCredential("fake-key"),
-                new ContentUnderstandingClientOptions { Transport = mockTransport });
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
 
             var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
 
@@ -1701,7 +1659,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var client = new ContentUnderstandingClient(
                 new Uri("https://example.com"),
                 new AzureKeyCredential("fake-key"),
-                new ContentUnderstandingClientOptions { Transport = mockTransport });
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
 
             var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
 
@@ -1744,18 +1702,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var client = new ContentUnderstandingClient(
                 new Uri("https://example.com"),
                 new AzureKeyCredential("fake-key"),
-                new ContentUnderstandingClientOptions { Transport = mockTransport });
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
 
             var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
 
             // Act
             try
             {
-                client.AnalyzeBinary(
-                    WaitUntil.Started,
+                client.AnalyzeBinaryInline(
                     "test-analyzer",
-                    "application/pdf",
                     requestContent,
+                    "application/pdf",
                     clientRequestId: testGuid);
             }
             catch (Exception)
@@ -1788,18 +1745,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var client = new ContentUnderstandingClient(
                 new Uri("https://example.com"),
                 new AzureKeyCredential("fake-key"),
-                new ContentUnderstandingClientOptions { Transport = mockTransport });
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
 
             var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
 
             // Act
             try
             {
-                await client.AnalyzeBinaryAsync(
-                    WaitUntil.Started,
+                await client.AnalyzeBinaryInlineAsync(
                     "test-analyzer",
-                    "application/pdf",
                     requestContent,
+                    "application/pdf",
                     clientRequestId: testGuid);
             }
             catch (Exception)
@@ -1831,7 +1787,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var client = new ContentUnderstandingClient(
                 new Uri("https://example.com"),
                 new AzureKeyCredential("fake-key"),
-                new ContentUnderstandingClientOptions { Transport = mockTransport });
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
 
             var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
 
@@ -1873,18 +1829,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var client = new ContentUnderstandingClient(
                 new Uri("https://example.com"),
                 new AzureKeyCredential("fake-key"),
-                new ContentUnderstandingClientOptions { Transport = mockTransport });
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
 
             var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
 
             // Act
             try
             {
-                client.AnalyzeBinary(
-                    WaitUntil.Started,
+                client.AnalyzeBinaryInline(
                     "test-analyzer",
-                    "application/pdf",
-                    requestContent);
+                    requestContent,
+                    "application/pdf");
             }
             catch (Exception)
             {

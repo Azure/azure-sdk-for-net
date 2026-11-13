@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             TryGetApiVersion(ResourceType, out string serviceFabricVmSizeResourceApiVersion);
             _unsupportedVmSizesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ResourceType.Namespace, Diagnostics);
-            _unsupportedVmSizesRestClient = new UnsupportedVmSizes(_unsupportedVmSizesClientDiagnostics, Pipeline, Endpoint, serviceFabricVmSizeResourceApiVersion ?? "2026-03-01-preview");
+            _unsupportedVmSizesRestClient = new UnsupportedVmSizes(_unsupportedVmSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricVmSizeResourceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

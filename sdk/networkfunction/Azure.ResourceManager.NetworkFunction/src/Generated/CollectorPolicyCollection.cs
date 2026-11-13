@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             TryGetApiVersion(CollectorPolicyResource.ResourceType, out string collectorPolicyApiVersion);
             _collectorPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", CollectorPolicyResource.ResourceType.Namespace, Diagnostics);
-            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Endpoint, collectorPolicyApiVersion ?? "2022-11-01");
+            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, collectorPolicyApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPolicyDataAsyncCollectionResultOfT(
                 _collectorPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPolicyDataCollectionResultOfT(
                 _collectorPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

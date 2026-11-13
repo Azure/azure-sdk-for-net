@@ -37,14 +37,18 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the segment in the markdown content. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the segment. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the segment. </param>
+        /// <param name="confidence"> Confidence of the segmentation and category classification. </param>
+        /// <param name="source"> Encoded source that identifies the position of the segment in the content. Can be used as the 'range' input to route this segment to a sub-analyzer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentContentSegment(string segmentId, string category, ContentSpan span, int startPageNumber, int endPageNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentContentSegment(string segmentId, string category, ContentSpan span, int startPageNumber, int endPageNumber, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SegmentId = segmentId;
             Category = category;
             Span = span;
             StartPageNumber = startPageNumber;
             EndPageNumber = endPageNumber;
+            Confidence = confidence;
+            Source = source;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -62,5 +66,11 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> End page number (1-indexed) of the segment. </summary>
         public int EndPageNumber { get; }
+
+        /// <summary> Confidence of the segmentation and category classification. </summary>
+        public float? Confidence { get; }
+
+        /// <summary> Encoded source that identifies the position of the segment in the content. Can be used as the 'range' input to route this segment to a sub-analyzer. </summary>
+        public string Source { get; }
     }
 }

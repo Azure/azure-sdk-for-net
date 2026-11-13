@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="customerPropertiesOverviewMissMbpsMaxOn"> Customer resource peak cache miss throughput timestamp. </param>
         /// <param name="customerPropertiesOverviewCacheNodesHealthyCount"> Customer resource total healthy cache nodes. </param>
         /// <param name="customerPropertiesOverviewCacheNodesUnhealthyCount"> Customer resource total unhealthy cache nodes. </param>
-        /// <param name="signupStatus"> Customer resource signup status as boolean. </param>
+        /// <param name="isSignupComplete"> Customer resource signup status as boolean. </param>
         /// <param name="signupStatusCode"> Customer resource signup status as integer code. </param>
         /// <param name="signupStatusText"> Customer resource signup status as string text. </param>
         /// <param name="signupPhaseStatusCode"> Customer resource signup phase status code as integer. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency, float? customerPropertiesOverviewAverageEgressMbps, float? customerPropertiesOverviewAverageMissMbps, float? customerPropertiesOverviewEgressMbpsMax, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn, float? customerPropertiesOverviewMissMbpsMax, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn, int? customerPropertiesOverviewCacheNodesHealthyCount, int? customerPropertiesOverviewCacheNodesUnhealthyCount, bool? signupStatus, int? signupStatusCode, string signupStatusText, int? signupPhaseStatusCode, string signupPhaseStatusText, DateTimeOffset? peeringDBLastUpdatedOn, string customerOrgName, string customerEmail, string customerTransitAsn, CustomerTransitState? customerTransitState, string customerAsn, float? customerAsnEstimatedEgressPeekGbps, string customerEntitlementSkuId, string customerEntitlementSkuGuid, string customerEntitlementSkuName, DateTimeOffset? customerEntitlementExpiryOn, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency, float? customerPropertiesOverviewAverageEgressMbps, float? customerPropertiesOverviewAverageMissMbps, float? customerPropertiesOverviewEgressMbpsMax, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn, float? customerPropertiesOverviewMissMbpsMax, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn, int? customerPropertiesOverviewCacheNodesHealthyCount, int? customerPropertiesOverviewCacheNodesUnhealthyCount, bool? isSignupComplete, int? signupStatusCode, string signupStatusText, int? signupPhaseStatusCode, string signupPhaseStatusText, DateTimeOffset? peeringDBLastUpdatedOn, string customerOrgName, string customerEmail, string customerTransitAsn, CustomerTransitState? customerTransitState, string customerAsn, float? customerAsnEstimatedEgressPeekGbps, string customerEntitlementSkuId, string customerEntitlementSkuGuid, string customerEntitlementSkuName, DateTimeOffset? customerEntitlementExpiryOn, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomerPropertiesOverviewCacheEfficiency = customerPropertiesOverviewCacheEfficiency;
             CustomerPropertiesOverviewAverageEgressMbps = customerPropertiesOverviewAverageEgressMbps;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             CustomerPropertiesOverviewMissMbpsMaxOn = customerPropertiesOverviewMissMbpsMaxOn;
             CustomerPropertiesOverviewCacheNodesHealthyCount = customerPropertiesOverviewCacheNodesHealthyCount;
             CustomerPropertiesOverviewCacheNodesUnhealthyCount = customerPropertiesOverviewCacheNodesUnhealthyCount;
-            SignupStatus = signupStatus;
+            IsSignupComplete = isSignupComplete;
             SignupStatusCode = signupStatusCode;
             SignupStatusText = signupStatusText;
             SignupPhaseStatusCode = signupPhaseStatusCode;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public int? CustomerPropertiesOverviewCacheNodesUnhealthyCount { get; }
 
         /// <summary> Customer resource signup status as boolean. </summary>
-        public bool? SignupStatus { get; }
+        public bool? IsSignupComplete { get; }
 
         /// <summary> Customer resource signup status as integer code. </summary>
         public int? SignupStatusCode { get; }

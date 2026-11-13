@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.AppService.Tests.Helpers;
 using Azure.ResourceManager.Resources;

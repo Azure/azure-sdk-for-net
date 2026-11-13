@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OnboardingPackageWindows))
             {
                 writer.WritePropertyName("onboardingPackageWindows"u8);
-                writer.WriteBase64StringValue(OnboardingPackageWindows.ToArray(), "D");
+                writer.WriteBase64StringValue(OnboardingPackageWindows, "D");
             }
             if (Optional.IsDefined(OnboardingPackageLinux))
             {
                 writer.WritePropertyName("onboardingPackageLinux"u8);
-                writer.WriteBase64StringValue(OnboardingPackageLinux.ToArray(), "D");
+                writer.WriteBase64StringValue(OnboardingPackageLinux, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MdeOnboardingDataProperties(onboardingPackageWindows, onboardingPackageLinux, additionalBinaryDataProperties);

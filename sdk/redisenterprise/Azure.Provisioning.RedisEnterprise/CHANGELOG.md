@@ -1,14 +1,14 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-09-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for Redis Enterprise migrations, maintenance windows, access policy assignment details, and API versions through `2026-06-01-preview`.
 
 ### Other Changes
+
+- Migrated code generation to the TypeSpec provisioning emitter.
 
 ## 1.1.0 (2025-12-04)
 

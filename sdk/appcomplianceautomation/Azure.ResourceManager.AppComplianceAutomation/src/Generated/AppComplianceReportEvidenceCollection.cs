@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(AppComplianceReportEvidenceResource.ResourceType, out string appComplianceReportEvidenceApiVersion);
             _evidenceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportEvidenceResource.ResourceType.Namespace, Diagnostics);
-            _evidenceRestClient = new Evidence(_evidenceClientDiagnostics, Pipeline, Endpoint, appComplianceReportEvidenceApiVersion ?? "2024-06-27");
+            _evidenceRestClient = new Evidence(_evidenceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportEvidenceApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppComplianceReportEvidenceData, AppComplianceReportEvidenceResource>(new EvidenceGetByReportAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppComplianceReportEvidenceData, AppComplianceReportEvidenceResource>(new AppComplianceReportEvidenceDataAsyncCollectionResultOfT(
                 _evidenceRestClient,
                 Id.Name,
                 skipToken,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppComplianceReportEvidenceData, AppComplianceReportEvidenceResource>(new EvidenceGetByReportCollectionResultOfT(
+            return new PageableWrapper<AppComplianceReportEvidenceData, AppComplianceReportEvidenceResource>(new AppComplianceReportEvidenceDataCollectionResultOfT(
                 _evidenceRestClient,
                 Id.Name,
                 skipToken,

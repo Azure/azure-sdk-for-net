@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // This identifies the latest API Version under test: 2024-08-22-preview
@@ -21,6 +21,7 @@ using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
+using Azure.Security.ConfidentialLedger.Models;
 using NUnit.Framework;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 using static Azure.Security.ConfidentialLedger.Tests.ConfidentialLedgerClientLiveTests;
@@ -88,7 +89,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 credential: null,
                 clientCertificate: _cert,
                 ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions())));
-            var result = await certClient.GetConstitutionAsync(new());
+            var result = await certClient.GetConstitutionAsync(new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -130,7 +131,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                waitUntil: WaitUntil.Completed,
                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
 
-            var result = await Client.GetCurrentLedgerEntryAsync();
+            var result = await Client.GetCurrentLedgerEntryAsync(null, new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -155,7 +156,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var tuple = await GetFirstTransactionIdFromGetEntries();
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
-            Response response = await Client.GetLedgerEntryAsync(transactionId);
+            Response response = await Client.GetLedgerEntryAsync(transactionId, null, new RequestContext());
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -190,13 +191,158 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
         }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task PostAndGetReceipt_WithV2026_02_23_ReturnsApplicationClaim()
+        {
+            if (!TestEnvironment.IsApplicationClaimsLedgerConfigured)
+            {
+                Assert.Ignore(
+                    "Set CONFIDENTIALLEDGER_APPLICATION_CLAIMS_URL and " +
+                    "CONFIDENTIALLEDGER_APPLICATION_CLAIMS_IDENTITY_URL to run the application-claims live test.");
+            }
+
+            var identityClient = new ConfidentialLedgerCertificateClient(
+                TestEnvironment.ConfidentialLedgerApplicationClaimsIdentityUrl,
+                InstrumentClientOptions(new ConfidentialLedgerCertificateClientOptions()));
+            (X509Certificate2 Cert, string PEM) applicationClaimsServiceCert =
+                ConfidentialLedgerClient.GetIdentityServerTlsCert(
+                    TestEnvironment.ConfidentialLedgerApplicationClaimsUrl,
+                    new ConfidentialLedgerCertificateClientOptions(),
+                    identityClient);
+
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await SetProxyOptionsAsync(
+                    new ProxyOptions
+                    {
+                        Transport = new ProxyOptionsTransport
+                        {
+                            TLSValidationCert = applicationClaimsServiceCert.PEM,
+                            AllowAutoRedirect = true
+                        }
+                    });
+            }
+
+            var v2026Client = InstrumentClient(
+                new ConfidentialLedgerClient(
+                    TestEnvironment.ConfidentialLedgerApplicationClaimsUrl,
+                    credential: Credential,
+                    clientCertificate: null,
+                    ledgerOptions: InstrumentClientOptions(
+                        new ConfidentialLedgerClientOptions(ServiceVersion.V2026_02_23)
+                        {
+                            CertificateEndpoint = TestEnvironment.ConfidentialLedgerApplicationClaimsIdentityUrl,
+                        }),
+                    identityServiceCert: applicationClaimsServiceCert.Cert));
+
+            var operation = await v2026Client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Completed,
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+            string transactionId = operation.Id;
+            Assert.NotNull(transactionId);
+
+            Response<TransactionReceipt> receiptResponse = null;
+            for (int attempt = 0; attempt < 10; attempt++)
+            {
+                receiptResponse = await v2026Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
+                if (receiptResponse.Value.TransactionId == transactionId &&
+                    receiptResponse.Value.ApplicationClaims.Count > 0)
+                {
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+            }
+
+            Assert.AreEqual((int)HttpStatusCode.OK, receiptResponse.GetRawResponse().Status);
+            Assert.AreEqual(transactionId, receiptResponse.Value.TransactionId);
+            Assert.IsNotEmpty(receiptResponse.Value.ApplicationClaims);
+            Assert.That(receiptResponse.Value.ApplicationClaims, Has.Some.Matches<ApplicationClaim>(
+                claim => claim.Kind == ApplicationClaimKind.LedgerEntry && claim.LedgerEntry != null));
+        }
+        #endregion
+
+        #region WaitForCommit
+        // Live verification (2026-09-30, ledger "ryan-acl-sdk-test", api-version 2026-07-31-preview):
+        //   - waitForCommit=true (LRO path, PostLedgerEntry): returned HTTP 200 with an
+        //     already-completed operation (HasCompleted=true, no polling); Operation.Id came from
+        //     the x-ms-ccf-transaction-id response header and GetTransactionStatus reported
+        //     "Committed" immediately.
+        //   - waitForCommit=true (value path, CreateLedgerEntry -> Response<LedgerWriteResult>):
+        //     the 200 body carried the full receipt inline (LedgerWriteResult.Receipt populated:
+        //     cert, leafComponents, nodeId, proof, signature), State=Committed, and one
+        //     ApplicationClaim. LedgerWriteResult.TransactionId is empty by design - the tx id is
+        //     conveyed via the x-ms-ccf-transaction-id header (also embedded in
+        //     receipt.leafComponents.commitEvidence), and callers track it via that id.
+        //   - waitForCommit=false (poll path): PostLedgerEntry(WaitUntil.Completed) polled the
+        //     transaction status endpoint to completion and reported "Committed".
+        // These tests are [LiveOnly] (skipped in Playback) because they require a real ledger and
+        // Azure credentials, so no session recordings are produced.
+        private ConfidentialLedgerClient CreateWaitForCommitClient()
+        {
+            return InstrumentClient(
+                new ConfidentialLedgerClient(
+                    TestEnvironment.ConfidentialLedgerUrl,
+                    credential: Credential,
+                    clientCertificate: null,
+                    ledgerOptions: InstrumentClientOptions(
+                        new ConfidentialLedgerClientOptions(ServiceVersion.V2026_07_31_Preview)),
+                    identityServiceCert: serviceCert.Cert));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task PostLedgerEntry_WaitForCommitTrue_CompletesInline()
+        {
+            var client = CreateWaitForCommitClient();
+
+            var operation = await client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Started,
+                content: RequestContent.Create(new { contents = Recording.GenerateAssetName("waitForCommit") }),
+                waitForCommit: true);
+
+            // With waitForCommit=true the service holds the response until the entry is
+            // globally committed, so the returned operation is already completed and no
+            // polling is required.
+            Assert.IsTrue(operation.HasCompleted, "waitForCommit=true should return an already-completed operation.");
+            Assert.IsNotNull(operation.Id);
+            Assert.AreEqual((int)HttpStatusCode.OK, operation.GetRawResponse().Status);
+
+            // The transaction should be immediately readable as Committed.
+            var status = await client.GetTransactionStatusAsync(operation.Id, new RequestContext());
+            var stringResult = new StreamReader(status.ContentStream).ReadToEnd();
+            Assert.AreEqual((int)HttpStatusCode.OK, status.Status);
+            Assert.That(stringResult, Does.Contain(operation.Id));
+            Assert.That(stringResult, Does.Contain("Committed"));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task PostLedgerEntry_WaitForCommitFalse_Polls()
+        {
+            var client = CreateWaitForCommitClient();
+
+            var operation = await client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Completed,
+                content: RequestContent.Create(new { contents = Recording.GenerateAssetName("waitForCommit") }),
+                waitForCommit: false);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsNotNull(operation.Id);
+
+            var status = await client.GetTransactionStatusAsync(operation.Id, new RequestContext());
+            var stringResult = new StreamReader(status.ContentStream).ReadToEnd();
+            Assert.AreEqual((int)HttpStatusCode.OK, status.Status);
+            Assert.That(stringResult, Does.Contain("Committed"));
+        }
         #endregion
 
         #region LedgerGovernance
         [RecordedTest]
         public async Task GetConstitution()
         {
-            var result = await Client.GetConstitutionAsync(new());
+            var result = await Client.GetConstitutionAsync(new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -206,7 +352,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetConsortiumMembers()
         {
-            await foreach (var page in Client.GetConsortiumMembersAsync(new()))
+            await foreach (var page in Client.GetConsortiumMembersAsync(new RequestContext()))
             {
                 var stringResult = page.ToString();
 
@@ -217,7 +363,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetEnclaveQuotes()
         {
-            var result = await Client.GetEnclaveQuotesAsync(new());
+            var result = await Client.GetEnclaveQuotesAsync(new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -232,7 +378,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 #endif
         public async Task GetUser(string objId)
         {
-            var result = await Client.GetUserAsync(objId, new());
+            var result = await Client.GetUserAsync(objId, new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -280,7 +426,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.That(stringResult, Does.Contain(userId));
 
             HashSet<string> users = [];
-            await foreach (BinaryData page in Client.GetUsersAsync())
+            await foreach (BinaryData page in Client.GetUsersAsync(new RequestContext()))
             {
                 JsonElement pageResult = JsonDocument.Parse(page.ToStream()).RootElement;
                 if (pageResult.GetProperty("assignedRole").GetString() == "Reader")
@@ -307,7 +453,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.That(stringResult, Does.Contain(userId));
 
             HashSet<string> users = [];
-            await foreach (BinaryData page in Client.GetLedgerUsersAsync())
+            await foreach (BinaryData page in Client.GetLedgerUsersAsync(new RequestContext()))
             {
                 JsonElement pageResult = JsonDocument.Parse(page.ToStream()).RootElement;
 
@@ -326,7 +472,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedEndpointsTest()
         {
-            await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync())
+            await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync(new RequestContext()))
             {
                 JsonElement functiondata = JsonDocument.Parse(functions.ToStream()).RootElement;
                 string functionId = functiondata.GetProperty("id").ToString();
@@ -342,7 +488,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
-            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test.js");
+            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test.js", new RequestContext());
             Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
 
             // Verify Response by Querying endpt
@@ -353,11 +499,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //Assert.AreEqual("Test content", response);
         }
 
+        [LiveOnly]
         [RecordedTest]
         public async Task JSRuntimeOptionsTest()
         {
             // Get initial JS Runtime Options (capture to restore later)
-            Response result = await Client.GetRuntimeOptionsAsync();
+            Response result = await Client.GetRuntimeOptionsAsync(new RequestContext());
 
             // Deserialize JSON response into the initial runtime options
             var initialRuntimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
@@ -377,7 +524,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string jsRuntimeOptionsPayload = JsonSerializer.Serialize(updateJSRuntimeOptions);
             RequestContent runtimeOptionsContent = RequestContent.Create(jsRuntimeOptionsPayload);
 
-            result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
+            result = await Client.UpdateRuntimeOptionsStableAsync(runtimeOptionsContent, new RequestContext());
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
 
             var runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
@@ -392,12 +539,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(initialRuntimeOptions);
             runtimeOptionsContent = RequestContent.Create(restoreJsRuntimeOptionsPayload);
 
-            result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
+            result = await Client.UpdateRuntimeOptionsStableAsync(runtimeOptionsContent, new RequestContext());
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
         #endregion
 
         #region CustomRole
+        [LiveOnly]
         [RecordedTest]
         public async Task CustomRoleTest()
         {
@@ -417,10 +565,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             try
             {
-                Response result = await Client.CreateUserDefinedRoleAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)));
+                Response result = await Client.CreateUserDefinedRoleStableAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)), new RequestContext());
                 Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
 
-                result = await Client.GetUserDefinedRoleAsync(roleName);
+                result = await Client.GetUserDefinedRoleAsync(roleName, new RequestContext());
 
                 RolesParam roleData = JsonSerializer.Deserialize<RolesParam>(result.Content.ToString());
                 // Validate Fetched RoleData with Added Role Data
@@ -429,7 +577,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             }
             finally
             {
-                Response result = await Client.DeleteUserDefinedRoleAsync(roleName);
+                Response result = await Client.DeleteUserDefinedRoleStableAsync(roleName, new RequestContext());
                 Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             }
         }
@@ -450,7 +598,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var tuple = await GetFirstTransactionIdFromGetEntries();
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
-            Response response = await Client.GetLedgerEntryAsync(transactionId);
+            Response response = await Client.GetLedgerEntryAsync(transactionId, null, new RequestContext());
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -468,7 +616,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 Code = "export function main() { return true }",
                 Id = "myFunction"
             };
-            Response response = await Client.GetUserDefinedEndpointAsync();
+            Response response = await Client.GetUserDefinedEndpointAsync(new RequestContext());
             if (response.Content.ToString() == null)
             {
                 // Create UDF
@@ -476,7 +624,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 {
                     userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
                     Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
-                    userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
+                    userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId, new RequestContext());
 
                     var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
                     // Validate Fetched user function with Added function Id
@@ -508,7 +656,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private async Task<(string TransactionId, string StringResult)> GetFirstTransactionIdFromGetEntries()
         {
             string stringResult = "Loading";
-            var result = Client.GetLedgerEntriesAsync();
+            var result = Client.GetLedgerEntriesAsync(null, null, null, null, new RequestContext());
             bool first = true;
             Response response = null;
 
@@ -529,7 +677,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             while (stringResult.Contains("Loading"))
             {
                 first = true;
-                result = Client.GetLedgerEntriesAsync();
+                result = Client.GetLedgerEntriesAsync(null, null, null, null, new RequestContext());
                 await foreach (var page in result.AsPages())
                 {
                     if (first)

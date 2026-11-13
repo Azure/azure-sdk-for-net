@@ -673,9 +673,14 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class SecretAttributes : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class SecretAttributes : Azure.Provisioning.KeyVault.SecretBaseAttributes
     {
         public SecretAttributes() { }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class SecretBaseAttributes : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SecretBaseAttributes() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Created { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Expires { get { throw null; } set { } }

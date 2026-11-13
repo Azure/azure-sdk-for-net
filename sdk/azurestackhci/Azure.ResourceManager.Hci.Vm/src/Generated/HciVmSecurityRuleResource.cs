@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmSecurityRuleApiVersion);
             _securityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _securityRulesRestClient = new SecurityRules(_securityRulesClientDiagnostics, Pipeline, Endpoint, hciVmSecurityRuleApiVersion ?? "2025-09-01-preview");
+            _securityRulesRestClient = new SecurityRules(_securityRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmSecurityRuleApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

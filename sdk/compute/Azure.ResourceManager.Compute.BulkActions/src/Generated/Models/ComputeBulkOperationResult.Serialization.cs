@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> High level response from an operation on a resource. </summary>
+    /// <summary> The result of a bulk action for one virtual machine. </summary>
     public partial class ComputeBulkOperationResult : IJsonModel<ComputeBulkOperationResult>
     {
         /// <param name="data"> The data to parse. </param>
@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("operation"u8);
                 writer.WriteObjectValue(Operation, options);
             }
+            if (Optional.IsDefined(VirtualMachineInfo))
+            {
+                writer.WritePropertyName("virtualMachineInfo"u8);
+                writer.WriteObjectValue(VirtualMachineInfo, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,6 +146,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string errorCode = default;
             string errorDetails = default;
             ComputeBulkOperationDetails operation = default;
+            VirtualMachineInfo virtualMachineInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,12 +178,27 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     operation = ComputeBulkOperationDetails.DeserializeComputeBulkOperationDetails(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("virtualMachineInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualMachineInfo = VirtualMachineInfo.DeserializeVirtualMachineInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeBulkOperationResult(resourceId, errorCode, errorDetails, operation, additionalBinaryDataProperties);
+            return new ComputeBulkOperationResult(
+                resourceId,
+                errorCode,
+                errorDetails,
+                operation,
+                virtualMachineInfo,
+                additionalBinaryDataProperties);
         }
     }
 }

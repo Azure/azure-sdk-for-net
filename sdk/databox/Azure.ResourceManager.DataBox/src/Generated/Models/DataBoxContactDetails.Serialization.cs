@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataBoxContactDetails(
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 phone,
                 phoneExtension,
                 mobile,
-                emailList,
+                emailList ?? new ChangeTrackingList<string>(),
                 notificationPreference ?? new ChangeTrackingList<NotificationPreference>(),
                 additionalBinaryDataProperties);
         }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(IotSecurityAggregatedRecommendationResource.ResourceType, out string iotSecurityAggregatedRecommendationApiVersion);
             _iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecurityAggregatedRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _iotSecuritySolutionsAnalyticsRecommendationRestClient = new IotSecuritySolutionsAnalyticsRecommendation(_iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, Endpoint, iotSecurityAggregatedRecommendationApiVersion ?? "2019-08-01");
+            _iotSecuritySolutionsAnalyticsRecommendationRestClient = new IotSecuritySolutionsAnalyticsRecommendation(_iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotSecurityAggregatedRecommendationApiVersion ?? "2019-08-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecuritySolutionsAnalyticsRecommendationGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecurityAggregatedRecommendationDataAsyncCollectionResultOfT(
                 _iotSecuritySolutionsAnalyticsRecommendationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecuritySolutionsAnalyticsRecommendationGetAllCollectionResultOfT(
+            return new PageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecurityAggregatedRecommendationDataCollectionResultOfT(
                 _iotSecuritySolutionsAnalyticsRecommendationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

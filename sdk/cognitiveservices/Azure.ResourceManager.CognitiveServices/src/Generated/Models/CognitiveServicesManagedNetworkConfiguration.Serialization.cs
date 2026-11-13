@@ -86,14 +86,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             if (Optional.IsCollectionDefined(OutboundRules))
             {
-                writer.WritePropertyName("outboundRules"u8);
-                writer.WriteStartObject();
-                foreach (var item in OutboundRules)
+                if (OutboundRules != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("outboundRules"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in OutboundRules)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("outboundRules"u8);
+                }
             }
             if (Optional.IsDefined(Status))
             {
@@ -110,10 +117,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("managedNetworkKind"u8);
                 writer.WriteStringValue(ManagedNetworkKind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIPAddress, _firewallPublicIPAddressIsDefined))
             {
-                writer.WritePropertyName("firewallPublicIpAddress"u8);
-                writer.WriteStringValue(FirewallPublicIpAddress);
+                if (FirewallPublicIPAddress != null)
+                {
+                    writer.WritePropertyName("firewallPublicIpAddress"u8);
+                    writer.WriteStringValue(FirewallPublicIPAddress);
+                }
+                else
+                {
+                    writer.WriteNull("firewallPublicIpAddress"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -164,11 +178,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             CognitiveServicesIsolationMode? isolationMode = default;
             string networkId = default;
-            IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default;
+            IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
             CognitiveServicesManagedNetworkProvisionStatus status = default;
             CognitiveServicesFirewallSku? firewallSku = default;
             CognitiveServicesManagedNetworkKind? managedNetworkKind = default;
-            string firewallPublicIpAddress = default;
+            bool firewallPublicIPAddressIsDefined = false;
+            string firewallPublicIPAddress = default;
             CognitiveServicesManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -191,6 +206,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        outboundRules = null;
                         continue;
                     }
                     Dictionary<string, CognitiveServicesOutboundRuleBasicProperties> dictionary = new Dictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
@@ -230,12 +246,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("firewallPublicIpAddress"u8))
                 {
+                    firewallPublicIPAddressIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        firewallPublicIpAddress = null;
+                        firewallPublicIPAddress = null;
                         continue;
                     }
-                    firewallPublicIpAddress = prop.Value.GetString();
+                    firewallPublicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -249,19 +266,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesManagedNetworkConfiguration(
                 isolationMode,
                 networkId,
-                outboundRules ?? new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>(),
+                outboundRules,
                 status,
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _firewallPublicIPAddressIsDefined = firewallPublicIPAddressIsDefined
+            };
         }
     }
 }

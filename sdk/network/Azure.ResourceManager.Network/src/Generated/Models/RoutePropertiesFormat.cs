@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </summary>
         [WirePath("nextHop.nextHopIpAddresses")]
-        public IList<string> NextHopIpAddresses
+        public IList<string> NextHopIPAddresses
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     NextHop = new RouteNextHopEcmp();
                 }
-                return NextHop.NextHopIpAddresses;
+                return NextHop.NextHopIPAddresses;
             }
         }
     }

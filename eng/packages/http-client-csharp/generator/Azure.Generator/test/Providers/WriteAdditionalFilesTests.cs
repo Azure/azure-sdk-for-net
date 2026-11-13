@@ -6,6 +6,7 @@ using Azure.Generator.Tests.TestHelpers;
 using NUnit.Framework;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Azure.Generator.Tests.Providers
 {
@@ -29,12 +30,51 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [Test]
+        public void GetReadmeContentProvidesDefaultDescription()
+        {
+            var scaffolding = new TestableNewAzureProjectScaffolding();
+            string content = scaffolding.TestGetReadmeContent("Azure.Test.Package");
+
+            Assert.That(content, Does.Contain("The Azure.Test.Package client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics."));
+            Assert.That(content, Does.Not.Contain("TODO"));
+            Assert.That(content, Does.Not.Contain("rich experience"));
+        }
+
+        [Test]
+        public void GetSourceProjectFileContentProvidesDefaultDescription()
+        {
+            var scaffolding = new TestableNewAzureProjectScaffolding();
+            var project = XDocument.Parse(scaffolding.TestGetSourceProjectFileContent());
+            string? description = project.Root?.Element("PropertyGroup")?.Element("Description")?.Value;
+
+            Assert.That(description, Is.EqualTo($"The {AzureClientGenerator.Instance.Configuration.PackageName} client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics."));
+            Assert.That(description, Does.Not.Contain("TODO"));
+            Assert.That(description, Does.Not.Contain("rich experience"));
+        }
+
+        [Test]
         public void GetReadmeContentUsesCorrectGrammar()
         {
             var scaffolding = new TestableNewAzureProjectScaffolding();
             string content = scaffolding.TestGetReadmeContent("Azure.Test.Package");
             Assert.IsTrue(content.Contains("a [Microsoft Azure subscription]"));
             Assert.IsFalse(content.Contains("an [Microsoft Azure subscription]"));
+        }
+
+        [Test]
+        public void GetTestProjectFileContentUsesAzureTemplate()
+        {
+            var scaffolding = new TestableNewAzureProjectScaffolding();
+            string content = scaffolding.TestGetTestProjectFileContent();
+
+            Assert.IsTrue(content.Contains("<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>"));
+            Assert.IsTrue(content.Contains("<IsTestProject>true</IsTestProject>"));
+            Assert.IsFalse(content.Contains("<NoWarn>"));
+            Assert.IsTrue(content.Contains("<ProjectReference Include=\"$(AzureCoreTestFramework)\" />"));
+            Assert.IsTrue(content.Contains("<ProjectReference Include=\"..\\src\\Samples.csproj\" />"));
+            Assert.IsTrue(content.Contains("<PackageReference Include=\"Moq\" />"));
+            Assert.IsFalse(content.Contains("SessionRecords"));
+            Assert.IsTrue(content.EndsWith("\n"));
         }
 
         [Test]
@@ -94,9 +134,11 @@ namespace Azure.Generator.Tests.Providers
         /// </summary>
         private class TestableNewAzureProjectScaffolding : NewAzureProjectScaffolding
         {
+            public string TestGetSourceProjectFileContent() => GetSourceProjectFileContent();
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
             public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
             public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
+            public string TestGetTestProjectFileContent() => GetTestProjectFileContent();
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
         }
     }

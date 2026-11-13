@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Subscription
         {
             TryGetApiVersion(ResourceType, out string tenantPolicyApiVersion);
             _getTenantPolicyResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _getTenantPolicyResponsesRestClient = new GetTenantPolicyResponses(_getTenantPolicyResponsesClientDiagnostics, Pipeline, Endpoint, tenantPolicyApiVersion ?? "2025-11-01-preview");
+            _getTenantPolicyResponsesRestClient = new GetTenantPolicyResponses(_getTenantPolicyResponsesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantPolicyApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

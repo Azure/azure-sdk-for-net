@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeDynamicSchemaResource.ResourceType, out string edgeDynamicSchemaApiVersion);
             _dynamicSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDynamicSchemaResource.ResourceType.Namespace, Diagnostics);
-            _dynamicSchemasRestClient = new DynamicSchemas(_dynamicSchemasClientDiagnostics, Pipeline, Endpoint, edgeDynamicSchemaApiVersion ?? "2025-06-01");
+            _dynamicSchemasRestClient = new DynamicSchemas(_dynamicSchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDynamicSchemaApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new EdgeDynamicSchemaDataAsyncCollectionResultOfT(
                 _dynamicSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaCollectionResultOfT(
+            return new PageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new EdgeDynamicSchemaDataCollectionResultOfT(
                 _dynamicSchemasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

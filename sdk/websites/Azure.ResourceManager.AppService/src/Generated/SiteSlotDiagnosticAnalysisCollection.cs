@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotDiagnosticAnalysisResource.ResourceType, out string siteSlotDiagnosticAnalysisApiVersion);
             _analysisDefinitionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticAnalysisResource.ResourceType.Namespace, Diagnostics);
-            _analysisDefinitionOperationGroupRestClient = new AnalysisDefinitionOperationGroup(_analysisDefinitionOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotDiagnosticAnalysisApiVersion ?? "2026-03-15");
+            _analysisDefinitionOperationGroupRestClient = new AnalysisDefinitionOperationGroup(_analysisDefinitionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDiagnosticAnalysisApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebSiteAnalysisDefinitionData, SiteSlotDiagnosticAnalysisResource>(new AnalysisDefinitionOperationGroupGetSiteAnalysesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebSiteAnalysisDefinitionData, SiteSlotDiagnosticAnalysisResource>(new WebSiteAnalysisDefinitionDataAsync0CollectionResultOfT(
                 _analysisDefinitionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebSiteAnalysisDefinitionData, SiteSlotDiagnosticAnalysisResource>(new AnalysisDefinitionOperationGroupGetSiteAnalysesSlotCollectionResultOfT(
+            return new PageableWrapper<WebSiteAnalysisDefinitionData, SiteSlotDiagnosticAnalysisResource>(new WebSiteAnalysisDefinitionData0CollectionResultOfT(
                 _analysisDefinitionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

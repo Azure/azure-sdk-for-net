@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(MigrationRecoveryPointResource.ResourceType, out string migrationRecoveryPointApiVersion);
             _migrationRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", MigrationRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _migrationRecoveryPointsRestClient = new MigrationRecoveryPoints(_migrationRecoveryPointsClientDiagnostics, Pipeline, Endpoint, migrationRecoveryPointApiVersion ?? "2026-02-01");
+            _migrationRecoveryPointsRestClient = new MigrationRecoveryPoints(_migrationRecoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, migrationRecoveryPointApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointsGetByReplicationMigrationItemsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointDataAsyncCollectionResultOfT(
                 _migrationRecoveryPointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointsGetByReplicationMigrationItemsCollectionResultOfT(
+            return new PageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointDataCollectionResultOfT(
                 _migrationRecoveryPointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

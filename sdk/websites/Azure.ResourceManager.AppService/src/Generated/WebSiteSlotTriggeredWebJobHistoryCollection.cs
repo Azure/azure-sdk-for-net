@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotTriggeredWebJobHistoryResource.ResourceType, out string webSiteSlotTriggeredWebJobHistoryApiVersion);
             _triggeredJobHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotTriggeredWebJobHistoryResource.ResourceType.Namespace, Diagnostics);
-            _triggeredJobHistoriesRestClient = new TriggeredJobHistories(_triggeredJobHistoriesClientDiagnostics, Pipeline, Endpoint, webSiteSlotTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
+            _triggeredJobHistoriesRestClient = new TriggeredJobHistories(_triggeredJobHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoriesGetTriggeredWebJobHistorySlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoryDataAsyncCollectionResultOfT(
                 _triggeredJobHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoriesGetTriggeredWebJobHistorySlotCollectionResultOfT(
+            return new PageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoryDataCollectionResultOfT(
                 _triggeredJobHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

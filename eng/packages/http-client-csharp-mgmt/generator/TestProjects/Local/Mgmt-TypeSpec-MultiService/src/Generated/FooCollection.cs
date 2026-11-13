@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         {
             TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.MultiService.Tests", FooResource.ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-01-01");
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetAllAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
+            return new AsyncPageableWrapper<FooData, FooResource>(new FooDataAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FooData, FooResource>(new FoosGetAllCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
+            return new PageableWrapper<FooData, FooResource>(new FooDataCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>

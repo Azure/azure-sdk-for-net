@@ -16,7 +16,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="HostAsset"/>. </summary>
         internal HostAsset()
         {
-            IpAddresses = new ChangeTrackingList<ObservedString>();
+            IPAddresses = new ChangeTrackingList<ObservedString>();
             WebComponents = new ChangeTrackingList<WebComponent>();
             Headers = new ChangeTrackingList<ObservedHeader>();
             Attributes = new ChangeTrackingList<AttributeDetails>();
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
             ResourceUrls = new ChangeTrackingList<ResourceUri>();
             ScanMetadata = new ChangeTrackingList<ScanMetadata>();
             Asns = new ChangeTrackingList<ObservedLong>();
-            IpBlocks = new ChangeTrackingList<IpBlock>();
+            IPBlocks = new ChangeTrackingList<IPBlock>();
             ResponseBodies = new ChangeTrackingList<ObservedString>();
             NsRecord = new ChangeTrackingList<ObservedBoolean>();
             MxRecord = new ChangeTrackingList<ObservedBoolean>();
@@ -40,8 +40,8 @@ namespace Azure.Analytics.Defender.Easm
             SslServerConfig = new ChangeTrackingList<SslServerConfig>();
             IsWildcard = new ChangeTrackingList<ObservedBoolean>();
             Banners = new ChangeTrackingList<BannerDetails>();
-            Ipv4 = new ChangeTrackingList<ObservedBoolean>();
-            Ipv6 = new ChangeTrackingList<ObservedBoolean>();
+            IPv4 = new ChangeTrackingList<ObservedBoolean>();
+            IPv6 = new ChangeTrackingList<ObservedBoolean>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HostAsset"/>. </summary>
@@ -79,11 +79,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="banners"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal HostAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, string domain, IList<ObservedString> ipAddresses, IList<WebComponent> webComponents, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<ObservedString> parentHosts, IList<ObservedString> childHosts, HostCore hostCore, IList<AssetService> services, IList<ObservedString> cnames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ResourceUri> resourceUrls, IList<ScanMetadata> scanMetadata, IList<ObservedLong> asns, IList<IpBlock> ipBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedBoolean> webserver, IList<ObservedLocation> location, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, IList<ObservedBoolean> isWildcard, IList<BannerDetails> banners, IList<ObservedBoolean> ipv4, IList<ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
+        internal HostAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, string domain, IList<ObservedString> ipAddresses, IList<WebComponent> webComponents, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<ObservedString> parentHosts, IList<ObservedString> childHosts, HostCore hostCore, IList<AssetService> services, IList<ObservedString> cnames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ResourceUri> resourceUrls, IList<ScanMetadata> scanMetadata, IList<ObservedLong> asns, IList<IPBlock> ipBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedBoolean> webserver, IList<ObservedLocation> location, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, IList<ObservedBoolean> isWildcard, IList<BannerDetails> banners, IList<ObservedBoolean> ipv4, IList<ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
         {
             Host = host;
             Domain = domain;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             WebComponents = webComponents;
             Headers = headers;
             Attributes = attributes;
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Defender.Easm
             ResourceUrls = resourceUrls;
             ScanMetadata = scanMetadata;
             Asns = asns;
-            IpBlocks = ipBlocks;
+            IPBlocks = ipBlocks;
             ResponseBodies = responseBodies;
             DomainAsset = domainAsset;
             NsRecord = nsRecord;
@@ -112,8 +112,8 @@ namespace Azure.Analytics.Defender.Easm
             SslServerConfig = sslServerConfig;
             IsWildcard = isWildcard;
             Banners = banners;
-            Ipv4 = ipv4;
-            Ipv6 = ipv6;
+            IPv4 = ipv4;
+            IPv6 = ipv6;
         }
 
         /// <summary> Gets the Host. </summary>
@@ -122,8 +122,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Domain. </summary>
         public string Domain { get; }
 
-        /// <summary> Gets the IpAddresses. </summary>
-        public IList<ObservedString> IpAddresses { get; }
+        /// <summary> Gets the IPAddresses. </summary>
+        public IList<ObservedString> IPAddresses { get; }
 
         /// <summary> Gets the WebComponents. </summary>
         public IList<WebComponent> WebComponents { get; }
@@ -176,8 +176,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Asns. </summary>
         public IList<ObservedLong> Asns { get; }
 
-        /// <summary> Gets the IpBlocks. </summary>
-        public IList<IpBlock> IpBlocks { get; }
+        /// <summary> Gets the IPBlocks. </summary>
+        public IList<IPBlock> IPBlocks { get; }
 
         /// <summary> Gets the ResponseBodies. </summary>
         public IList<ObservedString> ResponseBodies { get; }
@@ -209,10 +209,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Banners. </summary>
         public IList<BannerDetails> Banners { get; }
 
-        /// <summary> Gets the Ipv4. </summary>
-        public IList<ObservedBoolean> Ipv4 { get; }
+        /// <summary> Gets the IPv4. </summary>
+        public IList<ObservedBoolean> IPv4 { get; }
 
-        /// <summary> Gets the Ipv6. </summary>
-        public IList<ObservedBoolean> Ipv6 { get; }
+        /// <summary> Gets the IPv6. </summary>
+        public IList<ObservedBoolean> IPv6 { get; }
     }
 }

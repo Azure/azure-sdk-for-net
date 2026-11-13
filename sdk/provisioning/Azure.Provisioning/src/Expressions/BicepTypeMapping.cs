@@ -2,10 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
@@ -16,6 +20,11 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 internal static class BicepTypeMapping
 {
+    private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+    private const string JsonMediaType = "application/json";
+    private const string BicepMediaType = "text/vnd.microsoft.bicep";
+    private static readonly UTF8Encoding s_strictUtf8 = new(false, true);
+
     /// <summary>
     /// Map standard Azure types into Bicep primitive type names like bool,
     /// int, string, object, or array.  More complex types are not supported.
@@ -37,17 +46,22 @@ internal static class BicepTypeMapping
         type == typeof(ResourceIdentifier) ? "string" :
         type == typeof(ResourceType) ? "string" :
         type == typeof(AzureLocation) ? "string" :
+        type == typeof(ResponseError) ? "object" :
         typeof(Enum).IsAssignableFrom(type) ? "string" :
         typeof(System.Collections.IDictionary).IsAssignableFrom(type) ? "object" :
         typeof(System.Collections.IEnumerable).IsAssignableFrom(type) ? "array" :
         null;
 
     /// <summary>
-    /// Convert a .NET object into a literal Bicep string.
+    /// Convert a .NET object into a string-valued Bicep literal payload.
     /// </summary>
     /// <param name="value">The .NET value.</param>
-    /// <param name="format">Optional format.</param>
-    /// <returns>The corresponding Bicep literal string.</returns>
+    /// <param name="format">
+    /// Optional serialization format token emitted by the provisioning generator. Recognized
+    /// tokens use the same conversions as generated management libraries; unrecognized tokens
+    /// fall back to the type's default literal conversion.
+    /// </param>
+    /// <returns>The corresponding string-valued Bicep literal payload.</returns>
     /// <exception cref="InvalidOperationException">
     /// Thrown when we cannot convert a value to a literal Bicep string.
     /// </exception>
@@ -55,15 +69,14 @@ internal static class BicepTypeMapping
         value switch
         {
             bool b => b.ToString(),
-            int i => i.ToString(),
-            long i => i.ToString(),
+            int i => i.ToString(CultureInfo.InvariantCulture),
+            long i => i.ToString(CultureInfo.InvariantCulture),
             float f => f.ToString(CultureInfo.InvariantCulture),
             double d => d.ToString(CultureInfo.InvariantCulture),
             string s => s,
             Uri u => u.AbsoluteUri,
-            DateTimeOffset d => d.ToString("o"),
-            TimeSpan t when format == "P" => XmlConvert.ToString(t),
-            TimeSpan t => t.ToString(),
+            DateTimeOffset d => FormatDateTimeOffsetAsString(d, format),
+            TimeSpan t => FormatDurationAsString(t, format),
             Guid g => g.ToString(),
             IPAddress a => a.ToString(),
             ETag e => e.ToString(),
@@ -75,6 +88,193 @@ internal static class BicepTypeMapping
             // TODO: Can we either tag or special case all that we care about because ValueType is too broad
             ValueType ee => ee.ToString()!,
             _ => throw new InvalidOperationException($"Cannot convert {value} to a literal Bicep string.")
+        };
+
+    /// <summary>
+    /// Convert a .NET object into a literal Bicep expression.
+    /// </summary>
+    /// <param name="value">The .NET value.</param>
+    /// <param name="format">Optional serialization format token emitted by the provisioning generator.</param>
+    /// <returns>The corresponding Bicep expression.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when we cannot convert a value to a literal Bicep expression.
+    /// </exception>
+    public static BicepExpression ToLiteralExpression(object value, string? format) =>
+        value switch
+        {
+            bool b => BicepSyntax.Value(b),
+            int i => FormatIntegerAsExpression(i, format),
+            long i => FormatIntegerAsExpression(i, format),
+            float f => BicepSyntax.Value(f),
+            double d => BicepSyntax.Value(d),
+            string s => BicepSyntax.Value(s),
+            Uri u => BicepSyntax.Value(ToLiteralString(u, format)),
+            DateTimeOffset d => FormatDateTimeOffsetAsExpression(d, format),
+            TimeSpan t => FormatDurationAsExpression(t, format),
+            Guid g => BicepSyntax.Value(ToLiteralString(g, format)),
+            IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
+            ETag e => BicepSyntax.Value(ToLiteralString(e, format)),
+            ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
+            BinaryData b => ToBicep(b, format),
+            AzureLocation azureLocation => BicepSyntax.Value(ToLiteralString(azureLocation, format)),
+            ResourceType rt => BicepSyntax.Value(ToLiteralString(rt, format)),
+            ResponseError error => ToBicep(error),
+            Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
+            ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
+            _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
+        };
+
+    /// <summary>
+    /// Convert a <see cref="BinaryData"/> value into a Bicep expression.
+    /// </summary>
+    /// <param name="value">The <see cref="BinaryData"/> value.</param>
+    /// <param name="format">An optional format that controls literal serialization.</param>
+    /// <returns>The corresponding Bicep expression.</returns>
+    public static BicepExpression ToBicep(BinaryData value, string? format)
+    {
+        if (format == "base64")
+        {
+            return BicepSyntax.Value(Convert.ToBase64String(value.ToArray()));
+        }
+
+        string? mediaType = value.MediaType;
+        if (mediaType is null || IsMediaType(mediaType, JsonMediaType))
+        {
+            return BicepFunction.ParseJson(BicepSyntax.Value(DecodeUtf8(value, mediaType ?? JsonMediaType))).Compile();
+        }
+
+        if (IsMediaType(mediaType, BicepMediaType))
+        {
+            return new RawExpression(DecodeUtf8(value, mediaType));
+        }
+        throw new InvalidOperationException(
+            $"Cannot compile BinaryData with unsupported media type '{mediaType}'. " +
+            $"Use '{JsonMediaType}', '{BicepMediaType}', or omit the media type for JSON.");
+    }
+
+    private static BicepExpression ToBicep(ResponseError value)
+    {
+        // ResponseError only exposes Code and Message publicly, while Target, InnerError,
+        // and Details are internal but included in its supported wire representation.
+        // Serialize through Azure.Core so the native Bicep object preserves the complete error.
+        BinaryData json = ModelReaderWriter.Write(value, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
+        using JsonDocument document = JsonDocument.Parse(json.ToMemory());
+        return ToBicep(document.RootElement);
+    }
+
+    private static BicepExpression ToBicep(JsonElement value) =>
+        value.ValueKind switch
+        {
+            JsonValueKind.Object => new ObjectExpression(
+                value.EnumerateObject()
+                    .Select(property => new PropertyExpression(property.Name, ToBicep(property.Value)))
+                    .ToArray()),
+            JsonValueKind.Array => new ArrayExpression(value.EnumerateArray().Select(ToBicep).ToArray()),
+            JsonValueKind.String => BicepSyntax.Value(value.GetString()!),
+            JsonValueKind.Number when value.TryGetInt64(out long integer) => BicepSyntax.Value(integer),
+            JsonValueKind.Number => BicepSyntax.Value(value.GetDouble()),
+            JsonValueKind.True => BicepSyntax.Value(true),
+            JsonValueKind.False => BicepSyntax.Value(false),
+            JsonValueKind.Null => BicepSyntax.Null(),
+            // Parsed JSON covers every value kind above. Undefined cannot occur in a JsonDocument;
+            // keep the fallback to fail explicitly if System.Text.Json adds another value kind.
+            _ => throw new InvalidOperationException($"Cannot convert JSON value kind {value.ValueKind} to a Bicep expression.")
+        };
+
+    private static string DecodeUtf8(BinaryData value, string mediaType)
+    {
+        try
+        {
+            return s_strictUtf8.GetString(value.ToArray());
+        }
+        catch (DecoderFallbackException exception)
+        {
+            throw new InvalidOperationException($"Cannot compile BinaryData with media type '{mediaType}' because its contents are not valid UTF-8.", exception);
+        }
+    }
+
+    private static bool IsMediaType(string value, string expected)
+    {
+        string[] parts = value.Split(';');
+        if (!string.Equals(parts[0].Trim(), expected, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        bool foundCharset = false;
+        for (int i = 1; i < parts.Length; i++)
+        {
+            string parameter = parts[i].Trim();
+            int separator = parameter.IndexOf('=');
+            if (separator < 0 ||
+                !string.Equals(parameter.Substring(0, separator).Trim(), "charset", StringComparison.OrdinalIgnoreCase) ||
+                foundCharset)
+            {
+                return false;
+            }
+
+            string charset = parameter.Substring(separator + 1).Trim().Trim('"');
+            if (!string.Equals(charset, "utf-8", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            foundCharset = true;
+        }
+
+        return true;
+    }
+
+    private static string FormatDateTimeOffsetAsString(DateTimeOffset value, string? format) => format switch
+    {
+        null => value.ToString("o", CultureInfo.InvariantCulture),
+        "D" => value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+        "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
+        "O" or "o" => value.ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture),
+        "R" => value.ToString("r", CultureInfo.InvariantCulture),
+        "T" => value.ToString("HH:mm:ss", CultureInfo.InvariantCulture),
+        _ => value.ToString("o", CultureInfo.InvariantCulture)
+    };
+
+    private static string FormatDurationAsString(TimeSpan value, string? format) => format switch
+    {
+        null => value.ToString(),
+        "P" => XmlConvert.ToString(value),
+        "seconds" => Convert.ToInt32(Math.Round(value.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
+        "seconds-int64" => Convert.ToInt64(Math.Round(value.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
+        "seconds-float" or "seconds-double" => value.TotalSeconds.ToString(CultureInfo.InvariantCulture),
+        "milliseconds" => Convert.ToInt32(Math.Round(value.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
+        "milliseconds-int64" => Convert.ToInt64(Math.Round(value.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
+        "milliseconds-float" or "milliseconds-double" => value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
+        _ => value.ToString()
+    };
+
+    private static BicepExpression FormatIntegerAsExpression(int value, string? format) =>
+        string.Equals(format, "string", StringComparison.Ordinal) ?
+            BicepSyntax.Value(value.ToString(CultureInfo.InvariantCulture)) :
+            BicepSyntax.Value(value);
+
+    private static BicepExpression FormatIntegerAsExpression(long value, string? format) =>
+        string.Equals(format, "string", StringComparison.Ordinal) ?
+            BicepSyntax.Value(value.ToString(CultureInfo.InvariantCulture)) :
+            BicepSyntax.Value(value);
+
+    private static BicepExpression FormatDateTimeOffsetAsExpression(DateTimeOffset value, string? format) =>
+        format switch
+        {
+            "U" => BicepSyntax.Value(value.ToUnixTimeSeconds()),
+            _ => BicepSyntax.Value(FormatDateTimeOffsetAsString(value, format))
+        };
+
+    private static BicepExpression FormatDurationAsExpression(TimeSpan value, string? format) =>
+        format switch
+        {
+            "seconds" => BicepSyntax.Value(Convert.ToInt32(Math.Round(value.TotalSeconds))),
+            "seconds-int64" => BicepSyntax.Value(Convert.ToInt64(Math.Round(value.TotalSeconds))),
+            "seconds-float" or "seconds-double" => BicepSyntax.Value(value.TotalSeconds),
+            "milliseconds" => BicepSyntax.Value(Convert.ToInt32(Math.Round(value.TotalMilliseconds))),
+            "milliseconds-int64" => BicepSyntax.Value(Convert.ToInt64(Math.Round(value.TotalMilliseconds))),
+            "milliseconds-float" or "milliseconds-double" => BicepSyntax.Value(value.TotalMilliseconds),
+            _ => BicepSyntax.Value(FormatDurationAsString(value, format))
         };
 
     /// <summary>

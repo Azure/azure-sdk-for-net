@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             TryGetApiVersion(DeploymentStackResource.ResourceType, out string deploymentStackApiVersion);
             _deploymentStacksAtScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.DeploymentStacks", DeploymentStackResource.ResourceType.Namespace, Diagnostics);
-            _deploymentStacksAtScopeRestClient = new DeploymentStacksAtScope(_deploymentStacksAtScopeClientDiagnostics, Pipeline, Endpoint, deploymentStackApiVersion ?? "2025-07-01");
+            _deploymentStacksAtScopeRestClient = new DeploymentStacksAtScope(_deploymentStacksAtScopeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackApiVersion ?? "2025-07-01");
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStacksAtScopeGetAllAsyncCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id.ToString(), context, "DeploymentStackCollection.GetAll"), data => new DeploymentStackResource(Client, data));
+            return new AsyncPageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStackDataAsyncCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id.ToString(), context, "DeploymentStackCollection.GetAll"), data => new DeploymentStackResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStacksAtScopeGetAllCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id.ToString(), context, "DeploymentStackCollection.GetAll"), data => new DeploymentStackResource(Client, data));
+            return new PageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStackDataCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id.ToString(), context, "DeploymentStackCollection.GetAll"), data => new DeploymentStackResource(Client, data));
         }
 
         /// <summary>

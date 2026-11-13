@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ResourceType, out string workloadImpactApiVersion);
             _workloadImpactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
-            _workloadImpactsRestClient = new WorkloadImpacts(_workloadImpactsClientDiagnostics, Pipeline, Endpoint, workloadImpactApiVersion ?? "2024-05-01-preview");
+            _workloadImpactsRestClient = new WorkloadImpacts(_workloadImpactsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadImpactApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 

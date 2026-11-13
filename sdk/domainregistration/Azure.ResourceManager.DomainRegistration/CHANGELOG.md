@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- `AppServiceDomainData.DnsZoneId` property type changed from `string` to `Azure.Core.ResourceIdentifier`.
+- `DomainPatchResourceProperties.DnsZoneId` property type changed from `string` to `Azure.Core.ResourceIdentifier`.
+- `AppServiceDomainPatch.DnsZoneId` property type changed from `string` to `Azure.Core.ResourceIdentifier`.
+
 ### Bugs Fixed
 
 ### Other Changes

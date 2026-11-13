@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppScaleAndConcurrency"/>. </summary>
         /// <param name="alwaysReady"> 'Always Ready' configuration for the function app. </param>
-        /// <param name="functionAppMaximumInstanceCount"> The maximum number of instances for the function app. </param>
+        /// <param name="functionAppMaximumInstanceCount"> The maximum number of on demand instances per function group. </param>
         /// <param name="functionAppInstanceMemoryMB"> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </param>
         /// <param name="triggers"> Scale and concurrency settings for the function app triggers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("alwaysReady")]
         public IList<FunctionAppAlwaysReadyConfig> AlwaysReady { get; }
 
-        /// <summary> The maximum number of instances for the function app. </summary>
+        /// <summary> The maximum number of on demand instances per function group. </summary>
         [WirePath("maximumInstanceCount")]
         public int? FunctionAppMaximumInstanceCount { get; set; }
 

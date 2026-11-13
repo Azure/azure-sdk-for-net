@@ -54,6 +54,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
+        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        public DataFactoryKeyVaultSecret Pwd
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Pwd;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.Pwd = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential
         {

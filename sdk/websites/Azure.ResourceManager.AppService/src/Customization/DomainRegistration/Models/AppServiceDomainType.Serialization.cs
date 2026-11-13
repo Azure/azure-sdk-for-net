@@ -21,8 +21,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceDomainType ToAppServiceDomainType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Regular")) return AppServiceDomainType.Regular;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SoftDeleted")) return AppServiceDomainType.SoftDeleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Regular"))
+                return AppServiceDomainType.Regular;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SoftDeleted"))
+                return AppServiceDomainType.SoftDeleted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceDomainType value.");
         }
     }

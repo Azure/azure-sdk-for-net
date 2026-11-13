@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ServiceGroupSiteResource.ResourceType, out string serviceGroupSiteApiVersion);
             _serviceGroupSitesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ServiceGroupSiteResource.ResourceType.Namespace, Diagnostics);
-            _serviceGroupSitesRestClient = new ServiceGroupSites(_serviceGroupSitesClientDiagnostics, Pipeline, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
+            _serviceGroupSitesRestClient = new ServiceGroupSites(_serviceGroupSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
+            return new AsyncPageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSiteDataAsyncCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
+            return new PageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSiteDataCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
         }
 
         /// <summary>

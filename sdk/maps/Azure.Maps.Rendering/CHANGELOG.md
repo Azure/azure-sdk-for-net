@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added a `MapTileSet` model factory method to `MapsRenderingModelFactory` to support mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed

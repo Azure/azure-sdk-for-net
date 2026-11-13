@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRCustomCertificateResource.ResourceType, out string signalRCustomCertificateApiVersion);
             _customCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomCertificateResource.ResourceType.Namespace, Diagnostics);
-            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Endpoint, signalRCustomCertificateApiVersion ?? "2025-01-01-preview");
+            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomCertificateApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new SignalRCustomCertificateDataAsyncCollectionResultOfT(
                 _customCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new SignalRCustomCertificateDataCollectionResultOfT(
                 _customCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -107,6 +107,46 @@ public enum SampleKind
 }
 ```
 
+### Hide and obsolete a compatibility member
+
+Use `EditorBrowsableNever` and `ObsoleteMessage` when a compatibility member must remain callable but should not be suggested for new code.
+
+```csharp
+using Microsoft.TypeSpec.Generator.Customizations;
+
+[assembly: CodeGenEnumValue(
+    "SampleKind",
+    "LegacyKind",
+    4,
+    WireName = "legacy-kind",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use CurrentKind instead.")]
+```
+
+The generator emits:
+
+```csharp
+[EditorBrowsable(EditorBrowsableState.Never)]
+[Obsolete("Use CurrentKind instead.")]
+[DataMember(Name = "legacy-kind")]
+LegacyKind = 4
+```
+
+### Add a compatibility alias
+
+Two members may share an ordinal. Pin the current member as well as the compatibility alias when both should retain the same numeric value.
+
+```csharp
+[assembly: CodeGenEnumValue("SampleKind", "CurrentKind", 3, WireName = "current-kind")]
+[assembly: CodeGenEnumValue(
+    "SampleKind",
+    "LegacyKind",
+    3,
+    WireName = "current-kind",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use CurrentKind instead.")]
+```
+
 ### Parameters
 
 | Parameter | Description |
@@ -115,5 +155,7 @@ public enum SampleKind
 | `memberName` | Generated or compatibility C# enum member name. |
 | `value` | Explicit integer value to emit for the enum member. |
 | `WireName` | Optional settable property. When provided and different from `memberName`, emits `[DataMember(Name = "...")]`. |
+| `EditorBrowsableNever` | Optional settable property. When `true`, emits `[EditorBrowsable(EditorBrowsableState.Never)]`. |
+| `ObsoleteMessage` | Optional settable property. When provided, emits `[Obsolete("...")]` with the supplied message. |
 
-The generator fails fast if two `CodeGenEnumValue` attributes target the same enum member or assign the same explicit ordinal within the same enum.
+The generator fails fast if two `CodeGenEnumValue` attributes target the same enum member. Different members may use the same explicit ordinal.

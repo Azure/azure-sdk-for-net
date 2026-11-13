@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePlacement"/>. </summary>
-        /// <param name="zonePlacementPolicyType"> Specifies the policy for resource's placement in availability zone. Possible values are: <b>Any</b> (used for Virtual Machines), <b>Auto</b> (used for Virtual Machine Scale Sets) - An availability zone will be automatically picked by system as part of resource creation. </param>
+        /// <param name="zonePlacementPolicyType"> Specifies the policy for the resource's placement in an availability zone. Use <b>Auto</b> for Virtual Machines and Virtual Machine Scale Sets to let the system automatically select an availability zone during resource creation. <b>Any</b> remains supported for Virtual Machines for backward compatibility. </param>
         /// <param name="includeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </param>
         /// <param name="excludeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must not be present in the list of availability zones passed with 'excludeZones'. If 'excludeZones' is not provided, all availability zones in region will be considered for selection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Specifies the policy for resource's placement in availability zone. Possible values are: <b>Any</b> (used for Virtual Machines), <b>Auto</b> (used for Virtual Machine Scale Sets) - An availability zone will be automatically picked by system as part of resource creation. </summary>
+        /// <summary> Specifies the policy for the resource's placement in an availability zone. Use <b>Auto</b> for Virtual Machines and Virtual Machine Scale Sets to let the system automatically select an availability zone during resource creation. <b>Any</b> remains supported for Virtual Machines for backward compatibility. </summary>
         public ZonePlacementPolicyType? ZonePlacementPolicyType { get; set; }
 
         /// <summary> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </summary>

@@ -15,27 +15,59 @@ namespace Azure.AI.OpenAI.Assistants;
 
 public partial class FunctionToolDefinition
 {
+    /// <summary> Determines whether a function tool definition matches the function tool call made by a run step. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <param name="functionToolCall"> The run step function tool call to compare. </param>
+    /// <returns> <c>true</c> if both refer to the same function name; otherwise, <c>false</c>. </returns>
     public static bool operator ==(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
         => functionToolDefinition.Name == functionToolCall.Name;
 
+    /// <summary> Determines whether a function tool definition does not match the function tool call made by a run step. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <param name="functionToolCall"> The run step function tool call to compare. </param>
+    /// <returns> <c>true</c> if the two refer to different function names; otherwise, <c>false</c>. </returns>
     public static bool operator !=(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
         => functionToolDefinition.Name != functionToolCall.Name;
 
+    /// <summary> Determines whether the function tool call made by a run step matches a function tool definition. </summary>
+    /// <param name="functionToolCall"> The run step function tool call to compare. </param>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <returns> <c>true</c> if both refer to the same function name; otherwise, <c>false</c>. </returns>
     public static bool operator ==(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name == functionToolDefinition.Name;
 
+    /// <summary> Determines whether the function tool call made by a run step does not match a function tool definition. </summary>
+    /// <param name="functionToolCall"> The run step function tool call to compare. </param>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <returns> <c>true</c> if the two refer to different function names; otherwise, <c>false</c>. </returns>
     public static bool operator !=(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name != functionToolDefinition.Name;
 
+    /// <summary> Determines whether a function tool definition matches a function tool call the run requires output for. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <param name="functionToolCall"> The required function tool call to compare. </param>
+    /// <returns> <c>true</c> if both refer to the same function name; otherwise, <c>false</c>. </returns>
     public static bool operator ==(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
         => functionToolDefinition.Name == functionToolCall.Name;
 
+    /// <summary> Determines whether a function tool definition does not match a function tool call the run requires output for. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <param name="functionToolCall"> The required function tool call to compare. </param>
+    /// <returns> <c>true</c> if the two refer to different function names; otherwise, <c>false</c>. </returns>
     public static bool operator !=(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
         => functionToolDefinition.Name != functionToolCall.Name;
 
+    /// <summary> Determines whether a function tool call the run requires output for matches a function tool definition. </summary>
+    /// <param name="functionToolCall"> The required function tool call to compare. </param>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <returns> <c>true</c> if both refer to the same function name; otherwise, <c>false</c>. </returns>
     public static bool operator ==(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name == functionToolDefinition.Name;
 
+    /// <summary> Determines whether a function tool call the run requires output for does not match a function tool definition. </summary>
+    /// <param name="functionToolCall"> The required function tool call to compare. </param>
+    /// <param name="functionToolDefinition"> The function tool definition to compare. </param>
+    /// <returns> <c>true</c> if the two refer to different function names; otherwise, <c>false</c>. </returns>
     public static bool operator !=(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name != functionToolDefinition.Name;
 

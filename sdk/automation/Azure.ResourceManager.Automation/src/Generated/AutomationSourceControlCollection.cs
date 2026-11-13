@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationSourceControlResource.ResourceType, out string automationSourceControlApiVersion);
             _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationSourceControlResource.ResourceType.Namespace, Diagnostics);
-            _sourceControlRestClient = new SourceControl(_sourceControlClientDiagnostics, Pipeline, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
+            _sourceControlRestClient = new SourceControl(_sourceControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationSourceControlData, AutomationSourceControlResource>(new SourceControlGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationSourceControlData, AutomationSourceControlResource>(new AutomationSourceControlDataAsyncCollectionResultOfT(
                 _sourceControlRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationSourceControlData, AutomationSourceControlResource>(new SourceControlGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationSourceControlData, AutomationSourceControlResource>(new AutomationSourceControlDataCollectionResultOfT(
                 _sourceControlRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

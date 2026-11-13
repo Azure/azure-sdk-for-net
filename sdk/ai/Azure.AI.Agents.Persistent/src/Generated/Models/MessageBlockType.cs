@@ -19,7 +19,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Indicates a block referencing an internally uploaded image file. </summary>
         private const string ImageFileValue = "image_file";
         /// <summary> Indicates a block referencing an external image URL. </summary>
-        private const string ImageUrlValue = "image_url";
+        private const string ImageUriValue = "image_url";
 
         /// <summary> Initializes a new instance of <see cref="MessageBlockType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
         public static MessageBlockType ImageFile { get; } = new MessageBlockType(ImageFileValue);
 
         /// <summary> Indicates a block referencing an external image URL. </summary>
-        public static MessageBlockType ImageUrl { get; } = new MessageBlockType(ImageUrlValue);
+        public static MessageBlockType ImageUri { get; } = new MessageBlockType(ImageUriValue);
 
         /// <summary> Determines if two <see cref="MessageBlockType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

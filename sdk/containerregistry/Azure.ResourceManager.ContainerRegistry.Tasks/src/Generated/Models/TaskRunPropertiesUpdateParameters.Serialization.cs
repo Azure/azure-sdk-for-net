@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            RunContent runRequest = default;
+            ContainerRegistryRunContent runRequest = default;
             string forceUpdateTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    runRequest = RunContent.DeserializeRunContent(prop.Value, options);
+                    runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("forceUpdateTag"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TaskRunPropertiesUpdateParameters(runRequest, forceUpdateTag, additionalBinaryDataProperties);

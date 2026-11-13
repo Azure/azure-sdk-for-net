@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(StorageClassificationMappingResource.ResourceType, out string storageClassificationMappingApiVersion);
             _replicationStorageClassificationMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", StorageClassificationMappingResource.ResourceType.Namespace, Diagnostics);
-            _replicationStorageClassificationMappingsRestClient = new ReplicationStorageClassificationMappings(_replicationStorageClassificationMappingsClientDiagnostics, Pipeline, Endpoint, storageClassificationMappingApiVersion ?? "2026-02-01");
+            _replicationStorageClassificationMappingsRestClient = new ReplicationStorageClassificationMappings(_replicationStorageClassificationMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageClassificationMappingApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new ReplicationStorageClassificationMappingsListByClassificationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingDataAsyncCollectionResultOfT(
                 _replicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new ReplicationStorageClassificationMappingsListByClassificationCollectionResultOfT(
+            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingDataCollectionResultOfT(
                 _replicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

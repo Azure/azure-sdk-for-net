@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         {
             TryGetApiVersion(ResourceType, out string openShiftVersionApiVersion);
             _openShiftVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", ResourceType.Namespace, Diagnostics);
-            _openShiftVersionsRestClient = new OpenShiftVersions(_openShiftVersionsClientDiagnostics, Pipeline, Endpoint, openShiftVersionApiVersion ?? "2025-07-25");
+            _openShiftVersionsRestClient = new OpenShiftVersions(_openShiftVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftVersionApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 

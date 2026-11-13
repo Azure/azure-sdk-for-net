@@ -15,12 +15,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Network base admin rule. </summary>
+    /// <summary>
+    /// Network base admin rule.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
+    /// </summary>
     public partial class BaseAdminRuleData : ResourceData, IJsonModel<BaseAdminRuleData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BaseAdminRuleData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BaseAdminRuleData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseAdminRuleData IPersistableModel<BaseAdminRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BaseAdminRuleData IPersistableModel<BaseAdminRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BaseAdminRuleData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BaseAdminRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,13 +87,47 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseAdminRuleData IJsonModel<BaseAdminRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BaseAdminRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BaseAdminRuleData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BaseAdminRuleData IJsonModel<BaseAdminRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BaseAdminRuleData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BaseAdminRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

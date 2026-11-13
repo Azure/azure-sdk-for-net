@@ -845,12 +845,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </summary>
-        public bool? EnableResilientEphemeralOsDisk
+        /// <summary> Specifies the settings for the proxy agent on the node type. </summary>
+        public ProxyAgentSettings ProxyAgentSettings
         {
             get
             {
-                return Properties is null ? default : Properties.EnableResilientEphemeralOsDisk;
+                return Properties is null ? default : Properties.ProxyAgentSettings;
             }
             set
             {
@@ -858,7 +858,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.EnableResilientEphemeralOsDisk = value;
+                Properties.ProxyAgentSettings = value;
+            }
+        }
+
+        /// <summary> The scale in policy mode for a node type. </summary>
+        public ScaleInPolicyMode? ScaleInMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleInMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.ScaleInMode = value;
             }
         }
     }

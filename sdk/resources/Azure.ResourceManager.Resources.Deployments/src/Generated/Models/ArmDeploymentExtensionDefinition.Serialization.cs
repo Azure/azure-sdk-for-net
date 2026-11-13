@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> The ArmDeploymentExtensionDefinition. </summary>
     public partial class ArmDeploymentExtensionDefinition : IJsonModel<ArmDeploymentExtensionDefinition>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentExtensionDefinition)} does not support writing '{options.Format}' format.");
             }
@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("configId"u8);
                 writer.WriteStringValue(ConfigId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConfigHash))
+            {
+                writer.WritePropertyName("configHash"u8);
+                writer.WriteStringValue(ConfigHash);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Config))
             {
@@ -151,6 +156,7 @@ namespace Azure.ResourceManager.Resources.Models
             string name = default;
             string version = default;
             string configId = default;
+            string configHash = default;
             IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -175,6 +181,11 @@ namespace Azure.ResourceManager.Resources.Models
                     configId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("configHash"u8))
+                {
+                    configHash = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("config"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -191,7 +202,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ArmDeploymentExtensionDefinition(
@@ -199,6 +210,7 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 version,
                 configId,
+                configHash,
                 config ?? new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>(),
                 additionalBinaryDataProperties);
         }

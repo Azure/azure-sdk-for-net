@@ -202,7 +202,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 {
                     signature = string.Join(",", val);
                 }
-                string? userId = null;
+                string userId = null;
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.UserId, out var userIds))
                 {
                     userId = userIds.FirstOrDefault();

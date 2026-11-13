@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Elastic
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of ElasticMonitorResources for mocking. </summary>
         protected ElasticMonitorResources()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Elastic
         /// <summary> Initializes a new instance of ElasticMonitorResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ElasticMonitorResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ElasticMonitorResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(ElasticMonitorResources).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -51,14 +54,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -73,14 +74,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
@@ -100,14 +99,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
@@ -127,14 +124,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -147,14 +142,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Elastic/monitors", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -170,14 +163,12 @@ namespace Azure.ResourceManager.Elastic
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -189,14 +180,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Elastic/monitors", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -212,14 +201,12 @@ namespace Azure.ResourceManager.Elastic
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -235,14 +222,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listMonitoredResources", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -258,14 +243,12 @@ namespace Azure.ResourceManager.Elastic
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -281,14 +264,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listDeploymentInfo", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -304,14 +285,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/createOrUpdateExternalUser", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
@@ -332,14 +311,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getBillingInfo", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -355,14 +332,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listConnectedPartnerResources", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -378,14 +353,12 @@ namespace Azure.ResourceManager.Elastic
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -401,14 +374,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listVMHost", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -424,14 +395,12 @@ namespace Azure.ResourceManager.Elastic
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -447,14 +416,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/vmIngestionDetails", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -470,14 +437,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/vmCollectionUpdate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
@@ -497,14 +462,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listUpgradableVersions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -520,14 +483,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/upgrade", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
@@ -547,14 +508,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listAllTrafficFilters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -570,14 +529,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listAssociatedTrafficFilters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -593,10 +550,7 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/createAndAssociateIPFilter", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             if (ips != null)
             {
                 uri.AppendQuery("ips", ips, true);
@@ -609,6 +563,7 @@ namespace Azure.ResourceManager.Elastic
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -623,10 +578,7 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/createAndAssociatePLFilter", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             if (name != null)
             {
                 uri.AppendQuery("name", name, true);
@@ -643,6 +595,7 @@ namespace Azure.ResourceManager.Elastic
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -657,10 +610,7 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/associateTrafficFilter", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             if (rulesetId != null)
             {
                 uri.AppendQuery("rulesetId", rulesetId, true);
@@ -669,6 +619,7 @@ namespace Azure.ResourceManager.Elastic
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -683,10 +634,7 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/detachAndDeleteTrafficFilter", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             if (rulesetId != null)
             {
                 uri.AppendQuery("rulesetId", rulesetId, true);
@@ -695,6 +643,7 @@ namespace Azure.ResourceManager.Elastic
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -709,10 +658,7 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/detachTrafficFilter", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             if (rulesetId != null)
             {
                 uri.AppendQuery("rulesetId", rulesetId, true);
@@ -721,6 +667,7 @@ namespace Azure.ResourceManager.Elastic
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -735,10 +682,7 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/deleteTrafficFilter", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             if (rulesetId != null)
             {
                 uri.AppendQuery("rulesetId", rulesetId, true);
@@ -747,6 +691,7 @@ namespace Azure.ResourceManager.Elastic
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -761,14 +706,12 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/resubscribe", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");

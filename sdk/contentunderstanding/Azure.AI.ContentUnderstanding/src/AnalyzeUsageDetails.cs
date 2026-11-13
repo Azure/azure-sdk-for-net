@@ -3,8 +3,10 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace Azure.AI.ContentUnderstanding
@@ -13,10 +15,8 @@ namespace Azure.AI.ContentUnderstanding
     /// Usage details from a completed analyze operation, including document page counts,
     /// contextualization tokens, and per-model LLM/embedding token consumption.
     /// </summary>
-    /// <remarks>
-    /// Obtain an instance by calling <see cref="AnalyzeOperationExtensions.GetUsage"/> on a
-    /// completed <see cref="Operation{AnalysisResult}"/>.
-    /// </remarks>
+    [Obsolete("Use UsageDetails with GetUsageDetails instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class AnalyzeUsageDetails
     {
         internal AnalyzeUsageDetails()
@@ -56,7 +56,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// The number of LLM and embedding tokens consumed, grouped by model
-        /// (e.g., "gpt-4.1") and type (e.g., "input", "cached input", "output").
+        /// (e.g., "gpt-5.2") and type (e.g., "input", "cached input", "output").
         /// </summary>
         public IReadOnlyDictionary<string, int> Tokens { get; internal set; }
 

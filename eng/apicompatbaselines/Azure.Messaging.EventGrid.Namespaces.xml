@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult.op_Explicit(Azure.Response)~Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.Messaging.EventGrid.Namespaces.ReceiveResult.op_Explicit(Azure.Response)~Azure.Messaging.EventGrid.Namespaces.ReceiveResult$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.Messaging.EventGrid.Namespaces.RejectResult.op_Explicit(Azure.Response)~Azure.Messaging.EventGrid.Namespaces.RejectResult$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.Messaging.EventGrid.Namespaces.ReleaseResult.op_Explicit(Azure.Response)~Azure.Messaging.EventGrid.Namespaces.ReleaseResult$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.Messaging.EventGrid.Namespaces.RenewLocksResult.op_Explicit(Azure.Response)~Azure.Messaging.EventGrid.Namespaces.RenewLocksResult$0</Target>
+  </Suppression>
+</Suppressions>

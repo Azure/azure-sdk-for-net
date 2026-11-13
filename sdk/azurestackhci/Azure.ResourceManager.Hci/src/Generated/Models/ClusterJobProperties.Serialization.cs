@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// Cluster Job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciConfigureSdnIntegrationJobProperties"/>, <see cref="HciConfigureCvmJobProperties"/>, <see cref="HciAddServerJobProperties"/>, <see cref="HciRepairServerJobProperties"/>, <see cref="GpuCreatePartitionJobProperties"/>, <see cref="GpuSwitchModeJobProperties"/>, <see cref="VmConnectProvisionJobProperties"/>, and <see cref="VmConnectRemoveJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciAddServerJobProperties"/>, <see cref="HciConfigureSdnIntegrationJobProperties"/>, and <see cref="HciRepairServerJobProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownClusterJobProperties))]
     public abstract partial class ClusterJobProperties : IJsonModel<ClusterJobProperties>
@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -165,22 +165,12 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ConfigureSdnIntegration":
-                        return HciConfigureSdnIntegrationJobProperties.DeserializeHciConfigureSdnIntegrationJobProperties(element, options);
-                    case "ConfigureCVM":
-                        return HciConfigureCvmJobProperties.DeserializeHciConfigureCvmJobProperties(element, options);
                     case "AddServer":
                         return HciAddServerJobProperties.DeserializeHciAddServerJobProperties(element, options);
+                    case "ConfigureSdnIntegration":
+                        return HciConfigureSdnIntegrationJobProperties.DeserializeHciConfigureSdnIntegrationJobProperties(element, options);
                     case "RepairServer":
                         return HciRepairServerJobProperties.DeserializeHciRepairServerJobProperties(element, options);
-                    case "GpuCreatePartition":
-                        return GpuCreatePartitionJobProperties.DeserializeGpuCreatePartitionJobProperties(element, options);
-                    case "GpuSwitchMode":
-                        return GpuSwitchModeJobProperties.DeserializeGpuSwitchModeJobProperties(element, options);
-                    case "VmConnectProvision":
-                        return VmConnectProvisionJobProperties.DeserializeVmConnectProvisionJobProperties(element, options);
-                    case "VmConnectRemove":
-                        return VmConnectRemoveJobProperties.DeserializeVmConnectRemoveJobProperties(element, options);
                 }
             }
             return UnknownClusterJobProperties.DeserializeUnknownClusterJobProperties(element, options);

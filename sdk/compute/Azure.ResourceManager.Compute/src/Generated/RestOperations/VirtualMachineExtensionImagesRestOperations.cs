@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionImages for mocking. </summary>
         protected VirtualMachineExtensionImages()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of VirtualMachineExtensionImages. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VirtualMachineExtensionImages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal VirtualMachineExtensionImages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(VirtualMachineExtensionImages).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.Compute
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -86,11 +90,12 @@ namespace Azure.ResourceManager.Compute
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -119,10 +124,15 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$orderby", @orderby, true);
             }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Machine is being provisioned. </summary>
         private const string ProvisioningValue = "Provisioning";
         /// <summary> Machine is ready for OS installation. </summary>
-        private const string ReadyForOsValue = "ReadyForOs";
+        private const string ReadyForOSValue = "ReadyForOs";
         /// <summary> Machine is installing the OS. </summary>
-        private const string InstallingOsValue = "InstallingOs";
+        private const string InstallingOSValue = "InstallingOs";
         /// <summary> Machine has been provisioned. </summary>
         private const string ProvisionedValue = "Provisioned";
         /// <summary> Machine OS is being updated. </summary>
-        private const string UpdatingOsValue = "UpdatingOs";
+        private const string UpdatingOSValue = "UpdatingOs";
         /// <summary> Machine OS is being reset. </summary>
-        private const string ResettingOsValue = "ResettingOs";
+        private const string ResettingOSValue = "ResettingOs";
         /// <summary> Machine is being deleted. </summary>
         private const string DeletingValue = "Deleting";
         /// <summary> Machine is in a failed state. </summary>
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Hci.Models
         public static EdgeMachineLifecycleStatus Provisioning { get; } = new EdgeMachineLifecycleStatus(ProvisioningValue);
 
         /// <summary> Machine is ready for OS installation. </summary>
-        public static EdgeMachineLifecycleStatus ReadyForOs { get; } = new EdgeMachineLifecycleStatus(ReadyForOsValue);
+        public static EdgeMachineLifecycleStatus ReadyForOS { get; } = new EdgeMachineLifecycleStatus(ReadyForOSValue);
 
         /// <summary> Machine is installing the OS. </summary>
-        public static EdgeMachineLifecycleStatus InstallingOs { get; } = new EdgeMachineLifecycleStatus(InstallingOsValue);
+        public static EdgeMachineLifecycleStatus InstallingOS { get; } = new EdgeMachineLifecycleStatus(InstallingOSValue);
 
         /// <summary> Machine has been provisioned. </summary>
         public static EdgeMachineLifecycleStatus Provisioned { get; } = new EdgeMachineLifecycleStatus(ProvisionedValue);
 
         /// <summary> Machine OS is being updated. </summary>
-        public static EdgeMachineLifecycleStatus UpdatingOs { get; } = new EdgeMachineLifecycleStatus(UpdatingOsValue);
+        public static EdgeMachineLifecycleStatus UpdatingOS { get; } = new EdgeMachineLifecycleStatus(UpdatingOSValue);
 
         /// <summary> Machine OS is being reset. </summary>
-        public static EdgeMachineLifecycleStatus ResettingOs { get; } = new EdgeMachineLifecycleStatus(ResettingOsValue);
+        public static EdgeMachineLifecycleStatus ResettingOS { get; } = new EdgeMachineLifecycleStatus(ResettingOSValue);
 
         /// <summary> Machine is being deleted. </summary>
         public static EdgeMachineLifecycleStatus Deleting { get; } = new EdgeMachineLifecycleStatus(DeletingValue);

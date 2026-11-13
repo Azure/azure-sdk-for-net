@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion, globalConfigurations ?? new ChangeTrackingDictionary<string, string>(), tableList ?? new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>(), additionalBinaryDataProperties);

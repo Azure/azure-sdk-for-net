@@ -88,20 +88,34 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             writer.WriteStringValue(ClusterTier.ToString());
             writer.WritePropertyName("regionName"u8);
             writer.WriteStringValue(RegionName);
-            if (options.Format != "W" && Optional.IsDefined(MongoDbVersion))
+            if (options.Format != "W" && Optional.IsDefined(MongoDBVersion))
             {
                 writer.WritePropertyName("mongoDbVersion"u8);
-                writer.WriteStringValue(MongoDbVersion);
+                writer.WriteStringValue(MongoDBVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsBackupsEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsBackupsEnabled, _isBackupsEnabledIsDefined))
             {
-                writer.WritePropertyName("backups"u8);
-                writer.WriteBooleanValue(IsBackupsEnabled.Value);
+                if (IsBackupsEnabled != null)
+                {
+                    writer.WritePropertyName("backups"u8);
+                    writer.WriteBooleanValue(IsBackupsEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("backups"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && Optional.IsDefined(State, _stateIsDefined))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
+                if (State != null)
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+                else
+                {
+                    writer.WriteNull("state"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -153,8 +167,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             string clusterName = default;
             MongoDBAtlasClusterTier clusterTier = default;
             string regionName = default;
-            string mongoDbVersion = default;
+            string mongoDBVersion = default;
+            bool isBackupsEnabledIsDefined = false;
             bool? isBackupsEnabled = default;
+            bool stateIsDefined = false;
             string state = default;
             MongoDBAtlasResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,11 +193,12 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (prop.NameEquals("mongoDbVersion"u8))
                 {
-                    mongoDbVersion = prop.Value.GetString();
+                    mongoDBVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("backups"u8))
                 {
+                    isBackupsEnabledIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isBackupsEnabled = null;
@@ -192,6 +209,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (prop.NameEquals("state"u8))
                 {
+                    stateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         state = null;
@@ -211,18 +229,22 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MongoDBAtlasClusterProperties(
                 clusterName,
                 clusterTier,
                 regionName,
-                mongoDbVersion,
+                mongoDBVersion,
                 isBackupsEnabled,
                 state,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _isBackupsEnabledIsDefined = isBackupsEnabledIsDefined,
+                _stateIsDefined = stateIsDefined
+            };
         }
     }
 }

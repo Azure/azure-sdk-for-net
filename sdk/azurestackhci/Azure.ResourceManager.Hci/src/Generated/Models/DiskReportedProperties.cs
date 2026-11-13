@@ -27,23 +27,27 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="diskName"> The actual disk name as reported by the OS. </param>
         /// <param name="model"> Model number of the hardware. </param>
         /// <param name="manufacturer"> The manufacturer of the disk. </param>
+        /// <param name="isSupported"> Indicates whether the disk manufacturer is supported for the validated solution recipe ring. Defaults to true. Set to false when the SAN vendor is not in the allowed vendor list for the current ring. </param>
         /// <param name="serialNumber"> Serial number. </param>
         /// <param name="firmwareVersion"> Firmware version. </param>
         /// <param name="sizeInBytes"> Size in bytes. </param>
+        /// <param name="storageType"> Storage type of the disk. </param>
         /// <param name="diskType"> Type of the disk. </param>
         /// <param name="busLocation"> Bus location of the disk. </param>
         /// <param name="unallocatedSizeInBytes"> Unallocated space on the disk in bytes. </param>
         /// <param name="state"> Current state of the disk. </param>
         /// <param name="volumes"> List of volumes on this disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskReportedProperties(string diskName, string model, string manufacturer, string serialNumber, string firmwareVersion, string sizeInBytes, DiskType? diskType, string busLocation, string unallocatedSizeInBytes, DiskState? state, IReadOnlyList<DiskVolumeReportedProperties> volumes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskReportedProperties(string diskName, string model, string manufacturer, bool? isSupported, string serialNumber, string firmwareVersion, string sizeInBytes, DiskStorageType? storageType, DiskType? diskType, string busLocation, string unallocatedSizeInBytes, DiskState? state, IReadOnlyList<DiskVolumeReportedProperties> volumes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskName = diskName;
             Model = model;
             Manufacturer = manufacturer;
+            IsSupported = isSupported;
             SerialNumber = serialNumber;
             FirmwareVersion = firmwareVersion;
             SizeInBytes = sizeInBytes;
+            StorageType = storageType;
             DiskType = diskType;
             BusLocation = busLocation;
             UnallocatedSizeInBytes = unallocatedSizeInBytes;
@@ -64,6 +68,10 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("manufacturer")]
         public string Manufacturer { get; }
 
+        /// <summary> Indicates whether the disk manufacturer is supported for the validated solution recipe ring. Defaults to true. Set to false when the SAN vendor is not in the allowed vendor list for the current ring. </summary>
+        [WirePath("isSupported")]
+        public bool? IsSupported { get; }
+
         /// <summary> Serial number. </summary>
         [WirePath("serialNumber")]
         public string SerialNumber { get; }
@@ -75,6 +83,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Size in bytes. </summary>
         [WirePath("sizeInBytes")]
         public string SizeInBytes { get; }
+
+        /// <summary> Storage type of the disk. </summary>
+        [WirePath("storageType")]
+        public DiskStorageType? StorageType { get; }
 
         /// <summary> Type of the disk. </summary>
         [WirePath("diskType")]

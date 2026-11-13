@@ -43,9 +43,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(WorkloadNetworkSegmentResource.ResourceType, out string workloadNetworkSegmentApiVersion);
             _workloadNetworkSegmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -302,7 +302,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentsGetAllAsyncCollectionResultOfT(_workloadNetworkSegmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkSegmentCollection.GetAll"), data => new WorkloadNetworkSegmentResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentDataAsyncCollectionResultOfT(_workloadNetworkSegmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkSegmentCollection.GetAll"), data => new WorkloadNetworkSegmentResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentsGetAllCollectionResultOfT(_workloadNetworkSegmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkSegmentCollection.GetAll"), data => new WorkloadNetworkSegmentResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentDataCollectionResultOfT(_workloadNetworkSegmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkSegmentCollection.GetAll"), data => new WorkloadNetworkSegmentResource(Client, data));
         }
 
         /// <summary>

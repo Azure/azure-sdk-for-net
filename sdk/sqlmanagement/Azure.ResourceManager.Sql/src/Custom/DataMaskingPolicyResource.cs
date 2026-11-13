@@ -72,21 +72,5 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataMaskingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, DataMaskingPolicyData data, CancellationToken cancellationToken = default)
             => Update(waitUntil, data, cancellationToken);
-
-        /// <summary>
-        /// Gets a list of database data masking rules.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken)
-            => GetDataMaskingRulesAsync(skip: null, cancellationToken);
-
-        /// <summary>
-        /// Gets a list of database data masking rules.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken)
-            => GetDataMaskingRules(skip: null, cancellationToken);
     }
 }

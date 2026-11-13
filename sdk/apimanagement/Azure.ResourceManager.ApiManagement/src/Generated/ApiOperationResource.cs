@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiOperationApiVersion);
             _apiOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiOperationRestClient = new ApiOperation(_apiOperationClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
+            _apiOperationRestClient = new ApiOperation(_apiOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

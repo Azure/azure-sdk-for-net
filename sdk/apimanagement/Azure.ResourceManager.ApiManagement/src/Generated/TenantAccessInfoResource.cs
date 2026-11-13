@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string tenantAccessInfoApiVersion);
             _tenantAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _tenantAccessRestClient = new TenantAccess(_tenantAccessClientDiagnostics, Pipeline, Endpoint, tenantAccessInfoApiVersion ?? "2025-09-01-preview");
+            _tenantAccessRestClient = new TenantAccess(_tenantAccessClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantAccessInfoApiVersion ?? "2025-09-01-preview");
             _tenantConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _tenantConfigurationRestClient = new TenantConfiguration(_tenantConfigurationClientDiagnostics, Pipeline, Endpoint, tenantAccessInfoApiVersion ?? "2025-09-01-preview");
+            _tenantConfigurationRestClient = new TenantConfiguration(_tenantConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantAccessInfoApiVersion ?? "2025-09-01-preview");
             _tenantAccessGitClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _tenantAccessGitRestClient = new TenantAccessGit(_tenantAccessGitClientDiagnostics, Pipeline, Endpoint, tenantAccessInfoApiVersion ?? "2025-09-01-preview");
+            _tenantAccessGitRestClient = new TenantAccessGit(_tenantAccessGitClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantAccessInfoApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

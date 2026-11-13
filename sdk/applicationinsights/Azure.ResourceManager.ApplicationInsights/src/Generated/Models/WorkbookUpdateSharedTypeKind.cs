@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     public readonly partial struct WorkbookUpdateSharedTypeKind : IEquatable<WorkbookUpdateSharedTypeKind>
     {
         private readonly string _value;
+        /// <summary> shared. </summary>
+        private const string SharedValue = "shared";
 
         /// <summary> Initializes a new instance of <see cref="WorkbookUpdateSharedTypeKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkbookUpdateSharedTypeKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SharedValue = "shared";
+            _value = value;
+        }
 
         /// <summary> shared. </summary>
         public static WorkbookUpdateSharedTypeKind Shared { get; } = new WorkbookUpdateSharedTypeKind(SharedValue);
+
         /// <summary> Determines if two <see cref="WorkbookUpdateSharedTypeKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkbookUpdateSharedTypeKind left, WorkbookUpdateSharedTypeKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkbookUpdateSharedTypeKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkbookUpdateSharedTypeKind left, WorkbookUpdateSharedTypeKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkbookUpdateSharedTypeKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkbookUpdateSharedTypeKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkbookUpdateSharedTypeKind(string value) => new WorkbookUpdateSharedTypeKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkbookUpdateSharedTypeKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkbookUpdateSharedTypeKind?(string value) => value == null ? null : new WorkbookUpdateSharedTypeKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkbookUpdateSharedTypeKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkbookUpdateSharedTypeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

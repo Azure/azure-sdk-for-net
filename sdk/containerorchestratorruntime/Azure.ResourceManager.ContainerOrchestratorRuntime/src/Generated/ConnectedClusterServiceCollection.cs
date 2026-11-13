@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             TryGetApiVersion(ConnectedClusterServiceResource.ResourceType, out string connectedClusterServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, connectedClusterServiceApiVersion ?? "2024-03-01");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterServiceApiVersion ?? "2024-03-01");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(_servicesRestClient, Id.ToString(), context, "ConnectedClusterServiceCollection.GetAll"), data => new ConnectedClusterServiceResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ConnectedClusterServiceDataAsyncCollectionResultOfT(_servicesRestClient, Id.ToString(), context, "ConnectedClusterServiceCollection.GetAll"), data => new ConnectedClusterServiceResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllCollectionResultOfT(_servicesRestClient, Id.ToString(), context, "ConnectedClusterServiceCollection.GetAll"), data => new ConnectedClusterServiceResource(Client, data));
+            return new PageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ConnectedClusterServiceDataCollectionResultOfT(_servicesRestClient, Id.ToString(), context, "ConnectedClusterServiceCollection.GetAll"), data => new ConnectedClusterServiceResource(Client, data));
         }
 
         /// <summary>

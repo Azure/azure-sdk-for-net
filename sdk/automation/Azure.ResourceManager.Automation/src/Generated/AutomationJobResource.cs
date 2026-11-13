@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationJobApiVersion);
             _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, automationJobApiVersion ?? "2024-10-23");
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationJobApiVersion ?? "2024-10-23");
             _jobStreamClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _jobStreamRestClient = new JobStream(_jobStreamClientDiagnostics, Pipeline, Endpoint, automationJobApiVersion ?? "2024-10-23");
+            _jobStreamRestClient = new JobStream(_jobStreamClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationJobApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new JobStreamGetJobStreamsAsyncCollectionResultOfT(
+            return new AutomationJobStreamAsyncCollectionResultOfT(
                 _jobStreamRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new JobStreamGetJobStreamsCollectionResultOfT(
+            return new AutomationJobStreamCollectionResultOfT(
                 _jobStreamRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

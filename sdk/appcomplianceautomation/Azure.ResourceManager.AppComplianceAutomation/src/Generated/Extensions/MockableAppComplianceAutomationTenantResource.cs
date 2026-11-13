@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
 
         private ClientDiagnostics ProviderActionsClientDiagnostics => _providerActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProviderActions ProviderActionsRestClient => _providerActionsRestClient ??= new ProviderActions(ProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-06-27");
+        private ProviderActions ProviderActionsRestClient => _providerActionsRestClient ??= new ProviderActions(ProviderActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-06-27");
 
         /// <summary> Gets a collection of AppComplianceReports in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of AppComplianceReports and their operations over a AppComplianceReportResource. </returns>

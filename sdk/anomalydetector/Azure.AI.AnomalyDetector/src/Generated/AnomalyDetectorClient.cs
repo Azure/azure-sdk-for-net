@@ -37,8 +37,8 @@ namespace Azure.AI.AnomalyDetector
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly string _apiVersion;
-        private Univariate _cachedUnivariate;
-        private Multivariate _cachedMultivariate;
+        private UnivariateDetector _cachedUnivariateDetector;
+        private MultivariateDetector _cachedMultivariateDetector;
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient for mocking. </summary>
         protected AnomalyDetectorClient()
@@ -98,16 +98,16 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of Univariate. </summary>
-        public virtual Univariate GetUnivariateClient()
+        /// <summary> Initializes a new instance of UnivariateDetector. </summary>
+        public virtual UnivariateDetector GetUnivariateDetectorClient()
         {
-            return Volatile.Read(ref _cachedUnivariate) ?? Interlocked.CompareExchange(ref _cachedUnivariate, new Univariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedUnivariate;
+            return Volatile.Read(ref _cachedUnivariateDetector) ?? Interlocked.CompareExchange(ref _cachedUnivariateDetector, new UnivariateDetector(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedUnivariateDetector;
         }
 
-        /// <summary> Initializes a new instance of Multivariate. </summary>
-        public virtual Multivariate GetMultivariateClient()
+        /// <summary> Initializes a new instance of MultivariateDetector. </summary>
+        public virtual MultivariateDetector GetMultivariateDetectorClient()
         {
-            return Volatile.Read(ref _cachedMultivariate) ?? Interlocked.CompareExchange(ref _cachedMultivariate, new Multivariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedMultivariate;
+            return Volatile.Read(ref _cachedMultivariateDetector) ?? Interlocked.CompareExchange(ref _cachedMultivariateDetector, new MultivariateDetector(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedMultivariateDetector;
         }
     }
 }

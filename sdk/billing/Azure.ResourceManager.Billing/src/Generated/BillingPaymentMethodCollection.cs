@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingPaymentMethodResource.ResourceType, out string billingPaymentMethodApiVersion);
             _paymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingPaymentMethodResource.ResourceType.Namespace, Diagnostics);
-            _paymentMethodsRestClient = new PaymentMethods(_paymentMethodsClientDiagnostics, Pipeline, Endpoint, billingPaymentMethodApiVersion ?? "2024-04-01");
+            _paymentMethodsRestClient = new PaymentMethods(_paymentMethodsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingPaymentMethodApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new PaymentMethodsGetByUserAsyncCollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
+            return new AsyncPageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new BillingPaymentMethodDataAsync0CollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new PaymentMethodsGetByUserCollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
+            return new PageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new BillingPaymentMethodData0CollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
         }
 
         /// <summary>

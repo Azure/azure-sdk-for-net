@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(CsmSiteSlotDeploymentStatusResource.ResourceType, out string csmSiteSlotDeploymentStatusApiVersion);
             _csmDeploymentStatusOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", CsmSiteSlotDeploymentStatusResource.ResourceType.Namespace, Diagnostics);
-            _csmDeploymentStatusOperationGroupRestClient = new CsmDeploymentStatusOperationGroup(_csmDeploymentStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, csmSiteSlotDeploymentStatusApiVersion ?? "2026-03-15");
+            _csmDeploymentStatusOperationGroupRestClient = new CsmDeploymentStatusOperationGroup(_csmDeploymentStatusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, csmSiteSlotDeploymentStatusApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CsmDeploymentStatusData, CsmSiteSlotDeploymentStatusResource>(new CsmDeploymentStatusOperationGroupGetSlotSiteDeploymentStatusesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CsmDeploymentStatusData, CsmSiteSlotDeploymentStatusResource>(new CsmDeploymentStatusDataAsyncCollectionResultOfT(
                 _csmDeploymentStatusOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CsmDeploymentStatusData, CsmSiteSlotDeploymentStatusResource>(new CsmDeploymentStatusOperationGroupGetSlotSiteDeploymentStatusesSlotCollectionResultOfT(
+            return new PageableWrapper<CsmDeploymentStatusData, CsmSiteSlotDeploymentStatusResource>(new CsmDeploymentStatusDataCollectionResultOfT(
                 _csmDeploymentStatusOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

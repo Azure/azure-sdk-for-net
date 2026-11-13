@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             TryGetApiVersion(OnlineExperimentationPrivateEndpointConnectionResource.ResourceType, out string onlineExperimentationPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, onlineExperimentationPrivateEndpointConnectionApiVersion ?? "2025-08-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationPrivateEndpointConnectionApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new OnlineExperimentationPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new OnlineExperimentationPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Hci.Models
         {
             Steps = new ChangeTrackingList<HciClusterDeploymentStep>();
             Exception = new ChangeTrackingList<string>();
+            AdditionalData = new ChangeTrackingList<HciClusterDeploymentStepMetadata>();
+            RecommendedSteps = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentStep"/>. </summary>
@@ -35,8 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="steps"> List of nested steps of AzureStackHCI Cluster Deployment. </param>
         /// <param name="exception"> List of exceptions in AzureStackHCI Cluster Deployment. </param>
         /// <param name="error"> error details. </param>
+        /// <param name="percentComplete"> The progress percentage of the step. </param>
+        /// <param name="additionalData"> Additional metadata associated with the step. </param>
+        /// <param name="recommendedSteps"> Recommended steps to resolve failures in this step. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, ResponseError error, int? percentComplete, IReadOnlyList<HciClusterDeploymentStepMetadata> additionalData, IReadOnlyList<string> recommendedSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -47,6 +52,9 @@ namespace Azure.ResourceManager.Hci.Models
             Steps = steps;
             Exception = exception;
             Error = error;
+            PercentComplete = percentComplete;
+            AdditionalData = additionalData;
+            RecommendedSteps = recommendedSteps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -85,5 +93,17 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> error details. </summary>
         [WirePath("error")]
         public ResponseError Error { get; }
+
+        /// <summary> The progress percentage of the step. </summary>
+        [WirePath("percentComplete")]
+        public int? PercentComplete { get; }
+
+        /// <summary> Additional metadata associated with the step. </summary>
+        [WirePath("additionalData")]
+        public IReadOnlyList<HciClusterDeploymentStepMetadata> AdditionalData { get; }
+
+        /// <summary> Recommended steps to resolve failures in this step. </summary>
+        [WirePath("recommendedSteps")]
+        public IReadOnlyList<string> RecommendedSteps { get; }
     }
 }

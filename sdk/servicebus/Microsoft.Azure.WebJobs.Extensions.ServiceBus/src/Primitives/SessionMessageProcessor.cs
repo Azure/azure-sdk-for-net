@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
+    /// <summary>
+    /// Processes messages that are received from a session-enabled Service Bus entity, allowing custom
+    /// logic to run before the job function is invoked and after it has completed.
+    /// </summary>
     public class SessionMessageProcessor
     {
         /// <summary>

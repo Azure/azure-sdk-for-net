@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoDataConnectionResource.ResourceType, out string kustoDataConnectionApiVersion);
             _dataConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDataConnectionResource.ResourceType.Namespace, Diagnostics);
-            _dataConnectionsRestClient = new DataConnections(_dataConnectionsClientDiagnostics, Pipeline, Endpoint, kustoDataConnectionApiVersion ?? "2025-02-14");
+            _dataConnectionsRestClient = new DataConnections(_dataConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDataConnectionApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoDataConnectionData, KustoDataConnectionResource>(new DataConnectionsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoDataConnectionData, KustoDataConnectionResource>(new KustoDataConnectionDataAsyncCollectionResultOfT(
                 _dataConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoDataConnectionData, KustoDataConnectionResource>(new DataConnectionsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<KustoDataConnectionData, KustoDataConnectionResource>(new KustoDataConnectionDataCollectionResultOfT(
                 _dataConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceTagProductLinkResource.ResourceType, out string serviceTagProductLinkApiVersion);
             _tagProductLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceTagProductLinkResource.ResourceType.Namespace, Diagnostics);
-            _tagProductLinkRestClient = new TagProductLink(_tagProductLinkClientDiagnostics, Pipeline, Endpoint, serviceTagProductLinkApiVersion ?? "2025-09-01-preview");
+            _tagProductLinkRestClient = new TagProductLink(_tagProductLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceTagProductLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagProductLinkContractData, ServiceTagProductLinkResource>(new TagProductLinkGetByProductAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TagProductLinkContractData, ServiceTagProductLinkResource>(new TagProductLinkContractDataAsyncCollectionResultOfT(
                 _tagProductLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagProductLinkContractData, ServiceTagProductLinkResource>(new TagProductLinkGetByProductCollectionResultOfT(
+            return new PageableWrapper<TagProductLinkContractData, ServiceTagProductLinkResource>(new TagProductLinkContractDataCollectionResultOfT(
                 _tagProductLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

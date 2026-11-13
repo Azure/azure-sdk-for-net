@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SitePublicCertificateResource.ResourceType, out string sitePublicCertificateApiVersion);
             _publicCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SitePublicCertificateResource.ResourceType.Namespace, Diagnostics);
-            _publicCertificatesRestClient = new PublicCertificates(_publicCertificatesClientDiagnostics, Pipeline, Endpoint, sitePublicCertificateApiVersion ?? "2026-03-15");
+            _publicCertificatesRestClient = new PublicCertificates(_publicCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sitePublicCertificateApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCertificateData, SitePublicCertificateResource>(new PublicCertificatesGetPublicCertificatesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PublicCertificateData, SitePublicCertificateResource>(new PublicCertificateDataAsync0CollectionResultOfT(
                 _publicCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCertificateData, SitePublicCertificateResource>(new PublicCertificatesGetPublicCertificatesCollectionResultOfT(
+            return new PageableWrapper<PublicCertificateData, SitePublicCertificateResource>(new PublicCertificateData0CollectionResultOfT(
                 _publicCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

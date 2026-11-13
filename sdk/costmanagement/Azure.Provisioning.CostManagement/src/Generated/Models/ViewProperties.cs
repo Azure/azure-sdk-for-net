@@ -294,8 +294,8 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
             _scope = DefineProperty<ResourceIdentifier>(nameof(Scope), new string[] { "scope" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdOn" }, isOutput: true);
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedOn" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdOn" }, isOutput: true, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedOn" }, format: "O");
             _dateRange = DefineProperty<string>(nameof(DateRange), new string[] { "dateRange" });
             _currency = DefineProperty<string>(nameof(Currency), new string[] { "currency" }, isOutput: true);
             _query = DefineModelProperty<ReportConfigDefinition>(nameof(Query), new string[] { "query" });

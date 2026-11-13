@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _evaluationOn = DefineProperty<DateTimeOffset>(nameof(EvaluationOn), new string[] { "evaluationTime" });
+            _evaluationOn = DefineProperty<DateTimeOffset>(nameof(EvaluationOn), new string[] { "evaluationTime" }, format: "O");
             _results = DefineProperty<string>(nameof(Results), new string[] { "results" });
             _error = DefineProperty<ResponseError>(nameof(Error), new string[] { "error" });
             DefineAdditionalProperties();

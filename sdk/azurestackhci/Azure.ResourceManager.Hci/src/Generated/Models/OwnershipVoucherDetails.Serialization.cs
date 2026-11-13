@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string ownershipVoucher = default;
-            OwnerKeyType ownerKeyType = default;
+            HciOwnershipVoucherOwnerKeyType ownerKeyType = default;
             OwnershipVoucherValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("ownerKeyType"u8))
                 {
-                    ownerKeyType = new OwnerKeyType(prop.Value.GetString());
+                    ownerKeyType = new HciOwnershipVoucherOwnerKeyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("validationDetails"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OwnershipVoucherDetails(ownershipVoucher, ownerKeyType, validationDetails, additionalBinaryDataProperties);

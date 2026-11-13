@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rawIcon = BinaryData.FromString(prop.Value.GetRawText());
+                    rawIcon = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("rawPng"u8))
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rawPng = BinaryData.FromString(prop.Value.GetRawText());
+                    rawPng = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MsixPackageApplications(

@@ -13,8 +13,8 @@ namespace Azure.Maps.Search
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetGeocodingAsync(string query = null, Azure.Maps.Search.Models.GeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetGeocodingBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse>> GetGeocodingBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.Boundary> GetPolygon(Azure.Maps.Search.Models.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.Boundary>> GetPolygonAsync(Azure.Maps.Search.Models.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchBoundary> GetPolygon(Azure.Maps.Search.Models.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchBoundary>> GetPolygonAsync(Azure.Maps.Search.Models.GetPolygonOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingResponse> GetReverseGeocoding(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.ReverseGeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.GeocodingResponse>> GetReverseGeocodingAsync(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Search.Models.ReverseGeocodingQuery options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.GeocodingBatchResponse> GetReverseGeocodingBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseGeocodingQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -90,20 +90,6 @@ namespace Azure.Maps.Search
 }
 namespace Azure.Maps.Search.Models
 {
-    public partial class Address
-    {
-        internal Address() { }
-        public string AddressLine { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.AddressAdminDistrictsItem> AdminDistricts { get { throw null; } }
-        public Azure.Maps.Search.Models.AddressCountryRegion CountryRegion { get { throw null; } }
-        public string FormattedAddress { get { throw null; } }
-        public Azure.Maps.Search.Models.Intersection Intersection { get { throw null; } }
-        public string Locality { get { throw null; } }
-        public string Neighborhood { get { throw null; } }
-        public string PostalCode { get { throw null; } }
-        public string StreetName { get { throw null; } }
-        public string StreetNumber { get { throw null; } }
-    }
     public partial class AddressAdminDistrictsItem
     {
         internal AddressAdminDistrictsItem() { }
@@ -115,12 +101,6 @@ namespace Azure.Maps.Search.Models
         internal AddressCountryRegion() { }
         public string Iso { get { throw null; } }
         public string Name { get { throw null; } }
-    }
-    public partial class Boundary
-    {
-        internal Boundary() { }
-        public Azure.Core.GeoJson.GeoCollection Geometry { get { throw null; } }
-        public Azure.Maps.Search.Models.BoundaryProperties Properties { get { throw null; } }
     }
     public partial class BoundaryProperties
     {
@@ -230,7 +210,7 @@ namespace Azure.Maps.Search.Models
     public partial class FeaturesItemProperties
     {
         internal FeaturesItemProperties() { }
-        public Azure.Maps.Search.Models.Address Address { get { throw null; } }
+        public Azure.Maps.Search.Models.SearchAddress Address { get { throw null; } }
         public Azure.Maps.Search.Models.ConfidenceEnum? Confidence { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeocodePointsItem> GeocodePoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.MatchCodesEnum> MatchCodes { get { throw null; } }
@@ -335,30 +315,22 @@ namespace Azure.Maps.Search.Models
         public Azure.Maps.Search.Models.ResolutionEnum? Resolution { get { throw null; } set { } }
         public Azure.Maps.Search.Models.BoundaryResultTypeEnum? ResultType { get { throw null; } set { } }
     }
-    public partial class Intersection
-    {
-        internal Intersection() { }
-        public string BaseStreet { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public string IntersectionType { get { throw null; } }
-        public string SecondaryStreet1 { get { throw null; } }
-        public string SecondaryStreet2 { get { throw null; } }
-    }
     public static partial class MapsSearchModelFactory
     {
-        public static Azure.Maps.Search.Models.Address Address(string addressLine = null, string locality = null, string neighborhood = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, Azure.Maps.Search.Models.AddressCountryRegion countryRegion = null, string formattedAddress = null, string streetName = null, string streetNumber = null, Azure.Maps.Search.Models.Intersection intersection = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressAdminDistrictsItem AddressAdminDistrictsItem(string name = null, string shortName = null) { throw null; }
         public static Azure.Maps.Search.Models.AddressCountryRegion AddressCountryRegion(string iso = null, string name = null) { throw null; }
         public static Azure.Maps.Search.Models.BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightUrl = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
-        public static Azure.Maps.Search.Models.FeaturesItemProperties FeaturesItemProperties(string type = null, Azure.Maps.Search.Models.ConfidenceEnum? confidence = default(Azure.Maps.Search.Models.ConfidenceEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.MatchCodesEnum> matchCodes = null, Azure.Maps.Search.Models.Address address = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodePointsItem> geocodePoints = null) { throw null; }
+        public static Azure.Maps.Search.Models.FeaturesItemProperties FeaturesItemProperties(string type = null, Azure.Maps.Search.Models.ConfidenceEnum? confidence = default(Azure.Maps.Search.Models.ConfidenceEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.MatchCodesEnum> matchCodes = null, Azure.Maps.Search.Models.SearchAddress address = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodePointsItem> geocodePoints = null) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingBatchResponse GeocodingBatchResponse(Azure.Maps.Search.Models.GeocodingBatchResponseSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodingBatchResponseItem> batchItems = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingBatchResponseItem GeocodingBatchResponseItem(string optionalId = null, Azure.Maps.Search.Models.FeatureCollectionEnum? type = default(Azure.Maps.Search.Models.FeatureCollectionEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FeaturesItem> features = null, string nextLink = null, Azure.Maps.Search.Models.ErrorDetail error = null) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingBatchResponseSummary GeocodingBatchResponseSummary(int? successfulRequests = default(int?), int? totalRequests = default(int?)) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingResponse GeocodingResponse(Azure.Maps.Search.Models.FeatureCollectionEnum? type = default(Azure.Maps.Search.Models.FeatureCollectionEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FeaturesItem> features = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Search.Models.GeometryCopyright GeometryCopyright(string sourceName = null, string copyright = null) { throw null; }
-        public static Azure.Maps.Search.Models.Intersection Intersection(string baseStreet = null, string secondaryStreet1 = null, string secondaryStreet2 = null, string intersectionType = null, string displayName = null) { throw null; }
+        public static Azure.Maps.Search.Models.SearchAddress SearchAddress(string addressLine = null, string locality = null, string neighborhood = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, Azure.Maps.Search.Models.AddressCountryRegion countryRegion = null, string formattedAddress = null, string streetName = null, string streetNumber = null, Azure.Maps.Search.Models.SearchIntersection intersection = null) { throw null; }
+        public static Azure.Maps.Search.Models.SearchBoundary SearchBoundary(Azure.Core.GeoJson.GeoCollection geometry = null, Azure.Maps.Search.Models.BoundaryProperties properties = null) { throw null; }
+        public static Azure.Maps.Search.Models.SearchIntersection SearchIntersection(string baseStreet = null, string secondaryStreet1 = null, string secondaryStreet2 = null, string intersectionType = null, string displayName = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MatchCodesEnum : System.IEquatable<Azure.Maps.Search.Models.MatchCodesEnum>
@@ -452,6 +424,35 @@ namespace Azure.Maps.Search.Models
         public static implicit operator Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum left, Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SearchAddress
+    {
+        internal SearchAddress() { }
+        public string AddressLine { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.AddressAdminDistrictsItem> AdminDistricts { get { throw null; } }
+        public Azure.Maps.Search.Models.AddressCountryRegion CountryRegion { get { throw null; } }
+        public string FormattedAddress { get { throw null; } }
+        public Azure.Maps.Search.Models.SearchIntersection Intersection { get { throw null; } }
+        public string Locality { get { throw null; } }
+        public string Neighborhood { get { throw null; } }
+        public string PostalCode { get { throw null; } }
+        public string StreetName { get { throw null; } }
+        public string StreetNumber { get { throw null; } }
+    }
+    public partial class SearchBoundary
+    {
+        internal SearchBoundary() { }
+        public Azure.Core.GeoJson.GeoCollection Geometry { get { throw null; } }
+        public Azure.Maps.Search.Models.BoundaryProperties Properties { get { throw null; } }
+    }
+    public partial class SearchIntersection
+    {
+        internal SearchIntersection() { }
+        public string BaseStreet { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public string IntersectionType { get { throw null; } }
+        public string SecondaryStreet1 { get { throw null; } }
+        public string SecondaryStreet2 { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UsageTypeEnum : System.IEquatable<Azure.Maps.Search.Models.UsageTypeEnum>

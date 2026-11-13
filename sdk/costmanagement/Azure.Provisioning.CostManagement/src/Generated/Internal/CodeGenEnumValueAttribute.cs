@@ -37,5 +37,11 @@ namespace Microsoft.TypeSpec.Generator.Customizations
 
         /// <summary> Gets or sets the WireName. </summary>
         public string WireName { get; set; }
+
+        /// <summary> Gets or sets the EditorBrowsableNever. </summary>
+        public bool EditorBrowsableNever { get; set; }
+
+        /// <summary> Gets or sets the ObsoleteMessage. </summary>
+        public string ObsoleteMessage { get; set; }
     }
 }

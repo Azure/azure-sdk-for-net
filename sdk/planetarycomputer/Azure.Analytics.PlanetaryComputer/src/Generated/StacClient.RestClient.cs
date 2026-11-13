@@ -226,7 +226,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceCollectionRequest(string collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceCollectionRequest(string collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -514,7 +514,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetConformanceClassRequest(RequestContext context)
+        internal HttpMessage CreateGetConformanceClassesRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -569,7 +569,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceItemRequest(string collectionId, string itemId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceItemRequest(string collectionId, string itemId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -611,7 +611,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemRequest(string collectionId, string itemId, RequestContext context)
+        internal HttpMessage CreateGetItemRequest(string collectionId, string itemId, string sign, int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -623,6 +623,14 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (sign != null)
+            {
+                uri.AppendQuery("sign", sign, true);
+            }
+            if (durationInMinutes != null)
+            {
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -631,7 +639,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemCollectionRequest(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        internal HttpMessage CreateGetItemCollectionRequest(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, string sign, int? durationInMinutes, string token, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -653,6 +661,18 @@ namespace Azure.Analytics.PlanetaryComputer
             if (datetime != null)
             {
                 uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sign != null)
+            {
+                uri.AppendQuery("sign", sign, true);
+            }
+            if (durationInMinutes != null)
+            {
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+            }
+            if (token != null)
+            {
+                uri.AppendQuery("token", token, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

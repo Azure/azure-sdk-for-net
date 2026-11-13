@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-04-01-preview");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01-preview");
 
         /// <summary>
         /// Lists all of the available operations supported by Microsoft Healthcare resource provider.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllAsyncCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
+            return new OperationDetailAsyncCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
+            return new OperationDetailCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
         }
     }
 }

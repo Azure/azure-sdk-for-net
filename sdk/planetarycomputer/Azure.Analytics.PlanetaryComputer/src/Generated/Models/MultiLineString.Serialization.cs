@@ -15,11 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a MultiLineString. </summary>
     public partial class MultiLineString : GeoJsonGeometry, IJsonModel<MultiLineString>
     {
-        /// <summary> Initializes a new instance of <see cref="MultiLineString"/> for deserialization. </summary>
-        internal MultiLineString()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -133,7 +128,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            GeometryType @type = default;
+            GeometryKind @type = default;
             IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<IList<IList<float>>> coordinates = default;
@@ -141,7 +136,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new GeometryType(prop.Value.GetString());
+                    @type = new GeometryKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bbox"u8))
@@ -194,10 +189,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultiLineString(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
+            return new MultiLineString(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates ?? new ChangeTrackingList<IList<IList<float>>>());
         }
     }
 }

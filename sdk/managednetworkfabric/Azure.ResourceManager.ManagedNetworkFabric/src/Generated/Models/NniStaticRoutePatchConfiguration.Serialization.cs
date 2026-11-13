@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             BfdPatchConfiguration bfdConfiguration = default;
-            IList<StaticRoutePatchProperties> iPv4Routes = default;
-            IList<StaticRoutePatchProperties> iPv6Routes = default;
+            IList<StaticRoutePatchProperties> ipv4Routes = default;
+            IList<StaticRoutePatchProperties> ipv6Routes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(StaticRoutePatchProperties.DeserializeStaticRoutePatchProperties(item, options));
                     }
-                    iPv4Routes = array;
+                    ipv4Routes = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Routes"u8))
@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(StaticRoutePatchProperties.DeserializeStaticRoutePatchProperties(item, options));
                     }
-                    iPv6Routes = array;
+                    ipv6Routes = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NniStaticRoutePatchConfiguration(bfdConfiguration, iPv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>(), iPv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>(), additionalBinaryDataProperties);
+            return new NniStaticRoutePatchConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>(), additionalBinaryDataProperties);
         }
     }
 }

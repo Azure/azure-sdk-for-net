@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.Core;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoClusterPrincipalAssignmentResource.ResourceType, out string kustoClusterPrincipalAssignmentApiVersion);
             _clusterPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterPrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _clusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignments(_clusterPrincipalAssignmentsClientDiagnostics, Pipeline, Endpoint, kustoClusterPrincipalAssignmentApiVersion ?? "2025-02-14");
+            _clusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignments(_clusterPrincipalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterPrincipalAssignmentApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentDataAsyncCollectionResultOfT(
                 _clusterPrincipalAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentDataCollectionResultOfT(
                 _clusterPrincipalAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

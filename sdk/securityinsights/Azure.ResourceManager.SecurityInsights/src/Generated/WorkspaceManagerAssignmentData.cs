@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> The time the last job associated to this assignment ended at. </summary>
         [WirePath("properties.lastJobEndTime")]
-        public DateTimeOffset? LastJobEndOn
+        public DateTimeOffset? LastJobEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastJobEndOn;
+                return Properties is null ? default : Properties.LastJobEndsOn;
             }
         }
 
         /// <summary> State of the last job associated to this assignment. </summary>
         [WirePath("properties.lastJobProvisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? LastJobProvisioningState
+        public JobProvisioningState? LastJobProvisioningState
         {
             get
             {

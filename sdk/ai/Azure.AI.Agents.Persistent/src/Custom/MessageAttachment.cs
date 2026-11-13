@@ -12,6 +12,9 @@ namespace Azure.AI.Agents.Persistent;
 
 public partial class MessageAttachment
 {
+    /// <summary> Initializes a new instance of the <see cref="MessageAttachment"/> class from a vector store data source. </summary>
+    /// <param name="ds"> The vector store data source for the attachment. </param>
+    /// <param name="tools"> The tools associated with this attachment. </param>
     public MessageAttachment(VectorStoreDataSource ds, List<ToolDefinition> tools)
     {
         FileId = null;
@@ -20,6 +23,9 @@ public partial class MessageAttachment
         _additionalBinaryDataProperties = null;
     }
 
+    /// <summary> Initializes a new instance of the <see cref="MessageAttachment"/> class from a file identifier. </summary>
+    /// <param name="fileId"> The identifier of the file to attach. </param>
+    /// <param name="tools"> The tools associated with this attachment. </param>
     public MessageAttachment(string fileId, List<ToolDefinition> tools)
     {
         FileId = fileId;

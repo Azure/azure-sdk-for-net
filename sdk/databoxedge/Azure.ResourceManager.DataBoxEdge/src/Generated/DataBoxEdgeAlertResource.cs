@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeAlertApiVersion);
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeAlertApiVersion ?? "2023-12-01");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeAlertApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

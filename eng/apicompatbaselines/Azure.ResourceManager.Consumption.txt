@@ -1,7 +1,0 @@
-# The Unknown* discriminator fallback type is an internal generator implementation detail.
-# Its name is captured in public PersistableModelProxyAttribute metadata, but the runtime
-# behavior is unchanged and the review recommendation is to baseline this metadata-only
-# change instead of adding SDK custom code.
-CannotChangeAttribute : Attribute 'System.ClientModel.Primitives.PersistableModelProxyAttribute' on 'Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail' changed from '[PersistableModelProxyAttribute(typeof(UnknownUsageDetail))]' in the contract to '[PersistableModelProxyAttribute(typeof(UnknownConsumptionUsageDetail))]' in the implementation.
-CannotChangeAttribute : Attribute 'System.ClientModel.Primitives.PersistableModelProxyAttribute' on 'Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary' changed from '[PersistableModelProxyAttribute(typeof(UnknownChargeSummary))]' in the contract to '[PersistableModelProxyAttribute(typeof(UnknownConsumptionChargeSummary))]' in the implementation.
-CannotChangeAttribute : Attribute 'System.ClientModel.Primitives.PersistableModelProxyAttribute' on 'Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation' changed from '[PersistableModelProxyAttribute(typeof(UnknownReservationRecommendation))]' in the contract to '[PersistableModelProxyAttribute(typeof(UnknownConsumptionReservationRecommendation))]' in the implementation.

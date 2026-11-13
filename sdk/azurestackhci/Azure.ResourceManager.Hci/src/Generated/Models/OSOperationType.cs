@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Hci.Models
         private const string UpdateValue = "Update";
         /// <summary> OS ReImage operation. </summary>
         private const string ReImageValue = "ReImage";
+        /// <summary> OS Reset operation. </summary>
+        private const string ResetValue = "Reset";
 
         /// <summary> Initializes a new instance of <see cref="OSOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> OS ReImage operation. </summary>
         public static OSOperationType ReImage { get; } = new OSOperationType(ReImageValue);
+
+        /// <summary> OS Reset operation. </summary>
+        public static OSOperationType Reset { get; } = new OSOperationType(ResetValue);
 
         /// <summary> Determines if two <see cref="OSOperationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

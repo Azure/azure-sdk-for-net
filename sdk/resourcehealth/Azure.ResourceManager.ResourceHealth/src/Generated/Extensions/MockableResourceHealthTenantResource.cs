@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         /// <summary> Gets a collection of ResourceHealthMetadataEntities in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of ResourceHealthMetadataEntities and their operations over a ResourceHealthMetadataEntityResource. </returns>

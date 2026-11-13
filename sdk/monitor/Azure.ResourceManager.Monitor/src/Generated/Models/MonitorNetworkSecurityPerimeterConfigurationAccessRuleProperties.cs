@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties"/>. </summary>
-        /// <param name="direction"></param>
+        /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Direction. </summary>
+        /// <summary> Direction of the access rule. </summary>
         public MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? Direction { get; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>

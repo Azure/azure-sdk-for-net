@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Maps.Models;
 using Azure.ResourceManager.Models;
 
@@ -24,13 +23,10 @@ namespace Azure.ResourceManager.Maps
     [ModelReaderWriterBuildable(typeof(MapsAccountPatch))]
     [ModelReaderWriterBuildable(typeof(MapsAccountProperties))]
     [ModelReaderWriterBuildable(typeof(MapsAccountResource))]
-    [ModelReaderWriterBuildable(typeof(MapsAccounts))]
     [ModelReaderWriterBuildable(typeof(MapsAccountSasContent))]
     [ModelReaderWriterBuildable(typeof(MapsAccountSasToken))]
     [ModelReaderWriterBuildable(typeof(MapsCorsRule))]
-    [ModelReaderWriterBuildable(typeof(MapsCorsRules))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorData))]
-    [ModelReaderWriterBuildable(typeof(MapsCreatorListResult))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorPatch))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorProperties))]
     [ModelReaderWriterBuildable(typeof(MapsCreatorResource))]
@@ -42,14 +38,8 @@ namespace Azure.ResourceManager.Maps
     [ModelReaderWriterBuildable(typeof(MapsPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(MapsPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(MapsPrivateLinkResourceData))]
-    [ModelReaderWriterBuildable(typeof(MapsPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(MapsPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(MapsSku))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourceList))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMapsContext : ModelReaderWriterContext

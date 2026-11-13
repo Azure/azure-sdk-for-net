@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
         /// <param name="licenseProfile"> Specifies the License related properties for a machine. </param>
+        /// <param name="statusReason"> Indicates whether the service has detected that this Arc machine is a clone of another onboarded machine. Service-computed; not settable by the user. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="status"> The status of the hybrid machine agent. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkProfile"> Information about the network the machine is on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineProperties(HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, HybridComputeIdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, ResourceIdentifier hardwareResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineProperties(HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, MachineStatusReason? statusReason, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, HybridComputeIdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, ResourceIdentifier hardwareResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             AgentUpgrade = agentUpgrade;
             OSProfile = osProfile;
             LicenseProfile = licenseProfile;
+            StatusReason = statusReason;
             ProvisioningState = provisioningState;
             Status = status;
             LastStatusChange = lastStatusChange;
@@ -147,6 +149,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the License related properties for a machine. </summary>
         [WirePath("licenseProfile")]
         public LicenseProfileMachineInstanceView LicenseProfile { get; set; }
+
+        /// <summary> Indicates whether the service has detected that this Arc machine is a clone of another onboarded machine. Service-computed; not settable by the user. </summary>
+        [WirePath("statusReason")]
+        public MachineStatusReason? StatusReason { get; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
         [WirePath("provisioningState")]

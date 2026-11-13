@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(GremlinRoleDefinitionResource.ResourceType, out string gremlinRoleDefinitionApiVersion);
             _gremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", GremlinRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinRoleDefinitionApiVersion ?? "2026-04-01-preview");
+            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gremlinRoleDefinitionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GremlinRoleDefinitionData, GremlinRoleDefinitionResource>(new GremlinResourcesGetGremlinRoleDefinitionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GremlinRoleDefinitionData, GremlinRoleDefinitionResource>(new GremlinRoleDefinitionDataAsyncCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GremlinRoleDefinitionData, GremlinRoleDefinitionResource>(new GremlinResourcesGetGremlinRoleDefinitionsCollectionResultOfT(
+            return new PageableWrapper<GremlinRoleDefinitionData, GremlinRoleDefinitionResource>(new GremlinRoleDefinitionDataCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

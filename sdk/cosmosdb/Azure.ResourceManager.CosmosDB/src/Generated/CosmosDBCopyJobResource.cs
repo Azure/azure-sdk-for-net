@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBCopyJobApiVersion);
             _copyJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _copyJobsRestClient = new CopyJobs(_copyJobsClientDiagnostics, Pipeline, Endpoint, cosmosDBCopyJobApiVersion ?? "2026-04-01-preview");
+            _copyJobsRestClient = new CopyJobs(_copyJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBCopyJobApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

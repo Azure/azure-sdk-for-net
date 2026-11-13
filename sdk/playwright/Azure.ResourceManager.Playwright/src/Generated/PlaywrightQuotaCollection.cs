@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Playwright
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightQuotaResource"/> and their operations.
     /// Each <see cref="PlaywrightQuotaResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="PlaywrightQuotaCollection"/> instance call the GetPlaywrightQuotas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="PlaywrightQuotaCollection"/> instance call the GetAllPlaywrightQuota method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class PlaywrightQuotaCollection : ArmCollection, IEnumerable<PlaywrightQuotaResource>, IAsyncEnumerable<PlaywrightQuotaResource>
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Playwright
             TryGetApiVersion(PlaywrightQuotaResource.ResourceType, out string playwrightQuotaApiVersion);
             _location = location;
             _playwrightQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightQuotaResource.ResourceType.Namespace, Diagnostics);
-            _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2026-02-01-preview");
+            _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightQuotaApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlaywrightQuotaCollection.GetAll"), data => new PlaywrightQuotaResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotaDataAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlaywrightQuotaCollection.GetAll"), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlaywrightQuotaCollection.GetAll"), data => new PlaywrightQuotaResource(Client, data));
+            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotaDataCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlaywrightQuotaCollection.GetAll"), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary>

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ProviderHub
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of Operations for mocking. </summary>
         protected Operations()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Initializes a new instance of Operations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Operations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Operations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(Operations).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -40,46 +43,6 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
-
-        internal HttpMessage CreateGetAllRequest(RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/operations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
 
         internal HttpMessage CreateGetByProviderRegistrationRequest(Guid subscriptionId, string providerNamespace, RequestContext context)
         {
@@ -98,6 +61,7 @@ namespace Azure.ResourceManager.ProviderHub
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -119,6 +83,7 @@ namespace Azure.ResourceManager.ProviderHub
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -142,6 +107,7 @@ namespace Azure.ResourceManager.ProviderHub
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
     }

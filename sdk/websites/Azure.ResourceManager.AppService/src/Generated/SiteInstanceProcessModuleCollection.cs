@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteInstanceProcessModuleResource.ResourceType, out string siteInstanceProcessModuleApiVersion);
             _processModuleInfosClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceProcessModuleResource.ResourceType.Namespace, Diagnostics);
-            _processModuleInfosRestClient = new ProcessModuleInfos(_processModuleInfosClientDiagnostics, Pipeline, Endpoint, siteInstanceProcessModuleApiVersion ?? "2026-03-15");
+            _processModuleInfosRestClient = new ProcessModuleInfos(_processModuleInfosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteInstanceProcessModuleApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProcessModuleInfoData, SiteInstanceProcessModuleResource>(new ProcessModuleInfosGetInstanceProcessModulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProcessModuleInfoData, SiteInstanceProcessModuleResource>(new ProcessModuleInfoDataAsyncCollectionResultOfT(
                 _processModuleInfosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProcessModuleInfoData, SiteInstanceProcessModuleResource>(new ProcessModuleInfosGetInstanceProcessModulesCollectionResultOfT(
+            return new PageableWrapper<ProcessModuleInfoData, SiteInstanceProcessModuleResource>(new ProcessModuleInfoDataCollectionResultOfT(
                 _processModuleInfosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

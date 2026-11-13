@@ -12,7 +12,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for datastore contents configuration. </summary>
+    /// <summary>
+    /// Base definition for datastore contents configuration.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/>, <see cref="MachineLearningAzureFileDatastore"/>, and <see cref="OneLakeDatastore"/>.
+    /// </summary>
     public partial class MachineLearningDatastoreProperties : MachineLearningResourceBase, IJsonModel<MachineLearningDatastoreProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreProperties"/> for deserialization. </summary>

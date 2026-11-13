@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverPolicyVirtualNetworkLinkResource.ResourceType, out string dnsResolverPolicyVirtualNetworkLinkApiVersion);
             _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyVirtualNetworkLinkResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolverPolicyVirtualNetworkLinksRestClient = new DnsResolverPolicyVirtualNetworkLinks(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
+            _dnsResolverPolicyVirtualNetworkLinksRestClient = new DnsResolverPolicyVirtualNetworkLinks(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinkDataAsyncCollectionResultOfT(
                 _dnsResolverPolicyVirtualNetworkLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinksGetAllCollectionResultOfT(
+            return new PageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinkDataCollectionResultOfT(
                 _dnsResolverPolicyVirtualNetworkLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

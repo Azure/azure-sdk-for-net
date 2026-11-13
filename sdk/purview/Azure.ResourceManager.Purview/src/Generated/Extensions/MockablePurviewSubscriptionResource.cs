@@ -42,15 +42,21 @@ namespace Azure.ResourceManager.Purview.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(
+            AccountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-04-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics FeaturesClientDiagnostics => _featuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Features FeaturesRestClient => _featuresRestClient ??= new Features(FeaturesClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
+        private Features FeaturesRestClient => _featuresRestClient ??= new Features(FeaturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01-preview");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01-preview");
 
         /// <summary>
         /// List accounts in Subscription
@@ -78,7 +84,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
+            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new PurviewAccountDataAsync0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -107,7 +113,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
+            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new PurviewAccountData0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +341,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(
+            return new PurviewUsageAsyncCollectionResultOfT(
                 UsagesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -371,7 +377,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(
+            return new PurviewUsageCollectionResultOfT(
                 UsagesRestClient,
                 Id.SubscriptionId,
                 location,

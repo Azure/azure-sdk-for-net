@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingReservationOrderResource.ResourceType, out string billingReservationOrderApiVersion);
             _reservationOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingReservationOrderResource.ResourceType.Namespace, Diagnostics);
-            _reservationOrdersRestClient = new ReservationOrders(_reservationOrdersClientDiagnostics, Pipeline, Endpoint, billingReservationOrderApiVersion ?? "2024-04-01");
+            _reservationOrdersRestClient = new ReservationOrders(_reservationOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservationOrderApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationOrderData, BillingReservationOrderResource>(new ReservationOrdersGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingReservationOrderData, BillingReservationOrderResource>(new BillingReservationOrderDataAsyncCollectionResultOfT(
                 _reservationOrdersRestClient,
                 Id.Name,
                 filter,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationOrderData, BillingReservationOrderResource>(new ReservationOrdersGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingReservationOrderData, BillingReservationOrderResource>(new BillingReservationOrderDataCollectionResultOfT(
                 _reservationOrdersRestClient,
                 Id.Name,
                 filter,

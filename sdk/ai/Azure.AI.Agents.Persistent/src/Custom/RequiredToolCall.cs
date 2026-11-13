@@ -20,7 +20,8 @@ namespace Azure.AI.Agents.Persistent;
 [CodeGenSuppress("RequiredToolCall", typeof(string))]
 public abstract partial class RequiredToolCall : RequiredAction
 {
-    // Backward-compat: old contract had protected RequiredToolCall(string id)
+    /// <summary> Initializes a new instance of the <see cref="RequiredToolCall"/> class. </summary>
+    /// <param name="id"> The identifier of the tool call. </param>
     protected RequiredToolCall(string id) : base((string)null)
     {
         Id = id;

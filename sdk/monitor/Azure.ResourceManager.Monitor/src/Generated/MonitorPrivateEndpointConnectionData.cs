@@ -40,6 +40,19 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Resource properties. </summary>
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
+        /// <summary> The group ids for the private endpoint resource. </summary>
+        public IReadOnlyList<string> GroupIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
+            }
+        }
+
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public MonitorPrivateLinkServiceConnectionState ConnectionState
         {

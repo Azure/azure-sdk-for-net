@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppConnectedEnvironmentDaprComponentResource.ResourceType, out string containerAppConnectedEnvironmentDaprComponentApiVersion);
             _containerAppConnectedEnvironmentDaprComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentDaprComponentResource.ResourceType.Namespace, Diagnostics);
-            _containerAppConnectedEnvironmentDaprComponentsRestClient = new ContainerAppConnectedEnvironmentDaprComponents(_containerAppConnectedEnvironmentDaprComponentsClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentDaprComponentApiVersion ?? "2025-10-02-preview");
+            _containerAppConnectedEnvironmentDaprComponentsRestClient = new ContainerAppConnectedEnvironmentDaprComponents(_containerAppConnectedEnvironmentDaprComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentDaprComponentApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppDaprComponentData, ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppConnectedEnvironmentDaprComponentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppDaprComponentData, ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppDaprComponentDataAsyncCollectionResultOfT(
                 _containerAppConnectedEnvironmentDaprComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppDaprComponentData, ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppConnectedEnvironmentDaprComponentsGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerAppDaprComponentData, ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppDaprComponentDataCollectionResultOfT(
                 _containerAppConnectedEnvironmentDaprComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

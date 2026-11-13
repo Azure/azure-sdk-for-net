@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary> Connection setting resource definition. </summary>
+    /// <summary> Bot channel resource definition. </summary>
     public partial class BotConnectionSettingData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"> The set of properties specific to bot channel resource. </param>
         /// <param name="sku"> Gets or sets the SKU of the resource. </param>
         /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
         /// <param name="eTag"> Entity Tag. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BotService
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary> The set of properties specific to bot channel resource. </summary>
         public BotConnectionSettingProperties Properties { get; set; }
 
         /// <summary> Gets or sets the SKU of the resource. </summary>

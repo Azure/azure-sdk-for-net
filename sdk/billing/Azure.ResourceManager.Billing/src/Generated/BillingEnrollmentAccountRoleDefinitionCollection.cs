@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingEnrollmentAccountRoleDefinitionResource.ResourceType, out string billingEnrollmentAccountRoleDefinitionApiVersion);
             _billingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingEnrollmentAccountRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Endpoint, billingEnrollmentAccountRoleDefinitionApiVersion ?? "2024-04-01");
+            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingEnrollmentAccountRoleDefinitionApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingEnrollmentAccountRoleDefinitionResource>(new BillingRoleDefinitionGetByEnrollmentAccountAsyncCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll"), data => new BillingEnrollmentAccountRoleDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingEnrollmentAccountRoleDefinitionResource>(new BillingRoleDefinitionDataAsync4CollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll"), data => new BillingEnrollmentAccountRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleDefinitionData, BillingEnrollmentAccountRoleDefinitionResource>(new BillingRoleDefinitionGetByEnrollmentAccountCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll"), data => new BillingEnrollmentAccountRoleDefinitionResource(Client, data));
+            return new PageableWrapper<BillingRoleDefinitionData, BillingEnrollmentAccountRoleDefinitionResource>(new BillingRoleDefinitionData4CollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll"), data => new BillingEnrollmentAccountRoleDefinitionResource(Client, data));
         }
 
         /// <summary>

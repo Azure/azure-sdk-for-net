@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> Role Addon. </summary>
+    /// <summary>
+    /// Role Addon
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EdgeArcAddon"/> and <see cref="EdgeIotAddon"/>.
+    /// </summary>
     public partial class DataBoxEdgeRoleAddonData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

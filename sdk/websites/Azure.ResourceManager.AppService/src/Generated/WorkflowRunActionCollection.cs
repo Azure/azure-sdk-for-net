@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WorkflowRunActionResource.ResourceType, out string workflowRunActionApiVersion);
             _workflowRunActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunActionResource.ResourceType.Namespace, Diagnostics);
-            _workflowRunActionsRestClient = new WorkflowRunActions(_workflowRunActionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionApiVersion ?? "2026-03-15");
+            _workflowRunActionsRestClient = new WorkflowRunActions(_workflowRunActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workflowRunActionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowRunActionData, WorkflowRunActionResource>(new WorkflowRunActionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowRunActionData, WorkflowRunActionResource>(new WorkflowRunActionDataAsyncCollectionResultOfT(
                 _workflowRunActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowRunActionData, WorkflowRunActionResource>(new WorkflowRunActionsGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkflowRunActionData, WorkflowRunActionResource>(new WorkflowRunActionDataCollectionResultOfT(
                 _workflowRunActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

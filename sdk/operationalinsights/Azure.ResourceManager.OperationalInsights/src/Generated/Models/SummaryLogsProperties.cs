@@ -23,29 +23,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SummaryLogsProperties"/>. </summary>
-        /// <param name="ruleType"> SummaryRules rule type: User. </param>
+        /// <param name="summaryLogsRuleType"> SummaryRules rule type: User. </param>
         /// <param name="displayName"> The display name of the Summary rule. </param>
         /// <param name="description"> The description of the Summary rule. </param>
         /// <param name="isActive"> Indicates if Summary rule is active. If not, Summary rule execution stops. </param>
-        /// <param name="statusCode"> Indicates the reason for rule deactivation. </param>
-        /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
+        /// <param name="summaryLogsStatusCode"> Indicates the reason for rule deactivation. </param>
+        /// <param name="summaryLogsProvisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryLogsProperties(OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType, string displayName, string description, bool? isActive, OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode, OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState, OperationalInsightsSummaryRule ruleDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SummaryLogsProperties(OperationalInsightsSummaryLogsRuleType? summaryLogsRuleType, string displayName, string description, bool? isActive, OperationalInsightsSummaryLogsStatusCode? summaryLogsStatusCode, OperationalInsightsSummaryLogsProvisioningState? summaryLogsProvisioningState, OperationalInsightsSummaryRule ruleDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RuleType = ruleType;
+            SummaryLogsRuleType = summaryLogsRuleType;
             DisplayName = displayName;
             Description = description;
             IsActive = isActive;
-            StatusCode = statusCode;
-            ProvisioningState = provisioningState;
+            SummaryLogsStatusCode = summaryLogsStatusCode;
+            SummaryLogsProvisioningState = summaryLogsProvisioningState;
             RuleDefinition = ruleDefinition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SummaryRules rule type: User. </summary>
         [WirePath("ruleType")]
-        public OperationalInsightsNetworkSecurityPerimeterRuleType? RuleType { get; set; }
+        public OperationalInsightsSummaryLogsRuleType? SummaryLogsRuleType { get; set; }
 
         /// <summary> The display name of the Summary rule. </summary>
         [WirePath("displayName")]
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Indicates the reason for rule deactivation. </summary>
         [WirePath("statusCode")]
-        public OperationalInsightsNetworkSecurityPerimeterStatusCode? StatusCode { get; }
+        public OperationalInsightsSummaryLogsStatusCode? SummaryLogsStatusCode { get; }
 
         /// <summary> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </summary>
         [WirePath("provisioningState")]
-        public OperationalInsightsNetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
+        public OperationalInsightsSummaryLogsProvisioningState? SummaryLogsProvisioningState { get; }
 
         /// <summary> Rule definition parameters. </summary>
         [WirePath("ruleDefinition")]

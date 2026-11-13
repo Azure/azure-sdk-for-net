@@ -7,63 +7,95 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary> The FavoriteSourceType. </summary>
+    /// <summary></summary>
     public readonly partial struct FavoriteSourceType : IEquatable<FavoriteSourceType>
     {
         private readonly string _value;
+        /// <summary> retention. </summary>
+        private const string RetentionValue = "retention";
+        /// <summary> notebook. </summary>
+        private const string NotebookValue = "notebook";
+        /// <summary> sessions. </summary>
+        private const string SessionsValue = "sessions";
+        /// <summary> events. </summary>
+        private const string EventsValue = "events";
+        /// <summary> userflows. </summary>
+        private const string UserflowsValue = "userflows";
+        /// <summary> funnel. </summary>
+        private const string FunnelValue = "funnel";
+        /// <summary> impact. </summary>
+        private const string ImpactValue = "impact";
+        /// <summary> segmentation. </summary>
+        private const string SegmentationValue = "segmentation";
 
         /// <summary> Initializes a new instance of <see cref="FavoriteSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FavoriteSourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RetentionValue = "retention";
-        private const string NotebookValue = "notebook";
-        private const string SessionsValue = "sessions";
-        private const string EventsValue = "events";
-        private const string UserflowsValue = "userflows";
-        private const string FunnelValue = "funnel";
-        private const string ImpactValue = "impact";
-        private const string SegmentationValue = "segmentation";
+            _value = value;
+        }
 
         /// <summary> retention. </summary>
         public static FavoriteSourceType Retention { get; } = new FavoriteSourceType(RetentionValue);
+
         /// <summary> notebook. </summary>
         public static FavoriteSourceType Notebook { get; } = new FavoriteSourceType(NotebookValue);
+
         /// <summary> sessions. </summary>
         public static FavoriteSourceType Sessions { get; } = new FavoriteSourceType(SessionsValue);
+
         /// <summary> events. </summary>
         public static FavoriteSourceType Events { get; } = new FavoriteSourceType(EventsValue);
+
         /// <summary> userflows. </summary>
         public static FavoriteSourceType Userflows { get; } = new FavoriteSourceType(UserflowsValue);
+
         /// <summary> funnel. </summary>
         public static FavoriteSourceType Funnel { get; } = new FavoriteSourceType(FunnelValue);
+
         /// <summary> impact. </summary>
         public static FavoriteSourceType Impact { get; } = new FavoriteSourceType(ImpactValue);
+
         /// <summary> segmentation. </summary>
         public static FavoriteSourceType Segmentation { get; } = new FavoriteSourceType(SegmentationValue);
+
         /// <summary> Determines if two <see cref="FavoriteSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FavoriteSourceType left, FavoriteSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FavoriteSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FavoriteSourceType left, FavoriteSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FavoriteSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FavoriteSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FavoriteSourceType(string value) => new FavoriteSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FavoriteSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FavoriteSourceType?(string value) => value == null ? null : new FavoriteSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FavoriteSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FavoriteSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

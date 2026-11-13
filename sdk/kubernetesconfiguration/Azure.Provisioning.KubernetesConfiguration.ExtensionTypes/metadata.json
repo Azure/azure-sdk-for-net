@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.KubernetesConfiguration": "2024-11-01-preview"
+  }
+}

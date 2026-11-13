@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(BatchApplicationPackageResource.ResourceType, out string batchApplicationPackageApiVersion);
             _applicationPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchApplicationPackageResource.ResourceType.Namespace, Diagnostics);
-            _applicationPackageRestClient = new ApplicationPackage(_applicationPackageClientDiagnostics, Pipeline, Endpoint, batchApplicationPackageApiVersion ?? "2025-06-01");
+            _applicationPackageRestClient = new ApplicationPackage(_applicationPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchApplicationPackageApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchApplicationPackageData, BatchApplicationPackageResource>(new ApplicationPackageGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BatchApplicationPackageData, BatchApplicationPackageResource>(new BatchApplicationPackageDataAsyncCollectionResultOfT(
                 _applicationPackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchApplicationPackageData, BatchApplicationPackageResource>(new ApplicationPackageGetAllCollectionResultOfT(
+            return new PageableWrapper<BatchApplicationPackageData, BatchApplicationPackageResource>(new BatchApplicationPackageDataCollectionResultOfT(
                 _applicationPackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

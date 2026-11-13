@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeOrderApiVersion);
             _ordersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _ordersRestClient = new Orders(_ordersClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeOrderApiVersion ?? "2023-12-01");
+            _ordersRestClient = new Orders(_ordersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeOrderApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

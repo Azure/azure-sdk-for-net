@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -37,12 +39,20 @@ namespace Samples
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatClientGetCatsAsyncCollectionResult as an enumerable collection. </returns>
-        public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
+            return this.AsPagesAsync(continuationToken, pageSizeHint, (_context?.CancellationToken ?? default));
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute] global::System.Threading.CancellationToken cancellationToken)
+        {
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken, global::System.UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                global::Azure.Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                global::Azure.Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if ((response is null))
                 {
                     yield break;
@@ -52,7 +62,7 @@ namespace Samples
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::System.ClientModel.Primitives.ModelReaderWriterOptions.Json, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if ((nextPage == null))
@@ -65,14 +75,23 @@ namespace Samples
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink, global::System.Threading.CancellationToken cancellationToken)
         {
             global::Azure.Core.HttpMessage message = (nextLink != null) ? _client.CreateNextGetCatsRequest(nextLink, _context) : _client.CreateGetCatsRequest(_context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                global::Azure.ErrorOptions errorOptions = (_context?.ErrorOptions ?? global::Azure.ErrorOptions.Default);
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if ((message.Response.IsError && ((errorOptions & global::Azure.ErrorOptions.NoThrow) != global::Azure.ErrorOptions.NoThrow)))
+                {
+                    throw new global::Azure.RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (global::System.Exception e)
             {

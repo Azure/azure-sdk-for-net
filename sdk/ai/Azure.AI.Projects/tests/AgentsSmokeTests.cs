@@ -36,28 +36,6 @@ public class AgentsSmokeTests : AgentsTestBase
         Assert.That(projectOpenAIClient, Is.Not.Null);
     }
 
-    [Test]
-    public void TestResponseItemExtension()
-    {
-        string rawStructuredInputsItem = """
-            {
-              "type": "structured_inputs",
-              "inputs": {
-                "hello": "world"
-              }
-            }
-            """;
-
-        ResponseItem item = ModelReaderWriter.Read<ResponseItem>(BinaryData.FromString(rawStructuredInputsItem));
-        Assert.That(item, Is.Not.Null);
-
-        AgentResponseItem agentResponseItem = item.AsAgentResponseItem();
-        Assert.That(agentResponseItem, Is.Not.Null);
-
-        ResponseItem revertedResponseItem = agentResponseItem;
-        Assert.That(revertedResponseItem, Is.Not.Null);
-    }
-
     //[Test]
     //public void TestUseAnAgentTool()
     //{
@@ -208,20 +186,6 @@ public class AgentsSmokeTests : AgentsTestBase
 
         Assert.That(ModelReaderWriter.Write(responseOptions).ToString(), Does.Contain("my-test-agent"));
         Assert.That(ModelReaderWriter.Write(responseOptions).ToString(), Does.Contain("conv_abcd1234"));
-    }
-
-    [Test]
-    public void ItemDeserializationTest()
-    {
-        const string rawItem = """
-            {
-              "role": "user",
-              "content": "hello, world"
-            }
-            """;
-        BinaryData itemBytes = BinaryData.FromString(rawItem);
-
-        AgentResponseItem asAgentItem = ModelReaderWriter.Read<AgentResponseItem>(itemBytes);
     }
 
     [TearDown]

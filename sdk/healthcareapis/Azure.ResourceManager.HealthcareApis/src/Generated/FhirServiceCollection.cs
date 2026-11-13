@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(FhirServiceResource.ResourceType, out string fhirServiceApiVersion);
             _fhirServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", FhirServiceResource.ResourceType.Namespace, Diagnostics);
-            _fhirServicesRestClient = new FhirServices(_fhirServicesClientDiagnostics, Pipeline, Endpoint, fhirServiceApiVersion ?? "2025-04-01-preview");
+            _fhirServicesRestClient = new FhirServices(_fhirServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fhirServiceApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServicesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServiceDataAsyncCollectionResultOfT(
                 _fhirServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServicesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<FhirServiceData, FhirServiceResource>(new FhirServiceDataCollectionResultOfT(
                 _fhirServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

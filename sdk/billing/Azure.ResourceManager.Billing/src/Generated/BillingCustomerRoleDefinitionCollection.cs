@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingCustomerRoleDefinitionResource.ResourceType, out string billingCustomerRoleDefinitionApiVersion);
             _billingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingCustomerRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Endpoint, billingCustomerRoleDefinitionApiVersion ?? "2024-04-01");
+            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerRoleDefinitionApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingCustomerRoleDefinitionResource>(new BillingRoleDefinitionGetByCustomerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingCustomerRoleDefinitionResource>(new BillingRoleDefinitionDataAsync0CollectionResultOfT(
                 _billingRoleDefinitionRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleDefinitionData, BillingCustomerRoleDefinitionResource>(new BillingRoleDefinitionGetByCustomerCollectionResultOfT(
+            return new PageableWrapper<BillingRoleDefinitionData, BillingCustomerRoleDefinitionResource>(new BillingRoleDefinitionData0CollectionResultOfT(
                 _billingRoleDefinitionRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,

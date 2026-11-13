@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> The ArmDeploymentExtensionDefinition. </summary>
     public partial class ArmDeploymentExtensionDefinition
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionDefinition"/>. </summary>
-        internal ArmDeploymentExtensionDefinition()
+        public ArmDeploymentExtensionDefinition()
         {
             Config = new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>();
         }
@@ -27,15 +27,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="alias"> The alias of the extension as defined in the deployment template. </param>
         /// <param name="name"> The extension name. </param>
         /// <param name="version"> The extension version. </param>
-        /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </param>
+        /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment target within an extension. </param>
+        /// <param name="configHash"> The extension configuration hash. Can be used to distinguish different configurations that have the same config ID. </param>
         /// <param name="config"> The extension configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentExtensionDefinition(string @alias, string name, string version, string configId, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentExtensionDefinition(string @alias, string name, string version, string configId, string configHash, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alias = @alias;
             Name = name;
             Version = version;
             ConfigId = configId;
+            ConfigHash = configHash;
             Config = config;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,9 +54,13 @@ namespace Azure.ResourceManager.Resources.Models
         [WirePath("version")]
         public string Version { get; }
 
-        /// <summary> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </summary>
+        /// <summary> The extension configuration ID. It uniquely identifies a deployment target within an extension. </summary>
         [WirePath("configId")]
         public string ConfigId { get; }
+
+        /// <summary> The extension configuration hash. Can be used to distinguish different configurations that have the same config ID. </summary>
+        [WirePath("configHash")]
+        public string ConfigHash { get; }
 
         /// <summary> The extension configuration. </summary>
         [WirePath("config")]

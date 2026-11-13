@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotWorkflowResource.ResourceType, out string siteSlotWorkflowApiVersion);
             _workflowEnvelopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotWorkflowResource.ResourceType.Namespace, Diagnostics);
-            _workflowEnvelopesRestClient = new WorkflowEnvelopes(_workflowEnvelopesClientDiagnostics, Pipeline, Endpoint, siteSlotWorkflowApiVersion ?? "2026-03-15");
+            _workflowEnvelopesRestClient = new WorkflowEnvelopes(_workflowEnvelopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotWorkflowApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopesGetInstanceWorkflowsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopeDataAsyncCollectionResultOfT(
                 _workflowEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopesGetInstanceWorkflowsSlotCollectionResultOfT(
+            return new PageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopeDataCollectionResultOfT(
                 _workflowEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

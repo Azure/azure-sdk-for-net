@@ -14,46 +14,14 @@ using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
 {
-    /// <summary>
-    /// A class representing the ScVmmAvailabilitySet data model.
-    /// The AvailabilitySets resource definition.
-    /// </summary>
+    /// <summary> The AvailabilitySets resource definition. </summary>
     public partial class ScVmmAvailabilitySetData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmAvailabilitySetData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public ScVmmAvailabilitySetData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
@@ -64,38 +32,69 @@ namespace Azure.ResourceManager.ScVmm
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmmAvailabilitySetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extended location. </param>
-        /// <param name="availabilitySetName"> Name of the availability set. </param>
-        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmAvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string availabilitySetName, ResourceIdentifier vmmServerId, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmAvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvailabilitySetProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            AvailabilitySetName = availabilitySetName;
-            VmmServerId = vmmServerId;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmmAvailabilitySetData"/> for deserialization. </summary>
-        internal ScVmmAvailabilitySetData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal AvailabilitySetProperties Properties { get; set; }
 
         /// <summary> The extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> Name of the availability set. </summary>
-        public string AvailabilitySetName { get; set; }
+        public string AvailabilitySetName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilitySetName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.AvailabilitySetName = value;
+            }
+        }
+
         /// <summary> ARM Id of the vmmServer resource in which this resource resides. </summary>
-        public ResourceIdentifier VmmServerId { get; set; }
+        public ResourceIdentifier VmmServerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmmServerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.VmmServerId = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public ScVmmProvisioningState? ProvisioningState { get; }
+        public ScVmmProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

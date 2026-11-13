@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <summary> Initializes a new instance of <see cref="TaskListResult"/>. </summary>
         internal TaskListResult()
         {
-            Value = new ChangeTrackingList<TaskData>();
+            Value = new ChangeTrackingList<ContainerRegistryTaskData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TaskListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskListResult(IList<TaskData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskListResult(IList<ContainerRegistryTaskData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The collection value. </summary>
-        public IList<TaskData> Value { get; }
+        public IList<ContainerRegistryTaskData> Value { get; }
 
         /// <summary> The URI that can be used to request the next set of paged results. </summary>
         public string NextLink { get; }

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GenericBlobSbsAuthModel(@type, additionalBinaryDataProperties, credentialsConfig ?? new ChangeTrackingDictionary<string, string>(), storageAccountCredentialsConfig ?? new ChangeTrackingDictionary<string, string>());

@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> Specifies how Tasks should be distributed across Compute Nodes. </summary>
     public partial class BatchTaskSchedulingPolicy : IJsonModel<BatchTaskSchedulingPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/> for deserialization. </summary>
-        internal BatchTaskSchedulingPolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchTaskSchedulingPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -148,7 +143,7 @@ namespace Azure.Compute.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BatchTaskSchedulingPolicy(jobDefaultOrder, nodeFillType, additionalBinaryDataProperties);

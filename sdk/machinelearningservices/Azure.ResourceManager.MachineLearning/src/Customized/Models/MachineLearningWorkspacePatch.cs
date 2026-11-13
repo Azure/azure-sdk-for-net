@@ -16,16 +16,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
         public int? CosmosDbCollectionsThroughput
         {
-            get => ServiceManagedResourcesCosmosDbCollectionsThroughput;
-            set => ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
+            get => ServiceManagedResourcesCosmosDBCollectionsThroughput;
+            set => ServiceManagedResourcesCosmosDBCollectionsThroughput = value;
         }
 
         /// <summary> Gets or sets the KeyIdentifier. </summary>
         [WirePath("properties.encryption.keyVaultProperties.keyIdentifier")]
         public string KeyIdentifier
         {
-            get => EncryptionKeyIdentifier;
-            set => EncryptionKeyIdentifier = value;
+            get => Properties?.Encryption?.KeyIdentifier;
+            set
+            {
+                Properties ??= new MachineLearningWorkspacePropertiesPatch();
+                Properties.Encryption = value is null
+                    ? null
+                    : new EncryptionUpdateProperties(new EncryptionKeyVaultUpdateProperties(value), null);
+            }
         }
 
         /// <summary> Whether requests from Public Network are allowed. </summary>

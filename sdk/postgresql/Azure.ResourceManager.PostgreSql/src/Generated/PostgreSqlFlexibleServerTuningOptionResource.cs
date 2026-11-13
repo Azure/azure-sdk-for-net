@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerTuningOptionApiVersion);
             _tuningOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _tuningOptionsRestClient = new TuningOptions(_tuningOptionsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerTuningOptionApiVersion ?? "2026-04-01-preview");
+            _tuningOptionsRestClient = new TuningOptions(_tuningOptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerTuningOptionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new TuningOptionsGetRecommendationsAsyncCollectionResultOfT(
+            return new ObjectRecommendationAsyncCollectionResultOfT(
                 _tuningOptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new TuningOptionsGetRecommendationsCollectionResultOfT(
+            return new ObjectRecommendationCollectionResultOfT(
                 _tuningOptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

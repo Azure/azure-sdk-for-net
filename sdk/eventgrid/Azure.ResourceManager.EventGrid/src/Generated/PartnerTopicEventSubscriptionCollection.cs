@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(PartnerTopicEventSubscriptionResource.ResourceType, out string partnerTopicEventSubscriptionApiVersion);
             _partnerTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerTopicEventSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _partnerTopicEventSubscriptionsRestClient = new PartnerTopicEventSubscriptions(_partnerTopicEventSubscriptionsClientDiagnostics, Pipeline, Endpoint, partnerTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
+            _partnerTopicEventSubscriptionsRestClient = new PartnerTopicEventSubscriptions(_partnerTopicEventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridSubscriptionData, PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionsGetByPartnerTopicAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridSubscriptionData, PartnerTopicEventSubscriptionResource>(new EventGridSubscriptionDataAsync9CollectionResultOfT(
                 _partnerTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridSubscriptionData, PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionsGetByPartnerTopicCollectionResultOfT(
+            return new PageableWrapper<EventGridSubscriptionData, PartnerTopicEventSubscriptionResource>(new EventGridSubscriptionData9CollectionResultOfT(
                 _partnerTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

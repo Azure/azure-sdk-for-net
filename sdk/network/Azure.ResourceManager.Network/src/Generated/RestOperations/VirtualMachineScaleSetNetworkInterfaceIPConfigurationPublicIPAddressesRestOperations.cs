@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses for mocking. </summary>
         protected VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ipconfigurations/", false);
             uri.AppendPath(ipConfigurationName, true);
             uri.AppendPath("/publicipaddresses/", false);
-            uri.AppendPath(publicIpAddressName, true);
+            uri.AppendPath(publicIPAddressName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.Network
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -100,6 +104,7 @@ namespace Azure.ResourceManager.Network
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.Network
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

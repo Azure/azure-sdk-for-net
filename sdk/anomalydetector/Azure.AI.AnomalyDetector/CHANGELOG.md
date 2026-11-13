@@ -10,6 +10,8 @@
 
 ### Breaking Changes
 
+- Renamed the `Univariate` and `Multivariate` sub-clients to `UnivariateDetector` and `MultivariateDetector` to comply with type-naming guidelines. The accessors were renamed accordingly: `GetUnivariateClient()`→`GetUnivariateDetectorClient()` and `GetMultivariateClient()`→`GetMultivariateDetectorClient()`.
+
 ### Bugs Fixed
 
 ### Other Changes

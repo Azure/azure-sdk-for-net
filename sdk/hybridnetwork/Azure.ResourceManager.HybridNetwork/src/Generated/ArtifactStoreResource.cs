@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
@@ -55,9 +56,9 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(ResourceType, out string artifactStoreApiVersion);
             _artifactStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
             _proxyArtifactClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            _proxyArtifactRestClient = new ProxyArtifact(_proxyArtifactClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            _proxyArtifactRestClient = new ProxyArtifact(_proxyArtifactClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -1069,7 +1070,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactsAsyncCollectionResultOfT(
+            return new ProxyArtifactListOverviewAsyncCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1108,7 +1109,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactsCollectionResultOfT(
+            return new ProxyArtifactListOverviewCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1152,7 +1153,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactVersionsAsyncCollectionResultOfT(
+            return new ProxyArtifactVersionsListOverviewAsyncCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1197,7 +1198,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactVersionsCollectionResultOfT(
+            return new ProxyArtifactVersionsListOverviewCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1446,10 +1447,9 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1489,10 +1489,9 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

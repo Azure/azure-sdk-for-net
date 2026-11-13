@@ -58,8 +58,7 @@ namespace Azure.AI.Translation.Document.Tests
             bool useTokenCredential = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            // TODO remove service version pinning https://github.com/Azure/azure-sdk-for-net/issues/53189
-            options ??= new DocumentTranslationClientOptions(DocumentTranslationClientOptions.ServiceVersion.V2024_05_01)
+            options ??= new DocumentTranslationClientOptions()
             {
                 Diagnostics =
                 {

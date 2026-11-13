@@ -22,7 +22,7 @@ namespace Azure.AI.Projects
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnection(string connectionName, bool includeCredentials, CancellationToken cancellationToken) instead.")]
-        public virtual AIProjectConnection GetConnection(string connectionName, bool includeCredentials, string clientRequestId, CancellationToken cancellationToken)
+        public virtual ClientResult<AIProjectConnection> GetConnection(string connectionName, bool includeCredentials, string clientRequestId, CancellationToken cancellationToken)
         {
             return GetConnection(connectionName, includeCredentials, cancellationToken);
         }
@@ -51,7 +51,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <returns>A <see cref="AIProjectConnection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public virtual AIProjectConnection GetConnection(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AIProjectConnection> GetConnection(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(connectionName))
             {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string staticSiteDatabaseConnectionApiVersion);
             _databaseConnectionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _databaseConnectionOperationGroupRestClient = new DatabaseConnectionOperationGroup(_databaseConnectionOperationGroupClientDiagnostics, Pipeline, Endpoint, staticSiteDatabaseConnectionApiVersion ?? "2026-03-15");
+            _databaseConnectionOperationGroupRestClient = new DatabaseConnectionOperationGroup(_databaseConnectionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteDatabaseConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

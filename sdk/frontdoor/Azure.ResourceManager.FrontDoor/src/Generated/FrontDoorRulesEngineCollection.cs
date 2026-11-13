@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(FrontDoorRulesEngineResource.ResourceType, out string frontDoorRulesEngineApiVersion);
             _rulesEnginesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorRulesEngineResource.ResourceType.Namespace, Diagnostics);
-            _rulesEnginesRestClient = new RulesEngines(_rulesEnginesClientDiagnostics, Pipeline, Endpoint, frontDoorRulesEngineApiVersion ?? "2025-11-01");
+            _rulesEnginesRestClient = new RulesEngines(_rulesEnginesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRulesEngineApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorRulesEngineData, FrontDoorRulesEngineResource>(new RulesEnginesGetByFrontDoorAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorRulesEngineData, FrontDoorRulesEngineResource>(new FrontDoorRulesEngineDataAsyncCollectionResultOfT(
                 _rulesEnginesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorRulesEngineData, FrontDoorRulesEngineResource>(new RulesEnginesGetByFrontDoorCollectionResultOfT(
+            return new PageableWrapper<FrontDoorRulesEngineData, FrontDoorRulesEngineResource>(new FrontDoorRulesEngineDataCollectionResultOfT(
                 _rulesEnginesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

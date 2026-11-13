@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Cdn
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private EndpointProperties _properties;
-        private ResourceReference<CdnProfile> _parent;
+        private ProvisioningResourceReference<CdnProfile> _parent;
 
         /// <summary> Creates a new CdnEndpoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -122,92 +122,6 @@ namespace Azure.Provisioning.Cdn
             {
                 Initialize();
                 _parent.Value = value;
-            }
-        }
-
-        /// <summary> Gets the HostName. </summary>
-        public BicepValue<string> HostName
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.HostName;
-            }
-        }
-
-        /// <summary> Gets or sets the Origins. </summary>
-        public BicepList<DeepCreatedOrigin> Origins
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Origins;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                Properties.Origins = value;
-            }
-        }
-
-        /// <summary> Gets or sets the OriginGroups. </summary>
-        public BicepList<DeepCreatedOriginGroup> OriginGroups
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OriginGroups;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                Properties.OriginGroups = value;
-            }
-        }
-
-        /// <summary> Gets the DeepCreatedCustomDomains. </summary>
-        public BicepList<DeepCreatedCustomDomain> DeepCreatedCustomDomains
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.DeepCreatedCustomDomains;
-            }
-        }
-
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<EndpointResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<CdnEndpointProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.ProvisioningState;
             }
         }
 
@@ -449,6 +363,92 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
+        /// <summary> Gets the HostName. </summary>
+        public BicepValue<string> HostName
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                return Properties.HostName;
+            }
+        }
+
+        /// <summary> Gets or sets the Origins. </summary>
+        public BicepList<DeepCreatedOrigin> Origins
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Origins;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.Origins = value;
+            }
+        }
+
+        /// <summary> Gets or sets the OriginGroups. </summary>
+        public BicepList<DeepCreatedOriginGroup> OriginGroups
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginGroups;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.OriginGroups = value;
+            }
+        }
+
+        /// <summary> Gets the DeepCreatedCustomDomains. </summary>
+        public BicepList<DeepCreatedCustomDomain> DeepCreatedCustomDomains
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                return Properties.DeepCreatedCustomDomains;
+            }
+        }
+
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<EndpointResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<CdnEndpointProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CdnEndpoint. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -459,7 +459,7 @@ namespace Azure.Provisioning.Cdn
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<EndpointProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CdnProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<CdnProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -32,7 +35,7 @@ internal static class ItemConversion
             return null; // non-convertible type (e.g. ItemReferenceParam)
         }
 
-        return item switch
+        OutputItem? converted = item switch
         {
             // --- Messages ---
             ItemMessage message => new OutputItemMessage(
@@ -185,6 +188,8 @@ internal static class ItemConversion
             // Should not reach here — NewItemId returned non-null so the type is known.
             _ => null,
         };
+
+        return converted is null ? null : StripInternalMetadata(converted);
     }
 
     /// <summary>
@@ -226,12 +231,42 @@ internal static class ItemConversion
         try
         {
             var json = ModelReaderWriter.Write(outputItem, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
-            return ModelReaderWriter.Read<Item>(json, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+            var node = JsonNode.Parse(json.ToString());
+            if (node is null)
+            {
+                return null;
+            }
+
+            InternalMetadataEgress.Strip(node);
+            var stripped = BinaryData.FromString(node.ToJsonString());
+            return ModelReaderWriter.Read<Item>(stripped, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
         }
-        catch
+        catch (JsonException)
         {
             return null;
         }
+        catch (FormatException)
+        {
+            return null;
+        }
+        catch (NotSupportedException)
+        {
+            return null;
+        }
+    }
+
+    private static OutputItem StripInternalMetadata(OutputItem outputItem)
+    {
+        var json = ModelReaderWriter.Write(outputItem, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        var node = JsonNode.Parse(json.ToString());
+        if (node is null)
+        {
+            return outputItem;
+        }
+
+        InternalMetadataEgress.Strip(node);
+        var stripped = BinaryData.FromString(node.ToJsonString());
+        return ModelReaderWriter.Read<OutputItem>(stripped, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!;
     }
 
     // ── ApplyPatch helpers ──────────────────────────────────────────────

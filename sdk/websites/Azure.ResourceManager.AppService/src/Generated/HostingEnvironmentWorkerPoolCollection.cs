@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(HostingEnvironmentWorkerPoolResource.ResourceType, out string hostingEnvironmentWorkerPoolApiVersion);
             _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentWorkerPoolResource.ResourceType.Namespace, Diagnostics);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentWorkerPoolApiVersion ?? "2026-03-15");
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentWorkerPoolApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceEnvironmentsGetWorkerPoolsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceWorkerPoolDataAsyncCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceEnvironmentsGetWorkerPoolsCollectionResultOfT(
+            return new PageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceWorkerPoolDataCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

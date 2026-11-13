@@ -28,6 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         private readonly string _parameterName;
         private readonly QueueServiceClient _queueServiceClient;
         private readonly QueueClient _queue;
+        private readonly QueueClient _rawQueue;
         private readonly ITriggerDataArgumentBinding<QueueMessage> _argumentBinding;
         private readonly IReadOnlyDictionary<string, Type> _bindingDataContract;
         private readonly QueuesOptions _queueOptions;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             string parameterName,
             QueueServiceClient queueServiceClient,
             QueueClient queue,
+            QueueClient rawQueue,
             ITriggerDataArgumentBinding<QueueMessage> argumentBinding,
             QueuesOptions queueOptions,
             IWebJobsExceptionHandler exceptionHandler,
@@ -57,6 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         {
             _queueServiceClient = queueServiceClient ?? throw new ArgumentNullException(nameof(queueServiceClient));
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+            _rawQueue = rawQueue ?? throw new ArgumentNullException(nameof(rawQueue));
             _argumentBinding = argumentBinding ?? throw new ArgumentNullException(nameof(argumentBinding));
             _bindingDataContract = CreateBindingDataContract(argumentBinding.BindingDataContract);
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
@@ -146,6 +149,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             var factory = new QueueListenerFactory(
                 _queueServiceClient,
                 _queue,
+                _rawQueue,
                 _queueOptions,
                 _exceptionHandler,
                 _messageEnqueuedWatcherSetter,

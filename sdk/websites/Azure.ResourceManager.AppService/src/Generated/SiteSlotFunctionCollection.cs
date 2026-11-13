@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotFunctionResource.ResourceType, out string siteSlotFunctionApiVersion);
             _functionEnvelopeOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotFunctionResource.ResourceType.Namespace, Diagnostics);
-            _functionEnvelopeOperationGroupRestClient = new FunctionEnvelopeOperationGroup(_functionEnvelopeOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotFunctionApiVersion ?? "2026-03-15");
+            _functionEnvelopeOperationGroupRestClient = new FunctionEnvelopeOperationGroup(_functionEnvelopeOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotFunctionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FunctionEnvelopeData, SiteSlotFunctionResource>(new FunctionEnvelopeOperationGroupGetInstanceFunctionsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FunctionEnvelopeData, SiteSlotFunctionResource>(new FunctionEnvelopeDataAsyncCollectionResultOfT(
                 _functionEnvelopeOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FunctionEnvelopeData, SiteSlotFunctionResource>(new FunctionEnvelopeOperationGroupGetInstanceFunctionsSlotCollectionResultOfT(
+            return new PageableWrapper<FunctionEnvelopeData, SiteSlotFunctionResource>(new FunctionEnvelopeDataCollectionResultOfT(
                 _functionEnvelopeOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

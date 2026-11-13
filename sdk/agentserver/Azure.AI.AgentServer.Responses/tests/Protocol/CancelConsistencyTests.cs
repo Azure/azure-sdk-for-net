@@ -35,7 +35,6 @@ public class CancelConsistencyTests : IDisposable
             {
                 services.AddSingleton<ResponsesProvider>(_spy);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(_spy.AsCancellationProvider());
-                services.AddSingleton<ResponsesStreamProvider>(_spy.AsStreamProvider());
             });
         _client = _factory.CreateClient();
     }
@@ -200,7 +199,6 @@ public class CancelConsistencyTests : IDisposable
     private sealed class RecordingProvider : ResponsesProvider
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
-        private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cts = new();
 
         public ConcurrentBag<Models.ResponseObject> CreateCalls { get; } = new();
@@ -252,7 +250,6 @@ public class CancelConsistencyTests : IDisposable
         // --- Adapter factories for DI registration ---
 
         internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(this);
-        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(this);
 
         private sealed class CancellationAdapter(RecordingProvider provider) : ResponsesCancellationSignalProvider
         {
@@ -260,32 +257,6 @@ public class CancelConsistencyTests : IDisposable
                 => provider.CancelResponseAsync(responseId, ct);
             public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
                 => provider.GetResponseCancellationTokenAsync(responseId, ct);
-        }
-
-        private sealed class StreamAdapter(RecordingProvider provider) : ResponsesStreamProvider
-        {
-            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
-                => provider.CreateEventPublisherAsync(responseId, ct);
-            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken ct = default)
-                => provider.SubscribeToEventsAsync(responseId, observer, cursor, ct);
-        }
-
-        public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
-            string responseId, CancellationToken ct = default)
-        {
-            var subject = _subjects.GetOrAdd(responseId,
-                _ => new SeekableReplaySubject(TimeSpan.FromMinutes(10)));
-            return Task.FromResult(subject.GetPublisher());
-        }
-
-        public async Task<IAsyncDisposable> SubscribeToEventsAsync(
-            string responseId, IAsyncObserver<ResponseStreamEvent> observer,
-            long? cursor = null, CancellationToken ct = default)
-        {
-            if (!_subjects.TryGetValue(responseId, out var subject))
-                throw new InvalidOperationException($"No event stream for '{responseId}'.");
-            var adapter = new UnwrappingObserver(observer);
-            return await subject.SubscribeAsync(adapter, cursor);
         }
 
         public Task CancelResponseAsync(string responseId, CancellationToken ct = default)
@@ -304,16 +275,6 @@ public class CancelConsistencyTests : IDisposable
         {
             var cts = _cts.GetOrAdd(responseId, _ => new CancellationTokenSource());
             return Task.FromResult(cts.Token);
-        }
-
-        private sealed class UnwrappingObserver : IAsyncObserver<(long SeqNo, ResponseStreamEvent Event)>
-        {
-            private readonly IAsyncObserver<ResponseStreamEvent> _inner;
-            public UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner) => _inner = inner;
-            public async ValueTask OnNextAsync((long SeqNo, ResponseStreamEvent Event) value)
-                => await _inner.OnNextAsync(value.Event);
-            public ValueTask OnErrorAsync(Exception error) => _inner.OnErrorAsync(error);
-            public ValueTask OnCompletedAsync() => _inner.OnCompletedAsync();
         }
     }
 }

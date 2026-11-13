@@ -15,11 +15,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Tests Notification rule model. </summary>
     public partial class TestsNotificationRule : NotificationRule, IJsonModel<TestsNotificationRule>
     {
-        /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/> for deserialization. </summary>
-        internal TestsNotificationRule()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NotificationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -133,9 +128,9 @@ namespace Azure.Developer.LoadTesting
             string displayName = default;
             IList<string> actionGroupIds = default;
             NotificationScopeType scope = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> testIds = default;
@@ -180,7 +175,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -194,7 +189,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -235,21 +230,21 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TestsNotificationRule(
                 notificationRuleId,
                 displayName,
-                actionGroupIds,
+                actionGroupIds ?? new ChangeTrackingList<string>(),
                 scope,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties,
                 testIds ?? new ChangeTrackingList<string>(),
-                eventFilters);
+                eventFilters ?? new ChangeTrackingDictionary<string, TestsNotificationEventFilter>());
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(FileSharePrivateEndpointConnectionResource.ResourceType, out string fileSharePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", FileSharePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, fileSharePrivateEndpointConnectionApiVersion ?? "2026-06-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileSharePrivateEndpointConnectionApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new FileSharePrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareCollectionResultOfT(
+            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new FileSharePrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

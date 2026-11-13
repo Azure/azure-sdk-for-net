@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(CosmosDBForPostgreSqlClusterServerResource.ResourceType, out string cosmosDBForPostgreSqlClusterServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlClusterServerResource.ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlClusterServerApiVersion ?? "2023-03-02-preview");
+            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlClusterServerApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new ServersGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new CosmosDBForPostgreSqlClusterServerDataAsyncCollectionResultOfT(
                 _serversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new ServersGetByClusterCollectionResultOfT(
+            return new PageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new CosmosDBForPostgreSqlClusterServerDataCollectionResultOfT(
                 _serversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

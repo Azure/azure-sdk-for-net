@@ -15,11 +15,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> An event observed by a metric. </summary>
     public partial class ObservedEvent : IJsonModel<ObservedEvent>
     {
-        /// <summary> Initializes a new instance of <see cref="ObservedEvent"/> for deserialization. </summary>
-        internal ObservedEvent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ObservedEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -144,7 +139,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ObservedEvent(eventName, filter, additionalBinaryDataProperties);

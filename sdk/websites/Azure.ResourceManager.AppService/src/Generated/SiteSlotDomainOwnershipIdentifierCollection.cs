@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotDomainOwnershipIdentifierResource.ResourceType, out string siteSlotDomainOwnershipIdentifierApiVersion);
             _identifierOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
-            _identifierOperationGroupRestClient = new IdentifierOperationGroup(_identifierOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
+            _identifierOperationGroupRestClient = new IdentifierOperationGroup(_identifierOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceIdentifierData, SiteSlotDomainOwnershipIdentifierResource>(new IdentifierOperationGroupGetDomainOwnershipIdentifiersSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceIdentifierData, SiteSlotDomainOwnershipIdentifierResource>(new AppServiceIdentifierDataAsyncCollectionResultOfT(
                 _identifierOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceIdentifierData, SiteSlotDomainOwnershipIdentifierResource>(new IdentifierOperationGroupGetDomainOwnershipIdentifiersSlotCollectionResultOfT(
+            return new PageableWrapper<AppServiceIdentifierData, SiteSlotDomainOwnershipIdentifierResource>(new AppServiceIdentifierDataCollectionResultOfT(
                 _identifierOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

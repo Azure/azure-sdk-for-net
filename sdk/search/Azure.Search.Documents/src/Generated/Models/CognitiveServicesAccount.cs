@@ -11,7 +11,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for describing any Azure AI service resource attached to a skillset. </summary>
+    /// <summary>
+    /// Base type for describing any Azure AI service resource attached to a skillset.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AIServicesAccountIdentity"/>, <see cref="AIServicesAccountKey"/>, <see cref="CognitiveServicesAccountKey"/>, and <see cref="DefaultCognitiveServicesAccount"/>.
+    /// </summary>
     public partial class CognitiveServicesAccount
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

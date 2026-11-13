@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(MajorVersionUpgradePrecheckResource.ResourceType, out string majorVersionUpgradePrecheckApiVersion);
             _majorVersionUpgradePrecheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", MajorVersionUpgradePrecheckResource.ResourceType.Namespace, Diagnostics);
-            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Endpoint, majorVersionUpgradePrecheckApiVersion ?? "2026-04-01-preview");
+            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, majorVersionUpgradePrecheckApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckDataAsyncCollectionResultOfT(
                 _majorVersionUpgradePrecheckRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllCollectionResultOfT(
+            return new PageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckDataCollectionResultOfT(
                 _majorVersionUpgradePrecheckRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

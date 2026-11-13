@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
@@ -30,8 +31,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
         /// <param name="ephemeralType"> The ephemeral type of the image. </param>
         /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
+        /// <param name="provisioningScriptStorageAccountResourceId"> The ARM resource ID of the storage account hosting provisioning scripts for this image. </param>
+        /// <param name="provisioningScriptManagedIdentityClientId"> The managed identity client ID used to access provisioning script content for this image. </param>
+        /// <param name="provisioningScriptShouldRestart"> Determines whether the machine should be restarted after provisioning script execution for this image. </param>
+        /// <param name="provisioningScriptEntryPoint"> The provisioning script entry point for this image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IList<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IList<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral, ResourceIdentifier provisioningScriptStorageAccountResourceId, string provisioningScriptManagedIdentityClientId, bool? provisioningScriptShouldRestart, string provisioningScriptEntryPoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             WellKnownImageName = wellKnownImageName;
@@ -39,6 +44,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             Buffer = buffer;
             EphemeralType = ephemeralType;
             IsEphemeral = isEphemeral;
+            ProvisioningScriptStorageAccountResourceId = provisioningScriptStorageAccountResourceId;
+            ProvisioningScriptManagedIdentityClientId = provisioningScriptManagedIdentityClientId;
+            ProvisioningScriptShouldRestart = provisioningScriptShouldRestart;
+            ProvisioningScriptEntryPoint = provisioningScriptEntryPoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,5 +68,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Read only. Determines if the image is ephemeral. </summary>
         public bool? IsEphemeral { get; }
+
+        /// <summary> The ARM resource ID of the storage account hosting provisioning scripts for this image. </summary>
+        public ResourceIdentifier ProvisioningScriptStorageAccountResourceId { get; set; }
+
+        /// <summary> The managed identity client ID used to access provisioning script content for this image. </summary>
+        public string ProvisioningScriptManagedIdentityClientId { get; set; }
+
+        /// <summary> Determines whether the machine should be restarted after provisioning script execution for this image. </summary>
+        public bool? ProvisioningScriptShouldRestart { get; set; }
+
+        /// <summary> The provisioning script entry point for this image. </summary>
+        public string ProvisioningScriptEntryPoint { get; set; }
     }
 }

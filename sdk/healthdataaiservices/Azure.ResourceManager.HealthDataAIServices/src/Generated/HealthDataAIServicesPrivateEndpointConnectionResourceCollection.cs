@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             TryGetApiVersion(HealthDataAIServicesPrivateEndpointConnectionResource.ResourceType, out string healthDataAIServicesPrivateEndpointConnectionResourceApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", HealthDataAIServicesPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, healthDataAIServicesPrivateEndpointConnectionResourceApiVersion ?? "2024-09-20");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthDataAIServicesPrivateEndpointConnectionResourceApiVersion ?? "2024-09-20");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new HealthDataAIServicesPrivateEndpointConnectionResourceDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceCollectionResultOfT(
+            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new HealthDataAIServicesPrivateEndpointConnectionResourceDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

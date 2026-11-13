@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Sql
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of RestorableDroppedDatabases for mocking. </summary>
         protected RestorableDroppedDatabases()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RestorableDroppedDatabases. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal RestorableDroppedDatabases(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal RestorableDroppedDatabases(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(RestorableDroppedDatabases).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -69,11 +72,12 @@ namespace Azure.ResourceManager.Sql
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context)
+        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, string skiptoken, long? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,15 +92,24 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context)
+        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string skiptoken, long? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -115,6 +128,7 @@ namespace Azure.ResourceManager.Sql
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

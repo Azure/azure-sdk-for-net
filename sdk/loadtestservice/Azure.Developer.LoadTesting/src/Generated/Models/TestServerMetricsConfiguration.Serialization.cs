@@ -16,11 +16,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Test server metrics configuration. </summary>
     public partial class TestServerMetricsConfiguration : IJsonModel<TestServerMetricsConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/> for deserialization. </summary>
-        internal TestServerMetricsConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestServerMetricsConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -99,20 +94,20 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
-                writer.WriteStringValue(LastModifiedDateTime.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
@@ -163,9 +158,9 @@ namespace Azure.Developer.LoadTesting
             }
             string testId = default;
             IDictionary<string, ResourceMetric> metrics = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -191,7 +186,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -205,7 +200,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -215,15 +210,15 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TestServerMetricsConfiguration(
                 testId,
-                metrics,
-                createdDateTime,
+                metrics ?? new ChangeTrackingDictionary<string, ResourceMetric>(),
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties);
         }

@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Sql.Tests
         }
 
         [Test]
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task ManagedServerSecurityAlertPolicyApiTests()
         {
             // Create Managed Instance

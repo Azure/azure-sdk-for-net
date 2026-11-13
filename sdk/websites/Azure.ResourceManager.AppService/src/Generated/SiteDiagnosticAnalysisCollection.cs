@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteDiagnosticAnalysisResource.ResourceType, out string siteDiagnosticAnalysisApiVersion);
             _analysisDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDiagnosticAnalysisResource.ResourceType.Namespace, Diagnostics);
-            _analysisDefinitionsRestClient = new AnalysisDefinitions(_analysisDefinitionsClientDiagnostics, Pipeline, Endpoint, siteDiagnosticAnalysisApiVersion ?? "2026-03-15");
+            _analysisDefinitionsRestClient = new AnalysisDefinitions(_analysisDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteDiagnosticAnalysisApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebSiteAnalysisDefinitionData, SiteDiagnosticAnalysisResource>(new AnalysisDefinitionsGetSiteAnalysesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebSiteAnalysisDefinitionData, SiteDiagnosticAnalysisResource>(new WebSiteAnalysisDefinitionDataAsyncCollectionResultOfT(
                 _analysisDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebSiteAnalysisDefinitionData, SiteDiagnosticAnalysisResource>(new AnalysisDefinitionsGetSiteAnalysesCollectionResultOfT(
+            return new PageableWrapper<WebSiteAnalysisDefinitionData, SiteDiagnosticAnalysisResource>(new WebSiteAnalysisDefinitionDataCollectionResultOfT(
                 _analysisDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

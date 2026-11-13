@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2026-07-27)
+
+### Other Changes
+
+- Replaced `DatadogActivateSaaSContent.SaaSGuid` (of type `Guid`) with `SaaSResourceId` (of type `ResourceIdentifier`). The `DatadogActivateSaaSContent` constructor parameter changed accordingly from `Guid saaSGuid` to `ResourceIdentifier saaSResourceId`, and the corresponding `ArmDatadogModelFactory.DatadogActivateSaaSContent` factory parameter was updated as well.
 
 ## 1.1.0-beta.1 (2026-06-03)
 

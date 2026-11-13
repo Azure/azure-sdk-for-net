@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(PolicyArcAssignmentResource.ResourceType, out string policyArcAssignmentApiVersion);
             _policyArcAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PolicyArcAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _policyArcAssignmentsRestClient = new PolicyArcAssignments(_policyArcAssignmentsClientDiagnostics, Pipeline, Endpoint, policyArcAssignmentApiVersion ?? "2024-05-01");
+            _policyArcAssignmentsRestClient = new PolicyArcAssignments(_policyArcAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyArcAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyArcAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyAssignmentDataAsync0CollectionResultOfT(
                 _policyArcAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyArcAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyAssignmentData0CollectionResultOfT(
                 _policyArcAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

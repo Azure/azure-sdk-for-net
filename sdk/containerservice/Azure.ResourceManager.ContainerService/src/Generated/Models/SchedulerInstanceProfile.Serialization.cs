@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The scheduler profile for a single scheduler instance. </summary>
+    /// <summary> Profile with settings related to a specific instance of an AKS-managed scheduler. </summary>
     internal partial class SchedulerInstanceProfile : IJsonModel<SchedulerInstanceProfile>
     {
         /// <param name="data"> The data to parse. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SchedulerInstanceProfile(schedulerConfigMode, additionalBinaryDataProperties);

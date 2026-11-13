@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetApp
         private NetAppLdapServerType? _ldapServerType;
         private LargeVolumeType? _largeVolumeType;
         private BreakthroughMode? _breakthroughMode;
+        private BreakthroughMode? _breakthroughModeOld;
 
         // The new spec marks isRestoring as read-only; restore the GA setter for source compat.
         /// <summary> Restoring. </summary>
@@ -60,6 +61,17 @@ namespace Azure.ResourceManager.NetApp
         {
             get => _breakthroughMode;
             set => _breakthroughMode = value;
+        }
+
+        /// <summary>
+        /// Legacy breakthrough mode field retained for service-compatibility.
+        /// Use <see cref="BreakthroughMode"/> for new code.
+        /// </summary>
+        [Obsolete("Use BreakthroughMode instead.")]
+        public BreakthroughMode? BreakthroughModeOld
+        {
+            get => _breakthroughModeOld;
+            set => _breakthroughModeOld = value;
         }
     }
 }

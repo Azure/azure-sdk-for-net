@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(ResourceType, out string horizonDBReplicaApiVersion);
             _horizonDBReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBReplicasRestClient = new HorizonDBReplicas(_horizonDBReplicasClientDiagnostics, Pipeline, Endpoint, horizonDBReplicaApiVersion ?? "2026-01-20-preview");
+            _horizonDBReplicasRestClient = new HorizonDBReplicas(_horizonDBReplicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBReplicaApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

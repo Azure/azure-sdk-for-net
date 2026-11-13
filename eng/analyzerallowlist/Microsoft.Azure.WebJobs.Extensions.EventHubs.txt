@@ -1,0 +1,15 @@
+# Microsoft.Azure.WebJobs.Extensions.EventHubs approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# SA1636 (file header copyright text should match) cannot be satisfied by this project.
+# It compiles source of two different provenances:
+#   * WebJobs SDK derived code carrying the ".NET Foundation" header, which is what this
+#     project's own stylecop.json declares as the expected copyright text; and
+#   * Microsoft-copyright helpers that are shared/linked in from elsewhere in this repo
+#     (sdk/core/Azure.Core/src/Shared, sdk/eventhub/Azure.Messaging.EventHubs.Shared/src,
+#     sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared).
+# The shared files are compiled into Microsoft-headered projects as well, so their header
+# is correct and must not be rewritten. StyleCop supports only a single copyrightText per
+# project, so no configuration can satisfy both sets and the suppression must be
+# project-level.
+nowarn:SA1636

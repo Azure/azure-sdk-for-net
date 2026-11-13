@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of DetectorDefinitionResources for mocking. </summary>
         protected DetectorDefinitionResources()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of DetectorDefinitionResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DetectorDefinitionResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DetectorDefinitionResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(DetectorDefinitionResources).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.AppService
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -88,6 +92,7 @@ namespace Azure.ResourceManager.AppService
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -111,11 +116,12 @@ namespace Azure.ResourceManager.AppService
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateExecuteRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, RequestContext context)
+        internal HttpMessage CreateExecuteRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -134,13 +140,13 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (startTime != null)
+            if (startsOn != null)
             {
-                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (endTime != null)
+            if (endsOn != null)
             {
-                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (timeGrain != null)
             {
@@ -150,6 +156,7 @@ namespace Azure.ResourceManager.AppService
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             TryGetApiVersion(SelfHelpSolutionResultResource.ResourceType, out string selfHelpSolutionResultApiVersion);
             _solutionSelfHelpClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpSolutionResultResource.ResourceType.Namespace, Diagnostics);
-            _solutionSelfHelpRestClient = new SolutionSelfHelp(_solutionSelfHelpClientDiagnostics, Pipeline, Endpoint, selfHelpSolutionResultApiVersion ?? "2024-03-01-preview");
+            _solutionSelfHelpRestClient = new SolutionSelfHelp(_solutionSelfHelpClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSolutionResultApiVersion ?? "2024-03-01-preview");
             ValidateResourceId(id);
         }
 

@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -31,7 +32,7 @@ namespace Azure.Generator.Tests
         }
 
         [TestCase(typeof(Guid), ExpectedResult = "writer.WriteStringValue(value);\n")]
-        [TestCase(typeof(IPAddress), ExpectedResult ="writer.WriteStringValue(value.ToString());\n")]
+        [TestCase(typeof(IPAddress), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(ETag), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "writer.WriteStringValue(value);\n")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "writer.WriteStringValue(value);\n")]
@@ -159,6 +160,11 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(AzureLocation))]
         [TestCase(typeof(ResponseError))]
         [TestCase(typeof(ClientDiagnostics))]
+        [TestCase(typeof(RequestConditions))]
+        [TestCase(typeof(DataFactoryElement<>))]
+        [TestCase(typeof(DataFactorySecret))]
+        [TestCase(typeof(DataFactoryLinkedServiceReference))]
+        [TestCase(typeof(DataFactorySecretString))]
         public void CreatesFrameworkType(Type expectedType)
         {
             var factory = new TestTypeFactory();
@@ -288,24 +294,29 @@ namespace Azure.Generator.Tests
                 $"Expected serialization to use WriteObjectValue pattern for DataFactoryElement, but got: {displayString}");
         }
 
-        [Test]
-        public void DataFactoryElementDeserializationUsesDeserializeMethod()
+        [TestCase(typeof(DataFactoryElement<string>), "string", "options")]
+        [TestCase(typeof(DataFactoryElement<string>), "string", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "options")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "options")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "options")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "customOptions")]
+        public void DataFactoryElementDeserializationUsesDeserializeMethod(Type type, string typeArgument, string optionsName)
         {
-            // Verify that DataFactoryElement<string> uses its deserialize method
-            var type = typeof(DataFactoryElement<string>);
             var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
             var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
             var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
                 type,
                 element,
                 data,
-                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), optionsName)),
                 SerializationFormat.Default);
             Assert.IsNotNull(expression);
 
             var displayString = expression.ToDisplayString();
             Assert.AreEqual(
-                "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)",
+                $"global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<{typeArgument}>>(data, {optionsName}, global::Samples.SamplesContext.Default)",
                 displayString);
         }
 
@@ -357,6 +368,8 @@ namespace Azure.Generator.Tests
 
         [TestCase(typeof(ETag), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
         [TestCase(typeof(ETag), true, ExpectedResult = "writer.WriteValue(value.Value.ToString());\n")]
+        [TestCase(typeof(ResourceIdentifier), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
+        [TestCase(typeof(ResourceIdentifier), true, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
         public string ValidateXmlSerializationStatement(Type type, bool isNullable)
         {
             CSharpType valueType = new CSharpType(type).WithNullable(isNullable);
@@ -372,6 +385,8 @@ namespace Azure.Generator.Tests
 
         [TestCase(typeof(ETag), false, ExpectedResult = "new global::Azure.ETag(element.Value)")]
         [TestCase(typeof(ETag), true, ExpectedResult = "new global::Azure.ETag(element.Value)")]
+        [TestCase(typeof(ResourceIdentifier), false, ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.Value)")]
+        [TestCase(typeof(ResourceIdentifier), true, ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.Value)")]
         public string ValidateXmlDeserializationExpression(Type type, bool isNullable)
         {
             CSharpType valueType = new CSharpType(type).WithNullable(isNullable);

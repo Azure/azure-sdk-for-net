@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(HostingEnvironmentPrivateEndpointConnectionResource.ResourceType, out string hostingEnvironmentPrivateEndpointConnectionApiVersion);
             _remotePrivateEndpointConnectionARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _remotePrivateEndpointConnectionARMResourcesRestClient = new RemotePrivateEndpointConnectionARMResources(_remotePrivateEndpointConnectionARMResourcesClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentPrivateEndpointConnectionApiVersion ?? "2026-03-15");
+            _remotePrivateEndpointConnectionARMResourcesRestClient = new RemotePrivateEndpointConnectionARMResources(_remotePrivateEndpointConnectionARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentPrivateEndpointConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, HostingEnvironmentPrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourcesGetPrivateEndpointConnectionListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, HostingEnvironmentPrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceDataAsyncCollectionResultOfT(
                 _remotePrivateEndpointConnectionARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, HostingEnvironmentPrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourcesGetPrivateEndpointConnectionListCollectionResultOfT(
+            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, HostingEnvironmentPrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceDataCollectionResultOfT(
                 _remotePrivateEndpointConnectionARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

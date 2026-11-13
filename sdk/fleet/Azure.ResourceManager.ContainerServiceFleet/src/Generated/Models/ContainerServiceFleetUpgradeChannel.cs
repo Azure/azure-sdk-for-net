@@ -30,6 +30,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         ///   see https://learn.microsoft.com/en-us/azure/kubernetes-fleet/update-orchestration?tabs=azure-portal
         /// </summary>
         private const string TargetKubernetesVersionValue = "TargetKubernetesVersion";
+        /// <summary>
+        ///   Applies security patches to the nodes of the target clusters.
+        ///   For information on the behavior of update run for security patch upgrade,
+        ///   see https://learn.microsoft.com/en-us/azure/kubernetes-fleet/update-orchestration?tabs=azure-portal
+        /// </summary>
+        private const string SecurityPatchValue = "SecurityPatch";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -59,6 +65,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         ///   see https://learn.microsoft.com/en-us/azure/kubernetes-fleet/update-orchestration?tabs=azure-portal
         /// </summary>
         public static ContainerServiceFleetUpgradeChannel TargetKubernetesVersion { get; } = new ContainerServiceFleetUpgradeChannel(TargetKubernetesVersionValue);
+
+        /// <summary>
+        ///   Applies security patches to the nodes of the target clusters.
+        ///   For information on the behavior of update run for security patch upgrade,
+        ///   see https://learn.microsoft.com/en-us/azure/kubernetes-fleet/update-orchestration?tabs=azure-portal
+        /// </summary>
+        public static ContainerServiceFleetUpgradeChannel SecurityPatch { get; } = new ContainerServiceFleetUpgradeChannel(SecurityPatchValue);
 
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpgradeChannel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Sql
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionBackupData"/>. </summary>
+        public ManagedInstanceLongTermRetentionBackupData()
+        {
+        }
+
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal ManagedInstanceLongTermRetentionBackupProperties Properties { get; }
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.BackupExpireOn;
+                return Properties is null ? default : Properties.BackupExpiresOn;
             }
         }
 
@@ -113,6 +118,46 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.BackupStorageAccessTier;
+            }
+        }
+
+        /// <summary> The setting whether the LTR backup is immutable. </summary>
+        [WirePath("properties.isBackupImmutable")]
+        public bool? IsBackupImmutable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsBackupImmutable;
+            }
+        }
+
+        /// <summary> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </summary>
+        [WirePath("properties.timeBasedImmutability")]
+        public TimeBasedImmutability? TimeBasedImmutability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeBasedImmutability;
+            }
+        }
+
+        /// <summary> The time-based immutability mode. Only applicable if time-based immutability is enabled. </summary>
+        [WirePath("properties.timeBasedImmutabilityMode")]
+        public TimeBasedImmutabilityMode? TimeBasedImmutabilityMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeBasedImmutabilityMode;
+            }
+        }
+
+        /// <summary> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </summary>
+        [WirePath("properties.legalHoldImmutability")]
+        public SetLegalHoldImmutability? LegalHoldImmutability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LegalHoldImmutability;
             }
         }
     }

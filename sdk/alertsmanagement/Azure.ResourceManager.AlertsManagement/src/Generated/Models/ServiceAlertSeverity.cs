@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The ServiceAlertSeverity. </summary>
+    /// <summary></summary>
     public readonly partial struct ServiceAlertSeverity : IEquatable<ServiceAlertSeverity>
     {
         private readonly string _value;
+        /// <summary> Sev0. </summary>
+        private const string Sev0Value = "Sev0";
+        /// <summary> Sev1. </summary>
+        private const string Sev1Value = "Sev1";
+        /// <summary> Sev2. </summary>
+        private const string Sev2Value = "Sev2";
+        /// <summary> Sev3. </summary>
+        private const string Sev3Value = "Sev3";
+        /// <summary> Sev4. </summary>
+        private const string Sev4Value = "Sev4";
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceAlertSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Sev0Value = "Sev0";
-        private const string Sev1Value = "Sev1";
-        private const string Sev2Value = "Sev2";
-        private const string Sev3Value = "Sev3";
-        private const string Sev4Value = "Sev4";
+            _value = value;
+        }
 
         /// <summary> Sev0. </summary>
         public static ServiceAlertSeverity Sev0 { get; } = new ServiceAlertSeverity(Sev0Value);
+
         /// <summary> Sev1. </summary>
         public static ServiceAlertSeverity Sev1 { get; } = new ServiceAlertSeverity(Sev1Value);
+
         /// <summary> Sev2. </summary>
         public static ServiceAlertSeverity Sev2 { get; } = new ServiceAlertSeverity(Sev2Value);
+
         /// <summary> Sev3. </summary>
         public static ServiceAlertSeverity Sev3 { get; } = new ServiceAlertSeverity(Sev3Value);
+
         /// <summary> Sev4. </summary>
         public static ServiceAlertSeverity Sev4 { get; } = new ServiceAlertSeverity(Sev4Value);
+
         /// <summary> Determines if two <see cref="ServiceAlertSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceAlertSeverity left, ServiceAlertSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceAlertSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceAlertSeverity left, ServiceAlertSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAlertSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceAlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceAlertSeverity(string value) => new ServiceAlertSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceAlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceAlertSeverity?(string value) => value == null ? null : new ServiceAlertSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceAlertSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceAlertSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

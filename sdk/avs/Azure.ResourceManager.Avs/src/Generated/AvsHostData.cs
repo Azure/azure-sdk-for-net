@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Avs
         /// <summary> The resource-specific properties for this resource. </summary>
         public AvsHostProperties Properties { get; }
 
+        /// <summary> The availability zones. </summary>
+        public IReadOnlyList<string> Zones { get; }
+
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         public AvsSku Sku { get; }
     }

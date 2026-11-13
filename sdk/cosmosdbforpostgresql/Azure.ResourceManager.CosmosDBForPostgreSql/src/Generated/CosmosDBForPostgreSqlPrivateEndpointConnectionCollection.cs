@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(CosmosDBForPostgreSqlPrivateEndpointConnectionResource.ResourceType, out string cosmosDBForPostgreSqlPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlPrivateEndpointConnectionApiVersion ?? "2023-03-02-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlPrivateEndpointConnectionApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateEndpointConnectionData, CosmosDBForPostgreSqlPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateEndpointConnectionData, CosmosDBForPostgreSqlPrivateEndpointConnectionResource>(new CosmosDBForPostgreSqlPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlPrivateEndpointConnectionData, CosmosDBForPostgreSqlPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByClusterCollectionResultOfT(
+            return new PageableWrapper<CosmosDBForPostgreSqlPrivateEndpointConnectionData, CosmosDBForPostgreSqlPrivateEndpointConnectionResource>(new CosmosDBForPostgreSqlPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

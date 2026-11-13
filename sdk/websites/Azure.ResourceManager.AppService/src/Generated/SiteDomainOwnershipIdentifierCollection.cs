@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteDomainOwnershipIdentifierResource.ResourceType, out string siteDomainOwnershipIdentifierApiVersion);
             _identifiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
-            _identifiersRestClient = new Identifiers(_identifiersClientDiagnostics, Pipeline, Endpoint, siteDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
+            _identifiersRestClient = new Identifiers(_identifiersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceIdentifierData, SiteDomainOwnershipIdentifierResource>(new IdentifiersGetDomainOwnershipIdentifiersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceIdentifierData, SiteDomainOwnershipIdentifierResource>(new AppServiceIdentifierDataAsync0CollectionResultOfT(
                 _identifiersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceIdentifierData, SiteDomainOwnershipIdentifierResource>(new IdentifiersGetDomainOwnershipIdentifiersCollectionResultOfT(
+            return new PageableWrapper<AppServiceIdentifierData, SiteDomainOwnershipIdentifierResource>(new AppServiceIdentifierData0CollectionResultOfT(
                 _identifiersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

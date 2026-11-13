@@ -211,12 +211,12 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IntentsEvaluationSummary(
-                confusionMatrix,
-                intents,
+                confusionMatrix ?? new ChangeTrackingDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow>(),
+                intents ?? new ChangeTrackingDictionary<string, IntentEvaluationSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. <b>Note</b> : When a Watchlist upload status is InProgress, the Watchlist cannot be deleted. </param>
         /// <param name="provisioningState"> Describes provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WatchlistProperties(Guid? watchlistId, string displayName, string provider, string sourceString, WatchlistSourceType? sourceType, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, string description, string watchlistType, string watchlistAlias, bool? isDeleted, IList<string> labels, TimeSpan? defaultDuration, Guid? tenantId, int? numberOfLinesToSkip, string rawContent, string itemsSearchKey, string contentType, string uploadStatus, TriggeredAnalyticsRuleRunProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WatchlistProperties(Guid? watchlistId, string displayName, string provider, string sourceString, WatchlistSourceType? sourceType, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, string description, string watchlistType, string watchlistAlias, bool? isDeleted, IList<string> labels, TimeSpan? defaultDuration, Guid? tenantId, int? numberOfLinesToSkip, string rawContent, string itemsSearchKey, string contentType, string uploadStatus, WatchlistProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WatchlistId = watchlistId;
             DisplayName = displayName;
@@ -171,6 +171,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Describes provisioning state. </summary>
         [WirePath("provisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState { get; }
+        public WatchlistProvisioningState? ProvisioningState { get; }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             TryGetApiVersion(NotificationHubsPrivateLinkResource.ResourceType, out string notificationHubsPrivateLinkResourceApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubsPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, notificationHubsPrivateLinkResourceApiVersion ?? "2023-10-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubsPrivateLinkResourceApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new NotificationHubsPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsCollectionResultOfT(
+            return new PageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new NotificationHubsPrivateLinkResourceDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

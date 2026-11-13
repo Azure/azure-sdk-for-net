@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevHub
         {
             TryGetApiVersion(DevHubVersionedTemplateResource.ResourceType, out string devHubVersionedTemplateApiVersion);
             _versionedTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", DevHubVersionedTemplateResource.ResourceType.Namespace, Diagnostics);
-            _versionedTemplateRestClient = new VersionedTemplate(_versionedTemplateClientDiagnostics, Pipeline, Endpoint, devHubVersionedTemplateApiVersion ?? "2025-03-01-preview");
+            _versionedTemplateRestClient = new VersionedTemplate(_versionedTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devHubVersionedTemplateApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevHubVersionedTemplateData, DevHubVersionedTemplateResource>(new VersionedTemplateGetAllAsyncCollectionResultOfT(_versionedTemplateRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DevHubVersionedTemplateCollection.GetAll"), data => new DevHubVersionedTemplateResource(Client, data));
+            return new AsyncPageableWrapper<DevHubVersionedTemplateData, DevHubVersionedTemplateResource>(new DevHubVersionedTemplateDataAsyncCollectionResultOfT(_versionedTemplateRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DevHubVersionedTemplateCollection.GetAll"), data => new DevHubVersionedTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevHubVersionedTemplateData, DevHubVersionedTemplateResource>(new VersionedTemplateGetAllCollectionResultOfT(_versionedTemplateRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DevHubVersionedTemplateCollection.GetAll"), data => new DevHubVersionedTemplateResource(Client, data));
+            return new PageableWrapper<DevHubVersionedTemplateData, DevHubVersionedTemplateResource>(new DevHubVersionedTemplateDataCollectionResultOfT(_versionedTemplateRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DevHubVersionedTemplateCollection.GetAll"), data => new DevHubVersionedTemplateResource(Client, data));
         }
 
         /// <summary>

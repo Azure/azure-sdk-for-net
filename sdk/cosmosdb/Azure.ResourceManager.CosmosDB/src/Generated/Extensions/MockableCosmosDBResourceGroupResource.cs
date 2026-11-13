@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
 
         private ClientDiagnostics SoftDeletedDatabaseAccountsClientDiagnostics => _softDeletedDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SoftDeletedDatabaseAccounts SoftDeletedDatabaseAccountsRestClient => _softDeletedDatabaseAccountsRestClient ??= new SoftDeletedDatabaseAccounts(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private SoftDeletedDatabaseAccounts SoftDeletedDatabaseAccountsRestClient => _softDeletedDatabaseAccountsRestClient ??= new SoftDeletedDatabaseAccounts(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         /// <summary> Gets a collection of CosmosDBAccounts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of CosmosDBAccounts and their operations over a CosmosDBAccountResource. </returns>

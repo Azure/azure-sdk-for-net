@@ -30,13 +30,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Initializes a new instance of <see cref="FhirServiceAccessPolicyEntry"/>. </summary>
         /// <param name="objectId"> An Azure AD object ID (User or Apps) that is allowed access to the FHIR service. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        public FhirServiceAccessPolicyEntry(string objectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        // TODO: Remove this compatibility constructor after https://github.com/microsoft/typespec/issues/11588 is fixed.
+        public FhirServiceAccessPolicyEntry(string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Argument.AssertNotNull(objectId, nameof(objectId));
 
             ObjectId = objectId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = serializedAdditionalRawData;
         }
 
         /// <summary> An Azure AD object ID (User or Apps) that is allowed access to the FHIR service. </summary>

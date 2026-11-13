@@ -1,3 +1,6 @@
 import:
   - ../../.vscode/cspell.json
-overrides: []
+overrides:
+  - filename: '**/sdk/provisioning/**/*.cs'
+    words:
+      - AZPROVISION

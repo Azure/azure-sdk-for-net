@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(ConnectionMonitorTestResource.ResourceType, out string connectionMonitorTestApiVersion);
             _connectionMonitorTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ConnectionMonitorTestResource.ResourceType.Namespace, Diagnostics);
-            _connectionMonitorTestsRestClient = new ConnectionMonitorTests(_connectionMonitorTestsClientDiagnostics, Pipeline, Endpoint, connectionMonitorTestApiVersion ?? "2025-05-01");
+            _connectionMonitorTestsRestClient = new ConnectionMonitorTests(_connectionMonitorTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectionMonitorTestApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestDataAsyncCollectionResultOfT(
                 _connectionMonitorTestsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceCollectionResultOfT(
+            return new PageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestDataCollectionResultOfT(
                 _connectionMonitorTestsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

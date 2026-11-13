@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string UserDefinedRoutingValue = "userDefinedRouting";
         /// <summary> The AKS-managed NAT gateway is used for egress. </summary>
         private const string ManagedNatGatewayValue = "managedNATGateway";
-        /// <summary> The AKS-managed NAT gateway V2 is used for egress. </summary>
-        private const string ManagedNatGatewayV2Value = "managedNATGatewayV2";
         /// <summary> The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration. </summary>
         private const string UserAssignedNatGatewayValue = "userAssignedNATGateway";
         /// <summary> The AKS cluster is not set with any outbound-type. All AKS nodes follows Azure VM default outbound behavior. Please refer to https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/. </summary>
@@ -46,9 +44,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The AKS-managed NAT gateway is used for egress. </summary>
         public static ContainerServiceOutboundType ManagedNatGateway { get; } = new ContainerServiceOutboundType(ManagedNatGatewayValue);
-
-        /// <summary> The AKS-managed NAT gateway V2 is used for egress. </summary>
-        public static ContainerServiceOutboundType ManagedNatGatewayV2 { get; } = new ContainerServiceOutboundType(ManagedNatGatewayV2Value);
 
         /// <summary> The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration. </summary>
         public static ContainerServiceOutboundType UserAssignedNatGateway { get; } = new ContainerServiceOutboundType(UserAssignedNatGatewayValue);

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSiteBuildResource.ResourceType, out string staticSiteBuildApiVersion);
             _staticSiteBuildARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildResource.ResourceType.Namespace, Diagnostics);
-            _staticSiteBuildARMResourcesRestClient = new StaticSiteBuildARMResources(_staticSiteBuildARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteBuildApiVersion ?? "2026-03-15");
+            _staticSiteBuildARMResourcesRestClient = new StaticSiteBuildARMResources(_staticSiteBuildARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteBuildData, StaticSiteBuildResource>(new StaticSiteBuildARMResourcesGetStaticSiteBuildsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteBuildData, StaticSiteBuildResource>(new StaticSiteBuildDataAsyncCollectionResultOfT(
                 _staticSiteBuildARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteBuildData, StaticSiteBuildResource>(new StaticSiteBuildARMResourcesGetStaticSiteBuildsCollectionResultOfT(
+            return new PageableWrapper<StaticSiteBuildData, StaticSiteBuildResource>(new StaticSiteBuildDataCollectionResultOfT(
                 _staticSiteBuildARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

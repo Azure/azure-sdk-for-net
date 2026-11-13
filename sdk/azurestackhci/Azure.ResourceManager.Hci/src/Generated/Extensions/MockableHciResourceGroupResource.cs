@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Mocking
 
         private ClientDiagnostics OwnershipVouchersClientDiagnostics => _ownershipVouchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OwnershipVouchers OwnershipVouchersRestClient => _ownershipVouchersRestClient ??= new OwnershipVouchers(OwnershipVouchersClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private OwnershipVouchers OwnershipVouchersRestClient => _ownershipVouchersRestClient ??= new OwnershipVouchers(OwnershipVouchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         /// <summary> Gets a collection of HciClusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of HciClusters and their operations over a HciClusterResource. </returns>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,71 +170,6 @@ namespace Azure.ResourceManager.Hci.Mocking
             return GetEdgeMachines().Get(edgeMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevicePools in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of DevicePools and their operations over a DevicePoolResource. </returns>
-        public virtual DevicePoolCollection GetDevicePools()
-        {
-            return GetCachedClient(client => new DevicePoolCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a DevicePool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/devicePools/{devicePoolName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DevicePools_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devicePoolName"> The name of the DevicePool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devicePoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devicePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevicePoolResource>> GetDevicePoolAsync(string devicePoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(devicePoolName, nameof(devicePoolName));
-
-            return await GetDevicePools().GetAsync(devicePoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a DevicePool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/devicePools/{devicePoolName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DevicePools_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devicePoolName"> The name of the DevicePool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devicePoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devicePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DevicePoolResource> GetDevicePool(string devicePoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(devicePoolName, nameof(devicePoolName));
-
-            return GetDevicePools().Get(devicePoolName, cancellationToken);
-        }
-
         /// <summary>
         /// Validates ownership vouchers.
         /// <list type="bullet">
@@ -248,7 +183,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +232,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

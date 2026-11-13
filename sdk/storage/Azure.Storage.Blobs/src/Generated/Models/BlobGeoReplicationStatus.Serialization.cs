@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class BlobGeoReplicationStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BlobGeoReplicationStatus value) => value switch
         {
             BlobGeoReplicationStatus.Live => "live",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobGeoReplicationStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BlobGeoReplicationStatus ToBlobGeoReplicationStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "live")) return BlobGeoReplicationStatus.Live;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bootstrap")) return BlobGeoReplicationStatus.Bootstrap;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable")) return BlobGeoReplicationStatus.Unavailable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "live"))
+            {
+                return BlobGeoReplicationStatus.Live;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bootstrap"))
+            {
+                return BlobGeoReplicationStatus.Bootstrap;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable"))
+            {
+                return BlobGeoReplicationStatus.Unavailable;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobGeoReplicationStatus value.");
         }
     }

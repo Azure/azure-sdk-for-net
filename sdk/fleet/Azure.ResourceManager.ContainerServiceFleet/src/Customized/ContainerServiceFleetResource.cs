@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<ContainerServiceFleetResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceFleetPatch patch, string ifMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<ContainerServiceFleetResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceFleetPatch patch, string ifMatch, CancellationToken cancellationToken = default)
         {
             return await UpdateAsync(waitUntil, patch, ETagHelper.ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<ContainerServiceFleetResource> Update(WaitUntil waitUntil, ContainerServiceFleetPatch patch, string ifMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<ContainerServiceFleetResource> Update(WaitUntil waitUntil, ContainerServiceFleetPatch patch, string ifMatch, CancellationToken cancellationToken = default)
         {
             return Update(waitUntil, patch, ETagHelper.ToETag(ifMatch), cancellationToken);
         }

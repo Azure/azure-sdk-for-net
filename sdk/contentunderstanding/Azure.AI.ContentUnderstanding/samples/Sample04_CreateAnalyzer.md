@@ -22,7 +22,7 @@ Custom analyzers allow you to define a field schema that specifies what structur
 
   For the complete and up-to-date list of supported base analyzers, see the [Analyzer reference documentation][analyzer-reference-docs].
 - Configure analysis options (OCR, layout, formulas)
-- Enable source and confidence tracking: Set `estimateFieldSourceAndConfidence` to `true` at the analyzer level (in `ContentAnalyzerConfig`) or `estimateSourceAndConfidence` to `true` at the field level to get source location (page number, bounding box) and confidence scores for extracted field values. This is required for fields with `method` = `extract` and is useful for validation, quality assurance, debugging, and highlighting source text in user interfaces. Field-level settings override analyzer-level settings. For more information, see [estimateSourceAndConfidence][estimate-source-confidence-docs].
+- Enable source and confidence tracking: Set `estimateFieldSourceAndConfidence` to `true` at the analyzer level (in `ContentAnalyzerConfig`) or `estimateSourceAndConfidence` to `true` at the field level to get source location (page number, bounding box) and confidence scores for extracted field values. Field-level settings override analyzer-level settings. For more information, see [estimateSourceAndConfidence][estimate-source-confidence-docs].
 
 ## Prerequisites
 
@@ -133,7 +133,7 @@ var customAnalyzer = new ContentAnalyzer
 
 // Add model mappings for supported large language models (required for custom analyzers)
 // Maps model roles (completion, embedding) to specific model names
-customAnalyzer.Models["completion"] = "gpt-4.1";
+customAnalyzer.Models["completion"] = "gpt-5.2";
 customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
 // Create the analyzer
@@ -212,26 +212,22 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         }
     }
 
-    // Generate field (AI-generated value)
     if (content.Fields.TryGetValue("document_summary", out var summaryField))
     {
         var summary = summaryField is ContentStringField sf ? sf.Value : null;
-        Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
+        Console.WriteLine($"Document Summary: {summary ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
-        // Note: Generated fields may not have grounding source information
         if (summaryField.Sources != null)
         {
             Console.WriteLine($"  Grounding sources: {summaryField.Sources.Length}");
         }
     }
 
-    // Classify field (classification against predefined categories)
     if (content.Fields.TryGetValue("document_type", out var documentTypeField))
     {
         var documentType = documentTypeField is ContentStringField sf ? sf.Value : null;
-        Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
+        Console.WriteLine($"Document Type: {documentType ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
-        // Note: Classified fields may not have grounding source information
         if (documentTypeField.Sources != null)
         {
             Console.WriteLine($"  Grounding sources: {documentTypeField.Sources.Length}");

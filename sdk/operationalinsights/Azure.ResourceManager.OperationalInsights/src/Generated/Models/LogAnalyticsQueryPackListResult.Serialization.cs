@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogAnalyticsQueryPackListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LogAnalyticsQueryPackListResult(value ?? new ChangeTrackingList<LogAnalyticsQueryPackData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

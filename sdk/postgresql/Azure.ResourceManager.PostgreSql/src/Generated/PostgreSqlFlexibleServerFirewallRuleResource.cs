@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerFirewallRuleApiVersion);
             _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerFirewallRuleApiVersion ?? "2026-04-01-preview");
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerFirewallRuleApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

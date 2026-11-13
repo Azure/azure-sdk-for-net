@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteWebJobResource.ResourceType, out string webSiteWebJobApiVersion);
             _webJobOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteWebJobResource.ResourceType.Namespace, Diagnostics);
-            _webJobOperationGroupRestClient = new WebJobOperationGroup(_webJobOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteWebJobApiVersion ?? "2026-03-15");
+            _webJobOperationGroupRestClient = new WebJobOperationGroup(_webJobOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteWebJobApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebJobData, WebSiteWebJobResource>(new WebJobOperationGroupGetWebJobsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebJobData, WebSiteWebJobResource>(new WebJobDataAsync0CollectionResultOfT(
                 _webJobOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebJobData, WebSiteWebJobResource>(new WebJobOperationGroupGetWebJobsCollectionResultOfT(
+            return new PageableWrapper<WebJobData, WebSiteWebJobResource>(new WebJobData0CollectionResultOfT(
                 _webJobOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

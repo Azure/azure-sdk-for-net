@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(AzureDevOpsProjectResource.ResourceType, out string azureDevOpsProjectApiVersion);
             _azureDevOpsProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AzureDevOpsProjectResource.ResourceType.Namespace, Diagnostics);
-            _azureDevOpsProjectsRestClient = new AzureDevOpsProjects(_azureDevOpsProjectsClientDiagnostics, Pipeline, Endpoint, azureDevOpsProjectApiVersion ?? "2025-11-01-preview");
+            _azureDevOpsProjectsRestClient = new AzureDevOpsProjects(_azureDevOpsProjectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureDevOpsProjectApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureDevOpsProjectData, AzureDevOpsProjectResource>(new AzureDevOpsProjectsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AzureDevOpsProjectData, AzureDevOpsProjectResource>(new AzureDevOpsProjectDataAsyncCollectionResultOfT(
                 _azureDevOpsProjectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureDevOpsProjectData, AzureDevOpsProjectResource>(new AzureDevOpsProjectsGetAllCollectionResultOfT(
+            return new PageableWrapper<AzureDevOpsProjectData, AzureDevOpsProjectResource>(new AzureDevOpsProjectDataCollectionResultOfT(
                 _azureDevOpsProjectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

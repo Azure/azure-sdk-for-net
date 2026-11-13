@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceTagApiLinkResource.ResourceType, out string serviceWorkspaceTagApiLinkApiVersion);
             _workspaceTagApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagApiLinkResource.ResourceType.Namespace, Diagnostics);
-            _workspaceTagApiLinkRestClient = new WorkspaceTagApiLink(_workspaceTagApiLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagApiLinkApiVersion ?? "2025-09-01-preview");
+            _workspaceTagApiLinkRestClient = new WorkspaceTagApiLink(_workspaceTagApiLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceTagApiLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new WorkspaceTagApiLinkGetByProductAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new TagApiLinkContractDataAsync0CollectionResultOfT(
                 _workspaceTagApiLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new WorkspaceTagApiLinkGetByProductCollectionResultOfT(
+            return new PageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new TagApiLinkContractData0CollectionResultOfT(
                 _workspaceTagApiLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

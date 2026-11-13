@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorTriageRecommendationResource.ResourceType, out string advisorTriageRecommendationApiVersion);
             _triageRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorTriageRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _triageRecommendationsRestClient = new TriageRecommendations(_triageRecommendationsClientDiagnostics, Pipeline, Endpoint, advisorTriageRecommendationApiVersion ?? "2025-05-01-preview");
+            _triageRecommendationsRestClient = new TriageRecommendations(_triageRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorTriageRecommendationApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorTriageRecommendationData, AdvisorTriageRecommendationResource>(new TriageRecommendationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorTriageRecommendationData, AdvisorTriageRecommendationResource>(new AdvisorTriageRecommendationDataAsyncCollectionResultOfT(
                 _triageRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorTriageRecommendationData, AdvisorTriageRecommendationResource>(new TriageRecommendationsGetAllCollectionResultOfT(
+            return new PageableWrapper<AdvisorTriageRecommendationData, AdvisorTriageRecommendationResource>(new AdvisorTriageRecommendationDataCollectionResultOfT(
                 _triageRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

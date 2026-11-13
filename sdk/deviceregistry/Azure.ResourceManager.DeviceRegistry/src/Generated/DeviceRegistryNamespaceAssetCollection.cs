@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryNamespaceAssetResource.ResourceType, out string deviceRegistryNamespaceAssetApiVersion);
             _namespaceAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceAssetResource.ResourceType.Namespace, Diagnostics);
-            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2026-03-01-preview");
+            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new NamespaceAssetsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new DeviceRegistryNamespaceAssetDataAsyncCollectionResultOfT(
                 _namespaceAssetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new NamespaceAssetsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DeviceRegistryNamespaceAssetData, DeviceRegistryNamespaceAssetResource>(new DeviceRegistryNamespaceAssetDataCollectionResultOfT(
                 _namespaceAssetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

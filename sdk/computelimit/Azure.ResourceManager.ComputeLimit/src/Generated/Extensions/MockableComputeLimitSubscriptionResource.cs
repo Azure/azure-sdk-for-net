@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of ComputeLimitGuestSubscriptions and their operations over a ComputeLimitGuestSubscriptionResource. </returns>
         public virtual ComputeLimitGuestSubscriptionCollection GetComputeLimitGuestSubscriptions(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitGuestSubscriptionCollection(client, Id, location));
+            return new ComputeLimitGuestSubscriptionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,12 +99,80 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             return GetComputeLimitGuestSubscriptions(location).Get(guestSubscriptionId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of TrustedHostSubscriptions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of TrustedHostSubscriptions and their operations over a TrustedHostSubscriptionResource. </returns>
+        public virtual TrustedHostSubscriptionCollection GetTrustedHostSubscriptions(AzureLocation location)
+        {
+            return new TrustedHostSubscriptionCollection(Client, Id, location);
+        }
+
+        /// <summary>
+        /// Gets a host subscription that the guest subscription trusts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/trustedHostSubscriptions/{hostSubscriptionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrustedHostSubscriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-31. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="hostSubscriptionId"> The name of the TrustedHostSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TrustedHostSubscriptionResource>> GetTrustedHostSubscriptionAsync(AzureLocation location, string hostSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostSubscriptionId, nameof(hostSubscriptionId));
+
+            return await GetTrustedHostSubscriptions(location).GetAsync(hostSubscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a host subscription that the guest subscription trusts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/trustedHostSubscriptions/{hostSubscriptionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrustedHostSubscriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-31. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="hostSubscriptionId"> The name of the TrustedHostSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TrustedHostSubscriptionResource> GetTrustedHostSubscription(AzureLocation location, string hostSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostSubscriptionId, nameof(hostSubscriptionId));
+
+            return GetTrustedHostSubscriptions(location).Get(hostSubscriptionId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ComputeLimitSharedLimits in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of ComputeLimitSharedLimits and their operations over a ComputeLimitSharedLimitResource. </returns>
         public virtual ComputeLimitSharedLimitCollection GetComputeLimitSharedLimits(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitSharedLimitCollection(client, Id, location));
+            return new ComputeLimitSharedLimitCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -120,7 +188,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +218,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +240,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of ComputeLimitFeatures and their operations over a ComputeLimitFeatureResource. </returns>
         public virtual ComputeLimitFeatureCollection GetComputeLimitFeatures(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitFeatureCollection(client, Id, location));
+            return new ComputeLimitFeatureCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -188,7 +256,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +286,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,7 +308,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of ComputeLimitVmFamilies and their operations over a ComputeLimitVmFamilyResource. </returns>
         public virtual ComputeLimitVmFamilyCollection GetComputeLimitVmFamilies(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitVmFamilyCollection(client, Id, location));
+            return new ComputeLimitVmFamilyCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -256,7 +324,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,7 +354,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,7 +376,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of SharedLimitCaps and their operations over a SharedLimitCapResource. </returns>
         public virtual SharedLimitCapCollection GetSharedLimitCaps(AzureLocation location)
         {
-            return GetCachedClient(client => new SharedLimitCapCollection(client, Id, location));
+            return new SharedLimitCapCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -324,7 +392,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,7 +422,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>

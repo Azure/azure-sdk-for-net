@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabArmTemplateResource.ResourceType, out string devTestLabArmTemplateApiVersion);
             _armTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabArmTemplateResource.ResourceType.Namespace, Diagnostics);
-            _armTemplatesRestClient = new ArmTemplates(_armTemplatesClientDiagnostics, Pipeline, Endpoint, devTestLabArmTemplateApiVersion ?? "2018-09-15");
+            _armTemplatesRestClient = new ArmTemplates(_armTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabArmTemplateApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabArmTemplateData, DevTestLabArmTemplateResource>(new ArmTemplatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabArmTemplateData, DevTestLabArmTemplateResource>(new DevTestLabArmTemplateDataAsyncCollectionResultOfT(
                 _armTemplatesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabArmTemplateData, DevTestLabArmTemplateResource>(new ArmTemplatesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabArmTemplateData, DevTestLabArmTemplateResource>(new DevTestLabArmTemplateDataCollectionResultOfT(
                 _armTemplatesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

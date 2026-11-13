@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(MonitorPrivateEndpointConnectionResource.ResourceType, out string monitorPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, monitorPrivateEndpointConnectionApiVersion ?? "2023-06-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorPrivateEndpointConnectionApiVersion ?? "2023-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorPrivateEndpointConnectionData, MonitorPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MonitorPrivateEndpointConnectionData, MonitorPrivateEndpointConnectionResource>(new MonitorPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorPrivateEndpointConnectionData, MonitorPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT(
+            return new PageableWrapper<MonitorPrivateEndpointConnectionData, MonitorPrivateEndpointConnectionResource>(new MonitorPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

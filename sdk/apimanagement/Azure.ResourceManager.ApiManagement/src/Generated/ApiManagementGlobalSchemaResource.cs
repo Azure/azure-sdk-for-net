@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementGlobalSchemaApiVersion);
             _globalSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _globalSchemaRestClient = new GlobalSchema(_globalSchemaClientDiagnostics, Pipeline, Endpoint, apiManagementGlobalSchemaApiVersion ?? "2025-09-01-preview");
+            _globalSchemaRestClient = new GlobalSchema(_globalSchemaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGlobalSchemaApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

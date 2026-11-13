@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NamespaceJunction(namespacePath, targetPath, nfsExport, nfsAccessPolicy, additionalBinaryDataProperties);

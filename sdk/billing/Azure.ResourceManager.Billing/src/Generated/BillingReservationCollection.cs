@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingReservationResource.ResourceType, out string billingReservationApiVersion);
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingReservationResource.ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Endpoint, billingReservationApiVersion ?? "2024-04-01");
+            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservationApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByReservationOrderAsyncCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationDataAsyncCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByReservationOrderCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
+            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationDataCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
         }
 
         /// <summary>

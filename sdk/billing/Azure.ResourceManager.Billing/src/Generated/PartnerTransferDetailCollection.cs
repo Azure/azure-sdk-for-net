@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(PartnerTransferDetailResource.ResourceType, out string partnerTransferDetailApiVersion);
             _partnerTransfersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", PartnerTransferDetailResource.ResourceType.Namespace, Diagnostics);
-            _partnerTransfersRestClient = new PartnerTransfers(_partnerTransfersClientDiagnostics, Pipeline, Endpoint, partnerTransferDetailApiVersion ?? "2024-04-01");
+            _partnerTransfersRestClient = new PartnerTransfers(_partnerTransfersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerTransferDetailApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerTransferDetailData, PartnerTransferDetailResource>(new PartnerTransfersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerTransferDetailData, PartnerTransferDetailResource>(new PartnerTransferDetailDataAsyncCollectionResultOfT(
                 _partnerTransfersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerTransferDetailData, PartnerTransferDetailResource>(new PartnerTransfersGetAllCollectionResultOfT(
+            return new PageableWrapper<PartnerTransferDetailData, PartnerTransferDetailResource>(new PartnerTransferDetailDataCollectionResultOfT(
                 _partnerTransfersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,

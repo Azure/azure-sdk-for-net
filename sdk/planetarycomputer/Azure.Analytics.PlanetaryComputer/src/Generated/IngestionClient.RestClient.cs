@@ -381,12 +381,12 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateReplaceSourceRequest(Guid id, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceSourceRequest(Guid sourceId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
-            uri.AppendPath(id.ToString(), true);
+            uri.AppendPath(sourceId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -401,12 +401,12 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateDeleteSourceRequest(Guid id, RequestContext context)
+        internal HttpMessage CreateDeleteSourceRequest(Guid sourceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
-            uri.AppendPath(id.ToString(), true);
+            uri.AppendPath(sourceId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -418,12 +418,12 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetSourceRequest(Guid id, RequestContext context)
+        internal HttpMessage CreateGetSourceRequest(Guid sourceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
-            uri.AppendPath(id.ToString(), true);
+            uri.AppendPath(sourceId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

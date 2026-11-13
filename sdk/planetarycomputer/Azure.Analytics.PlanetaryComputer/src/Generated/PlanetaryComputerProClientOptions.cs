@@ -15,7 +15,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Client options for <see cref="PlanetaryComputerProClient"/>. </summary>
     public partial class PlanetaryComputerProClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_04_30_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_15;
 
         /// <summary> Initializes a new instance of PlanetaryComputerProClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -23,7 +23,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Version = version switch
             {
-                ServiceVersion.V2025_04_30_Preview => "2025-04-30-preview",
+                ServiceVersion.V2026_04_15 => "2026-04-15",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.PlanetaryComputer
         [Experimental("SCME0002")]
         internal PlanetaryComputerProClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2025-04-30-preview";
+            Version = "2026-04-15";
             if (section is null || !section.Exists())
             {
                 return;
@@ -55,8 +55,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Represents the 2025-04-30-preview version. </summary>
-            V2025_04_30_Preview = 1
+            /// <summary> Represents the 2026-04-15 stable version. </summary>
+            V2026_04_15 = 1
         }
     }
 }

@@ -51,20 +51,12 @@ Write-Host "Deploying models to copy target Foundry resource: $copyTargetAccount
 # Model deployment configurations
 $modelConfigs = @(
     @{
-        Name = 'gpt-4.1'
-        ModelName = 'gpt-4.1'
+        Name = 'gpt-5.2'
+        ModelName = 'gpt-5.2'
         Format = 'OpenAI'
-        Version = '2025-04-14'
-        SkuName = 'Standard'
-        SkuCapacity = 150  # Rate limit: 150,000 tokens per minute
-    },
-    @{
-        Name = 'gpt-4.1-mini'
-        ModelName = 'gpt-4.1-mini'
-        Format = 'OpenAI'
-        Version = '2025-04-14'
-        SkuName = 'Standard'
-        SkuCapacity = 150  # Rate limit: 150,000 tokens per minute
+        Version = '2025-12-11'
+        SkuName = 'DataZoneStandard'
+        SkuCapacity = 100
     },
     @{
         Name = 'text-embedding-3-large'
@@ -215,7 +207,7 @@ function Update-ContentUnderstandingDefaults {
     Write-Host "Updating Content Understanding defaults for account '$AccountName'..."
 
     # Build the request body JSON
-    # Format: { "modelDeployments": { "gpt-4.1": "gpt-4.1", "gpt-4.1-mini": "gpt-4.1-mini", "text-embedding-3-large": "text-embedding-3-large" } }
+    # Format: { "modelDeployments": { "gpt-5.2": "gpt-5.2", "prebuilt-analyzer-completion": "gpt-5.2", ... } }
     $modelDeploymentsJson = @{}
     foreach ($kvp in $ModelDeployments.GetEnumerator()) {
         $modelDeploymentsJson[$kvp.Key] = $kvp.Value
@@ -384,6 +376,9 @@ if ($allDeploymentsReady) {
             $modelDeployments[$model.Name] = $model.Name
         }
     }
+    $modelDeployments['prebuilt-analyzer-completion'] = 'gpt-5.2'
+    $modelDeployments['prebuilt-analyzer-completion-mini'] = 'gpt-5.2'
+    $modelDeployments['prebuilt-analyzer-embedding'] = 'text-embedding-3-large'
 
     # Update defaults for Primary Microsoft Foundry resource
     $updatePrimaryResult = Update-ContentUnderstandingDefaults `

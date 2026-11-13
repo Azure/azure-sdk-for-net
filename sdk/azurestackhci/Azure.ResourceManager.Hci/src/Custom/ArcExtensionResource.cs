@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Update Extension for HCI cluster (backward-compat overload using ArcExtensionData). </summary>
         [Obsolete("This method is now deprecated.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<ArcExtensionResource> Update(WaitUntil waitUntil, ArcExtensionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcExtensionResource> Update(WaitUntil waitUntil, ArcExtensionData data1, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This method is obsolete, use the overload that takes ArcExtensionPatch instead.");
 
         /// <summary> Upgrade Machine Extensions (backward-compat overload using ExtensionUpgradeContent). </summary>

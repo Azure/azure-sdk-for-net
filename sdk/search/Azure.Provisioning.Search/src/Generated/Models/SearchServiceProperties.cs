@@ -328,7 +328,7 @@ namespace Azure.Provisioning.Search
             _sharedPrivateLinkResources = DefineListProperty<SharedSearchServicePrivateLink>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _isUpgradeAvailable = DefineProperty<SearchServiceUpgradeAvailable>(nameof(IsUpgradeAvailable), new string[] { "upgradeAvailable" });
-            _serviceUpgradedOn = DefineProperty<DateTimeOffset>(nameof(ServiceUpgradedOn), new string[] { "serviceUpgradedAt" }, isOutput: true);
+            _serviceUpgradedOn = DefineProperty<DateTimeOffset>(nameof(ServiceUpgradedOn), new string[] { "serviceUpgradedAt" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

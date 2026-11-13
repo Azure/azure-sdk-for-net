@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Mocking
 
         private ClientDiagnostics DecompileOperationGroupClientDiagnostics => _decompileOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Bicep.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DecompileOperationGroup DecompileOperationGroupRestClient => _decompileOperationGroupRestClient ??= new DecompileOperationGroup(DecompileOperationGroupClientDiagnostics, Pipeline, Endpoint, "2023-11-01");
+        private DecompileOperationGroup DecompileOperationGroupRestClient => _decompileOperationGroupRestClient ??= new DecompileOperationGroup(DecompileOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-11-01");
 
         /// <summary>
         /// Decompiles an ARM json template into a Bicep template

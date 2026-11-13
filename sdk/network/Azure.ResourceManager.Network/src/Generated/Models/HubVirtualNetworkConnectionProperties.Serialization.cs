@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration, options);
             }
+            if (Optional.IsDefined(IsOnlyIPv6PeeringEnabled))
+            {
+                writer.WritePropertyName("enableOnlyIPv6Peering"u8);
+                writer.WriteBooleanValue(IsOnlyIPv6PeeringEnabled.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -156,7 +161,8 @@ namespace Azure.ResourceManager.Network.Models
             bool? allowRemoteVnetToUseHubVnetGateways = default;
             NetworkSubResource connectionPolicy = default;
             bool? enableInternetSecurity = default;
-            RoutingConfigurationNfv routingConfiguration = default;
+            RoutingConfiguration routingConfiguration = default;
+            bool? isOnlyIPv6PeeringEnabled = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -212,7 +218,16 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
+                    routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("enableOnlyIPv6Peering"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isOnlyIPv6PeeringEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -226,7 +241,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HubVirtualNetworkConnectionProperties(
@@ -236,6 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectionPolicy,
                 enableInternetSecurity,
                 routingConfiguration,
+                isOnlyIPv6PeeringEnabled,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

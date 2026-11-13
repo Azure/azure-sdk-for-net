@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Payload.Pageable.csproj" />
+  <Project Path="tests/Payload.Pageable.Tests.csproj" />
 </Solution>

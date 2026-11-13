@@ -13,6 +13,28 @@ namespace Azure.Generator.Management.Tests.Providers
 {
     internal class ResourceCollectionClientProviderTests
     {
+        [TestCase]
+        public void Verify_BackCompatOverloadIsDecorated()
+        {
+            // The current spec adds an optional "expand" query parameter to Get; the previous contract (loaded from
+            // TestData) did not, so the upstream generator synthesizes a hidden back-compat overload preserving the old
+            // signature.
+            var (client, models) = InputResourceData.ClientWithResource(includeGetQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+            var provider = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().First();
+            Assert.That(provider.LastContractView, Is.Not.Null);
+
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(provider);
+
+            var backCompatMethods = new TestTypeProvider(
+                name: provider.Name,
+                ns: provider.Type.Namespace,
+                declarationModifiers: provider.DeclarationModifiers,
+                methods: provider.Methods.Where(m => m.Signature.Name == "Get" || m.Signature.Name == "GetAsync"));
+            var rendered = new TypeProviderWriter(backCompatMethods).Write().Content.Replace("\r\n", "\n");
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
         private static MethodProvider GetResourceCollectionClientProviderMethodByName(string methodName)
         {
             ResourceCollectionClientProvider resourceProvider = GetResourceCollectionClientProvider();
@@ -231,6 +253,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(expected));
+            Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type));
+            Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.False);
         }
 
         [TestCase]

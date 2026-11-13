@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UriFileNameMatchCondition. </summary>
         public UriFileNameMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleUrlFilenameConditionParameters);
         }
 
         /// <summary> Gets or sets the UriFileNameOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleUrlFilenameConditionParameters");
             _uriFileNameOperator = DefineProperty<UriFileNameOperator>(nameof(UriFileNameOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValues = DefineListProperty<string>(nameof(MatchValues), new string[] { "matchValues" });

@@ -57,7 +57,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the entity. </param>
         /// <param name="contacts"> The dictionary of contacts for entities. Key could be Expert or Owner. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntity(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> businessAttributes, IList<AtlasClassification> classifications, long? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, BinaryData> relationshipAttributes, EntityStatus? status, long? updateTime, string updatedBy, long? version, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntity(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> businessAttributes, IList<AtlasClassification> classifications, long? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, BinaryData> relationshipAttributes, DataMapEntityStatus? status, long? updateTime, string updatedBy, long? version, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </summary>
-        public EntityStatus? Status { get; set; }
+        public DataMapEntityStatus? Status { get; set; }
 
         /// <summary> The update time of the record. </summary>
         public long? UpdateTime { get; set; }

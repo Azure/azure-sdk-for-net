@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 throw new FormatException($"The model {nameof(CertificateRestoreParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
-            writer.WriteBase64StringValue(CertificateBundleBackup.ToArray(), "U");
+            writer.WriteBase64StringValue(CertificateBundleBackup, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -144,7 +144,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CertificateRestoreParameters(certificateBundleBackup, additionalBinaryDataProperties);

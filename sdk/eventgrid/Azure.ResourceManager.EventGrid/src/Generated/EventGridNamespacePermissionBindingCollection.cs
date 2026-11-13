@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(EventGridNamespacePermissionBindingResource.ResourceType, out string eventGridNamespacePermissionBindingApiVersion);
             _permissionBindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridNamespacePermissionBindingResource.ResourceType.Namespace, Diagnostics);
-            _permissionBindingsRestClient = new PermissionBindings(_permissionBindingsClientDiagnostics, Pipeline, Endpoint, eventGridNamespacePermissionBindingApiVersion ?? "2025-07-15-preview");
+            _permissionBindingsRestClient = new PermissionBindings(_permissionBindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridNamespacePermissionBindingApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridNamespacePermissionBindingData, EventGridNamespacePermissionBindingResource>(new PermissionBindingsGetByNamespaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridNamespacePermissionBindingData, EventGridNamespacePermissionBindingResource>(new EventGridNamespacePermissionBindingDataAsyncCollectionResultOfT(
                 _permissionBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridNamespacePermissionBindingData, EventGridNamespacePermissionBindingResource>(new PermissionBindingsGetByNamespaceCollectionResultOfT(
+            return new PageableWrapper<EventGridNamespacePermissionBindingData, EventGridNamespacePermissionBindingResource>(new EventGridNamespacePermissionBindingDataCollectionResultOfT(
                 _permissionBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

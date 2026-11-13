@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             TryGetApiVersion(HDInsightApplicationResource.ResourceType, out string hdInsightApplicationApiVersion);
             _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, hdInsightApplicationApiVersion ?? "2025-01-15-preview");
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightApplicationApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightApplicationData, HDInsightApplicationResource>(new ApplicationsGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HDInsightApplicationData, HDInsightApplicationResource>(new HDInsightApplicationDataAsyncCollectionResultOfT(
                 _applicationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightApplicationData, HDInsightApplicationResource>(new ApplicationsGetByClusterCollectionResultOfT(
+            return new PageableWrapper<HDInsightApplicationData, HDInsightApplicationResource>(new HDInsightApplicationDataCollectionResultOfT(
                 _applicationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

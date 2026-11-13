@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(IotSecurityAggregatedAlertResource.ResourceType, out string iotSecurityAggregatedAlertApiVersion);
             _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecurityAggregatedAlertResource.ResourceType.Namespace, Diagnostics);
-            _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient = new IotSecuritySolutionsAnalyticsAggregatedAlert(_iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, Endpoint, iotSecurityAggregatedAlertApiVersion ?? "2019-08-01");
+            _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient = new IotSecuritySolutionsAnalyticsAggregatedAlert(_iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotSecurityAggregatedAlertApiVersion ?? "2019-08-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotSecurityAggregatedAlertData, IotSecurityAggregatedAlertResource>(new IotSecuritySolutionsAnalyticsAggregatedAlertGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotSecurityAggregatedAlertData, IotSecurityAggregatedAlertResource>(new IotSecurityAggregatedAlertDataAsyncCollectionResultOfT(
                 _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotSecurityAggregatedAlertData, IotSecurityAggregatedAlertResource>(new IotSecuritySolutionsAnalyticsAggregatedAlertGetAllCollectionResultOfT(
+            return new PageableWrapper<IotSecurityAggregatedAlertData, IotSecurityAggregatedAlertResource>(new IotSecurityAggregatedAlertDataCollectionResultOfT(
                 _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

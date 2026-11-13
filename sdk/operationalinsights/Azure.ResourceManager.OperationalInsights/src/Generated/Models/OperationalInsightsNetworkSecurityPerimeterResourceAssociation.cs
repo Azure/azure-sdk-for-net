@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
-        /// <param name="accessMode"></param>
+        /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OperationalInsightsNetworkSecurityPerimeterResourceAssociation(string name, OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         [WirePath("name")]
         public string Name { get; }
 
-        /// <summary> Gets the AccessMode. </summary>
+        /// <summary> Access mode of the resource association. </summary>
         [WirePath("accessMode")]
         public OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? AccessMode { get; }
     }

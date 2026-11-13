@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
             _subscriptionQuotaAllocationsListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2024-05-01");
+            _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

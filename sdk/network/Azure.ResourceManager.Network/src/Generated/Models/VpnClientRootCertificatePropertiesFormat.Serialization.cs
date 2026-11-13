@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(VpnClientRootCertificatePropertiesFormat)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("publicCertData"u8);
-            writer.WriteBase64StringValue(PublicCertData.ToArray(), "D");
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(PublicCertData);
+#else
+            using (JsonDocument document = JsonDocument.Parse(PublicCertData))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -135,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("publicCertData"u8))
                 {
-                    publicCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    publicCertData = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -149,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VpnClientRootCertificatePropertiesFormat(publicCertData, provisioningState, additionalBinaryDataProperties);

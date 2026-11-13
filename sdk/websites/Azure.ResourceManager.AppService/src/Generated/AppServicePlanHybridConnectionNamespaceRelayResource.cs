@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string appServicePlanHybridConnectionNamespaceRelayApiVersion);
             _hybridConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _hybridConnectionsRestClient = new HybridConnections(_hybridConnectionsClientDiagnostics, Pipeline, Endpoint, appServicePlanHybridConnectionNamespaceRelayApiVersion ?? "2026-03-15");
+            _hybridConnectionsRestClient = new HybridConnections(_hybridConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanHybridConnectionNamespaceRelayApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new HybridConnectionsGetWebAppsByHybridConnectionAsyncCollectionResultOfT(
+            return new StringAsyncCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new HybridConnectionsGetWebAppsByHybridConnectionCollectionResultOfT(
+            return new StringCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

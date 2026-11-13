@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(DataMigrationServiceTaskResource.ResourceType, out string dataMigrationServiceTaskApiVersion);
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationServiceTaskResource.ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, dataMigrationServiceTaskApiVersion ?? "2025-09-01-preview");
+            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMigrationServiceTaskApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMigrationProjectTaskData, DataMigrationServiceTaskResource>(new TasksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataMigrationProjectTaskData, DataMigrationServiceTaskResource>(new DataMigrationProjectTaskDataAsync0CollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMigrationProjectTaskData, DataMigrationServiceTaskResource>(new TasksGetAllCollectionResultOfT(
+            return new PageableWrapper<DataMigrationProjectTaskData, DataMigrationServiceTaskResource>(new DataMigrationProjectTaskData0CollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

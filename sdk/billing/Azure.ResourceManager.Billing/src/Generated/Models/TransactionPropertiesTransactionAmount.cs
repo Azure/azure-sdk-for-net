@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The charge associated with the transaction. </summary>
-    public partial class TransactionPropertiesTransactionAmount : BillingAmount
+    internal partial class TransactionPropertiesTransactionAmount : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesTransactionAmount"/>. </summary>
         public TransactionPropertiesTransactionAmount()

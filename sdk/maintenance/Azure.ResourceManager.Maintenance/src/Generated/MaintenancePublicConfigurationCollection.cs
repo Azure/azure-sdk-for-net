@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(MaintenancePublicConfigurationResource.ResourceType, out string maintenancePublicConfigurationApiVersion);
             _publicMaintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenancePublicConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _publicMaintenanceConfigurationsRestClient = new PublicMaintenanceConfigurations(_publicMaintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenancePublicConfigurationApiVersion ?? "2025-10-01-preview");
+            _publicMaintenanceConfigurationsRestClient = new PublicMaintenanceConfigurations(_publicMaintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenancePublicConfigurationApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new PublicMaintenanceConfigurationsGetAllAsyncCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new MaintenanceConfigurationDataAsyncCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new PublicMaintenanceConfigurationsGetAllCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new MaintenanceConfigurationDataCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
         }
 
         /// <summary>

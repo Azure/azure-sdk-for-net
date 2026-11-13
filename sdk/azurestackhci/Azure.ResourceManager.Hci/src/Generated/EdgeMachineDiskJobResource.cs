@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string edgeMachineDiskJobApiVersion);
             _edgeMachineDiskJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeMachineDiskJobsRestClient = new EdgeMachineDiskJobs(_edgeMachineDiskJobsClientDiagnostics, Pipeline, Endpoint, edgeMachineDiskJobApiVersion ?? "2026-05-01-preview");
+            _edgeMachineDiskJobsRestClient = new EdgeMachineDiskJobs(_edgeMachineDiskJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineDiskJobApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

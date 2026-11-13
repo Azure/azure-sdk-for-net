@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager. </summary>
         [WirePath("properties.targetWorkspaceResourceId")]
-        public string TargetWorkspaceResourceId
+        public ResourceIdentifier TargetWorkspaceResourceId
         {
             get
             {

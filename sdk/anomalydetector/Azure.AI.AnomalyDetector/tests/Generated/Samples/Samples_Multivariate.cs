@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response response = client.GetMultivariateBatchDetectionResult(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"), null);
 
@@ -41,7 +41,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"), null);
 
@@ -60,7 +60,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response<MultivariateDetectionResult> response = client.GetMultivariateBatchDetectionResult(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"));
         }
@@ -71,7 +71,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response<MultivariateDetectionResult> response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"));
         }
@@ -82,7 +82,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -113,7 +113,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             ModelInfo modelInfo = new ModelInfo(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:00:00Z"), DateTimeOffset.Parse("2019-04-02T00:00:00Z"))
             {
@@ -167,7 +167,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             ModelInfo modelInfo = new ModelInfo(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:00:00Z"), DateTimeOffset.Parse("2019-04-02T00:00:00Z"))
             {
@@ -190,7 +190,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response response = client.DeleteMultivariateModel("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
 
@@ -203,7 +203,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response response = await client.DeleteMultivariateModelAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
 
@@ -216,7 +216,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response response = client.GetMultivariateModel("45aad126-aafd-11ea-b8fb-d89ef3400c5f", null);
 
@@ -232,7 +232,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response response = await client.GetMultivariateModelAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f", null);
 
@@ -248,7 +248,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response<AnomalyDetectionModel> response = client.GetMultivariateModel("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
         }
@@ -259,7 +259,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             Response<AnomalyDetectionModel> response = await client.GetMultivariateModelAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
         }
@@ -270,7 +270,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -296,7 +296,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -322,7 +322,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:15:00Z"), DateTimeOffset.Parse("2019-04-01T00:40:00Z"))
             {
@@ -337,7 +337,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:15:00Z"), DateTimeOffset.Parse("2019-04-01T00:40:00Z"))
             {
@@ -352,7 +352,7 @@ namespace Azure.AI.AnomalyDetector.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -583,7 +583,7 @@ values = new object[]
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -814,7 +814,7 @@ values = new object[]
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
             {
@@ -834,7 +834,7 @@ new VariableValues("Variable_3", new string[]{"2021-01-01T00:00:00Z", "2021-01-0
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
             {
@@ -854,7 +854,7 @@ new VariableValues("Variable_3", new string[]{"2021-01-01T00:00:00Z", "2021-01-0
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             foreach (BinaryData item in client.GetMultivariateModels(0, null, null))
             {
@@ -871,7 +871,7 @@ new VariableValues("Variable_3", new string[]{"2021-01-01T00:00:00Z", "2021-01-0
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             await foreach (BinaryData item in client.GetMultivariateModelsAsync(0, null, null))
             {
@@ -888,7 +888,7 @@ new VariableValues("Variable_3", new string[]{"2021-01-01T00:00:00Z", "2021-01-0
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             foreach (AnomalyDetectionModel item in client.GetMultivariateModels())
             {
@@ -901,7 +901,7 @@ new VariableValues("Variable_3", new string[]{"2021-01-01T00:00:00Z", "2021-01-0
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
+            MultivariateDetector client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateDetectorClient();
 
             await foreach (AnomalyDetectionModel item in client.GetMultivariateModelsAsync())
             {

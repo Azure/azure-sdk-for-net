@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="ownershipVoucher"> Ownership voucher in base64 encoded format. </param>
         /// <param name="ownerKeyType"> Owner key type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ownershipVoucher"/> is null. </exception>
-        public OwnershipVoucherDetails(string ownershipVoucher, OwnerKeyType ownerKeyType)
+        public OwnershipVoucherDetails(string ownershipVoucher, HciOwnershipVoucherOwnerKeyType ownerKeyType)
         {
             Argument.AssertNotNull(ownershipVoucher, nameof(ownershipVoucher));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="ownerKeyType"> Owner key type. </param>
         /// <param name="validationDetails"> Ownership Voucher Validation Details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OwnershipVoucherDetails(string ownershipVoucher, OwnerKeyType ownerKeyType, OwnershipVoucherValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OwnershipVoucherDetails(string ownershipVoucher, HciOwnershipVoucherOwnerKeyType ownerKeyType, OwnershipVoucherValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OwnershipVoucher = ownershipVoucher;
             OwnerKeyType = ownerKeyType;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Owner key type. </summary>
         [WirePath("ownerKeyType")]
-        public OwnerKeyType OwnerKeyType { get; set; }
+        public HciOwnershipVoucherOwnerKeyType OwnerKeyType { get; set; }
 
         /// <summary> Ownership Voucher Validation Details. </summary>
         [WirePath("validationDetails")]

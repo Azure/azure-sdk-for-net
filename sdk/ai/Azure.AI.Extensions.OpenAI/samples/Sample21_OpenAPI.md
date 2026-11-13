@@ -23,11 +23,13 @@ Synchronous sample:
 string filePath = GetFile();
 OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenAPIAnonymousAuthenticationDetails()
-);
-toolDefinition.Description = "Retrieve weather information for a location.";
-OpenAPITool openapiTool = new(toolDefinition);
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenApiAnonymousAuthenticationDetails()
+)
+{
+    Description = "Retrieve weather information for a location."
+};
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -44,11 +46,13 @@ Asynchronous sample:
 string filePath = GetFile();
 OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenAPIAnonymousAuthenticationDetails()
-);
-toolDefinition.Description = "Retrieve weather information for a location.";
-OpenAPITool openapiTool = new(toolDefinition);
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenApiAnonymousAuthenticationDetails()
+)
+{
+    Description = "Retrieve weather information for a location."
+};
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

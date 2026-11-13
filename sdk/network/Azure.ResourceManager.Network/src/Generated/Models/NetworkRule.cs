@@ -24,6 +24,9 @@ namespace Azure.ResourceManager.Network.Models
             SourceIPGroups = new ChangeTrackingList<string>();
             DestinationIPGroups = new ChangeTrackingList<string>();
             DestinationFqdns = new ChangeTrackingList<string>();
+            SourceKubeSelectorGroups = new ChangeTrackingList<string>();
+            SourceGeoLocations = new ChangeTrackingList<string>();
+            DestinationGeoLocations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkRule"/>. </summary>
@@ -38,7 +41,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
         /// <param name="destinationFqdns"> List of destination FQDNs. </param>
-        internal NetworkRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups, IList<string> destinationFqdns) : base(name, description, ruleType, additionalBinaryDataProperties)
+        /// <param name="sourceKubeSelectorGroups"> List of source Kubernetes Selector Groups for this rule. </param>
+        /// <param name="sourceGeoLocations"> List of source geographic location filters (ISO 3166-1 alpha-2 country codes, e.g. "US", "CA") for this rule. </param>
+        /// <param name="destinationGeoLocations"> List of destination geographic location filters (ISO 3166-1 alpha-2 country codes, e.g. "US", "CA") for this rule. </param>
+        internal NetworkRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups, IList<string> destinationFqdns, IList<string> sourceKubeSelectorGroups, IList<string> sourceGeoLocations, IList<string> destinationGeoLocations) : base(name, description, ruleType, additionalBinaryDataProperties)
         {
             IPProtocols = ipProtocols;
             SourceAddresses = sourceAddresses;
@@ -47,6 +53,9 @@ namespace Azure.ResourceManager.Network.Models
             SourceIPGroups = sourceIPGroups;
             DestinationIPGroups = destinationIPGroups;
             DestinationFqdns = destinationFqdns;
+            SourceKubeSelectorGroups = sourceKubeSelectorGroups;
+            SourceGeoLocations = sourceGeoLocations;
+            DestinationGeoLocations = destinationGeoLocations;
         }
 
         /// <summary> Array of FirewallPolicyRuleNetworkProtocols. </summary>
@@ -76,5 +85,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of destination FQDNs. </summary>
         [WirePath("destinationFqdns")]
         public IList<string> DestinationFqdns { get; }
+
+        /// <summary> List of source Kubernetes Selector Groups for this rule. </summary>
+        [WirePath("sourceKubeSelectorGroups")]
+        public IList<string> SourceKubeSelectorGroups { get; }
+
+        /// <summary> List of source geographic location filters (ISO 3166-1 alpha-2 country codes, e.g. "US", "CA") for this rule. </summary>
+        [WirePath("sourceGeoLocations")]
+        public IList<string> SourceGeoLocations { get; }
+
+        /// <summary> List of destination geographic location filters (ISO 3166-1 alpha-2 country codes, e.g. "US", "CA") for this rule. </summary>
+        [WirePath("destinationGeoLocations")]
+        public IList<string> DestinationGeoLocations { get; }
     }
 }

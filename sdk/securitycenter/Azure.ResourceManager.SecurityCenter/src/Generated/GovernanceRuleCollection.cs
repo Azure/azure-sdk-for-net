@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(GovernanceRuleResource.ResourceType, out string governanceRuleApiVersion);
             _governanceRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GovernanceRuleResource.ResourceType.Namespace, Diagnostics);
-            _governanceRulesRestClient = new GovernanceRules(_governanceRulesClientDiagnostics, Pipeline, Endpoint, governanceRuleApiVersion ?? "2022-01-01-preview");
+            _governanceRulesRestClient = new GovernanceRules(_governanceRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, governanceRuleApiVersion ?? "2022-01-01-preview");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GovernanceRuleData, GovernanceRuleResource>(new GovernanceRulesGetAllAsyncCollectionResultOfT(_governanceRulesRestClient, Id.ToString(), context, "GovernanceRuleCollection.GetAll"), data => new GovernanceRuleResource(Client, data));
+            return new AsyncPageableWrapper<GovernanceRuleData, GovernanceRuleResource>(new GovernanceRuleDataAsyncCollectionResultOfT(_governanceRulesRestClient, Id.ToString(), context, "GovernanceRuleCollection.GetAll"), data => new GovernanceRuleResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GovernanceRuleData, GovernanceRuleResource>(new GovernanceRulesGetAllCollectionResultOfT(_governanceRulesRestClient, Id.ToString(), context, "GovernanceRuleCollection.GetAll"), data => new GovernanceRuleResource(Client, data));
+            return new PageableWrapper<GovernanceRuleData, GovernanceRuleResource>(new GovernanceRuleDataCollectionResultOfT(_governanceRulesRestClient, Id.ToString(), context, "GovernanceRuleCollection.GetAll"), data => new GovernanceRuleResource(Client, data));
         }
 
         /// <summary>

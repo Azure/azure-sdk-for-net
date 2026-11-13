@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OperationalInsightsNetworkSecurityPerimeterAccessRule(string name, OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         [WirePath("name")]
         public string Name { get; }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Properties of the access rule. </summary>
         [WirePath("properties")]
         public OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties Properties { get; }
     }

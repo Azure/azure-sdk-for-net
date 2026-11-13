@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string caCertificateApiVersion);
             _caCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _caCertificatesRestClient = new CaCertificates(_caCertificatesClientDiagnostics, Pipeline, Endpoint, caCertificateApiVersion ?? "2025-07-15-preview");
+            _caCertificatesRestClient = new CaCertificates(_caCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, caCertificateApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

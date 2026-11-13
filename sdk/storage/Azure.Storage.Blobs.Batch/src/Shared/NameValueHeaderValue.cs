@@ -24,6 +24,7 @@ namespace Azure.Core.Http.Multipart
     // According to the RFC, in places where a "parameter" is required, the value is mandatory
     // (e.g. Media-Type, Accept). However, we don't introduce a dedicated type for it. So NameValueHeaderValue supports
     // name-only values in addition to name/value pairs.
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal class NameValueHeaderValue
     {
         private static readonly HttpHeaderParser<NameValueHeaderValue> SingleValueParser

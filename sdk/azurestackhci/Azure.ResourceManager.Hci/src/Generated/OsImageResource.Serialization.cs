@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Hci
 {
     /// <summary></summary>
-    public partial class OsImageResource : IJsonModel<OsImageData>
+    public partial class OsImageResource : IJsonModel<OSImageData>
     {
-        private static IJsonModel<OsImageData> s_dataDeserializationInstance;
+        private static IJsonModel<OSImageData> s_dataDeserializationInstance;
 
-        private static IJsonModel<OsImageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OsImageData();
+        private static IJsonModel<OSImageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OSImageData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OsImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OsImageData>)Data).Write(writer, options);
+        void IJsonModel<OSImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OSImageData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OsImageData IJsonModel<OsImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        OSImageData IJsonModel<OSImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OsImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OsImageData>(Data, options, AzureResourceManagerHciContext.Default);
+        BinaryData IPersistableModel<OSImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OSImageData>(Data, options, AzureResourceManagerHciContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OsImageData IPersistableModel<OsImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OsImageData>(data, options, AzureResourceManagerHciContext.Default);
+        OSImageData IPersistableModel<OSImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OSImageData>(data, options, AzureResourceManagerHciContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OsImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<OSImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

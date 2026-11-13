@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webAppRequestHistoryApiVersion);
             _requestHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _requestHistoriesRestClient = new RequestHistories(_requestHistoriesClientDiagnostics, Pipeline, Endpoint, webAppRequestHistoryApiVersion ?? "2026-03-15");
+            _requestHistoriesRestClient = new RequestHistories(_requestHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webAppRequestHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

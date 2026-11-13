@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AuthorizationProviderOAuth2GrantTypes(authorizationCode ?? new ChangeTrackingDictionary<string, string>(), clientCredentials ?? new ChangeTrackingDictionary<string, string>(), authorizationCodeWithFederatedIdentityCredentials, additionalBinaryDataProperties);

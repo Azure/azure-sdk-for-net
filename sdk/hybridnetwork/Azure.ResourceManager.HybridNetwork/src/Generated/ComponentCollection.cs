@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(ComponentResource.ResourceType, out string componentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ComponentResource.ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Endpoint, componentApiVersion ?? "2025-03-30");
+            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, componentApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComponentData, ComponentResource>(new ComponentsGetByNetworkFunctionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ComponentData, ComponentResource>(new ComponentDataAsyncCollectionResultOfT(
                 _componentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComponentData, ComponentResource>(new ComponentsGetByNetworkFunctionCollectionResultOfT(
+            return new PageableWrapper<ComponentData, ComponentResource>(new ComponentDataCollectionResultOfT(
                 _componentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

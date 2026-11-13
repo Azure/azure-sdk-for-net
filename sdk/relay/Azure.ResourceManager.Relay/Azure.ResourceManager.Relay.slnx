@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.Relay.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Relay.Tests.csproj" />
+</Solution>

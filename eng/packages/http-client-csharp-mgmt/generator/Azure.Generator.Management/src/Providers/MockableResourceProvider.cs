@@ -113,7 +113,9 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
+                            New.Instance(restClientProvider.Type, [clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), .. inputClient.NeedsApiVersionField ? new[] { inputClient.ConstructorApiVersion is { } constructorVersion
+                            ? InputClientExtensions.BuildConstructorApiVersion(constructorVersion)
+                            : Literal(inputClient.CurrentApiVersion) } : [], .. inputClient.NeedsApiVersionResolver ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []]),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -131,6 +133,9 @@ namespace Azure.Generator.Management.Providers
         protected override FormattableString BuildDescription() => $"A class to add extension methods to {ArmCoreType:C}.";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
+
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementMethodProvider.GetBodyDependencyTypes(Methods);
 
         protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
@@ -192,6 +197,19 @@ namespace Azure.Generator.Management.Providers
             return [.. properties];
         }
 
+        protected override IReadOnlyList<MethodProvider> BuildMethodsForBackCompatibility(IEnumerable<MethodProvider> originalMethods)
+        {
+            if (LastContractView?.Methods == null || LastContractView.Methods.Count == 0)
+            {
+                return [.. originalMethods];
+            }
+
+            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
+        }
+
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>(_resources.Count * 3 + _resourceMethods.Count * 2 + _nonResourceMethods.Count * 2);
@@ -249,9 +267,19 @@ namespace Azure.Generator.Management.Providers
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
 
-                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"),
-                    client => New.Instance(collection.Type,
-                        [client, This.As<ArmResource>().Id(), .. collectionMethodSignature.Parameters]))); // the first two parameters have values, others we just pass through them.
+                var thisResource = This.As<ArmResource>();
+                MethodBodyStatement bodyStatement;
+                if (collectionMethodSignature.Parameters.Count > 0)
+                {
+                    // GetCachedClient keys only on the collection type, so it would ignore different path parameter values.
+                    bodyStatement = Return(New.Instance(collection.Type,
+                        [thisResource.Client(), thisResource.Id(), .. collectionMethodSignature.Parameters]));
+                }
+                else
+                {
+                    bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"),
+                        client => New.Instance(collection.Type, client, thisResource.Id())));
+                }
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -300,32 +328,28 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
+        internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
+            _resourceMethods.SelectMany(pair => pair.Value
+                .Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod,
+                    GetResourceMethodNameOverride(pair.Key, method, false), GetResourceMethodNameOverride(pair.Key, method, true))))
+                .Concat(_nonResourceMethods.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                    .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod)));
+
+        private static string? GetResourceMethodNameOverride(ResourceClientProvider resource, ResourceMethod method, bool isAsync)
+        {
+            var name = ResourceHelpers.GetExtensionOperationMethodName(method.Kind, resource.ResourceName, isAsync,
+                resource.PreserveResourceNameCasing ? resource.PluralResourceName : null);
+            // Explicit List client names override the synthesized plural extension method name.
+            return method.Kind == ResourceOperationKind.List &&
+                ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(method.InputMethod) ? null : name;
+        }
+
         private protected MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync, OperationContext operationContext, ParameterProvider? scopeParameter = null)
         {
-            var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
-
-            // If the user provided a @@clientName(.., "csharp") on the underlying tsp method,
-            // honor it instead of fabricating from (kind, ResourceName). The TCGC name on
-            // resourceMethod.InputMethod.Name already reflects the override.
-            // Scope: only List operations for now. Other kinds (Read/Create/Update/Delete/Action)
-            // can be opted into in a follow-up.
-            if (methodName != null
-                && resourceMethod.Kind == ResourceOperationKind.List
-                && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
-            {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
-            }
-
-            // Only fall back to the raw SDK method name when no standard name was generated.
-            // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
-            // standard CRUD method naming patterns.
-            if (methodName == null)
-            {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
-            }
-
+            var methodName = GetResourceMethodNameOverride(resource, resourceMethod, isAsync) ??
+                _clientInfos[resourceMethod.InputClient].RestClientProvider
+                    .GetConvenienceMethodByOperation(resourceMethod.InputMethod.Operation, isAsync, this).Signature.Name;
             return BuildServiceMethodWithContext(resourceMethod.InputMethod, resourceMethod.InputClient, operationContext, isAsync, methodName, resource, scopeParameter);
         }
 
@@ -356,7 +380,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }
 
-        return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, ResourceOperationKind.Action, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
+            return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, ResourceOperationKind.Action, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

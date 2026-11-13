@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotContinuousWebJobResource.ResourceType, out string webSiteSlotContinuousWebJobApiVersion);
             _continuousWebJobOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotContinuousWebJobResource.ResourceType.Namespace, Diagnostics);
-            _continuousWebJobOperationGroupRestClient = new ContinuousWebJobOperationGroup(_continuousWebJobOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotContinuousWebJobApiVersion ?? "2026-03-15");
+            _continuousWebJobOperationGroupRestClient = new ContinuousWebJobOperationGroup(_continuousWebJobOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotContinuousWebJobApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContinuousWebJobData, WebSiteSlotContinuousWebJobResource>(new ContinuousWebJobOperationGroupGetContinuousWebJobsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContinuousWebJobData, WebSiteSlotContinuousWebJobResource>(new ContinuousWebJobDataAsyncCollectionResultOfT(
                 _continuousWebJobOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContinuousWebJobData, WebSiteSlotContinuousWebJobResource>(new ContinuousWebJobOperationGroupGetContinuousWebJobsSlotCollectionResultOfT(
+            return new PageableWrapper<ContinuousWebJobData, WebSiteSlotContinuousWebJobResource>(new ContinuousWebJobDataCollectionResultOfT(
                 _continuousWebJobOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

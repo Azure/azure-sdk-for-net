@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(LogProfileResource.ResourceType, out string logProfileApiVersion);
             _logProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", LogProfileResource.ResourceType.Namespace, Diagnostics);
-            _logProfilesRestClient = new LogProfiles(_logProfilesClientDiagnostics, Pipeline, Endpoint, logProfileApiVersion ?? "2016-03-01");
+            _logProfilesRestClient = new LogProfiles(_logProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logProfileApiVersion ?? "2016-03-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogProfileData, LogProfileResource>(new LogProfilesGetAllAsyncCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
+            return new AsyncPageableWrapper<LogProfileData, LogProfileResource>(new LogProfileDataAsyncCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogProfileData, LogProfileResource>(new LogProfilesGetAllCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
+            return new PageableWrapper<LogProfileData, LogProfileResource>(new LogProfileDataCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
         }
 
         /// <summary>

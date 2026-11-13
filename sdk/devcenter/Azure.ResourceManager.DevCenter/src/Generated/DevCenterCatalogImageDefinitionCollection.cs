@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterCatalogImageDefinitionResource.ResourceType, out string devCenterCatalogImageDefinitionApiVersion);
             _devCenterCatalogImageDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCatalogImageDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _devCenterCatalogImageDefinitionsRestClient = new DevCenterCatalogImageDefinitions(_devCenterCatalogImageDefinitionsClientDiagnostics, Pipeline, Endpoint, devCenterCatalogImageDefinitionApiVersion ?? "2026-01-01-preview");
+            _devCenterCatalogImageDefinitionsRestClient = new DevCenterCatalogImageDefinitions(_devCenterCatalogImageDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogImageDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageDefinitionData, DevCenterCatalogImageDefinitionResource>(new DevCenterCatalogImageDefinitionsGetByDevCenterCatalogAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageDefinitionData, DevCenterCatalogImageDefinitionResource>(new ImageDefinitionDataAsyncCollectionResultOfT(
                 _devCenterCatalogImageDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageDefinitionData, DevCenterCatalogImageDefinitionResource>(new DevCenterCatalogImageDefinitionsGetByDevCenterCatalogCollectionResultOfT(
+            return new PageableWrapper<ImageDefinitionData, DevCenterCatalogImageDefinitionResource>(new ImageDefinitionDataCollectionResultOfT(
                 _devCenterCatalogImageDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </summary>
-    public partial class TransactionPropertiesConsumptionCommitmentDecremented : BillingAmount
+    internal partial class TransactionPropertiesConsumptionCommitmentDecremented : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesConsumptionCommitmentDecremented"/>. </summary>
         public TransactionPropertiesConsumptionCommitmentDecremented()

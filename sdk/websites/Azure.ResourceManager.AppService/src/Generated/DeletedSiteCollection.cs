@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(DeletedSiteResource.ResourceType, out string deletedSiteApiVersion);
             _globalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
-            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
+            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
             _globalDeletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
-            _globalDeletedWebAppsRestClient = new GlobalDeletedWebApps(_globalDeletedWebAppsClientDiagnostics, Pipeline, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
+            _globalDeletedWebAppsRestClient = new GlobalDeletedWebApps(_globalDeletedWebAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedSiteData, DeletedSiteResource>(new GlobalDeletedWebAppsGetAllAsyncCollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
+            return new AsyncPageableWrapper<DeletedSiteData, DeletedSiteResource>(new DeletedSiteDataAsync0CollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedSiteData, DeletedSiteResource>(new GlobalDeletedWebAppsGetAllCollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
+            return new PageableWrapper<DeletedSiteData, DeletedSiteResource>(new DeletedSiteData0CollectionResultOfT(_globalDeletedWebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "DeletedSiteCollection.GetAll"), data => new DeletedSiteResource(Client, data));
         }
 
         /// <summary>

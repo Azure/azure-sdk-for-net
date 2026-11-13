@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class ListContainersIncludeTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ListContainersIncludeType value) => value switch
         {
             ListContainersIncludeType.Metadata => "metadata",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListContainersIncludeType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ListContainersIncludeType ToListContainersIncludeType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata")) return ListContainersIncludeType.Metadata;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted")) return ListContainersIncludeType.Deleted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system")) return ListContainersIncludeType.System;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata"))
+            {
+                return ListContainersIncludeType.Metadata;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted"))
+            {
+                return ListContainersIncludeType.Deleted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system"))
+            {
+                return ListContainersIncludeType.System;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListContainersIncludeType value.");
         }
     }

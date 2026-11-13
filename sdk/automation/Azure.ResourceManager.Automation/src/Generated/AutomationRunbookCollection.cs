@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationRunbookResource.ResourceType, out string automationRunbookApiVersion);
             _runbookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationRunbookResource.ResourceType.Namespace, Diagnostics);
-            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new RunbookGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new AutomationRunbookDataAsyncCollectionResultOfT(
                 _runbookRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new RunbookGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new AutomationRunbookDataCollectionResultOfT(
                 _runbookRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

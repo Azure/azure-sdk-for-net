@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityStandardResource.ResourceType, out string securityStandardApiVersion);
             _securityStandardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityStandardResource.ResourceType.Namespace, Diagnostics);
-            _securityStandardsRestClient = new SecurityStandards(_securityStandardsClientDiagnostics, Pipeline, Endpoint, securityStandardApiVersion ?? "2024-08-01");
+            _securityStandardsRestClient = new SecurityStandards(_securityStandardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityStandardApiVersion ?? "2024-08-01");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityStandardData, SecurityStandardResource>(new SecurityStandardsGetAllAsyncCollectionResultOfT(_securityStandardsRestClient, Id.ToString(), context, "SecurityStandardCollection.GetAll"), data => new SecurityStandardResource(Client, data));
+            return new AsyncPageableWrapper<SecurityStandardData, SecurityStandardResource>(new SecurityStandardDataAsyncCollectionResultOfT(_securityStandardsRestClient, Id.ToString(), context, "SecurityStandardCollection.GetAll"), data => new SecurityStandardResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityStandardData, SecurityStandardResource>(new SecurityStandardsGetAllCollectionResultOfT(_securityStandardsRestClient, Id.ToString(), context, "SecurityStandardCollection.GetAll"), data => new SecurityStandardResource(Client, data));
+            return new PageableWrapper<SecurityStandardData, SecurityStandardResource>(new SecurityStandardDataCollectionResultOfT(_securityStandardsRestClient, Id.ToString(), context, "SecurityStandardCollection.GetAll"), data => new SecurityStandardResource(Client, data));
         }
 
         /// <summary>

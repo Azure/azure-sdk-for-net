@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             ResourceIdentifier siteResourceId = default;
-            TargetDeviceConfiguration deviceConfiguration = default;
+            HciTargetDeviceConfiguration deviceConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    deviceConfiguration = TargetDeviceConfiguration.DeserializeTargetDeviceConfiguration(prop.Value, options);
+                    deviceConfiguration = HciTargetDeviceConfiguration.DeserializeHciTargetDeviceConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciSiteDetails(siteResourceId, deviceConfiguration, additionalBinaryDataProperties);

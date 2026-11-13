@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ComponentModel;
@@ -25,20 +25,20 @@ public partial class NamespaceGeoDataReplicationProperties : ProvisionableConstr
     /// </summary>
     public BicepValue<int> MaxReplicationLagDurationInSeconds
     {
-        get { Initialize(); return _maxReplicationLagDurationInSeconds!; }
-        set { Initialize(); _maxReplicationLagDurationInSeconds!.Assign(value); }
+        get { Initialize(); return _maxReplicationLagDurationInSeconds; }
+        set { Initialize(); _maxReplicationLagDurationInSeconds.Assign(value); }
     }
-    private BicepValue<int>? _maxReplicationLagDurationInSeconds;
+    private BicepValue<int> _maxReplicationLagDurationInSeconds;
 
     /// <summary>
     /// A list of regions where replicas of the namespace are maintained.
     /// </summary>
     public BicepList<NamespaceReplicaLocation> Locations
     {
-        get { Initialize(); return _locations!; }
-        set { Initialize(); _locations!.Assign(value); }
+        get { Initialize(); return _locations; }
+        set { Initialize(); _locations.Assign(value); }
     }
-    private BicepList<NamespaceReplicaLocation>? _locations;
+    private BicepList<NamespaceReplicaLocation> _locations;
 
     /// <summary>
     /// Creates a new NamespaceGeoDataReplicationProperties.

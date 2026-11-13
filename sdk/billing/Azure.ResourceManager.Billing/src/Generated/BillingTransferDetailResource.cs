@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingTransferDetailApiVersion);
             _transfersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _transfersRestClient = new Transfers(_transfersClientDiagnostics, Pipeline, Endpoint, billingTransferDetailApiVersion ?? "2024-04-01");
+            _transfersRestClient = new Transfers(_transfersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingTransferDetailApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

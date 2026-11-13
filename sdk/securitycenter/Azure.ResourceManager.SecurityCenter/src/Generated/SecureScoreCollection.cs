@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecureScoreResource.ResourceType, out string secureScoreApiVersion);
             _secureScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecureScoreResource.ResourceType.Namespace, Diagnostics);
-            _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Endpoint, secureScoreApiVersion ?? "2020-01-01");
+            _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secureScoreApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoresGetAllAsyncCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
+            return new AsyncPageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoreDataAsyncCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoresGetAllCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
+            return new PageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoreDataCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
         }
 
         /// <summary>

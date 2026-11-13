@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -63,17 +64,17 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingInvoiceSectionApiVersion);
             _invoiceSectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _invoiceSectionsRestClient = new InvoiceSections(_invoiceSectionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _invoiceSectionsRestClient = new InvoiceSections(_invoiceSectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
             _billingRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
             _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
             _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -342,7 +343,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByInvoiceSectionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsync3CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -392,7 +393,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByInvoiceSectionCollectionResultOfT(
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestData3CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -444,7 +445,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByInvoiceSectionAsyncCollectionResultOfT(
+            return new BillingSubscriptionDataAsync4CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -498,7 +499,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByInvoiceSectionCollectionResultOfT(
+            return new BillingSubscriptionData4CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -548,7 +549,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionAsyncCollectionResultOfT(
+            return new BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -591,7 +592,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT(
+            return new BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -748,7 +749,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new InvoiceSectionsGetBillingPermissionsAsyncCollectionResultOfT(
+            return new BillingPermissionAsync3CollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -786,7 +787,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new InvoiceSectionsGetBillingPermissionsCollectionResultOfT(
+            return new BillingPermission3CollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -830,7 +831,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetProductsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new BillingProductDataAsync2CollectionResultOfT(
                 _productsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -880,7 +881,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetProductsCollectionResultOfT(
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new BillingProductData2CollectionResultOfT(
                 _productsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -1030,8 +1031,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -1041,19 +1042,19 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingTransactionData> GetByInvoiceSectionAsync(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingTransactionData> GetByInvoiceSectionAsync(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByInvoiceSectionAsyncCollectionResultOfT(
+            return new BillingTransactionDataAsync2CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,
@@ -1086,8 +1087,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -1097,19 +1098,19 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingTransactionData> GetByInvoiceSection(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingTransactionData> GetByInvoiceSection(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByInvoiceSectionCollectionResultOfT(
+            return new BillingTransactionData2CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,
@@ -1435,10 +1436,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1477,10 +1477,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

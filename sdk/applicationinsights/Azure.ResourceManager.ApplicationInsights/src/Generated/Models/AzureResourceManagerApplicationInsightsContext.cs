@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AnnotationsListResult))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsAnnotation))]
@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.ApplicationInsights
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentAnalyticsItem))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentAnalyticsItemProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentApiKey))]
-    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentApiKeyListResult))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentAvailableFeatures))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentBillingFeatures))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentData))]
@@ -47,17 +46,21 @@ namespace Azure.ResourceManager.ApplicationInsights
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookTemplateData))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookTemplatePatch))]
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookTemplateResource))]
+    [ModelReaderWriterBuildable(typeof(ComponentLinkedStorageAccountsData))]
+    [ModelReaderWriterBuildable(typeof(ComponentLinkedStorageAccountsPatch))]
+    [ModelReaderWriterBuildable(typeof(ComponentLinkedStorageAccountsResource))]
     [ModelReaderWriterBuildable(typeof(ComponentPurgeContent))]
     [ModelReaderWriterBuildable(typeof(ComponentPurgeFilters))]
     [ModelReaderWriterBuildable(typeof(ComponentPurgeResult))]
     [ModelReaderWriterBuildable(typeof(ComponentPurgeStatusResult))]
+    [ModelReaderWriterBuildable(typeof(DeletedWorkbook))]
+    [ModelReaderWriterBuildable(typeof(DeletedWorkbookData))]
     [ModelReaderWriterBuildable(typeof(LiveTokenResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkScopedResourceReference))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WebTestComponentTag))]
-    [ModelReaderWriterBuildable(typeof(WebTestConfiguration))]
     [ModelReaderWriterBuildable(typeof(WebTestContentValidation))]
     [ModelReaderWriterBuildable(typeof(WebTestGeolocation))]
     [ModelReaderWriterBuildable(typeof(WebTestListResult))]

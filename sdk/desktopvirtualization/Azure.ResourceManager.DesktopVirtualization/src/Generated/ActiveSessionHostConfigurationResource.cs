@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string activeSessionHostConfigurationApiVersion);
             _activeSessionHostConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, activeSessionHostConfigurationApiVersion ?? "2026-03-01-preview");
+            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, activeSessionHostConfigurationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

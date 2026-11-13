@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The pod scheduler profile for the cluster. </summary>
+    /// <summary> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </summary>
     internal partial class SchedulerProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,33 +23,33 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SchedulerProfile"/>. </summary>
-        /// <param name="schedulerInstanceProfiles"> Mapping of each scheduler instance to its profile. </param>
+        /// <param name="upstream"> Profile with settings related to upstream variant of kube-scheduler (https://github.com/kubernetes/kubernetes/tree/master/pkg/scheduler). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SchedulerProfile(SchedulerProfileSchedulerInstanceProfiles schedulerInstanceProfiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SchedulerProfile(SchedulerInstanceProfile upstream, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SchedulerInstanceProfiles = schedulerInstanceProfiles;
+            Upstream = upstream;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Mapping of each scheduler instance to its profile. </summary>
-        [WirePath("schedulerInstanceProfiles")]
-        internal SchedulerProfileSchedulerInstanceProfiles SchedulerInstanceProfiles { get; set; }
+        /// <summary> Profile with settings related to upstream variant of kube-scheduler (https://github.com/kubernetes/kubernetes/tree/master/pkg/scheduler). </summary>
+        [WirePath("upstream")]
+        internal SchedulerInstanceProfile Upstream { get; set; }
 
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("schedulerInstanceProfiles.upstream.schedulerConfigMode")]
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
+        [WirePath("upstream.schedulerConfigMode")]
         public SchedulerConfigMode? UpstreamSchedulerConfigMode
         {
             get
             {
-                return SchedulerInstanceProfiles is null ? default : SchedulerInstanceProfiles.UpstreamSchedulerConfigMode;
+                return Upstream is null ? default : Upstream.SchedulerConfigMode;
             }
             set
             {
-                if (SchedulerInstanceProfiles is null)
+                if (Upstream is null)
                 {
-                    SchedulerInstanceProfiles = new SchedulerProfileSchedulerInstanceProfiles();
+                    Upstream = new SchedulerInstanceProfile();
                 }
-                SchedulerInstanceProfiles.UpstreamSchedulerConfigMode = value;
+                Upstream.SchedulerConfigMode = value;
             }
         }
     }

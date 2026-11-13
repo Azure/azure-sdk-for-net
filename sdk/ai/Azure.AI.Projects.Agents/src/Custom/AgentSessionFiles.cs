@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -52,14 +51,14 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<SessionFileWriteResponse>> UploadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken=default)
+    public virtual async Task<ClientResult<SessionFileWriteResult>> UploadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
 
         using BinaryContent content = BinaryContent.Create(new BinaryData(File.ReadAllBytes(localPath)));
         ClientResult result = await UploadAsync(_agentName, _sessionId, sessionStoragePath, content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
+        return ClientResult.FromValue((SessionFileWriteResult)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -78,14 +77,14 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public ClientResult<SessionFileWriteResponse> Upload(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public ClientResult<SessionFileWriteResult> Upload(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
 
         using BinaryContent content = BinaryContent.Create(new BinaryData(File.ReadAllBytes(localPath)));
         ClientResult result = Upload(_agentName, _sessionId, sessionStoragePath, content, cancellationToken.ToRequestOptions());
-        return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
+        return ClientResult.FromValue((SessionFileWriteResult)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -126,7 +125,7 @@ public partial class AgentSessionFiles
                     path: string.Equals(localCollectionOptions.Filters[2], "<unset>") ? null : localCollectionOptions.Filters[2],
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
-                    after:localCollectionOptions.AfterId,
+                    after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
             dataItemDeserializer: (e, o) => SessionDirectoryEntry.DeserializeSessionDirectoryEntry(e, o),

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class SourceConfiguration : IUtf8JsonSerializable, IJsonModel<SourceConfiguration>
+    /// <summary> A configuration item for source resource. </summary>
+    public partial class SourceConfiguration : IJsonModel<SourceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SourceConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSourceConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SourceConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SourceConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SourceConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SourceConfiguration IPersistableModel<SourceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SourceConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SourceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +69,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SourceConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value, _valueIsDefined))
             {
                 if (Value != null)
                 {
@@ -48,18 +88,47 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 else
                 {
-                    writer.WriteNull("value");
+                    writer.WriteNull("value"u8);
                 }
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigType))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("configType"u8);
+                writer.WriteStringValue(ConfigType.Value.ToString());
+            }
+            if (Optional.IsDefined(KeyVaultReferenceIdentity, _keyVaultReferenceIdentityIsDefined))
+            {
+                if (KeyVaultReferenceIdentity != null)
+                {
+                    writer.WritePropertyName("keyVaultReferenceIdentity"u8);
+                    writer.WriteStringValue(KeyVaultReferenceIdentity);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultReferenceIdentity"u8);
+                }
+            }
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,85 +137,106 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        SourceConfiguration IJsonModel<SourceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SourceConfiguration IJsonModel<SourceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SourceConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SourceConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSourceConfiguration(document.RootElement, options);
         }
 
-        internal static SourceConfiguration DeserializeSourceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SourceConfiguration DeserializeSourceConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
+            bool valueIsDefined = false;
             string value = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            LinkerConfigurationType? configType = default;
+            bool keyVaultReferenceIdentityIsDefined = false;
+            string keyVaultReferenceIdentity = default;
+            bool descriptionIsDefined = false;
+            string description = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    valueIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         value = null;
                         continue;
                     }
-                    value = property.Value.GetString();
+                    value = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("configType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configType = new LinkerConfigurationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("keyVaultReferenceIdentity"u8))
+                {
+                    keyVaultReferenceIdentityIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyVaultReferenceIdentity = null;
+                        continue;
+                    }
+                    keyVaultReferenceIdentity = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    descriptionIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SourceConfiguration(name, value, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<SourceConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+            return new SourceConfiguration(
+                name,
+                value,
+                configType,
+                keyVaultReferenceIdentity,
+                description,
+                additionalBinaryDataProperties)
             {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SourceConfiguration)} does not support writing '{options.Format}' format.");
-            }
+                _valueIsDefined = valueIsDefined,
+                _keyVaultReferenceIdentityIsDefined = keyVaultReferenceIdentityIsDefined,
+                _descriptionIsDefined = descriptionIsDefined
+            };
         }
-
-        SourceConfiguration IPersistableModel<SourceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSourceConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SourceConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SourceConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

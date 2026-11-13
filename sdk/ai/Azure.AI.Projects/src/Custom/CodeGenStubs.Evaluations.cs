@@ -29,10 +29,9 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("EvaluatorGenerationArtifacts")] public partial class EvaluatorGenerationArtifacts { }
 [CodeGenType("EvaluatorGenerationInputs")] public partial class EvaluatorGenerationInputs { }
 [CodeGenType("EvaluatorGenerationJobSource")] public partial class EvaluatorGenerationJobSource { }
-[CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage{ }
+[CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage { }
 [CodeGenType("EvaluationLevel")] public readonly partial struct ProjectsEvaluationLevel { }
 [CodeGenType("EvaluationResultSample")] public partial class EvaluationResultSample { }
-[CodeGenType("EvaluationRule")] public partial class EvaluationRule { }
 [CodeGenType("EvaluationRuleAction")] public abstract partial class EvaluationRuleAction { }
 [CodeGenType("EvaluationRuleEventType")] public readonly partial struct EvaluationRuleEventType { }
 [CodeGenType("EvaluationRuleFilter")] public partial class EvaluationRuleFilter { }
@@ -102,11 +101,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("UnknownTrigger")] internal partial class UnknownTrigger { }
 
 // Mark experimental classes if they cannot be marked automatically.
-[CodeGenType("ProjectEvaluatorsGetLatestVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsCollectionResult { }
-[CodeGenType("ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult { }
 [CodeGenType("ProjectInsightsGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllAsyncCollectionResult { }
-[CodeGenType("ProjectEvaluatorsGetVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsAsyncCollectionResult { }
-[CodeGenType("ProjectEvaluatorsGetVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsCollectionResult { }
 [CodeGenType("ProjectInsightsGetAllCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllCollectionResult { }
 [CodeGenType("EvaluationTaxonomiesGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllAsyncCollectionResult { }
 [CodeGenType("EvaluationTaxonomiesGetAllCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllCollectionResult { }

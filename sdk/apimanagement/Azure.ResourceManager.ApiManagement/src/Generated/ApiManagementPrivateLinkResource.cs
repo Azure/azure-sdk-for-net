@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementPrivateLinkResourceApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateLinkResourceApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPrivateLinkResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

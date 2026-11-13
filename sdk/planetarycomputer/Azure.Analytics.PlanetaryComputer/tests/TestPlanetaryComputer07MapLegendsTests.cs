@@ -198,12 +198,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - color_map_name: {colorMapName}");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
+            Response response = await dataClient.GetLegendAsync(new GetLegendOptions(colorMapName));
 
             // Assert
             ValidateResponse(response, "GetLegend");
 
-            BinaryData legendData = response.Value;
+            BinaryData legendData = response.Content;
             byte[] legendBytes = legendData.ToArray();
 
             TestContext.WriteLine($"Legend size: {legendBytes.Length} bytes");
@@ -246,12 +246,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - color_map_name: {colorMapName}");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
+            Response response = await dataClient.GetLegendAsync(new GetLegendOptions(colorMapName));
 
             // Assert
             ValidateResponse(response, "GetLegend");
 
-            BinaryData legendData = response.Value;
+            BinaryData legendData = response.Content;
             byte[] legendBytes = legendData.ToArray();
 
             TestContext.WriteLine($"Legend size: {legendBytes.Length} bytes");

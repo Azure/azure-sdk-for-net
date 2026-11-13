@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebAppRequestHistoryResource.ResourceType, out string webAppRequestHistoryApiVersion);
             _requestHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebAppRequestHistoryResource.ResourceType.Namespace, Diagnostics);
-            _requestHistoriesRestClient = new RequestHistories(_requestHistoriesClientDiagnostics, Pipeline, Endpoint, webAppRequestHistoryApiVersion ?? "2026-03-15");
+            _requestHistoriesRestClient = new RequestHistories(_requestHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webAppRequestHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new RequestHistoriesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new WebAppRequestHistoryDataAsyncCollectionResultOfT(
                 _requestHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new RequestHistoriesGetAllCollectionResultOfT(
+            return new PageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new WebAppRequestHistoryDataCollectionResultOfT(
                 _requestHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

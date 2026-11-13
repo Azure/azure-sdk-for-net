@@ -15,7 +15,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// Update properties that extend base properties - this is the key pattern.
     /// The base type has a nested complex object (nestedConfig) that gets flattened.
     /// </summary>
-    public partial class IssueTestUpdateProperties : IssueTestBaseProperties
+    internal partial class IssueTestUpdateProperties : IssueTestBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="IssueTestUpdateProperties"/>. </summary>
         public IssueTestUpdateProperties()

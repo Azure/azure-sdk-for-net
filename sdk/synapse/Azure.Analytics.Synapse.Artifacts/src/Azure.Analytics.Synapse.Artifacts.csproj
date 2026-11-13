@@ -6,14 +6,6 @@
     <PackageTags>Microsoft Azure Synapse Artifacts;$(PackageCommonTags)</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <NoWarn>
-      $(NoWarn);
-      SA1649;
-      CA1812;
-      <!-- Missing XML comment for publicly visible type or member  -->
-      CS1591;
-    </NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>

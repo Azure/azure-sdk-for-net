@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="sshAuthority"> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </param>
         /// <param name="sharedPublicIPAddressConfiguration"> The configuration for sharing a public IP address across multiple virtual machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIPAddressId, string publicIPAddress, string privateIPAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIpAddressConfiguration sharedPublicIPAddressConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIPAddressId, string publicIPAddress, string privateIPAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkId = virtualNetworkId;
             SubnetId = subnetId;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string SshAuthority { get; set; }
 
         /// <summary> The configuration for sharing a public IP address across multiple virtual machines. </summary>
-        internal SharedPublicIpAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
+        internal SharedPublicIPAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
 
         /// <summary> The incoming NAT rules. </summary>
         public IList<DevTestLabInboundNatRule> SharedPublicIPAddressInboundNatRules
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 if (SharedPublicIPAddressConfiguration is null)
                 {
-                    SharedPublicIPAddressConfiguration = new SharedPublicIpAddressConfiguration();
+                    SharedPublicIPAddressConfiguration = new SharedPublicIPAddressConfiguration();
                 }
                 return SharedPublicIPAddressConfiguration.InboundNatRules;
             }

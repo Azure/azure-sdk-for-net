@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(NetworkFunctionDefinitionGroupResource.ResourceType, out string networkFunctionDefinitionGroupApiVersion);
             _networkFunctionDefinitionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkFunctionDefinitionGroupResource.ResourceType.Namespace, Diagnostics);
-            _networkFunctionDefinitionGroupsRestClient = new NetworkFunctionDefinitionGroups(_networkFunctionDefinitionGroupsClientDiagnostics, Pipeline, Endpoint, networkFunctionDefinitionGroupApiVersion ?? "2025-03-30");
+            _networkFunctionDefinitionGroupsRestClient = new NetworkFunctionDefinitionGroups(_networkFunctionDefinitionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFunctionDefinitionGroupApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupsGetByPublisherAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupDataAsyncCollectionResultOfT(
                 _networkFunctionDefinitionGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupsGetByPublisherCollectionResultOfT(
+            return new PageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupDataCollectionResultOfT(
                 _networkFunctionDefinitionGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

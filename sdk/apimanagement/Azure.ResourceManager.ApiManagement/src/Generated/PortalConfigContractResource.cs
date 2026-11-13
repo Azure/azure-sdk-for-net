@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string portalConfigContractApiVersion);
             _portalConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _portalConfigRestClient = new PortalConfig(_portalConfigClientDiagnostics, Pipeline, Endpoint, portalConfigContractApiVersion ?? "2025-09-01-preview");
+            _portalConfigRestClient = new PortalConfig(_portalConfigClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, portalConfigContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

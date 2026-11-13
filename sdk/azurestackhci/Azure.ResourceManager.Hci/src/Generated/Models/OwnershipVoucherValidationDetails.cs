@@ -31,9 +31,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="modelName"> Name of the model. </param>
         /// <param name="version"> Version of the Ownership Voucher format. </param>
         /// <param name="azureMachineId"> Azure Machine Id of the Ownership voucher. </param>
+        /// <param name="architecture"> CPU architecture of the device, for example amd64 or arm64. </param>
         /// <param name="error"> Error details if the validation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus, string serialNumber, string id, string manufacturer, string modelName, string version, string azureMachineId, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus, string serialNumber, string id, string manufacturer, string modelName, string version, string azureMachineId, HciCpuArchitecture? architecture, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationStatus = validationStatus;
             SerialNumber = serialNumber;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
             ModelName = modelName;
             Version = version;
             AzureMachineId = azureMachineId;
+            Architecture = architecture;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -73,6 +75,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Azure Machine Id of the Ownership voucher. </summary>
         [WirePath("azureMachineId")]
         public string AzureMachineId { get; }
+
+        /// <summary> CPU architecture of the device, for example amd64 or arm64. </summary>
+        [WirePath("architecture")]
+        public HciCpuArchitecture? Architecture { get; }
 
         /// <summary> Error details if the validation failed. </summary>
         [WirePath("error")]

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Base copy job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CassandraRUToCassandraRUCopyJobProperties"/>, <see cref="BlobToCassandraRUCopyJobProperties"/>, <see cref="CassandraRUToBlobCopyJobProperties"/>, <see cref="MongoRUToMongoRUCopyJobProperties"/>, <see cref="MongoRUToMongoVCoreCopyJobProperties"/>, and <see cref="NoSqlRUToNoSqlRUCopyJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BlobToCassandraRUCopyJobProperties"/>, <see cref="CassandraRUToBlobCopyJobProperties"/>, <see cref="CassandraRUToCassandraRUCopyJobProperties"/>, <see cref="MongoRUToMongoRUCopyJobProperties"/>, <see cref="MongoRUToMongoVCoreCopyJobProperties"/>, and <see cref="NoSqlRUToNoSqlRUCopyJobProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCosmosDBCopyJobBaseProperties))]
     public abstract partial class CosmosDBCopyJobBaseProperties : IJsonModel<CosmosDBCopyJobBaseProperties>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CassandraRUToCassandraRU":
-                        return CassandraRUToCassandraRUCopyJobProperties.DeserializeCassandraRUToCassandraRUCopyJobProperties(element, options);
                     case "AzureBlobStorageToCassandraRU":
                         return BlobToCassandraRUCopyJobProperties.DeserializeBlobToCassandraRUCopyJobProperties(element, options);
                     case "CassandraRUToAzureBlobStorage":
                         return CassandraRUToBlobCopyJobProperties.DeserializeCassandraRUToBlobCopyJobProperties(element, options);
+                    case "CassandraRUToCassandraRU":
+                        return CassandraRUToCassandraRUCopyJobProperties.DeserializeCassandraRUToCassandraRUCopyJobProperties(element, options);
                     case "MongoRUToMongoRU":
                         return MongoRUToMongoRUCopyJobProperties.DeserializeMongoRUToMongoRUCopyJobProperties(element, options);
                     case "MongoRUToMongoVCore":

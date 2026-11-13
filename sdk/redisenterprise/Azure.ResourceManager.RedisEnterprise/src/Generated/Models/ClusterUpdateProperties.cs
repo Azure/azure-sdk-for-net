@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Properties of Redis Enterprise clusters for update operations. </summary>
     internal partial class ClusterUpdateProperties : ClusterProperties
     {
+        private RedisEnterprisePublicNetworkAccess? _publicNetworkAccess;
+        private bool _publicNetworkAccessIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateProperties"/>. </summary>
         public ClusterUpdateProperties()
         {
@@ -24,6 +27,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </param>
         /// <param name="encryption"> Encryption-at-rest configuration for the cluster. </param>
         /// <param name="maintenanceConfiguration"> Cluster-level maintenance configuration. </param>
+        /// <param name="firewallRules">
+        /// The complete set of firewall rules for an Azure Managed Redis (AMR) cluster. At most 250 rules are supported, and non-empty rules require publicNetworkAccess to be Enabled.
+        /// On PUT, the supplied array replaces all existing rules. Omitting this property or supplying an empty array clears all rules.
+        /// On PATCH, omitting this property preserves existing rules. A supplied array replaces all existing rules; rules absent from it are deleted. Supplying an empty array clears all rules.
+        /// Disabling publicNetworkAccess also clears existing rules. With publicNetworkAccess Enabled, an empty rule set allows all public traffic; it does not deny all traffic.
+        /// Firewall rule changes cannot be combined with scaling or encryption changes in the same update request.
+        /// </param>
         /// <param name="hostName"> DNS name of the cluster endpoint. </param>
         /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
         /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </param>
@@ -33,13 +43,24 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="migratedEndpoint"> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
-        internal ClusterUpdateProperties(RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisEnterprisePublicNetworkAccess? publicNetworkAccess) : base(highAvailability, minimumTlsVersion, encryption, maintenanceConfiguration, hostName, provisioningState, redundancyMode, resourceState, redisVersion, privateEndpointConnections, migratedEndpoint, additionalBinaryDataProperties)
+        internal ClusterUpdateProperties(RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, IList<RedisEnterpriseFirewallRule> firewallRules, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisEnterprisePublicNetworkAccess? publicNetworkAccess) : base(highAvailability, minimumTlsVersion, encryption, maintenanceConfiguration, firewallRules, hostName, provisioningState, redundancyMode, resourceState, redisVersion, privateEndpointConnections, migratedEndpoint, additionalBinaryDataProperties)
         {
-            PublicNetworkAccess = publicNetworkAccess;
+            _publicNetworkAccess = publicNetworkAccess;
         }
 
         /// <summary> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </summary>
         [WirePath("publicNetworkAccess")]
-        public RedisEnterprisePublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public RedisEnterprisePublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return _publicNetworkAccess;
+            }
+            set
+            {
+                _publicNetworkAccess = value;
+                _publicNetworkAccessIsDefined = true;
+            }
+        }
     }
 }

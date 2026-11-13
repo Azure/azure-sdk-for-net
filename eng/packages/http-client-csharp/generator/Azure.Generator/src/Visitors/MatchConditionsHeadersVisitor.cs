@@ -101,6 +101,11 @@ namespace Azure.Generator.Visitors
         /// </summary>
         private void UpdateMethod(ScmMethodProvider method)
         {
+            if (method.Kind == ScmMethodKind.CreateRequest)
+            {
+                UpdateCustomETagHeaders(method);
+            }
+
             if (!TryGetMethodRequestConditionInfo(method, out var headerFlags, out var matchConditionParams))
             {
                 return;
@@ -118,6 +123,71 @@ namespace Azure.Generator.Visitors
             {
                 UpdateClientMethodBody(method, headerFlags, matchConditionParams);
             }
+        }
+
+        private static void UpdateCustomETagHeaders(ScmMethodProvider method)
+        {
+            var bodyStatements = method.BodyStatements;
+            if (bodyStatements == null)
+            {
+                return;
+            }
+
+            var customETagParameters = method.Signature.Parameters
+                .Where(parameter =>
+                    parameter.Location == ParameterLocation.Header &&
+                    parameter.Type.Equals(ETagType) &&
+                    !_conditionalHeaders.Contains(parameter.WireInfo.SerializedName))
+                .ToDictionary(parameter => parameter.WireInfo.SerializedName, StringComparer.OrdinalIgnoreCase);
+
+            if (customETagParameters.Count == 0)
+            {
+                return;
+            }
+
+            var originalStatements = bodyStatements.ToList();
+            var updatedStatements = new List<MethodBodyStatement>(originalStatements.Count);
+            foreach (var statement in originalStatements)
+            {
+                updatedStatements.Add(TryUpdateCustomETagHeader(statement, customETagParameters, out var updatedStatement)
+                    ? updatedStatement
+                    : statement);
+            }
+
+            method.Update(bodyStatements: updatedStatements);
+        }
+
+        private static bool TryUpdateCustomETagHeader(
+            MethodBodyStatement statement,
+            IReadOnlyDictionary<string, ParameterProvider> customETagParameters,
+            out MethodBodyStatement updatedStatement)
+        {
+            updatedStatement = statement;
+            if (statement is not IfStatement { Body: not null } ifStatement)
+            {
+                return false;
+            }
+
+            foreach (var bodyStatement in ifStatement.Body)
+            {
+                if (bodyStatement is ExpressionStatement
+                    {
+                        Expression: InvokeMethodExpression
+                        {
+                            InstanceReference: MemberExpression { Inner: VariableExpression variableExpression }
+                        } invokeExpression
+                    } &&
+                    variableExpression.Type.Equals(variableExpression.ToApi<HttpRequestApi>().Type) &&
+                    ExtractLiteralHeaderName(invokeExpression) is string headerName &&
+                    customETagParameters.TryGetValue(headerName, out var parameter))
+                {
+                    ifStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(headerName, parameter.Property("Value")));
+                    updatedStatement = ifStatement;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         protected override TypeProvider? VisitType(TypeProvider type)
@@ -563,13 +633,23 @@ namespace Azure.Generator.Visitors
 
         private static string? ExtractHeaderName(InvokeMethodExpression invokeExpression)
         {
-            if (invokeExpression.Arguments.FirstOrDefault() is ScopedApi<string> { Original: LiteralExpression { Literal: string headerName } } &&
-                _conditionalHeaders.Contains(headerName))
+            var headerName = ExtractLiteralHeaderName(invokeExpression);
+            if (headerName != null && _conditionalHeaders.Contains(headerName))
             {
                 return headerName;
             }
 
             return null;
+        }
+
+        private static string? ExtractLiteralHeaderName(InvokeMethodExpression invokeExpression)
+        {
+            return invokeExpression.Arguments.FirstOrDefault() is ScopedApi<string>
+            {
+                Original: LiteralExpression { Literal: string headerName }
+            }
+                ? headerName
+                : null;
         }
 
         private static bool ContainsOptionalMatchConditionParameters(InputServiceMethod inputServiceMethod)

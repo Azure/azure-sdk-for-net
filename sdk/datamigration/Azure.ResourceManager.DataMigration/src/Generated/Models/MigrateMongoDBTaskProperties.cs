@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateMongoDBTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateMongoDBTaskProperties"/>. </summary>
-        public MigrateMongoDBTaskProperties() : base(DataMigrationTaskType.MigrateMongoDb)
+        public MigrateMongoDBTaskProperties() : base(DataMigrationTaskType.MigrateMongoDB)
         {
             Output = new ChangeTrackingList<DataMigrationMongoDBProgress>();
         }

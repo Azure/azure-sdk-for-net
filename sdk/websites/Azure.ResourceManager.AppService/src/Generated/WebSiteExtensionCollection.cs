@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteExtensionResource.ResourceType, out string webSiteExtensionApiVersion);
             _siteExtensionInfosClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteExtensionResource.ResourceType.Namespace, Diagnostics);
-            _siteExtensionInfosRestClient = new SiteExtensionInfos(_siteExtensionInfosClientDiagnostics, Pipeline, Endpoint, webSiteExtensionApiVersion ?? "2026-03-15");
+            _siteExtensionInfosRestClient = new SiteExtensionInfos(_siteExtensionInfosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteExtensionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfosGetSiteExtensionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfoDataAsync0CollectionResultOfT(
                 _siteExtensionInfosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfosGetSiteExtensionsCollectionResultOfT(
+            return new PageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfoData0CollectionResultOfT(
                 _siteExtensionInfosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

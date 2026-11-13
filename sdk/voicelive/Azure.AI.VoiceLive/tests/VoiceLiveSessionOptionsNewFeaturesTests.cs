@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task ParallelToolCalls_True_SerializesOnWire()
         {
             var session = CreateSessionWithFakeSocket(out var fake);
-            await session.ConfigureSessionAsync(new VoiceLiveSessionOptions { ParallelToolCalls = true });
+            await session.ConfigureSessionAsync(new VoiceLiveSessionOptions { AllowParallelToolCalls = true });
 
             var sent = fake.GetSentTextMessages();
             using var doc = JsonDocument.Parse(sent[0]);
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task ParallelToolCalls_False_SerializesOnWire()
         {
             var session = CreateSessionWithFakeSocket(out var fake);
-            await session.ConfigureSessionAsync(new VoiceLiveSessionOptions { ParallelToolCalls = false });
+            await session.ConfigureSessionAsync(new VoiceLiveSessionOptions { AllowParallelToolCalls = false });
 
             var sent = fake.GetSentTextMessages();
             using var doc = JsonDocument.Parse(sent[0]);
@@ -51,14 +51,14 @@ namespace Azure.AI.VoiceLive.Tests
                 """{"id":"sess-1","model":"gpt-4o-realtime-preview","parallel_tool_calls":false}""",
                 new VoiceLiveSessionOptions());
 
-            Assert.That(opts.ParallelToolCalls, Is.EqualTo(false));
+            Assert.That(opts.AllowParallelToolCalls, Is.EqualTo(false));
         }
 
         [Test]
         public void ParallelToolCalls_RoundTrip()
         {
             // Verify serialized JSON has correct TypeSpec wire key
-            var json = TestUtilities.SerializeViaIJsonModel(new VoiceLiveSessionOptions { ParallelToolCalls = true });
+            var json = TestUtilities.SerializeViaIJsonModel(new VoiceLiveSessionOptions { AllowParallelToolCalls = true });
             using var doc = JsonDocument.Parse(json);
             Assert.That(doc.RootElement.GetProperty("parallel_tool_calls").GetBoolean(), Is.True);
 
@@ -66,7 +66,7 @@ namespace Azure.AI.VoiceLive.Tests
             var fromWire = TestUtilities.DeserializeViaIJsonModel(
                 """{"parallel_tool_calls":true}""",
                 new VoiceLiveSessionOptions());
-            Assert.That(fromWire.ParallelToolCalls, Is.EqualTo(true));
+            Assert.That(fromWire.AllowParallelToolCalls, Is.EqualTo(true));
         }
     }
 }

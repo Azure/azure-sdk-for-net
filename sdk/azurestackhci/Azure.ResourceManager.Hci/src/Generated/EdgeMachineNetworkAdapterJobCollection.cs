@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(EdgeMachineNetworkAdapterJobResource.ResourceType, out string edgeMachineNetworkAdapterJobApiVersion);
             _edgeMachineNetworkAdapterJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", EdgeMachineNetworkAdapterJobResource.ResourceType.Namespace, Diagnostics);
-            _edgeMachineNetworkAdapterJobsRestClient = new EdgeMachineNetworkAdapterJobs(_edgeMachineNetworkAdapterJobsClientDiagnostics, Pipeline, Endpoint, edgeMachineNetworkAdapterJobApiVersion ?? "2026-05-01-preview");
+            _edgeMachineNetworkAdapterJobsRestClient = new EdgeMachineNetworkAdapterJobs(_edgeMachineNetworkAdapterJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineNetworkAdapterJobApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeMachineNetworkAdapterJobData, EdgeMachineNetworkAdapterJobResource>(new EdgeMachineNetworkAdapterJobsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeMachineNetworkAdapterJobData, EdgeMachineNetworkAdapterJobResource>(new EdgeMachineNetworkAdapterJobDataAsyncCollectionResultOfT(
                 _edgeMachineNetworkAdapterJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeMachineNetworkAdapterJobData, EdgeMachineNetworkAdapterJobResource>(new EdgeMachineNetworkAdapterJobsGetAllCollectionResultOfT(
+            return new PageableWrapper<EdgeMachineNetworkAdapterJobData, EdgeMachineNetworkAdapterJobResource>(new EdgeMachineNetworkAdapterJobDataCollectionResultOfT(
                 _edgeMachineNetworkAdapterJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

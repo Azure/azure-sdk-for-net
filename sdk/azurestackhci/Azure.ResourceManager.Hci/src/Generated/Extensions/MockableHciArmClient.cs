@@ -30,15 +30,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="PlatformUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PlatformUpdateResource"/> object. </returns>
-        public virtual PlatformUpdateResource GetPlatformUpdateResource(ResourceIdentifier id)
-        {
-            PlatformUpdateResource.ValidateResourceId(id);
-            return new PlatformUpdateResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="OsImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OsImageResource"/> object. </returns>
@@ -46,15 +37,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             OsImageResource.ValidateResourceId(id);
             return new OsImageResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="UpdateContentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpdateContentResource"/> object. </returns>
-        public virtual UpdateContentResource GetUpdateContentResource(ResourceIdentifier id)
-        {
-            UpdateContentResource.ValidateResourceId(id);
-            return new UpdateContentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ArcSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -192,15 +174,6 @@ namespace Azure.ResourceManager.Hci.Mocking
             return new ArcExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HciClusterPublisherResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterPublisherResource"/> object. </returns>
-        public virtual HciClusterPublisherResource GetHciClusterPublisherResource(ResourceIdentifier id)
-        {
-            HciClusterPublisherResource.ValidateResourceId(id);
-            return new HciClusterPublisherResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="HciClusterSecuritySettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
@@ -264,15 +237,6 @@ namespace Azure.ResourceManager.Hci.Mocking
             return new EdgeMachineJobResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EdgeMachineUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeMachineUpdateResource"/> object. </returns>
-        public virtual EdgeMachineUpdateResource GetEdgeMachineUpdateResource(ResourceIdentifier id)
-        {
-            EdgeMachineUpdateResource.ValidateResourceId(id);
-            return new EdgeMachineUpdateResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ClusterJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ClusterJobResource"/> object. </returns>
@@ -280,33 +244,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             ClusterJobResource.ValidateResourceId(id);
             return new ClusterJobResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="DevicePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevicePoolResource"/> object. </returns>
-        public virtual DevicePoolResource GetDevicePoolResource(ResourceIdentifier id)
-        {
-            DevicePoolResource.ValidateResourceId(id);
-            return new DevicePoolResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="EdgeMachineGpuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeMachineGpuResource"/> object. </returns>
-        public virtual EdgeMachineGpuResource GetEdgeMachineGpuResource(ResourceIdentifier id)
-        {
-            EdgeMachineGpuResource.ValidateResourceId(id);
-            return new EdgeMachineGpuResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="EdgeMachineGpuJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeMachineGpuJobResource"/> object. </returns>
-        public virtual EdgeMachineGpuJobResource GetEdgeMachineGpuJobResource(ResourceIdentifier id)
-        {
-            EdgeMachineGpuJobResource.ValidateResourceId(id);
-            return new EdgeMachineGpuJobResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EdgeMachineNetworkAdapterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -361,6 +298,24 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             EdgeMachineDiskPrivilegedJobResource.ValidateResourceId(id);
             return new EdgeMachineDiskPrivilegedJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineSecuritySettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineSecuritySettingsResource"/> object. </returns>
+        public virtual EdgeMachineSecuritySettingsResource GetEdgeMachineSecuritySettingsResource(ResourceIdentifier id)
+        {
+            EdgeMachineSecuritySettingsResource.ValidateResourceId(id);
+            return new EdgeMachineSecuritySettingsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineDeploymentSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineDeploymentSettingResource"/> object. </returns>
+        public virtual EdgeMachineDeploymentSettingResource GetEdgeMachineDeploymentSettingResource(ResourceIdentifier id)
+        {
+            EdgeMachineDeploymentSettingResource.ValidateResourceId(id);
+            return new EdgeMachineDeploymentSettingResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HciClusterUpdateSummaryResource"/> along with the instance operations that can be performed on it but with no data. </summary>

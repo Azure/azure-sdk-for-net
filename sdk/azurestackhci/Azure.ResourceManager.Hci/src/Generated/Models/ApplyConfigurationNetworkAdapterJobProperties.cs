@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetConfiguration"> The desired network configuration to apply. </param>
-        internal ApplyConfigurationNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkAdapterConfiguration targetConfiguration) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, reportedProperties, additionalBinaryDataProperties)
+        internal ApplyConfigurationNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkAdapterConfiguration targetConfiguration) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, error, reportedProperties, additionalBinaryDataProperties)
         {
             TargetConfiguration = targetConfiguration;
         }

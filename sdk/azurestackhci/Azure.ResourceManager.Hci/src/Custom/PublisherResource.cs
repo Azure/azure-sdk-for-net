@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get Publisher resource details within a HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Response<PublisherResource> Get(CancellationToken cancellationToken)
+        public virtual new Response<PublisherResource> Get(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherResource instead.");
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get Publisher resource details within a HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<Response<PublisherResource>> GetAsync(CancellationToken cancellationToken)
+        public virtual new async Task<Response<PublisherResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherResource instead.");
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual Response<OfferResource> GetOffer(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual Response<OfferResource> GetOffer(string offerName, string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherResource instead.");
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual async Task<Response<OfferResource>> GetOfferAsync(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual async Task<Response<OfferResource>> GetOfferAsync(string offerName, string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherResource instead.");
         }

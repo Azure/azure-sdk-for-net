@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal GarnetClusterResourcePropertiesEndPointsItem(string ipAddress, int? port, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Port = port;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Ipv4 address of the endpoint. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; }
+        public string IPAddress { get; }
 
         /// <summary> Port number. </summary>
         [WirePath("port")]

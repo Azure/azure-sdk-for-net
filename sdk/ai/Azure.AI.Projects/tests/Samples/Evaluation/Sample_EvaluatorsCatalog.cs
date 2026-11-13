@@ -139,7 +139,7 @@ public class Sample_EvaluatorsCatalog : EvaluationSampleBase
         Console.WriteLine("     Categories:");
         foreach (EvaluatorCategory category in evaluator.Categories)
         {
-            Console.WriteLine("         - ${category}");
+            Console.WriteLine($"         - {category}");
         }
     }
     #endregion

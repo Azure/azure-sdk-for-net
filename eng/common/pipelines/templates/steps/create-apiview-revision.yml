@@ -1,0 +1,66 @@
+parameters:
+  - name: ArtifactPath
+    type: string
+    default: $(Build.ArtifactStagingDirectory)
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ConfigFileDir
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: GenerateApiReviewForManualOnly
+    type: boolean
+    default: false
+  - name: ArtifactName
+    type: string
+    default: "packages"
+  - name: PackageName
+    type: string
+    default: ""
+  - name: SourceRootPath
+    type: string
+    default: $(Build.SourcesDirectory)
+  - name: PackageInfoFiles
+    type: object
+    default: []
+
+steps:
+  # Automatic APIView revisions are created regardless of how the pipeline is triggered.
+  # This condition limits revision creation to manual runs when GenerateApiReviewForManualOnly is true.
+  - ${{ if or(ne(parameters.GenerateApiReviewForManualOnly, true), eq(variables['Build.Reason'], 'Manual')) }}:
+      # Ideally this should be an initial step in the caller job.
+      # Remove this step once all callers set the default branch themselves.
+      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+        parameters:
+          WorkingDirectory: ${{ parameters.SourceRootPath }}
+
+      - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), not(endsWith(variables['Build.Repository.Name'], '-pr'))) }}:
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: "APIView prod deployment"
+              scriptType: pscore
+              scriptLocation: scriptPath
+              scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIViewRevision.ps1
+              # PackageInfoFiles example: @('a/file1.json','a/file2.json')
+              arguments: >
+                -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
+                -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
+                -ArtifactPath '${{ parameters.ArtifactPath }}'
+                -ArtifactName '${{ parameters.ArtifactName }}'
+                -PackageName '${{ parameters.PackageName }}'
+                -SourceBranch '$(Build.SourceBranchName)'
+                -DefaultBranch '$(DefaultBranch)'
+                -ConfigFileDir '${{ parameters.ConfigFileDir }}'
+                -BuildId '$(Build.BuildId)'
+                -RepoName '$(Build.Repository.Name)'
+            displayName: Create APIView Revision
+            condition: >-
+              and(
+                succeededOrFailed(),
+                not(
+                  and(
+                    eq(variables['Skip.CreateApiReview'], 'true'),
+                    eq(variables['IsRequesterAuthorizedToSkipApiReview'], 'true')
+                  )
+                )
+              )

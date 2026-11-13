@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string domainNetworkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, domainNetworkSecurityPerimeterConfigurationApiVersion ?? "2025-07-15-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainNetworkSecurityPerimeterConfigurationApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

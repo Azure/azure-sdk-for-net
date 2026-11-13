@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationEmailConfigurationResource.ResourceType, out string dataReplicationEmailConfigurationApiVersion);
             _emailConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationEmailConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _emailConfigurationRestClient = new EmailConfiguration(_emailConfigurationClientDiagnostics, Pipeline, Endpoint, dataReplicationEmailConfigurationApiVersion ?? "2024-09-01");
+            _emailConfigurationRestClient = new EmailConfiguration(_emailConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationEmailConfigurationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new DataReplicationEmailConfigurationDataAsyncCollectionResultOfT(
                 _emailConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new DataReplicationEmailConfigurationDataCollectionResultOfT(
                 _emailConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(database, nameof(database));
 
-            TypeProperties = new MongoDbV2LinkedServiceTypeProperties(connectionString, database);
+            TypeProperties = new MongoDBV2LinkedServiceTypeProperties(connectionString, database);
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoDBV2LinkedService"/>. </summary>
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> MongoDB linked service properties. </param>
-        internal MongoDBV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, MongoDbV2LinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal MongoDBV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, MongoDBV2LinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> MongoDB linked service properties. </summary>
-        internal MongoDbV2LinkedServiceTypeProperties TypeProperties { get; set; }
+        internal MongoDBV2LinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new MongoDbV2LinkedServiceTypeProperties();
+                    TypeProperties = new MongoDBV2LinkedServiceTypeProperties();
                 }
                 TypeProperties.ConnectionString = value;
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new MongoDbV2LinkedServiceTypeProperties();
+                    TypeProperties = new MongoDBV2LinkedServiceTypeProperties();
                 }
                 TypeProperties.Database = value;
             }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(database, nameof(database));
 
-            TypeProperties = new MongoDbAtlasLinkedServiceTypeProperties(connectionString, database);
+            TypeProperties = new MongoDBAtlasLinkedServiceTypeProperties(connectionString, database);
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasLinkedService"/>. </summary>
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> MongoDB Atlas linked service properties. </param>
-        internal MongoDBAtlasLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, MongoDbAtlasLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal MongoDBAtlasLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, MongoDBAtlasLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> MongoDB Atlas linked service properties. </summary>
-        internal MongoDbAtlasLinkedServiceTypeProperties TypeProperties { get; set; }
+        internal MongoDBAtlasLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new MongoDbAtlasLinkedServiceTypeProperties();
+                    TypeProperties = new MongoDBAtlasLinkedServiceTypeProperties();
                 }
                 TypeProperties.ConnectionString = value;
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new MongoDbAtlasLinkedServiceTypeProperties();
+                    TypeProperties = new MongoDBAtlasLinkedServiceTypeProperties();
                 }
                 TypeProperties.Database = value;
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new MongoDbAtlasLinkedServiceTypeProperties();
+                    TypeProperties = new MongoDBAtlasLinkedServiceTypeProperties();
                 }
                 TypeProperties.DriverVersion = value;
             }

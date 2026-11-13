@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(ResourceType, out string appComplianceReportScopingConfigurationApiVersion);
             _scopingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ResourceType.Namespace, Diagnostics);
-            _scopingConfigurationRestClient = new ScopingConfiguration(_scopingConfigurationClientDiagnostics, Pipeline, Endpoint, appComplianceReportScopingConfigurationApiVersion ?? "2024-06-27");
+            _scopingConfigurationRestClient = new ScopingConfiguration(_scopingConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportScopingConfigurationApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 

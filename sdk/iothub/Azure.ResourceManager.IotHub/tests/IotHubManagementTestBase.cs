@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Tests
 {
     public class IotHubManagementTestBase : ManagementRecordedTestBase<IotHubManagementTestEnvironment>
     {
-        private const string RecordedApiVersion = "2021-07-02";
+        private const string RecordedApiVersion = "2026-05-01-preview";
 
         protected ArmClient Client { get; private set; }
 

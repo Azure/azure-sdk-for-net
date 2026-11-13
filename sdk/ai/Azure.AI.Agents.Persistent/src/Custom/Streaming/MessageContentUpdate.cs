@@ -17,6 +17,7 @@ namespace Azure.AI.Agents.Persistent;
 /// </remarks>
 public partial class MessageContentUpdate : StreamingUpdate
 {
+    /// <summary> Gets the identifier of the message being updated. </summary>
     public string MessageId => _delta.Id;
 
     /// <inheritdoc cref="MessageDeltaContent.Index"/>
@@ -25,10 +26,13 @@ public partial class MessageContentUpdate : StreamingUpdate
         ?? TextAnnotation?.ContentIndex
         ?? 0;
 
+    /// <summary> Gets the role of the message author, if available. </summary>
     public MessageRole? Role => _delta.Delta?.Role;
 
+    /// <summary> Gets the file identifier for an image file content part, if applicable. </summary>
     public string ImageFileId => _imageFileContent?.ImageFile?.FileId;
 
+    /// <summary> Gets the text value of the content part, if applicable. </summary>
     public string Text => _textContent?.Text?.Value;
 
     /// <summary>

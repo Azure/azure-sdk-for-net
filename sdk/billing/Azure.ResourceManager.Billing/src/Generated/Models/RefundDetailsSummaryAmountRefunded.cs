@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount refunded. </summary>
-    public partial class RefundDetailsSummaryAmountRefunded : BillingAmount
+    internal partial class RefundDetailsSummaryAmountRefunded : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="RefundDetailsSummaryAmountRefunded"/>. </summary>
         public RefundDetailsSummaryAmountRefunded()

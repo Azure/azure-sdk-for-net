@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -13,9 +11,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal class BlobErrors : Errors
     {
-        public static ArgumentOutOfRangeException BlobConditionsMustBeDefault(params string[] conditions) =>
-            new ArgumentOutOfRangeException($"The {string.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");
-
         public static InvalidOperationException BlobOrContainerMissing(string leaseClient,
             string blobBaseClient,
             string blobContainerClient) =>
@@ -23,6 +18,12 @@ namespace Azure.Storage.Blobs
 
         public static RequestFailedException InvalidRangeWithNonEmptyBlob(RequestFailedException ex) =>
             new RequestFailedException("Invalid range exception during ranged download despite non-empty blob", ex);
+
+        public static InvalidOperationException AccountNameRequiredForSessionSigning(Uri endpoint)
+            => new InvalidOperationException(
+                    $"{nameof(SessionMode)}.{nameof(SessionMode.Enabled)} requires the storage account name, " +
+                    $"which could not be determined from the URL: {endpoint.GetLeftPart(UriPartial.Path)}. " +
+                    $"Set BlobClientOptions.{nameof(SessionOptions)}.{nameof(SessionOptions.AccountName)} when using a custom endpoint URL.");
 
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {
@@ -39,9 +40,6 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set");
             }
         }
-
-        public static ArgumentException ParsingFullHttpRangeFailed(string range)
-            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
 
         public static void VerifyParallelismGreaterThanOne(int parallelism)
         {

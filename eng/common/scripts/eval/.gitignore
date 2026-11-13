@@ -1,4 +1,4 @@
-# The Vally eval harness ships hand-written ES modules under lib/ (glob.js, verdict.js).
+# The Vally eval harness ships hand-written ES modules under lib/ (glob.ts, verdict.ts).
 # Most repos ignore a top-level `lib/` (Python build output); re-include ours here so the
 # harness stays tracked wherever eng/common is synced (else node fails ERR_MODULE_NOT_FOUND).
 # Living in eng/common means this fix travels with the sync to every language SDK repo, so no

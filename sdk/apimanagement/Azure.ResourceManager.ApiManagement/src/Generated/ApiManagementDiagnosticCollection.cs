@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementDiagnosticResource.ResourceType, out string apiManagementDiagnosticApiVersion);
             _diagnosticClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            _diagnosticRestClient = new Diagnostic(_diagnosticClientDiagnostics, Pipeline, Endpoint, apiManagementDiagnosticApiVersion ?? "2025-09-01-preview");
+            _diagnosticRestClient = new Diagnostic(_diagnosticClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementDiagnosticApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiagnosticContractData, ApiManagementDiagnosticResource>(new DiagnosticGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiagnosticContractData, ApiManagementDiagnosticResource>(new DiagnosticContractDataAsync0CollectionResultOfT(
                 _diagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiagnosticContractData, ApiManagementDiagnosticResource>(new DiagnosticGetByServiceCollectionResultOfT(
+            return new PageableWrapper<DiagnosticContractData, ApiManagementDiagnosticResource>(new DiagnosticContractData0CollectionResultOfT(
                 _diagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

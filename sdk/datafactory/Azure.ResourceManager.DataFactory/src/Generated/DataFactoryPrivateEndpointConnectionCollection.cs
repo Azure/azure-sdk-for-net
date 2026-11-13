@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryPrivateEndpointConnectionResource.ResourceType, out string dataFactoryPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, dataFactoryPrivateEndpointConnectionApiVersion ?? "2018-06-01");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryPrivateEndpointConnectionApiVersion ?? "2018-06-01");
             _privateEndPointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndPointConnectionsRestClient = new PrivateEndPointConnections(_privateEndPointConnectionsClientDiagnostics, Pipeline, Endpoint, dataFactoryPrivateEndpointConnectionApiVersion ?? "2018-06-01");
+            _privateEndPointConnectionsRestClient = new PrivateEndPointConnections(_privateEndPointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryPrivateEndpointConnectionApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryPrivateEndpointConnectionData, DataFactoryPrivateEndpointConnectionResource>(new PrivateEndPointConnectionsGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryPrivateEndpointConnectionData, DataFactoryPrivateEndpointConnectionResource>(new DataFactoryPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndPointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryPrivateEndpointConnectionData, DataFactoryPrivateEndpointConnectionResource>(new PrivateEndPointConnectionsGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryPrivateEndpointConnectionData, DataFactoryPrivateEndpointConnectionResource>(new DataFactoryPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndPointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(ScheduledActionResource.ResourceType, out string scheduledActionApiVersion);
             _scheduledActionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
-            _scheduledActionOperationGroupRestClient = new ScheduledActionOperationGroup(_scheduledActionOperationGroupClientDiagnostics, Pipeline, Endpoint, scheduledActionApiVersion ?? "2025-03-01");
+            _scheduledActionOperationGroupRestClient = new ScheduledActionOperationGroup(_scheduledActionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeAsyncCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionDataAsync0CollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionData0CollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -560,6 +561,32 @@ namespace Azure.ResourceManager.CostManagement
         IAsyncEnumerator<ScheduledActionResource> IAsyncEnumerable<ScheduledActionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        /// <summary> Create or update a shared scheduled action within the given scope. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<ScheduledActionResource> CreateOrUpdate(WaitUntil waitUntil, string name, ScheduledActionData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdate(waitUntil, name, data, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary> Create or update a shared scheduled action within the given scope. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<ScheduledActionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ScheduledActionData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateAsync(waitUntil, name, data, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
     }
 }

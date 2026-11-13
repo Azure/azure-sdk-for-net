@@ -24,7 +24,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task ListAnalyzersAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingListAnalyzers

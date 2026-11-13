@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -21,13 +20,10 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationRule"/>. </summary>
-        /// <param name="displayName"> The name of the notification rule. </param>
-        /// <param name="actionGroupIds"> The action groups to notify. </param>
         /// <param name="scope"> The scope of the notification rule. </param>
-        private protected NotificationRule(string displayName, IEnumerable<string> actionGroupIds, NotificationScopeType scope)
+        private protected NotificationRule(NotificationScopeType scope)
         {
-            DisplayName = displayName;
-            ActionGroupIds = actionGroupIds.ToList();
+            ActionGroupIds = new ChangeTrackingList<string>();
             Scope = scope;
         }
 
@@ -36,20 +32,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
         /// <param name="scope"> The scope of the notification rule. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NotificationRuleId = notificationRuleId;
             DisplayName = displayName;
             ActionGroupIds = actionGroupIds;
             Scope = scope;
-            CreatedDateTime = createdDateTime;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
-            LastModifiedDateTime = lastModifiedDateTime;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -67,13 +63,13 @@ namespace Azure.Developer.LoadTesting
         internal NotificationScopeType Scope { get; set; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? CreatedDateTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
 
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? LastModifiedDateTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }

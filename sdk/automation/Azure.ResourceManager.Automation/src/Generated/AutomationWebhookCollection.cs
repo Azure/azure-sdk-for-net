@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationWebhookResource.ResourceType, out string automationWebhookApiVersion);
             _webhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationWebhookResource.ResourceType.Namespace, Diagnostics);
-            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Endpoint, automationWebhookApiVersion ?? "2024-10-23");
+            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationWebhookApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationWebhookData, AutomationWebhookResource>(new WebhookGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationWebhookData, AutomationWebhookResource>(new AutomationWebhookDataAsyncCollectionResultOfT(
                 _webhookRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationWebhookData, AutomationWebhookResource>(new WebhookGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationWebhookData, AutomationWebhookResource>(new AutomationWebhookDataCollectionResultOfT(
                 _webhookRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

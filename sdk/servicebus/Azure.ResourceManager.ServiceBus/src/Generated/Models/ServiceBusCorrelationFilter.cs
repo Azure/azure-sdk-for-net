@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of <see cref="ServiceBusCorrelationFilter"/>. </summary>
         public ServiceBusCorrelationFilter()
         {
-            ApplicationProperties = new ChangeTrackingDictionary<string, object>();
+            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusCorrelationFilter"/>. </summary>
-        /// <param name="applicationProperties"> dictionary object for custom filters. </param>
+        /// <param name="properties"> dictionary object for custom filters. </param>
         /// <param name="correlationId"> Identifier of the correlation. </param>
         /// <param name="messageId"> Identifier of the message. </param>
         /// <param name="sendTo"> Address to send to. </param>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceBusCorrelationFilter(IDictionary<string, string> properties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ApplicationProperties = applicationProperties;
+            Properties = properties;
             CorrelationId = correlationId;
             MessageId = messageId;
             SendTo = sendTo;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> dictionary object for custom filters. </summary>
         [WirePath("properties")]
-        public IDictionary<string, object> ApplicationProperties { get; }
+        public IDictionary<string, string> Properties { get; }
 
         /// <summary> Identifier of the correlation. </summary>
         [WirePath("correlationId")]

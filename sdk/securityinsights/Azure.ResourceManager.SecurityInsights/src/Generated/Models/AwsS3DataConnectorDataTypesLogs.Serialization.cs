@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class AwsS3DataConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<AwsS3DataConnectorDataTypesLogs>
+    internal partial class AwsS3DataConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<AwsS3DataConnectorDataTypesLogs>
     {
         /// <summary> Initializes a new instance of <see cref="AwsS3DataConnectorDataTypesLogs"/> for deserialization. </summary>
         internal AwsS3DataConnectorDataTypesLogs()
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AwsS3DataConnectorDataTypesLogs(state, additionalBinaryDataProperties);

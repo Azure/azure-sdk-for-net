@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2026-04-01-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

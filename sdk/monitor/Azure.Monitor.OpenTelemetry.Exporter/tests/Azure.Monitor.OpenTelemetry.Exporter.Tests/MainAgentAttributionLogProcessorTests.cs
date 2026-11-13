@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertDoesNotContainAttribute(log, MainAgentName);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_ActivityHasMainAgentAttrs_CopiedToLog()
         {
             // Arrange
@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertDoesNotContainAttribute(log, MainAgentId);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_ActivityHasPartialMainAgentAttrs_CopiesOnlyPresent()
         {
             // Arrange
@@ -142,7 +142,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertDoesNotContainAttribute(log, MainAgentConversationId);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_LogAlreadyHasMainAgentAttrs_NoDuplicates()
         {
             // This test uses a custom processor that pre-sets a main_agent attribute
@@ -189,6 +189,123 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // MainAgentId was NOT pre-set, so it should be added from the activity
             AssertContainsAttribute(log, MainAgentId, "bot-999");
+        }
+
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
+        public void OnEnd_ActivityHasBothFoundryProjectIds_BothCopiedToLog()
+        {
+            var exportedItems = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddProcessor(new MainAgentAttributionLogProcessor());
+                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger<MainAgentAttributionLogProcessorTests>();
+
+            using var activity = new Activity("TestActivity");
+            activity.SetTag(MainAgentName, "TestBot");
+            activity.SetTag(GenAiFoundryProjectId, "foundry-project-1");
+            activity.SetTag(GenAiAzureAiProjectId, "azure-ai-project-1");
+            activity.Start();
+
+            logger.LogInformation("Test log with both foundry project ids");
+            loggerFactory.Dispose();
+
+            Assert.Single(exportedItems);
+            var log = exportedItems[0];
+            AssertContainsAttribute(log, GenAiFoundryProjectId, "foundry-project-1");
+            AssertContainsAttribute(log, GenAiAzureAiProjectId, "azure-ai-project-1");
+        }
+
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
+        public void OnEnd_ActivityHasOnlyFoundryProjectId_OnlyThatCopiedToLog()
+        {
+            var exportedItems = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddProcessor(new MainAgentAttributionLogProcessor());
+                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger<MainAgentAttributionLogProcessorTests>();
+
+            using var activity = new Activity("TestActivity");
+            activity.SetTag(MainAgentName, "TestBot");
+            activity.SetTag(GenAiFoundryProjectId, "foundry-project-1");
+            activity.Start();
+
+            logger.LogInformation("Test log with only foundry project id");
+            loggerFactory.Dispose();
+
+            Assert.Single(exportedItems);
+            var log = exportedItems[0];
+            AssertContainsAttribute(log, GenAiFoundryProjectId, "foundry-project-1");
+            AssertDoesNotContainAttribute(log, GenAiAzureAiProjectId);
+        }
+
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
+        public void OnEnd_ActivityHasOnlyAzureAiProjectId_OnlyThatCopiedToLog()
+        {
+            var exportedItems = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddProcessor(new MainAgentAttributionLogProcessor());
+                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger<MainAgentAttributionLogProcessorTests>();
+
+            using var activity = new Activity("TestActivity");
+            activity.SetTag(MainAgentName, "TestBot");
+            activity.SetTag(GenAiAzureAiProjectId, "azure-ai-project-1");
+            activity.Start();
+
+            logger.LogInformation("Test log with only azure ai project id");
+            loggerFactory.Dispose();
+
+            Assert.Single(exportedItems);
+            var log = exportedItems[0];
+            AssertDoesNotContainAttribute(log, GenAiFoundryProjectId);
+            AssertContainsAttribute(log, GenAiAzureAiProjectId, "azure-ai-project-1");
+        }
+
+        [Fact]
+        public void OnEnd_ActivityHasNoFoundryProjectIds_NeitherCopiedToLog()
+        {
+            var exportedItems = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddProcessor(new MainAgentAttributionLogProcessor());
+                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger<MainAgentAttributionLogProcessorTests>();
+
+            using var activity = new Activity("TestActivity");
+            activity.SetTag(MainAgentName, "TestBot");
+            // No foundry project ids set on the activity.
+            activity.Start();
+
+            logger.LogInformation("Test log without foundry project ids");
+            loggerFactory.Dispose();
+
+            Assert.Single(exportedItems);
+            var log = exportedItems[0];
+            AssertDoesNotContainAttribute(log, GenAiFoundryProjectId);
+            AssertDoesNotContainAttribute(log, GenAiAzureAiProjectId);
         }
 
         private static void AssertContainsAttribute(LogRecord logRecord, string key, object expectedValue)

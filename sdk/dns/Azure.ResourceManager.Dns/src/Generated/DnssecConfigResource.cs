@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns
         {
             TryGetApiVersion(ResourceType, out string dnssecConfigApiVersion);
             _dnssecConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            _dnssecConfigsRestClient = new DnssecConfigs(_dnssecConfigsClientDiagnostics, Pipeline, Endpoint, dnssecConfigApiVersion ?? "2023-07-01-preview");
+            _dnssecConfigsRestClient = new DnssecConfigs(_dnssecConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnssecConfigApiVersion ?? "2023-07-01-preview");
             ValidateResourceId(id);
         }
 

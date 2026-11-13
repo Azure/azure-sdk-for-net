@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BotService.Mocking
 
         private ClientDiagnostics BotsOperationGroupClientDiagnostics => _botsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BotsOperationGroup BotsOperationGroupRestClient => _botsOperationGroupRestClient ??= new BotsOperationGroup(BotsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2023-09-15-preview");
+        private BotsOperationGroup BotsOperationGroupRestClient => _botsOperationGroupRestClient ??= new BotsOperationGroup(BotsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-09-15-preview");
 
         /// <summary>
         /// Check whether a bot name is available.

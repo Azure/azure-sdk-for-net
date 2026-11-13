@@ -533,6 +533,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
 

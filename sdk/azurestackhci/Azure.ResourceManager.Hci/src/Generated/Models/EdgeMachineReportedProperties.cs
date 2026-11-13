@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         internal EdgeMachineReportedProperties()
         {
             WorkloadInventory = new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>();
+            StorageInitiators = new ChangeTrackingList<StorageInitiator>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeMachineReportedProperties"/>. </summary>
@@ -32,19 +33,21 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <param name="extensionProfile"> Extension details for edge machine. </param>
         /// <param name="workloadInventory"> Read-only Hyper-V VM inventory reported by the device management extension for VMs visible on this node. </param>
-        /// <param name="workloadInventoryLastUpdated"> Last time the device management extension refreshed the local Hyper-V workload inventory. </param>
+        /// <param name="workloadInventoryLastUpdatedOn"> Last time the device management extension refreshed the local Hyper-V workload inventory. </param>
+        /// <param name="storageInitiators"> Storage fabric initiator ports (iSCSI or Fibre Channel) discovered on the edge machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn, EdgeMachineNetworkProfile networkProfile, HciDeploymentOSProfile osProfile, HciDeploymentHardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IReadOnlyList<EdgeMachineWorkloadInventoryItem> workloadInventory, DateTimeOffset? workloadInventoryLastUpdated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn, EdgeMachineNetworkProfile networkProfile, HciDeploymentOSProfile osProfile, HciDeploymentHardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IReadOnlyList<EdgeMachineWorkloadInventoryItem> workloadInventory, DateTimeOffset? workloadInventoryLastUpdatedOn, IReadOnlyList<StorageInitiator> storageInitiators, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastUpdatedOn = lastUpdatedOn;
             NetworkProfile = networkProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             SbeDeploymentPackageInfo = sbeDeploymentPackageInfo;
             ExtensionProfile = extensionProfile;
             WorkloadInventory = workloadInventory;
-            WorkloadInventoryLastUpdated = workloadInventoryLastUpdated;
+            WorkloadInventoryLastUpdatedOn = workloadInventoryLastUpdatedOn;
+            StorageInitiators = storageInitiators;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> OS Properties for edge machine. </summary>
         [WirePath("osProfile")]
-        public HciDeploymentOSProfile OsProfile { get; }
+        public HciDeploymentOSProfile OSProfile { get; }
 
         /// <summary> Hardware related information for edge machine. </summary>
         [WirePath("hardwareProfile")]
@@ -82,7 +85,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Last time the device management extension refreshed the local Hyper-V workload inventory. </summary>
         [WirePath("workloadInventoryLastUpdated")]
-        public DateTimeOffset? WorkloadInventoryLastUpdated { get; }
+        public DateTimeOffset? WorkloadInventoryLastUpdatedOn { get; }
+
+        /// <summary> Storage fabric initiator ports (iSCSI or Fibre Channel) discovered on the edge machine. </summary>
+        [WirePath("storageInitiators")]
+        public IReadOnlyList<StorageInitiator> StorageInitiators { get; }
 
         /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
         [WirePath("storageProfile.poolableDisksCount")]

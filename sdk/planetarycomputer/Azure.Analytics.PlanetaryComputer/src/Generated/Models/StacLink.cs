@@ -37,7 +37,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacLink"/>. </summary>
         /// <param name="rel"> The relationship type of the link. </param>
         /// <param name="title"> The title of the link. </param>
-        /// <param name="type"> The MIME type of the linked resource. </param>
+        /// <param name="kind"> The MIME type of the linked resource. </param>
         /// <param name="href"> The URL of the link. </param>
         /// <param name="hreflang"> The language of the linked resource. </param>
         /// <param name="length"> The length of the linked resource. </param>
@@ -56,11 +56,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Default: false.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacLink(string rel, string title, StacLinkType? @type, string href, string hreflang, int? length, StacLinkMethod? @method, IDictionary<string, string> headers, IDictionary<string, BinaryData> body, bool? merge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacLink(string rel, string title, StacLinkKind? kind, string href, string hreflang, int? length, StacLinkMethod? @method, IDictionary<string, string> headers, IDictionary<string, BinaryData> body, bool? merge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rel = rel;
             Title = title;
-            Type = @type;
+            Kind = kind;
             Href = href;
             Hreflang = hreflang;
             Length = length;
@@ -78,7 +78,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Title { get; set; }
 
         /// <summary> The MIME type of the linked resource. </summary>
-        public StacLinkType? Type { get; set; }
+        public StacLinkKind? Kind { get; set; }
 
         /// <summary> The URL of the link. </summary>
         public string Href { get; set; }

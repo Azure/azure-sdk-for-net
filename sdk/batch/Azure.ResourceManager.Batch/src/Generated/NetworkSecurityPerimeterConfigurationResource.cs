@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterRestClient = new NetworkSecurityPerimeter(_networkSecurityPerimeterClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2025-06-01");
+            _networkSecurityPerimeterRestClient = new NetworkSecurityPerimeter(_networkSecurityPerimeterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementGlobalSchemaResource.ResourceType, out string apiManagementGlobalSchemaApiVersion);
             _globalSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementGlobalSchemaResource.ResourceType.Namespace, Diagnostics);
-            _globalSchemaRestClient = new GlobalSchema(_globalSchemaClientDiagnostics, Pipeline, Endpoint, apiManagementGlobalSchemaApiVersion ?? "2025-09-01-preview");
+            _globalSchemaRestClient = new GlobalSchema(_globalSchemaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGlobalSchemaApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, ApiManagementGlobalSchemaResource>(new GlobalSchemaGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaDataAsync0CollectionResultOfT(
                 _globalSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGlobalSchemaData, ApiManagementGlobalSchemaResource>(new GlobalSchemaGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementGlobalSchemaData, ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaData0CollectionResultOfT(
                 _globalSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MonitorNetworkSecurityPerimeterConfigurationProperties(MonitorNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues, MonitorNetworkSecurityPerimeter networkSecurityPerimeter, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation, MonitorNetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -40,19 +40,19 @@ namespace Azure.ResourceManager.Monitor.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
+        /// <summary> Provisioning state of the network security perimeter configuration. </summary>
         public MonitorNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of provisioning issues, if any. </summary>
         public IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> ProvisioningIssues { get; }
 
-        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Information about the network security perimeter (NSP). </summary>
         public MonitorNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
-        /// <summary> Gets the ResourceAssociation. </summary>
+        /// <summary> Information about the resource association. </summary>
         public MonitorNetworkSecurityPerimeterConfigurationResourceAssociation ResourceAssociation { get; }
 
-        /// <summary> Gets the Profile. </summary>
+        /// <summary> Network security perimeter configuration profile. </summary>
         public MonitorNetworkSecurityProfile Profile { get; }
     }
 }

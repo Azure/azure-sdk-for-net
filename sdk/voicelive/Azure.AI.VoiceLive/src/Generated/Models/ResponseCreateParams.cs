@@ -81,7 +81,7 @@ namespace Azure.AI.VoiceLive
         /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
         /// </param>
         /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
-        /// <param name="invokeInput"> Input data to invoke the hosted agent. This feature is in preview. </param>
+        /// <param name="invokeInput"> Input data to invoke the hosted agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InteractionModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, AssistantMessageItem preGeneratedAssistantMessage, ReasoningEffort? reasoningEffort, IDictionary<string, string> metadata, BinaryData interimResponse, IDictionary<string, BinaryData> invokeInput, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -308,7 +308,7 @@ namespace Azure.AI.VoiceLive
         public BinaryData InterimResponse { get; set; }
 
         /// <summary>
-        /// Input data to invoke the hosted agent. This feature is in preview.
+        /// Input data to invoke the hosted agent.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

@@ -23,6 +23,7 @@ namespace Azure.AI.ContentUnderstanding
         internal AnalysisResult(IEnumerable<AnalysisContent> contents)
         {
             Warnings = new ChangeTrackingList<ResponseError>();
+            Infos = new ChangeTrackingList<ResponseError>();
             Contents = contents.ToList();
         }
 
@@ -31,18 +32,20 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="apiVersion"> The version of the API used to analyze the document. </param>
         /// <param name="createdAt"> The date and time when the result was created. </param>
         /// <param name="warnings"> Warnings encountered while analyzing the document. </param>
+        /// <param name="infos"> Additional diagnostic information about the analysis. </param>
         /// <param name="stringEncoding">
         ///   The string encoding format for content spans in the response.
         ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
         /// </param>
         /// <param name="contents"> The extracted content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<ResponseError> warnings, string stringEncoding, IList<AnalysisContent> contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IList<ResponseError> warnings, IList<ResponseError> infos, string stringEncoding, IList<AnalysisContent> contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AnalyzerId = analyzerId;
             ApiVersion = apiVersion;
             CreatedAt = createdAt;
             Warnings = warnings;
+            Infos = infos;
             StringEncoding = stringEncoding;
             Contents = contents;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,6 +62,9 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Warnings encountered while analyzing the document. </summary>
         public IList<ResponseError> Warnings { get; }
+
+        /// <summary> Additional diagnostic information about the analysis. </summary>
+        public IList<ResponseError> Infos { get; }
 
         /// <summary>
         ///   The string encoding format for content spans in the response.

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cassandraRoleAssignmentApiVersion);
             _cassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraRoleAssignmentApiVersion ?? "2026-04-01-preview");
+            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraRoleAssignmentApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

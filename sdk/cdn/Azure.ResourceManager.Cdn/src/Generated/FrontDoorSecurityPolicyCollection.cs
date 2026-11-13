@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorSecurityPolicyResource.ResourceType, out string frontDoorSecurityPolicyApiVersion);
             _securityPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
-            _securityPoliciesRestClient = new SecurityPolicies(_securityPoliciesClientDiagnostics, Pipeline, Endpoint, frontDoorSecurityPolicyApiVersion ?? "2025-09-01-preview");
+            _securityPoliciesRestClient = new SecurityPolicies(_securityPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecurityPolicyApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new SecurityPoliciesGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyDataAsyncCollectionResultOfT(
                 _securityPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new SecurityPoliciesGetByProfileCollectionResultOfT(
+            return new PageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyDataCollectionResultOfT(
                 _securityPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

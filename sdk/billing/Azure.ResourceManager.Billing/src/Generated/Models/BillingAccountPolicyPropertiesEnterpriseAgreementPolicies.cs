@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The policies for Enterprise Agreement enrollments. </summary>
-    public partial class BillingAccountPolicyPropertiesEnterpriseAgreementPolicies : EnterpriseAgreementPolicies
+    internal partial class BillingAccountPolicyPropertiesEnterpriseAgreementPolicies : EnterpriseAgreementPolicies
     {
         /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyPropertiesEnterpriseAgreementPolicies"/>. </summary>
         public BillingAccountPolicyPropertiesEnterpriseAgreementPolicies()

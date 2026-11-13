@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -339,7 +339,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     _testRunId,
                     metricDefinitions.Value.FirstOrDefault().Name,
                     metricNamespaces.Value.FirstOrDefault().Name,
-                    testRun.StartDateTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") + "/" + testRun.EndDateTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+                    testRun.StartsOn.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") + "/" + testRun.EndsOn.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
                 );
 
             await foreach (var page in metricsResponsePageable.AsPages())

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkToNetworkInterconnectResource.ResourceType, out string networkToNetworkInterconnectApiVersion);
             _networkToNetworkInterconnectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkToNetworkInterconnectResource.ResourceType.Namespace, Diagnostics);
-            _networkToNetworkInterconnectsRestClient = new NetworkToNetworkInterconnects(_networkToNetworkInterconnectsClientDiagnostics, Pipeline, Endpoint, networkToNetworkInterconnectApiVersion ?? "2025-07-15");
+            _networkToNetworkInterconnectsRestClient = new NetworkToNetworkInterconnects(_networkToNetworkInterconnectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkToNetworkInterconnectApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectsGetByNetworkFabricAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectDataAsyncCollectionResultOfT(
                 _networkToNetworkInterconnectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectsGetByNetworkFabricCollectionResultOfT(
+            return new PageableWrapper<NetworkToNetworkInterconnectData, NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectDataCollectionResultOfT(
                 _networkToNetworkInterconnectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

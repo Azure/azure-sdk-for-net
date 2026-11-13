@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ProviderRegistrationResource.ResourceType, out string providerRegistrationApiVersion);
             _providerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
-            _providerRegistrationsRestClient = new ProviderRegistrations(_providerRegistrationsClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
+            _providerRegistrationsRestClient = new ProviderRegistrations(_providerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerRegistrationApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
+            return new AsyncPageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationDataAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
+            return new PageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationDataCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

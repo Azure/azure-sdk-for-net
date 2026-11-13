@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotConfigAppSettingResource.ResourceType, out string webSiteSlotConfigAppSettingApiVersion);
             _appSettingKeyVaultReferenceSlotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotConfigAppSettingResource.ResourceType.Namespace, Diagnostics);
-            _appSettingKeyVaultReferenceSlotRestClient = new AppSettingKeyVaultReferenceSlot(_appSettingKeyVaultReferenceSlotClientDiagnostics, Pipeline, Endpoint, webSiteSlotConfigAppSettingApiVersion ?? "2026-03-15");
+            _appSettingKeyVaultReferenceSlotRestClient = new AppSettingKeyVaultReferenceSlot(_appSettingKeyVaultReferenceSlotClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigAppSettingApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigAppSettingResource>(new AppSettingKeyVaultReferenceSlotGetAppSettingsKeyVaultReferencesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigAppSettingResource>(new ApiKeyVaultReferenceDataAsyncCollectionResultOfT(
                 _appSettingKeyVaultReferenceSlotRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigAppSettingResource>(new AppSettingKeyVaultReferenceSlotGetAppSettingsKeyVaultReferencesSlotCollectionResultOfT(
+            return new PageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigAppSettingResource>(new ApiKeyVaultReferenceDataCollectionResultOfT(
                 _appSettingKeyVaultReferenceSlotRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

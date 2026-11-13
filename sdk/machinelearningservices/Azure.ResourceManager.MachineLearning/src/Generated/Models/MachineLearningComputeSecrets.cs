@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Secrets related to a Machine Learning compute. Might differ for every type of compute.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksComputeSecrets"/>, <see cref="MachineLearningVirtualMachineSecrets"/>, and <see cref="MachineLearningDatabricksComputeSecrets"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksComputeSecrets"/>, <see cref="MachineLearningDatabricksComputeSecrets"/>, and <see cref="MachineLearningVirtualMachineSecrets"/>.
     /// </summary>
     public abstract partial class MachineLearningComputeSecrets
     {

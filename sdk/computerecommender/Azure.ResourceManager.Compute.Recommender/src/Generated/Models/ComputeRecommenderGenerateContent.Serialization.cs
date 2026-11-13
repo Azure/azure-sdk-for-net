@@ -95,16 +95,13 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DesiredSizes))
+            writer.WritePropertyName("desiredSizes"u8);
+            writer.WriteStartArray();
+            foreach (ComputeRecommenderResourceSize item in DesiredSizes)
             {
-                writer.WritePropertyName("desiredSizes"u8);
-                writer.WriteStartArray();
-                foreach (ComputeRecommenderResourceSize item in DesiredSizes)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(DesiredCount))
             {
                 writer.WritePropertyName("desiredCount"u8);
@@ -180,10 +177,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 }
                 if (prop.NameEquals("desiredSizes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ComputeRecommenderResourceSize> array = new List<ComputeRecommenderResourceSize>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -212,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeRecommenderGenerateContent(desiredLocations ?? new ChangeTrackingList<AzureLocation>(), desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>(), desiredCount, availabilityZones, additionalBinaryDataProperties);

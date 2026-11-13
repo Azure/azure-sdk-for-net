@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(ResourceType, out string guestConfigurationVMwarevSphereAssignmentApiVersion);
             _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsAsyncCollectionResultOfT(
+            return new GuestConfigurationAssignmentReportAsync2CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsCollectionResultOfT(
+            return new GuestConfigurationAssignmentReport2CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

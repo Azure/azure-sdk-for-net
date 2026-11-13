@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteProcessResource.ResourceType, out string siteProcessApiVersion);
             _processInfoOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteProcessResource.ResourceType.Namespace, Diagnostics);
-            _processInfoOperationGroupRestClient = new ProcessInfoOperationGroup(_processInfoOperationGroupClientDiagnostics, Pipeline, Endpoint, siteProcessApiVersion ?? "2026-03-15");
+            _processInfoOperationGroupRestClient = new ProcessInfoOperationGroup(_processInfoOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteProcessApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProcessInfoData, SiteProcessResource>(new ProcessInfoOperationGroupGetProcessesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProcessInfoData, SiteProcessResource>(new ProcessInfoDataAsync0CollectionResultOfT(
                 _processInfoOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProcessInfoData, SiteProcessResource>(new ProcessInfoOperationGroupGetProcessesCollectionResultOfT(
+            return new PageableWrapper<ProcessInfoData, SiteProcessResource>(new ProcessInfoData0CollectionResultOfT(
                 _processInfoOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

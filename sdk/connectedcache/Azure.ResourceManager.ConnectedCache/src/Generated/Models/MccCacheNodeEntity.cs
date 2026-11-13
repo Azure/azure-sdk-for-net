@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="containerConfigurations"> Cache node resource container configuration details. </param>
         /// <param name="cidrCsv"> Cache node resource comma separated values of Cidrs. </param>
         /// <param name="cidrCsvLastUpdatedOn"> Cache node resource last Cidr Csv update timestamp. </param>
+        /// <param name="bgpNetworkInterface"> Cache node resource Bgp network interface. </param>
         /// <param name="bgpCidrCsvLastUpdatedOn"> Cache node resource last Bgp Cidr Csv update timestamp. </param>
         /// <param name="bgpLastReportedOn"> Cache node resource last Bgp report timestamp. </param>
         /// <param name="bgpReviewStateText"> Cache node resource Bgp review state string text in detail. </param>
@@ -73,12 +74,17 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="containerResyncTrigger"> Cache node resource Mcc container configuration details re-sync trigger. </param>
         /// <param name="imageUri"> Cache node resource Mcc Container Id Uri. </param>
         /// <param name="fullyQualifiedDomainName"> FQDN(fully qualified domain name) value of the mcc cache node. </param>
-        /// <param name="autoUpdateRingType"> Auto Update Ring Type which is slow or fast etc. </param>
+        /// <param name="autoUpdateRingType"> Auto Update Ring Type which is stable or beta as new values. slow or fast are legacy from version 2026-06-01. </param>
         /// <param name="autoUpdateRequestedWeek"> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </param>
         /// <param name="autoUpdateRequestedDay"> Customer requested day of week for mcc install of auto update cycle. 0 is default no selection. 1-7 are days of week, 1 is Sunday, 2 is Monday, etc. </param>
         /// <param name="autoUpdateRequestedTime"> Customer requested time of the day for mcc install of auto update cycle, should be hh:mm. </param>
+        /// <param name="shouldOpenFirewallPort80"> Cache node port firewall rule creation opt-in for port 80 property. </param>
+        /// <param name="shouldOpenFirewallPort443"> Cache node port firewall rule creation opt-in for port 443 property. </param>
+        /// <param name="shouldOpenFirewallPort5000"> Cache node port firewall rule creation opt-in for port 5000 property. </param>
+        /// <param name="shouldOpenFirewallPort5001"> Cache node port firewall rule creation opt-in for port 5001 property. </param>
+        /// <param name="runtimeAccountType"> Connected Cache runtime account type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId, string customerId, string customerName, string ipAddress, string customerIndex, string cacheNodeId, string cacheNodeName, int? customerAsn, bool? isEnabled, int? maxAllowableEgressInMbps, float? maxAllowableProbability, string xCid, bool? isEnterpriseManaged, string createAsyncOperationId, string deleteAsyncOperationId, string clientTenantId, string category, int? releaseVersion, DateTimeOffset? lastSyncedWithAzureOn, DateTimeOffset? lastUpdatedOn, int? synchWithAzureAttemptsCount, string containerConfigurations, IList<string> cidrCsv, DateTimeOffset? cidrCsvLastUpdatedOn, DateTimeOffset? bgpCidrCsvLastUpdatedOn, DateTimeOffset? bgpLastReportedOn, string bgpReviewStateText, MccCacheNodeBgpReviewState? bgpReviewState, string bgpReviewFeedback, int? bgpNumberOfTimesUpdated, int? bgpNumberOfRecords, int? bgpCidrBlocksCount, int? bgpAddressSpace, bool? shouldMigrate, int? bgpFileBytesTruncated, int? cidrSelectionType, bool? isFrozen, int? reviewState, string reviewStateText, string reviewFeedback, MccCacheNodeConfigurationState? configurationState, string configurationStateText, int? addressSpace, int? workerConnections, DateTimeOffset? workerConnectionsLastUpdatedOn, int? containerResyncTrigger, Uri imageUri, string fullyQualifiedDomainName, AutoUpdateRingType? autoUpdateRingType, int? autoUpdateRequestedWeek, int? autoUpdateRequestedDay, string autoUpdateRequestedTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId, string customerId, string customerName, string ipAddress, string customerIndex, string cacheNodeId, string cacheNodeName, int? customerAsn, bool? isEnabled, int? maxAllowableEgressInMbps, float? maxAllowableProbability, string xCid, bool? isEnterpriseManaged, string createAsyncOperationId, string deleteAsyncOperationId, string clientTenantId, string category, int? releaseVersion, DateTimeOffset? lastSyncedWithAzureOn, DateTimeOffset? lastUpdatedOn, int? synchWithAzureAttemptsCount, string containerConfigurations, IList<string> cidrCsv, DateTimeOffset? cidrCsvLastUpdatedOn, string bgpNetworkInterface, DateTimeOffset? bgpCidrCsvLastUpdatedOn, DateTimeOffset? bgpLastReportedOn, string bgpReviewStateText, MccCacheNodeBgpReviewState? bgpReviewState, string bgpReviewFeedback, int? bgpNumberOfTimesUpdated, int? bgpNumberOfRecords, int? bgpCidrBlocksCount, int? bgpAddressSpace, bool? shouldMigrate, int? bgpFileBytesTruncated, int? cidrSelectionType, bool? isFrozen, int? reviewState, string reviewStateText, string reviewFeedback, MccCacheNodeConfigurationState? configurationState, string configurationStateText, int? addressSpace, int? workerConnections, DateTimeOffset? workerConnectionsLastUpdatedOn, int? containerResyncTrigger, Uri imageUri, string fullyQualifiedDomainName, AutoUpdateRingType? autoUpdateRingType, int? autoUpdateRequestedWeek, int? autoUpdateRequestedDay, string autoUpdateRequestedTime, bool? shouldOpenFirewallPort80, bool? shouldOpenFirewallPort443, bool? shouldOpenFirewallPort5000, bool? shouldOpenFirewallPort5001, string runtimeAccountType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FullyQualifiedResourceId = fullyQualifiedResourceId;
             CustomerId = customerId;
@@ -104,6 +110,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             ContainerConfigurations = containerConfigurations;
             CidrCsv = cidrCsv;
             CidrCsvLastUpdatedOn = cidrCsvLastUpdatedOn;
+            BgpNetworkInterface = bgpNetworkInterface;
             BgpCidrCsvLastUpdatedOn = bgpCidrCsvLastUpdatedOn;
             BgpLastReportedOn = bgpLastReportedOn;
             BgpReviewStateText = bgpReviewStateText;
@@ -132,6 +139,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             AutoUpdateRequestedWeek = autoUpdateRequestedWeek;
             AutoUpdateRequestedDay = autoUpdateRequestedDay;
             AutoUpdateRequestedTime = autoUpdateRequestedTime;
+            ShouldOpenFirewallPort80 = shouldOpenFirewallPort80;
+            ShouldOpenFirewallPort443 = shouldOpenFirewallPort443;
+            ShouldOpenFirewallPort5000 = shouldOpenFirewallPort5000;
+            ShouldOpenFirewallPort5001 = shouldOpenFirewallPort5001;
+            RuntimeAccountType = runtimeAccountType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -207,6 +219,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> Cache node resource last Cidr Csv update timestamp. </summary>
         public DateTimeOffset? CidrCsvLastUpdatedOn { get; }
 
+        /// <summary> Cache node resource Bgp network interface. </summary>
+        public string BgpNetworkInterface { get; set; }
+
         /// <summary> Cache node resource last Bgp Cidr Csv update timestamp. </summary>
         public DateTimeOffset? BgpCidrCsvLastUpdatedOn { get; }
 
@@ -279,7 +294,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> FQDN(fully qualified domain name) value of the mcc cache node. </summary>
         public string FullyQualifiedDomainName { get; set; }
 
-        /// <summary> Auto Update Ring Type which is slow or fast etc. </summary>
+        /// <summary> Auto Update Ring Type which is stable or beta as new values. slow or fast are legacy from version 2026-06-01. </summary>
         public AutoUpdateRingType? AutoUpdateRingType { get; set; }
 
         /// <summary> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </summary>
@@ -290,5 +305,20 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> Customer requested time of the day for mcc install of auto update cycle, should be hh:mm. </summary>
         public string AutoUpdateRequestedTime { get; set; }
+
+        /// <summary> Cache node port firewall rule creation opt-in for port 80 property. </summary>
+        public bool? ShouldOpenFirewallPort80 { get; set; }
+
+        /// <summary> Cache node port firewall rule creation opt-in for port 443 property. </summary>
+        public bool? ShouldOpenFirewallPort443 { get; set; }
+
+        /// <summary> Cache node port firewall rule creation opt-in for port 5000 property. </summary>
+        public bool? ShouldOpenFirewallPort5000 { get; set; }
+
+        /// <summary> Cache node port firewall rule creation opt-in for port 5001 property. </summary>
+        public bool? ShouldOpenFirewallPort5001 { get; set; }
+
+        /// <summary> Connected Cache runtime account type. </summary>
+        public string RuntimeAccountType { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of <see cref="MosaicMetadata"/>. </summary>
-        /// <param name="type"> Type of metadata resource. </param>
+        /// <param name="kind"> Type of metadata resource. </param>
         /// <param name="bounds"> Geographic bounding box in [west, south, east, north] format. </param>
         /// <param name="minZoom"> Minimum zoom level supported. </param>
         /// <param name="maxZoom"> Maximum zoom level supported. </param>
@@ -32,9 +32,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="assets"> List of asset identifiers included in the resource. </param>
         /// <param name="defaults"> Defaults. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MosaicMetadata(MosaicMetadataType? @type, string bounds, int? minZoom, int? maxZoom, string name, IList<string> assets, IDictionary<string, string> defaults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MosaicMetadata(MosaicMetadataKind? kind, string bounds, int? minZoom, int? maxZoom, string name, IList<string> assets, IDictionary<string, string> defaults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             Bounds = bounds;
             MinZoom = minZoom;
             MaxZoom = maxZoom;
@@ -45,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Type of metadata resource. </summary>
-        public MosaicMetadataType? Type { get; set; }
+        public MosaicMetadataKind? Kind { get; set; }
 
         /// <summary> Geographic bounding box in [west, south, east, north] format. </summary>
         public string Bounds { get; set; }

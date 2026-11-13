@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementEmailTemplateResource.ResourceType, out string apiManagementEmailTemplateApiVersion);
             _emailTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementEmailTemplateResource.ResourceType.Namespace, Diagnostics);
-            _emailTemplateRestClient = new EmailTemplate(_emailTemplateClientDiagnostics, Pipeline, Endpoint, apiManagementEmailTemplateApiVersion ?? "2025-09-01-preview");
+            _emailTemplateRestClient = new EmailTemplate(_emailTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementEmailTemplateApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new ApiManagementEmailTemplateDataAsyncCollectionResultOfT(
                 _emailTemplateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new ApiManagementEmailTemplateDataCollectionResultOfT(
                 _emailTemplateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

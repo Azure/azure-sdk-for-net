@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? analyticalStorageTtl = default;
             ResourceRestoreParameters restoreParameters = default;
             CosmosDBAccountCreateMode? createMode = default;
-            CosmosDBMaterializedViewDefinition materializedViewDefinition = default;
+            CosmosDBMaterializedViewConfiguration materializedViewDefinition = default;
             IList<CosmosDBMaterializedViewDetails> materializedViews = default;
             MaterializedViewsProperties materializedViewsProperties = default;
             IList<ComputedProperty> computedProperties = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    materializedViewDefinition = CosmosDBMaterializedViewDefinition.DeserializeCosmosDBMaterializedViewDefinition(prop.Value, options);
+                    materializedViewDefinition = CosmosDBMaterializedViewConfiguration.DeserializeCosmosDBMaterializedViewConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("materializedViews"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RestorableSqlContainerPropertiesResourceContainer(

@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> object. </returns>
-        public virtual KubernetesConfigurationPrivateLinkScopeResource GetKubernetesConfigurationPrivateLinkScopeResource(ResourceIdentifier id)
-        {
-            KubernetesConfigurationPrivateLinkScopeResource.ValidateResourceId(id);
-            return new KubernetesConfigurationPrivateLinkScopeResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="KubernetesConfigurationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkResource"/> object. </returns>
@@ -51,6 +42,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
         {
             KubernetesConfigurationPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new KubernetesConfigurationPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> object. </returns>
+        public virtual KubernetesConfigurationPrivateLinkScopeResource GetKubernetesConfigurationPrivateLinkScopeResource(ResourceIdentifier id)
+        {
+            KubernetesConfigurationPrivateLinkScopeResource.ValidateResourceId(id);
+            return new KubernetesConfigurationPrivateLinkScopeResource(Client, id);
         }
     }
 }

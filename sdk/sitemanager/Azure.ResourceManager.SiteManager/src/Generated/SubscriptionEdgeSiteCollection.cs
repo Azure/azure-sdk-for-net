@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             TryGetApiVersion(SubscriptionEdgeSiteResource.ResourceType, out string subscriptionEdgeSiteApiVersion);
             _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", SubscriptionEdgeSiteResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, subscriptionEdgeSiteApiVersion ?? "2025-06-01");
+            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionEdgeSiteApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteData, SubscriptionEdgeSiteResource>(new SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT(_subscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionEdgeSiteCollection.GetAll"), data => new SubscriptionEdgeSiteResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSiteData, SubscriptionEdgeSiteResource>(new EdgeSiteDataAsync0CollectionResultOfT(_subscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionEdgeSiteCollection.GetAll"), data => new SubscriptionEdgeSiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteData, SubscriptionEdgeSiteResource>(new SubscriptionEdgeSiteGetAllCollectionResultOfT(_subscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionEdgeSiteCollection.GetAll"), data => new SubscriptionEdgeSiteResource(Client, data));
+            return new PageableWrapper<EdgeSiteData, SubscriptionEdgeSiteResource>(new EdgeSiteData0CollectionResultOfT(_subscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionEdgeSiteCollection.GetAll"), data => new SubscriptionEdgeSiteResource(Client, data));
         }
 
         /// <summary>

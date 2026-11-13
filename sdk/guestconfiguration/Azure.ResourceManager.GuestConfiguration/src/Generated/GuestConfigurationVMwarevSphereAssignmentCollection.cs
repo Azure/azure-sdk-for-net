@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(GuestConfigurationVMwarevSphereAssignmentResource.ResourceType, out string guestConfigurationVMwarevSphereAssignmentApiVersion);
             _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVMwarevSphereAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationAssignmentDataAsync4CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereCollectionResultOfT(
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationAssignmentData4CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

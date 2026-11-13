@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotCertificateResource.ResourceType, out string siteSlotCertificateApiVersion);
             _certificateOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotCertificateResource.ResourceType.Namespace, Diagnostics);
-            _certificateOperationGroupRestClient = new CertificateOperationGroup(_certificateOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotCertificateApiVersion ?? "2026-03-15");
+            _certificateOperationGroupRestClient = new CertificateOperationGroup(_certificateOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotCertificateApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppCertificateData, SiteSlotCertificateResource>(new CertificateOperationGroupGetSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppCertificateData, SiteSlotCertificateResource>(new AppCertificateDataAsyncCollectionResultOfT(
                 _certificateOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppCertificateData, SiteSlotCertificateResource>(new CertificateOperationGroupGetSlotCollectionResultOfT(
+            return new PageableWrapper<AppCertificateData, SiteSlotCertificateResource>(new AppCertificateDataCollectionResultOfT(
                 _certificateOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

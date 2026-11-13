@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostAllocationRuleResource.ResourceType, out string costAllocationRuleApiVersion);
             _costAllocationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostAllocationRuleResource.ResourceType.Namespace, Diagnostics);
-            _costAllocationRulesRestClient = new CostAllocationRules(_costAllocationRulesClientDiagnostics, Pipeline, Endpoint, costAllocationRuleApiVersion ?? "2025-03-01");
+            _costAllocationRulesRestClient = new CostAllocationRules(_costAllocationRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costAllocationRuleApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllAsyncCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
+            return new AsyncPageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRuleDataAsyncCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
+            return new PageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRuleDataCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
         }
 
         /// <summary>

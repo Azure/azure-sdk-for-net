@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ComputeLimit
     [ModelReaderWriterBuildable(typeof(SharedLimitCapResource))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TrustedHostSubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(TrustedHostSubscriptionListResult))]
+    [ModelReaderWriterBuildable(typeof(TrustedHostSubscriptionResource))]
     [ModelReaderWriterBuildable(typeof(VmFamilyListResult))]
     public partial class AzureResourceManagerComputeLimitContext : ModelReaderWriterContext
     {

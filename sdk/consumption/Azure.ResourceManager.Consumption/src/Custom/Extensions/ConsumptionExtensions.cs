@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Obsolete back-compat overload without the <c>filter</c> argument. Use the overload that accepts <c>filter</c> instead. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> instance. </param>
         /// <param name="scope"> The target scope. </param>
-        /// <param name="recommendationScope"> Reservation recommendation scope (Single/Shared). </param>
+        /// <param name="reservationScope"> Reservation recommendation scope (Single/Shared). </param>
         /// <param name="region"> Azure region. </param>
         /// <param name="term"> Reservation term. </param>
         /// <param name="lookBackPeriod"> Look-back period. </param>
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope recommendationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This extension method is obsolete.");
 
         /// <summary> Obsolete back-compat overload without the <c>filter</c> argument. Use the overload that accepts <c>filter</c> instead. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> instance. </param>
         /// <param name="scope"> The target scope. </param>
-        /// <param name="recommendationScope"> Reservation recommendation scope (Single/Shared). </param>
+        /// <param name="reservationScope"> Reservation recommendation scope (Single/Shared). </param>
         /// <param name="region"> Azure region. </param>
         /// <param name="term"> Reservation term. </param>
         /// <param name="lookBackPeriod"> Look-back period. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope recommendationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public static Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This extension method is obsolete.");
     }
 }

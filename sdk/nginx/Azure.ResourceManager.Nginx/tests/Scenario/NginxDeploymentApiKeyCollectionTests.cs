@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Tests.Scenario
 {
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     internal class NginxDeploymentApiKeyCollectionTests : NginxManagementTestBase
     {
         protected ResourceGroupResource ResGroup { get; set; }
@@ -36,6 +35,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task CreateOrUpdate()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Get()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAll()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -86,6 +88,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Exists()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -102,6 +105,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetIfExists()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");

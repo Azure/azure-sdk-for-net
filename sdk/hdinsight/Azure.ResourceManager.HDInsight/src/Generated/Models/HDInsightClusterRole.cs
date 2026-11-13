@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="scriptActions"> The list of script actions on the role. </param>
         /// <param name="encryptDataDisks"> Indicates whether encrypt the data disks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterRole(string name, int? minInstanceCount, int? targetInstanceCount, string vmGroupName, HDInsightAutoScaleConfiguration autoScaleConfiguration, HardwareProfile hardwareProfile, OsProfile osProfile, HDInsightVirtualNetworkProfile virtualNetworkProfile, IList<HDInsightClusterDataDiskGroup> dataDisksGroups, IList<ScriptAction> scriptActions, bool? encryptDataDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterRole(string name, int? minInstanceCount, int? targetInstanceCount, string vmGroupName, HDInsightAutoScaleConfiguration autoScaleConfiguration, HardwareProfile hardwareProfile, OSProfile osProfile, HDInsightVirtualNetworkProfile virtualNetworkProfile, IList<HDInsightClusterDataDiskGroup> dataDisksGroups, IList<ScriptAction> scriptActions, bool? encryptDataDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             MinInstanceCount = minInstanceCount;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HardwareProfile HardwareProfile { get; set; }
 
         /// <summary> The operating system profile. </summary>
-        internal OsProfile OSProfile { get; set; }
+        internal OSProfile OSProfile { get; set; }
 
         /// <summary> The virtual network profile. </summary>
         public HDInsightVirtualNetworkProfile VirtualNetworkProfile { get; set; }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 if (OSProfile is null)
                 {
-                    OSProfile = new OsProfile();
+                    OSProfile = new OSProfile();
                 }
                 OSProfile.LinuxProfile = value;
             }

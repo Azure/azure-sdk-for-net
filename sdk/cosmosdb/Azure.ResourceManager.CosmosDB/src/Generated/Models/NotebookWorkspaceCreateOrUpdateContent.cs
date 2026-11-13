@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create a notebook workspace resource. </summary>
-    public partial class NotebookWorkspaceCreateOrUpdateContent : ArmProxyResource
+    public partial class NotebookWorkspaceCreateOrUpdateContent : CosmosDBProxyResource
     {
         /// <summary> Initializes a new instance of <see cref="NotebookWorkspaceCreateOrUpdateContent"/>. </summary>
         public NotebookWorkspaceCreateOrUpdateContent()

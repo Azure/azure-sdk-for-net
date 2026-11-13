@@ -57,8 +57,8 @@ namespace Azure.Provisioning.CostManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" }, isOutput: true);
-            _validTill = DefineProperty<DateTimeOffset>(nameof(ValidTill), new string[] { "validTill" });
+            _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" }, isOutput: true, format: "O");
+            _validTill = DefineProperty<DateTimeOffset>(nameof(ValidTill), new string[] { "validTill" }, format: "O");
             _downloadUri = DefineProperty<Uri>(nameof(DownloadUri), new string[] { "downloadUrl" });
             DefineAdditionalProperties();
         }

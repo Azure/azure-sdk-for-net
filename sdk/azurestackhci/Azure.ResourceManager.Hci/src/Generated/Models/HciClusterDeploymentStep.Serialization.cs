@@ -136,6 +136,36 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            {
+                writer.WritePropertyName("percentComplete"u8);
+                writer.WriteNumberValue(PercentComplete.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            {
+                writer.WritePropertyName("additionalData"u8);
+                writer.WriteStartArray();
+                foreach (HciClusterDeploymentStepMetadata item in AdditionalData)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedSteps))
+            {
+                writer.WritePropertyName("recommendedSteps"u8);
+                writer.WriteStartArray();
+                foreach (string item in RecommendedSteps)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -187,6 +217,9 @@ namespace Azure.ResourceManager.Hci.Models
             IReadOnlyList<HciClusterDeploymentStep> steps = default;
             IReadOnlyList<string> exception = default;
             ResponseError error = default;
+            int? percentComplete = default;
+            IReadOnlyList<HciClusterDeploymentStepMetadata> additionalData = default;
+            IReadOnlyList<string> recommendedSteps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -264,9 +297,53 @@ namespace Azure.ResourceManager.Hci.Models
                     error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHciContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("percentComplete"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    percentComplete = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("additionalData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HciClusterDeploymentStepMetadata> array = new List<HciClusterDeploymentStepMetadata>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(HciClusterDeploymentStepMetadata.DeserializeHciClusterDeploymentStepMetadata(item, options));
+                    }
+                    additionalData = array;
+                    continue;
+                }
+                if (prop.NameEquals("recommendedSteps"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    recommendedSteps = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciClusterDeploymentStep(
@@ -279,6 +356,9 @@ namespace Azure.ResourceManager.Hci.Models
                 steps ?? new ChangeTrackingList<HciClusterDeploymentStep>(),
                 exception ?? new ChangeTrackingList<string>(),
                 error,
+                percentComplete,
+                additionalData ?? new ChangeTrackingList<HciClusterDeploymentStepMetadata>(),
+                recommendedSteps ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

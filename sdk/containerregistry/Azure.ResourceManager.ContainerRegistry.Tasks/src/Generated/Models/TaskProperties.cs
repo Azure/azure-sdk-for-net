@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskProperties(ContainerRegistryTaskProvisioningState? provisioningState, DateTimeOffset? createdOn, ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, TaskStepProperties step, ContainerRegistryTaskTriggerProperties trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, bool? isSystemTask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskProperties(ContainerRegistryTaskProvisioningState? provisioningState, DateTimeOffset? createdOn, ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, ContainerRegistryTaskStepProperties step, ContainerRegistryTaskTriggerProperties trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, bool? isSystemTask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public int? TimeoutInSeconds { get; set; }
 
         /// <summary> The properties of a task step. </summary>
-        public TaskStepProperties Step { get; set; }
+        public ContainerRegistryTaskStepProperties Step { get; set; }
 
         /// <summary> The properties that describe all triggers for the task. </summary>
         public ContainerRegistryTaskTriggerProperties Trigger { get; set; }

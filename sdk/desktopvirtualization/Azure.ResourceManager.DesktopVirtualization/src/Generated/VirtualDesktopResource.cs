@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string virtualDesktopApiVersion);
             _desktopsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _desktopsRestClient = new Desktops(_desktopsClientDiagnostics, Pipeline, Endpoint, virtualDesktopApiVersion ?? "2026-03-01-preview");
+            _desktopsRestClient = new Desktops(_desktopsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualDesktopApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

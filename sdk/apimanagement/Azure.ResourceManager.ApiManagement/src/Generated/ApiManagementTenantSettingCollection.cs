@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementTenantSettingResource.ResourceType, out string apiManagementTenantSettingApiVersion);
             _tenantSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementTenantSettingResource.ResourceType.Namespace, Diagnostics);
-            _tenantSettingsRestClient = new TenantSettings(_tenantSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementTenantSettingApiVersion ?? "2025-09-01-preview");
+            _tenantSettingsRestClient = new TenantSettings(_tenantSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementTenantSettingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new ApiManagementTenantSettingDataAsyncCollectionResultOfT(
                 _tenantSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new ApiManagementTenantSettingDataCollectionResultOfT(
                 _tenantSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

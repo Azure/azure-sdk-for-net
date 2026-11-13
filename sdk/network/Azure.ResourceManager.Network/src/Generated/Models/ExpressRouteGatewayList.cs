@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of ExpressRoute gateways. </summary>
-    public partial class ExpressRouteGatewayList
+    internal partial class ExpressRouteGatewayList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Response<OfferResource> Get(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new Response<OfferResource> Get(string offerName, string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<Response<OfferResource>> GetAsync(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new async Task<Response<OfferResource>> GetAsync(string offerName, string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Pageable<OfferResource> GetAll(string expand, CancellationToken cancellationToken)
+        public virtual new Pageable<OfferResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new AsyncPageable<OfferResource> GetAllAsync(string expand, CancellationToken cancellationToken)
+        public virtual new AsyncPageable<OfferResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new NullableResponse<OfferResource> GetIfExists(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new NullableResponse<OfferResource> GetIfExists(string offerName, string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerName, string expand = default, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }

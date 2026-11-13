@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(GlobalRulestackResource.ResourceType, out string globalRulestackApiVersion);
             _globalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", GlobalRulestackResource.ResourceType.Namespace, Diagnostics);
-            _globalRulestackRestClient = new GlobalRulestack(_globalRulestackClientDiagnostics, Pipeline, Endpoint, globalRulestackApiVersion ?? "2025-10-08");
+            _globalRulestackRestClient = new GlobalRulestack(_globalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackGetAllAsyncCollectionResultOfT(_globalRulestackRestClient, context, "GlobalRulestackCollection.GetAll"), data => new GlobalRulestackResource(Client, data));
+            return new AsyncPageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackDataAsyncCollectionResultOfT(_globalRulestackRestClient, context, "GlobalRulestackCollection.GetAll"), data => new GlobalRulestackResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackGetAllCollectionResultOfT(_globalRulestackRestClient, context, "GlobalRulestackCollection.GetAll"), data => new GlobalRulestackResource(Client, data));
+            return new PageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackDataCollectionResultOfT(_globalRulestackRestClient, context, "GlobalRulestackCollection.GetAll"), data => new GlobalRulestackResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

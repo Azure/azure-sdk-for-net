@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingInvoiceSectionResource.ResourceType, out string billingInvoiceSectionApiVersion);
             _invoiceSectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingInvoiceSectionResource.ResourceType.Namespace, Diagnostics);
-            _invoiceSectionsRestClient = new InvoiceSections(_invoiceSectionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _invoiceSectionsRestClient = new InvoiceSections(_invoiceSectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingInvoiceSectionData, BillingInvoiceSectionResource>(new InvoiceSectionsGetByBillingProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingInvoiceSectionData, BillingInvoiceSectionResource>(new BillingInvoiceSectionDataAsyncCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingInvoiceSectionData, BillingInvoiceSectionResource>(new InvoiceSectionsGetByBillingProfileCollectionResultOfT(
+            return new PageableWrapper<BillingInvoiceSectionData, BillingInvoiceSectionResource>(new BillingInvoiceSectionDataCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Name,
                 Id.Name,

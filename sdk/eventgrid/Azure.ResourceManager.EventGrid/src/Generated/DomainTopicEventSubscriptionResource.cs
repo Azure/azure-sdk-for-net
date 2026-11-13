@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string domainTopicEventSubscriptionApiVersion);
             _domainTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _domainTopicEventSubscriptionsRestClient = new DomainTopicEventSubscriptions(_domainTopicEventSubscriptionsClientDiagnostics, Pipeline, Endpoint, domainTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
+            _domainTopicEventSubscriptionsRestClient = new DomainTopicEventSubscriptions(_domainTopicEventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new DomainTopicEventSubscriptionsGetDeliveryAttributesAsyncCollectionResultOfT(
+            return new DeliveryAttributeMappingAsync1CollectionResultOfT(
                 _domainTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new DomainTopicEventSubscriptionsGetDeliveryAttributesCollectionResultOfT(
+            return new DeliveryAttributeMapping1CollectionResultOfT(
                 _domainTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

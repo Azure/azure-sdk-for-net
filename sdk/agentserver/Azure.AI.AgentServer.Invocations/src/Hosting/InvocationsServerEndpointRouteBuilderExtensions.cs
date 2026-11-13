@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Internal;
+using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -18,6 +19,8 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
 {
     /// <summary>
     /// Maps the Invocations API routes to the endpoint routing pipeline.
+    /// When a typed Voice handler is registered with <c>AddVoice&lt;THandler&gt;()</c>,
+    /// also maps the standalone <c>/voice_conversation_engine</c> WebSocket route.
     /// </summary>
     /// <param name="endpoints">The endpoint route builder to map routes on.</param>
     /// <param name="prefix">Optional route prefix (e.g., "/v1"). Default: empty (routes at /invocations).</param>
@@ -28,6 +31,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
     {
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
+        group.AddEndpointFilter<VoiceRegistrationGuardFilter>();
 
         // Register Invocations protocol identity with the version registry (if available)
         var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();
@@ -41,39 +45,57 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         // POST /invocations — invoke the agent
         group.MapPost("/invocations", async (
             HttpContext httpContext,
-            InvocationEndpointHandler handler,
-            InvocationHandler invocationHandler) =>
+            InvocationEndpointHandler endpointHandler,
+            InvocationHandler userHandler) =>
         {
-            await handler.HandleInvokeAsync(httpContext, invocationHandler);
+            await endpointHandler.HandleInvokeAsync(httpContext, userHandler);
         }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         // GET /invocations/{invocationId} — get invocation result
         group.MapGet("/invocations/{invocationId}", async (
             HttpContext httpContext,
             string invocationId,
-            InvocationEndpointHandler handler,
-            InvocationHandler invocationHandler) =>
+            InvocationEndpointHandler endpointHandler,
+            InvocationHandler userHandler) =>
         {
-            await handler.HandleGetAsync(httpContext, invocationId, invocationHandler);
+            await endpointHandler.HandleGetAsync(httpContext, invocationId, userHandler);
         }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         // POST /invocations/{invocationId}/cancel — cancel invocation
         group.MapPost("/invocations/{invocationId}/cancel", async (
             HttpContext httpContext,
             string invocationId,
-            InvocationEndpointHandler handler,
-            InvocationHandler invocationHandler) =>
+            InvocationEndpointHandler endpointHandler,
+            InvocationHandler userHandler) =>
         {
-            await handler.HandleCancelAsync(httpContext, invocationId, invocationHandler);
+            await endpointHandler.HandleCancelAsync(httpContext, invocationId, userHandler);
         }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         // GET /invocations/docs/openapi.json — OpenAPI spec
         group.MapGet("/invocations/docs/openapi.json", async (
             HttpContext httpContext,
-            InvocationEndpointHandler handler,
-            InvocationHandler invocationHandler) =>
+            InvocationEndpointHandler endpointHandler,
+            InvocationHandler userHandler) =>
         {
-            await handler.HandleGetOpenApiAsync(httpContext, invocationHandler);
+            await endpointHandler.HandleGetOpenApiAsync(httpContext, userHandler);
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
+
+        // GET /invocations/docs/asyncapi.json — AsyncAPI spec (JSON)
+        group.MapGet("/invocations/docs/asyncapi.json", async (
+            HttpContext httpContext,
+            InvocationEndpointHandler endpointHandler,
+            InvocationHandler userHandler) =>
+        {
+            await endpointHandler.HandleGetAsyncApiJsonAsync(httpContext, userHandler);
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
+
+        // GET /invocations/docs/asyncapi.yaml — AsyncAPI spec (YAML)
+        group.MapGet("/invocations/docs/asyncapi.yaml", async (
+            HttpContext httpContext,
+            InvocationEndpointHandler endpointHandler,
+            InvocationHandler userHandler) =>
+        {
+            await endpointHandler.HandleGetAsyncApiYamlAsync(httpContext, userHandler);
         }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         // /invocations_ws — WebSocket transport.
@@ -83,11 +105,24 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         // "endpoint not registered".
         group.Map(InvocationsWebSocketConstants.RoutePath, async (
             HttpContext httpContext,
-            WebSocketEndpointHandler handler,
-            InvocationHandler invocationHandler) =>
+            WebSocketEndpointHandler endpointHandler,
+            InvocationHandler userHandler) =>
         {
-            await handler.HandleAsync(httpContext, invocationHandler);
-        });
+            await endpointHandler.HandleAsync(httpContext, userHandler);
+        }).WithMetadata(VoiceWebSocketEndpointMetadata.Instance);
+
+        // CE is available only for the typed Voice registration. Raw WS handlers
+        // retain their existing routes and do not implicitly become CE handlers.
+        if (endpoints.ServiceProvider.GetService<VoiceRegistrationMarker>() is not null)
+        {
+            group.Map("/voice_conversation_engine", async (
+                HttpContext httpContext,
+                WebSocketEndpointHandler endpointHandler,
+                InvocationHandler userHandler) =>
+            {
+                await endpointHandler.HandleAsync(httpContext, userHandler);
+            }).WithMetadata(VoiceWebSocketEndpointMetadata.Instance);
+        }
 
         group.WithTags("Invocations");
 

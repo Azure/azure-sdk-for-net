@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(AppServicePlanVirtualNetworkConnectionGatewayResource.ResourceType, out string appServicePlanVirtualNetworkConnectionGatewayApiVersion);
             _vnetGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlanVirtualNetworkConnectionGatewayResource.ResourceType.Namespace, Diagnostics);
-            _vnetGatewaysRestClient = new VnetGateways(_vnetGatewaysClientDiagnostics, Pipeline, Endpoint, appServicePlanVirtualNetworkConnectionGatewayApiVersion ?? "2026-03-15");
+            _vnetGatewaysRestClient = new VnetGateways(_vnetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanVirtualNetworkConnectionGatewayApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

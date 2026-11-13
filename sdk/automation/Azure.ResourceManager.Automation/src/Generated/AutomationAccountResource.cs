@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -82,35 +83,35 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationAccountApiVersion);
             _automationAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Automation/automationAccounts", out string automationAccountApiVersionOverride) ? automationAccountApiVersionOverride : "2024-10-23");
             _agentRegistrationInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _agentRegistrationInformationRestClient = new AgentRegistrationInformation(_agentRegistrationInformationClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _agentRegistrationInformationRestClient = new AgentRegistrationInformation(_agentRegistrationInformationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _automationAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _automationAccountsRestClient = new AutomationAccounts(_automationAccountsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _automationAccountsRestClient = new AutomationAccounts(_automationAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _webhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _softwareUpdateConfigurationMachineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _softwareUpdateConfigurationMachineRunsRestClient = new SoftwareUpdateConfigurationMachineRuns(_softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _softwareUpdateConfigurationMachineRunsRestClient = new SoftwareUpdateConfigurationMachineRuns(_softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _keysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _keysRestClient = new Keys(_keysClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _keysRestClient = new Keys(_keysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _linkedWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _linkedWorkspaceRestClient = new LinkedWorkspace(_linkedWorkspaceClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _linkedWorkspaceRestClient = new LinkedWorkspace(_linkedWorkspaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _statisticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _statisticsRestClient = new Statistics(_statisticsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _statisticsRestClient = new Statistics(_statisticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _objectDataTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _objectDataTypesRestClient = new ObjectDataTypes(_objectDataTypesClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _objectDataTypesRestClient = new ObjectDataTypes(_objectDataTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _nodeCountInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _nodeCountInformationRestClient = new NodeCountInformation(_nodeCountInformationClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _nodeCountInformationRestClient = new NodeCountInformation(_nodeCountInformationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _softwareUpdateConfigurationRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _softwareUpdateConfigurationRunsRestClient = new SoftwareUpdateConfigurationRuns(_softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _softwareUpdateConfigurationRunsRestClient = new SoftwareUpdateConfigurationRuns(_softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _softwareUpdateConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _softwareUpdateConfigurationsRestClient = new SoftwareUpdateConfigurations(_softwareUpdateConfigurationsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _softwareUpdateConfigurationsRestClient = new SoftwareUpdateConfigurations(_softwareUpdateConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -577,7 +578,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesAutomationPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AutomationPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -615,7 +616,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesAutomationPrivateLinkResourcesCollectionResultOfT(
+            return new AutomationPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1230,7 +1231,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new StatisticsGetStatisticsAsyncCollectionResultOfT(
+            return new AutomationAccountStatisticsAsyncCollectionResultOfT(
                 _statisticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1270,7 +1271,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new StatisticsGetStatisticsCollectionResultOfT(
+            return new AutomationAccountStatisticsCollectionResultOfT(
                 _statisticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1309,7 +1310,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AutomationAccountGetDeletedRunbooksAsyncCollectionResultOfT(
+            return new DeletedRunbookAsyncCollectionResultOfT(
                 _automationAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1347,7 +1348,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AutomationAccountGetDeletedRunbooksCollectionResultOfT(
+            return new DeletedRunbookCollectionResultOfT(
                 _automationAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1390,7 +1391,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ObjectDataTypesGetFieldsByTypeAsyncCollectionResultOfT(
+            return new AutomationModuleFieldAsyncCollectionResultOfT(
                 _objectDataTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1434,7 +1435,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ObjectDataTypesGetFieldsByTypeCollectionResultOfT(
+            return new AutomationModuleFieldCollectionResultOfT(
                 _objectDataTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1474,7 +1475,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeCountInformationGetAllNodeCountInformationAsyncCollectionResultOfT(
+            return new DscNodeCountAsyncCollectionResultOfT(
                 _nodeCountInformationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1514,7 +1515,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeCountInformationGetAllNodeCountInformationCollectionResultOfT(
+            return new DscNodeCountCollectionResultOfT(
                 _nodeCountInformationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1661,7 +1662,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationMachineRunsGetSoftwareUpdateConfigurationMachineRunsAsyncCollectionResultOfT(
+            return new SoftwareUpdateConfigurationMachineRunAsyncCollectionResultOfT(
                 _softwareUpdateConfigurationMachineRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1707,7 +1708,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationMachineRunsGetSoftwareUpdateConfigurationMachineRunsCollectionResultOfT(
+            return new SoftwareUpdateConfigurationMachineRunCollectionResultOfT(
                 _softwareUpdateConfigurationMachineRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1853,7 +1854,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationRunsGetSoftwareUpdateConfigurationRunsAsyncCollectionResultOfT(
+            return new SoftwareUpdateConfigurationRunAsyncCollectionResultOfT(
                 _softwareUpdateConfigurationRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1899,7 +1900,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationRunsGetSoftwareUpdateConfigurationRunsCollectionResultOfT(
+            return new SoftwareUpdateConfigurationRunCollectionResultOfT(
                 _softwareUpdateConfigurationRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2025,7 +2026,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(
+            return new AutomationUsageAsyncCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2063,7 +2064,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(
+            return new AutomationUsageCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2182,10 +2183,9 @@ namespace Azure.ResourceManager.Automation
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2225,10 +2225,9 @@ namespace Azure.ResourceManager.Automation
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

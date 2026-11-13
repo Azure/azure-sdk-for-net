@@ -131,6 +131,87 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
+        public async Task PreservesApiVersionWhenFollowing303LocationWithoutApiVersion()
+        {
+            // The service returns a 303 whose Location omits api-version. Following it verbatim would use
+            // the unversioned (legacy) API; the policy must carry the request's api-version onto the
+            // followed GET so it stays on the negotiated API version.
+            var mockTransport = new MockTransport(
+                new MockResponse(303).AddHeader("Location", "https://myledger.confidential-ledger.azure.com/entries/123"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/entries?api-version=2026-03-26"));
+            }, new CodeTransparencyRedirectPolicy(s_endpoint));
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual("https://myledger.confidential-ledger.azure.com/entries/123?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
+        }
+
+        [Test]
+        public async Task PreservesApiVersionWhenFollowing307ToPrimaryNodeWithoutApiVersion()
+        {
+            // A 307 to the primary node whose Location omits api-version must still carry it forward (and
+            // keep the POST method) so the retried write targets the versioned API.
+            var mockTransport = new MockTransport(
+                new MockResponse(307).AddHeader("Location", "https://primary-node.myledger.confidential-ledger.azure.com/entries"),
+                new MockResponse(201));
+
+            var response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/entries?api-version=2026-03-26"));
+            }, new CodeTransparencyRedirectPolicy(s_endpoint));
+
+            Assert.AreEqual(201, response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual(RequestMethod.Post, mockTransport.Requests[1].Method);
+            Assert.AreEqual("https://primary-node.myledger.confidential-ledger.azure.com/entries?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
+        }
+
+        [Test]
+        public async Task DoesNotDuplicateApiVersionWhenRedirectLocationAlreadyHasIt()
+        {
+            // When the Location already carries an api-version it must be used verbatim (no duplicate).
+            var mockTransport = new MockTransport(
+                new MockResponse(303).AddHeader("Location", "https://myledger.confidential-ledger.azure.com/entries/123?api-version=2026-03-26"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/entries?api-version=2026-03-26"));
+            }, new CodeTransparencyRedirectPolicy(s_endpoint));
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual("https://myledger.confidential-ledger.azure.com/entries/123?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
+        }
+
+        [Test]
+        public async Task DoesNotAddApiVersionWhenOriginalRequestHasNone()
+        {
+            // If the original request carried no api-version there is nothing to preserve; the followed
+            // Location must be used as-is without introducing a spurious parameter.
+            var mockTransport = new MockTransport(
+                new MockResponse(303).AddHeader("Location", "https://myledger.confidential-ledger.azure.com/entries/123"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/entries"));
+            }, new CodeTransparencyRedirectPolicy(s_endpoint));
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual("https://myledger.confidential-ledger.azure.com/entries/123", mockTransport.Requests[1].Uri.ToString());
+        }
+
+        [Test]
         public void RefusesToFollow303RedirectToUntrustedDomain()
         {
             var mockTransport = new MockTransport(

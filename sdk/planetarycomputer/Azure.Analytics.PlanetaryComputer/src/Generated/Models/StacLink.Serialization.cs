@@ -93,10 +93,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("href"u8);
             writer.WriteStringValue(Href);
@@ -203,7 +203,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string rel = default;
             string title = default;
-            StacLinkType? @type = default;
+            StacLinkKind? kind = default;
             string href = default;
             string hreflang = default;
             int? length = default;
@@ -230,7 +230,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    @type = new StacLinkType(prop.Value.GetString());
+                    kind = new StacLinkKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("href"u8))
@@ -297,7 +297,7 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     body = dictionary;
@@ -314,13 +314,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StacLink(
                 rel,
                 title,
-                @type,
+                kind,
                 href,
                 hreflang,
                 length,

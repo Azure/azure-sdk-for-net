@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ResourceHealthEventImpactedResource.ResourceType, out string resourceHealthEventImpactedResourceApiVersion);
             _impactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventImpactedResource.ResourceType.Namespace, Diagnostics);
-            _impactedResourcesRestClient = new ImpactedResources(_impactedResourcesClientDiagnostics, Pipeline, Endpoint, resourceHealthEventImpactedResourceApiVersion ?? "2025-05-01");
+            _impactedResourcesRestClient = new ImpactedResources(_impactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventImpactedResourceApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ResourceHealthEventImpactedResourceDataAsync0CollectionResultOfT(
                 _impactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT(
+            return new PageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ResourceHealthEventImpactedResourceData0CollectionResultOfT(
                 _impactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,

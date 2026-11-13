@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsSupported))
+            {
+                writer.WritePropertyName("isSupported"u8);
+                writer.WriteBooleanValue(IsSupported.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
@@ -103,6 +108,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteStringValue(SizeInBytes);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageType))
+            {
+                writer.WritePropertyName("storageType"u8);
+                writer.WriteStringValue(StorageType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(DiskType))
             {
@@ -179,9 +189,11 @@ namespace Azure.ResourceManager.Hci.Models
             string diskName = default;
             string model = default;
             string manufacturer = default;
+            bool? isSupported = default;
             string serialNumber = default;
             string firmwareVersion = default;
             string sizeInBytes = default;
+            DiskStorageType? storageType = default;
             DiskType? diskType = default;
             string busLocation = default;
             string unallocatedSizeInBytes = default;
@@ -205,6 +217,15 @@ namespace Azure.ResourceManager.Hci.Models
                     manufacturer = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("isSupported"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSupported = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("serialNumber"u8))
                 {
                     serialNumber = prop.Value.GetString();
@@ -218,6 +239,15 @@ namespace Azure.ResourceManager.Hci.Models
                 if (prop.NameEquals("sizeInBytes"u8))
                 {
                     sizeInBytes = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("storageType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageType = new DiskStorageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskType"u8))
@@ -264,16 +294,18 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DiskReportedProperties(
                 diskName,
                 model,
                 manufacturer,
+                isSupported,
                 serialNumber,
                 firmwareVersion,
                 sizeInBytes,
+                storageType,
                 diskType,
                 busLocation,
                 unallocatedSizeInBytes,

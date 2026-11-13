@@ -5,11 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Azure.Monitor.Query.Logs;
-
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>

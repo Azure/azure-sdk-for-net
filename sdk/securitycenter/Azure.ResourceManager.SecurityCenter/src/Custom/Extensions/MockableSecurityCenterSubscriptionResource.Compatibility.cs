@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private MdeOnboardings _mdeOnboardingsRestClient;
 
         private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MdeOnboardings MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardings(MdeOnboardingsClientDiagnostics, Pipeline, Endpoint, "2021-10-01-preview");
+        private MdeOnboardings MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardings(MdeOnboardingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-10-01-preview");
 
         /// <summary> Gets security center pricings for this subscription. </summary>
         public virtual SecurityCenterPricingCollection GetSecurityCenterPricings()

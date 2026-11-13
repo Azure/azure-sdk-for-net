@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<BatchProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, BatchResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -40,19 +40,19 @@ namespace Azure.ResourceManager.Batch.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
+        /// <summary> Provisioning state of the network security perimeter configuration. </summary>
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of provisioning issues, if any. </summary>
         public IReadOnlyList<BatchProvisioningIssue> ProvisioningIssues { get; }
 
-        /// <summary> Gets or sets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Information about the network security perimeter (NSP). </summary>
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
 
-        /// <summary> Gets or sets the ResourceAssociation. </summary>
+        /// <summary> Information about the resource association. </summary>
         public BatchResourceAssociation ResourceAssociation { get; set; }
 
-        /// <summary> Gets or sets the Profile. </summary>
+        /// <summary> Network security perimeter configuration profile. </summary>
         public NetworkSecurityProfile Profile { get; set; }
     }
 }

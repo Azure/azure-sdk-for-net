@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceCapacityInfoApiVersion);
             _deviceCapacityInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _deviceCapacityInfoRestClient = new DeviceCapacityInfo(_deviceCapacityInfoClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceCapacityInfoApiVersion ?? "2023-12-01");
+            _deviceCapacityInfoRestClient = new DeviceCapacityInfo(_deviceCapacityInfoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceCapacityInfoApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

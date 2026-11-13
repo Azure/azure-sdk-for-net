@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations
         {
             TryGetApiVersion(ReservationOrderResource.ResourceType, out string reservationOrderApiVersion);
             _reservationOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResource.ResourceType.Namespace, Diagnostics);
-            _reservationOrderRestClient = new ReservationOrder(_reservationOrderClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
+            _reservationOrderRestClient = new ReservationOrder(_reservationOrderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReservationOrderData, ReservationOrderResource>(new ReservationOrderGetAllAsyncCollectionResultOfT(_reservationOrderRestClient, context, "ReservationOrderCollection.GetAll"), data => new ReservationOrderResource(Client, data));
+            return new AsyncPageableWrapper<ReservationOrderData, ReservationOrderResource>(new ReservationOrderDataAsyncCollectionResultOfT(_reservationOrderRestClient, context, "ReservationOrderCollection.GetAll"), data => new ReservationOrderResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReservationOrderData, ReservationOrderResource>(new ReservationOrderGetAllCollectionResultOfT(_reservationOrderRestClient, context, "ReservationOrderCollection.GetAll"), data => new ReservationOrderResource(Client, data));
+            return new PageableWrapper<ReservationOrderData, ReservationOrderResource>(new ReservationOrderDataCollectionResultOfT(_reservationOrderRestClient, context, "ReservationOrderCollection.GetAll"), data => new ReservationOrderResource(Client, data));
         }
 
         /// <summary>

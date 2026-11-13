@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ScVmm.Models
     internal readonly partial struct ScVmmInventoryType : IEquatable<ScVmmInventoryType>
     {
         private readonly string _value;
+        /// <summary> Cloud inventory type. </summary>
+        private const string CloudValue = "Cloud";
+        /// <summary> VirtualNetwork inventory type. </summary>
+        private const string VirtualNetworkValue = "VirtualNetwork";
+        /// <summary> VirtualMachine inventory type. </summary>
+        private const string VirtualMachineValue = "VirtualMachine";
+        /// <summary> VirtualMachineTemplate inventory type. </summary>
+        private const string VirtualMachineTemplateValue = "VirtualMachineTemplate";
 
         /// <summary> Initializes a new instance of <see cref="ScVmmInventoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScVmmInventoryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CloudValue = "Cloud";
-        private const string VirtualNetworkValue = "VirtualNetwork";
-        private const string VirtualMachineTemplateValue = "VirtualMachineTemplate";
-        private const string VirtualMachineValue = "VirtualMachine";
-
-        /// <summary> Cloud. </summary>
+        /// <summary> Cloud inventory type. </summary>
         public static ScVmmInventoryType Cloud { get; } = new ScVmmInventoryType(CloudValue);
-        /// <summary> VirtualNetwork. </summary>
+
+        /// <summary> VirtualNetwork inventory type. </summary>
         public static ScVmmInventoryType VirtualNetwork { get; } = new ScVmmInventoryType(VirtualNetworkValue);
-        /// <summary> VirtualMachineTemplate. </summary>
-        public static ScVmmInventoryType VirtualMachineTemplate { get; } = new ScVmmInventoryType(VirtualMachineTemplateValue);
-        /// <summary> VirtualMachine. </summary>
+
+        /// <summary> VirtualMachine inventory type. </summary>
         public static ScVmmInventoryType VirtualMachine { get; } = new ScVmmInventoryType(VirtualMachineValue);
+
+        /// <summary> VirtualMachineTemplate inventory type. </summary>
+        public static ScVmmInventoryType VirtualMachineTemplate { get; } = new ScVmmInventoryType(VirtualMachineTemplateValue);
+
         /// <summary> Determines if two <see cref="ScVmmInventoryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScVmmInventoryType left, ScVmmInventoryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScVmmInventoryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScVmmInventoryType left, ScVmmInventoryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScVmmInventoryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScVmmInventoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScVmmInventoryType(string value) => new ScVmmInventoryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScVmmInventoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScVmmInventoryType?(string value) => value == null ? null : new ScVmmInventoryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScVmmInventoryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScVmmInventoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

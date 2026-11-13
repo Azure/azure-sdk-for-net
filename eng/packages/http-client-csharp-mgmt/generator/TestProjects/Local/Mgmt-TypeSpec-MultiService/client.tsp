@@ -10,3 +10,5 @@ using Azure.ClientGenerator.Core;
   autoMergeService: true,
 })
 namespace MultiServiceCombine;
+
+@@clientName(ServiceOne.Foos.listFilteredProperties, "GetProperties");

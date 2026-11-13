@@ -369,14 +369,5 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 Properties.VirtualMachineIdentitySettings = value;
             }
         }
-
-        /// <summary> Operating System of the current SQL Virtual Machine. </summary>
-        public SqlVmOsType? OsType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OsType;
-            }
-        }
     }
 }

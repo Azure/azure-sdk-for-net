@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2026-10-22)
+
+### Features Added
+
+- Upgraded API version to `2026-10-01` (stable).
+- Added support for cluster jobs and edge-machine management, including deployment settings, disks, network adapters, security settings, volumes, and associated job operations.
+
+## 1.3.0 (2026-08-20)
+
+### Features Added
+
+- Upgraded API version to `2026-04-30` (stable).
+
+### Other Changes
+
+- Removed preview-only resource types: `ClusterJobResource`, `DevicePoolResource`, `EdgeMachineResource`, `EdgeMachineJobResource`, `OsImageResource`, `PlatformUpdateResource`, and `UpdateContentResource`.
+- Removed preview-only models and operations related to: ownership voucher validation, Kubernetes versions, SDN integration, confidential VM, and OS provisioning.
+- Removed many model factory overloads that referenced removed resource types.
 
 ## 1.3.0-beta.2 (2026-06-06)
 

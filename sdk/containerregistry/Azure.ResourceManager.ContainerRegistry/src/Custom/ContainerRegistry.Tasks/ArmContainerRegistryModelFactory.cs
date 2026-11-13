@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> The current status of the run. </param>
         /// <param name="lastUpdatedOn"> The last updated time for the run. </param>
         /// <param name="runType"> The type of run. </param>
-        /// <param name="runErrorMessage"> The error message received from backend systems after the run is scheduled. </param>
+        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="createdOn"> The time the run was scheduled. </param>
-        /// <param name="finishOn"> The time the run finished. </param>
         /// <param name="startOn"> The time the run started. </param>
+        /// <param name="finishOn"> The time the run finished. </param>
         /// <param name="outputImages"> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </param>
         /// <param name="task"> The task against which run was scheduled. </param>
         /// <param name="imageUpdateTrigger"> The image update trigger that caused the run. This is applicable if the task has base image trigger configured. </param>
@@ -58,28 +58,30 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="timerTrigger"> The timer trigger that caused the run. </param>
         /// <param name="platform"> The platform properties against which the run will happen. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
-        /// <param name="customRegistries"> The list of custom registries that were logged in during this run. </param>
         /// <param name="sourceRegistryAuth"> The scope of the credentials that were used to login to the source registry during this run. </param>
+        /// <param name="customRegistries"> The list of custom registries that were logged in during this run. </param>
+        /// <param name="runErrorMessage"> The error message received from backend systems after the run is scheduled. </param>
         /// <param name="updateTriggerToken"> The update trigger token passed for the Run. </param>
         /// <param name="logArtifact"> The image description for the log artifact. </param>
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <returns> A new <see cref="ContainerRegistryRunData"/> instance for mocking. </returns>
+        // Preserve the shipped 1.4.0 parameter names and order for named-argument source compatibility
+        // after the Task/Run/AgentPool types moved to Azure.ResourceManager.ContainerRegistry.Tasks.
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryRunData ContainerRegistryRunData(
             ResourceIdentifier id = null, string name = null, ResourceType resourceType = default,
             SystemData systemData = null, string runId = null, ContainerRegistryRunStatus? status = null,
             DateTimeOffset? lastUpdatedOn = null, ContainerRegistryRunType? runType = null,
-            string runErrorMessage = null, DateTimeOffset? createdOn = null, DateTimeOffset? finishOn = null,
-            DateTimeOffset? startOn = null, IEnumerable<ContainerRegistryImageDescriptor> outputImages = null,
+            string agentPoolName = null, DateTimeOffset? createdOn = null, DateTimeOffset? startOn = null,
+            DateTimeOffset? finishOn = null, IEnumerable<ContainerRegistryImageDescriptor> outputImages = null,
             string task = null, ContainerRegistryImageUpdateTrigger imageUpdateTrigger = null,
             ContainerRegistrySourceTriggerDescriptor sourceTrigger = null,
             ContainerRegistryTimerTriggerDescriptor timerTrigger = null,
             ContainerRegistryPlatformProperties platform = null, int? agentCpu = null,
-            string agentPoolName = null, IEnumerable<string> customRegistries = null,
-            string sourceRegistryAuth = null, string updateTriggerToken = null,
+            string sourceRegistryAuth = null, IEnumerable<string> customRegistries = null,
+            string runErrorMessage = null, string updateTriggerToken = null,
             ContainerRegistryImageDescriptor logArtifact = null,
             ContainerRegistryProvisioningState? provisioningState = null, bool? isArchiveEnabled = null)
             => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
@@ -259,16 +261,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Base properties for any task step.
         /// Please note this is the abstract base class.
         /// </summary>
-        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
+        /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
+        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
-        /// <param name="type"> The type of the step. </param>
         /// <returns> A new <see cref="ContainerRegistryTaskStepProperties"/> instance for mocking. </returns>
+        // Preserve the shipped 1.4.0 parameter names and order for named-argument source compatibility
+        // after the Task/Run/AgentPool types moved to Azure.ResourceManager.ContainerRegistry.Tasks.
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(
-            string contextPath = null, IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null,
-            string contextAccessToken = null, string type = null)
+            string containerRegistryTaskStepType = null,
+            IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null,
+            string contextPath = null,
+            string contextAccessToken = null)
             => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties for updating a timer trigger. </summary>

@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MeshMembershipPrivateConnectProfile"/>. </summary>
-        /// <param name="privateIpAddress"> The private IP address of the member cluster private FQDN. This is a read-only property populated by the service. </param>
+        /// <param name="privateIPAddress"> The private IP address of the member cluster private FQDN. This is a read-only property populated by the service. </param>
         /// <param name="subnetResourceId"> The delegated subnet resource ID. Customer can provide their own subnet, or AKS will allocate one if not specified. When providing your own subnet, the minimum required size is /28. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MeshMembershipPrivateConnectProfile(string privateIpAddress, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MeshMembershipPrivateConnectProfile(string privateIPAddress, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrivateIpAddress = privateIpAddress;
+            PrivateIPAddress = privateIPAddress;
             SubnetResourceId = subnetResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The private IP address of the member cluster private FQDN. This is a read-only property populated by the service. </summary>
         [WirePath("privateIpAddress")]
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
 
         /// <summary> The delegated subnet resource ID. Customer can provide their own subnet, or AKS will allocate one if not specified. When providing your own subnet, the minimum required size is /28. </summary>
         [WirePath("subnetResourceId")]

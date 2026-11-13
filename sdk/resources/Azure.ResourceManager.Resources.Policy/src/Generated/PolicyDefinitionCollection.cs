@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             TryGetApiVersion(PolicyDefinitionResource.ResourceType, out string policyDefinitionApiVersion);
             _policyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicyDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _policyDefinitionsRestClient = new PolicyDefinitions(_policyDefinitionsClientDiagnostics, Pipeline, Endpoint, policyDefinitionApiVersion ?? "2025-12-01-preview");
+            _policyDefinitionsRestClient = new PolicyDefinitions(_policyDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyDefinitionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionDataAsyncCollectionResultOfT(
                 _policyDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionsGetAllCollectionResultOfT(
+            return new PageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionDataCollectionResultOfT(
                 _policyDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,

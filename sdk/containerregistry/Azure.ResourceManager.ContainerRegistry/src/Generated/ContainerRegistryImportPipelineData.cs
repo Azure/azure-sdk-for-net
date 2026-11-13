@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> The list of all options configured for the pipeline. </summary>
         [WirePath("properties.options")]
-        public IList<PipelineOption> Options
+        public IList<ContainerRegistryPipelineOption> Options
         {
             get
             {

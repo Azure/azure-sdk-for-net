@@ -503,7 +503,50 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request2 = mockTransport.Requests[1];
             Assert.That(request2.Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(request2.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}"));
+            AssertRequestCommon(request2);
+        }
+
+        [Test]
+        public async Task GetRevisionsBatch()
+        {
+            var response1 = new MockResponse(200);
+            var response1Settings = new[]
+            {
+                CreateSetting(0),
+                CreateSetting(1)
+            };
+            response1.SetContent(SerializationHelpers.Serialize((Settings: response1Settings, NextLink: $"/revisions?after=2&api-version={s_version}"), SerializeBatch));
+
+            var response2 = new MockResponse(200);
+            var response2Settings = new[]
+            {
+                CreateSetting(2),
+                CreateSetting(3)
+            };
+            response2.SetContent(SerializationHelpers.Serialize((Settings: response2Settings, NextLink: (string)null), SerializeBatch));
+
+            var mockTransport = new MockTransport(response1, response2);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            int keyIndex = 0;
+            await foreach (ConfigurationSetting value in service.GetRevisionsAsync(new SettingSelector(), CancellationToken.None))
+            {
+                Assert.That(value.Key, Is.EqualTo("key" + keyIndex));
+                keyIndex++;
+            }
+
+            Assert.That(keyIndex, Is.EqualTo(4));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+
+            MockRequest request1 = mockTransport.Requests[0];
+            Assert.That(request1.Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(request1.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/revisions?api-version={s_version}"));
             AssertRequestCommon(request1);
+
+            MockRequest request2 = mockTransport.Requests[1];
+            Assert.That(request2.Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(request2.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/revisions?after=2&api-version={s_version}"));
+            AssertRequestCommon(request2);
         }
 
         [Test]

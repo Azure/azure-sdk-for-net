@@ -59,15 +59,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSign(Uri href, int? durationInMinutes, RequestContext context)
+        public virtual Response GetUrl(Uri href, int? durationInMinutes, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ManagedStorageSharedAccessSignatureClient.GetSign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ManagedStorageSharedAccessSignatureClient.GetUrl");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(href, nameof(href));
 
-                using HttpMessage message = CreateGetSignRequest(href, durationInMinutes, context);
+                using HttpMessage message = CreateGetUrlRequest(href, durationInMinutes, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -92,15 +92,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSignAsync(Uri href, int? durationInMinutes, RequestContext context)
+        public virtual async Task<Response> GetUrlAsync(Uri href, int? durationInMinutes, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ManagedStorageSharedAccessSignatureClient.GetSign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ManagedStorageSharedAccessSignatureClient.GetUrl");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(href, nameof(href));
 
-                using HttpMessage message = CreateGetSignRequest(href, durationInMinutes, context);
+                using HttpMessage message = CreateGetUrlRequest(href, durationInMinutes, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -119,11 +119,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SharedAccessSignatureSignedLink> GetSign(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessSignatureSignedLink> GetUrl(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(href, nameof(href));
 
-            Response result = GetSign(href, durationInMinutes, cancellationToken.ToRequestContext());
+            Response result = GetUrl(href, durationInMinutes, cancellationToken.ToRequestContext());
             return Response.FromValue((SharedAccessSignatureSignedLink)result, result);
         }
 
@@ -136,11 +136,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SharedAccessSignatureSignedLink>> GetSignAsync(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessSignatureSignedLink>> GetUrlAsync(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(href, nameof(href));
 
-            Response result = await GetSignAsync(href, durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetUrlAsync(href, durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SharedAccessSignatureSignedLink)result, result);
         }
 

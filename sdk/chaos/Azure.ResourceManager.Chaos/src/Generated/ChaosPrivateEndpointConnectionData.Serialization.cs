@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Chaos
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ChaosPrivateEndpointConnectionProperties properties = default;
+            PrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    properties = ChaosPrivateEndpointConnectionProperties.DeserializeChaosPrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ChaosPrivateEndpointConnectionData(

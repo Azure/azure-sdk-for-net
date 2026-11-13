@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterCatalogEnvironmentDefinitionApiVersion);
             _environmentDefinitionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _environmentDefinitionOperationGroupRestClient = new EnvironmentDefinitionOperationGroup(_environmentDefinitionOperationGroupClientDiagnostics, Pipeline, Endpoint, devCenterCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
+            _environmentDefinitionOperationGroupRestClient = new EnvironmentDefinitionOperationGroup(_environmentDefinitionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a collection of <see cref="TenantAssessmentMetadataResource"/> and their operations.
     /// Each <see cref="TenantAssessmentMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="TenantAssessmentMetadataCollection"/> instance call the GetTenantAssessmentMetadatas method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantAssessmentMetadataCollection"/> instance call the GetAllTenantAssessmentMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantAssessmentMetadataCollection : ArmCollection, IEnumerable<TenantAssessmentMetadataResource>, IAsyncEnumerable<TenantAssessmentMetadataResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(TenantAssessmentMetadataResource.ResourceType, out string tenantAssessmentMetadataApiVersion);
             _assessmentsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", TenantAssessmentMetadataResource.ResourceType.Namespace, Diagnostics);
-            _assessmentsMetadataRestClient = new AssessmentsMetadata(_assessmentsMetadataClientDiagnostics, Pipeline, Endpoint, tenantAssessmentMetadataApiVersion ?? "2025-05-04");
+            _assessmentsMetadataRestClient = new AssessmentsMetadata(_assessmentsMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantAssessmentMetadataApiVersion ?? "2025-05-04");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllAsyncCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new SecurityAssessmentMetadataDataAsync0CollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new SecurityAssessmentMetadataData0CollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>

@@ -1,12 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Internal use of the experimental protocol task scope.
+
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -36,6 +40,8 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
                 "before calling MapResponsesServer().");
         }
 
+        ValidateResilientComposition(endpoints.ServiceProvider);
+
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
 
@@ -50,6 +56,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
 
         group.AddEndpointFilter<SessionIdResponseHeaderFilter>();
         group.AddEndpointFilter<ResponsesExceptionFilter>();
+        group.AddEndpointFilter(async (context, next) =>
+        {
+            IServiceProvider provider = context.HttpContext.RequestServices;
+            ResponsesServerOptions options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
+            bool enabled = options.ResilientBackground || options.SteerableConversations;
+            using (provider.EnterResilientTaskScope("responses", enabled))
+            {
+                object? result = await next(context);
+                return result is IResult response ? new TaskScopedResult(response, enabled) : result;
+            }
+        });
 
         group.MapPost("/responses", async (HttpContext httpContext, ResponseEndpointHandler handler) =>
         {
@@ -79,5 +96,88 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         group.WithTags("Responses");
 
         return group;
+    }
+
+    private sealed class TaskScopedResult(IResult inner, bool enabled) : IResult
+    {
+        public async Task ExecuteAsync(HttpContext httpContext)
+        {
+            using (httpContext.RequestServices.EnterResilientTaskScope("responses", enabled))
+            {
+                await inner.ExecuteAsync(httpContext);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Fails loudly at startup when resilient background responses are enabled but the composed
+    /// persistence providers cannot survive a process restart. Enabling
+    /// <see cref="ResponsesServerOptions.ResilientBackground"/> promises that a background response
+    /// interrupted by a crash or graceful shutdown is re-invoked after the sandbox auto-recovers;
+    /// that promise cannot be kept if response state lives only in memory. Rather than silently
+    /// downgrading to weaker durability, the server refuses to start and names the offending
+    /// provider so the misconfiguration is caught before any request is accepted.
+    /// </summary>
+    private static void ValidateResilientComposition(IServiceProvider services)
+    {
+        var options = services.GetService<Microsoft.Extensions.Options.IOptions<ResponsesServerOptions>>()?.Value;
+        if (options is null || (!options.ResilientBackground && !options.SteerableConversations))
+        {
+            return;
+        }
+
+        bool resilientTasksEnabled = services
+            .GetRequiredService<Microsoft.Extensions.Options.IOptions<ResilientTaskOptions>>()
+            .Value.Enabled;
+        if (!resilientTasksEnabled)
+        {
+            throw new InvalidOperationException(
+                "ResilientBackground/SteerableConversations requires the Core resilient-task runtime. " +
+                "Ensure AddResponsesServer() is registered before host startup and restore " +
+                "the Core resilient-task runtime if its registration was replaced.");
+        }
+
+        if (options.ResilientBackground)
+        {
+            var provider = services.GetService<ResponsesProvider>();
+            if (provider is null)
+            {
+                throw new InvalidOperationException(
+                    "ResilientBackground is enabled but no ResponsesProvider is registered. " +
+                    "Call AddResponsesServer() (which registers a durable file-backed provider for " +
+                    "resilient local operation) or register a resilient-capable ResponsesProvider " +
+                    "before calling MapResponsesServer().");
+            }
+
+            if (provider is Internal.InMemoryResponsesProvider)
+            {
+                throw new InvalidOperationException(
+                    "ResilientBackground is enabled but the registered ResponsesProvider is the " +
+                    "in-memory provider, whose state does not survive a process restart. Resilient " +
+                    "background responses require a durable provider (the SDK selects a file-backed " +
+                    "provider automatically for local resilient operation, or a hosted storage " +
+                    "provider in a hosted environment). Register a durable ResponsesProvider or " +
+                    "disable ResilientBackground.");
+            }
+        }
+
+        // The resilient/steerable request paths run INSIDE a Core @task / @multi_turn_task and
+        // resolve their TaskDefinition handle by name (keyed DI) per request. AddResponsesServer
+        // composes the Core task subsystem (AddResilientTasks + the two flat task registrations) in
+        // both local and hosted environments — independent of how options are set — so the
+        // historical "options enabled via a separate configuration path leaves the task subsystem
+        // unregistered" desync can no longer occur. This defensive guard remains as a safety net: if
+        // a consumer somehow removed the task subsystem while a resilient/steerable option is
+        // enabled, it fails loud at startup rather than as a per-request 500.
+        if ((options.ResilientBackground || options.SteerableConversations)
+            && services.GetKeyedService<Core.Tasks.TaskDefinition<Internal.Resilience.ResponseTaskInput, Internal.Resilience.ResponseTaskOutput>>(
+                Internal.Resilience.ResponsesResilientTaskHandler.OneShotTaskName) is null)
+        {
+            throw new InvalidOperationException(
+                "ResilientBackground/SteerableConversations is enabled but the Core resilient-task " +
+                "subsystem is not registered. AddResponsesServer() composes it for both " +
+                "local and hosted hosts; if you removed or replaced the task subsystem registration, restore it " +
+                "or disable the resilient/steerable options.");
+        }
     }
 }

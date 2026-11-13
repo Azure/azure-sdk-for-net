@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSiteBuildUserProvidedFunctionAppResource.ResourceType, out string staticSiteBuildUserProvidedFunctionAppApiVersion);
             _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildUserProvidedFunctionAppResource.ResourceType.Namespace, Diagnostics);
-            _staticSiteUserProvidedFunctionAppARMResourcesRestClient = new StaticSiteUserProvidedFunctionAppARMResources(_staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteBuildUserProvidedFunctionAppApiVersion ?? "2026-03-15");
+            _staticSiteUserProvidedFunctionAppARMResourcesRestClient = new StaticSiteUserProvidedFunctionAppARMResources(_staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildUserProvidedFunctionAppApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteUserProvidedFunctionAppData, StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppARMResourcesGetUserProvidedFunctionAppsForStaticSiteBuildAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteUserProvidedFunctionAppData, StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppDataAsync0CollectionResultOfT(
                 _staticSiteUserProvidedFunctionAppARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteUserProvidedFunctionAppData, StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppARMResourcesGetUserProvidedFunctionAppsForStaticSiteBuildCollectionResultOfT(
+            return new PageableWrapper<StaticSiteUserProvidedFunctionAppData, StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppData0CollectionResultOfT(
                 _staticSiteUserProvidedFunctionAppARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

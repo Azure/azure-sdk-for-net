@@ -40,6 +40,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         [WirePath("properties")]
         internal AscDataConnectorProperties Properties { get; set; }
 
+        /// <summary> The available data types for the connector. </summary>
+        [WirePath("properties.dataTypes")]
+        public SecurityInsightsAlertsDataTypeOfDataConnector DataTypes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataTypes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AscDataConnectorProperties();
+                }
+                Properties.DataTypes = value;
+            }
+        }
+
         /// <summary> The subscription id to connect to, and get the data from. </summary>
         [WirePath("properties.subscriptionId")]
         public string SubscriptionId

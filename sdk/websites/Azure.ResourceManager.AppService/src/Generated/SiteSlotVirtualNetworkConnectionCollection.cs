@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotVirtualNetworkConnectionResource.ResourceType, out string siteSlotVirtualNetworkConnectionApiVersion);
             _vnetInfoResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotVirtualNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-            _vnetInfoResourceOperationGroupRestClient = new VnetInfoResourceOperationGroup(_vnetInfoResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotVirtualNetworkConnectionApiVersion ?? "2026-03-15");
+            _vnetInfoResourceOperationGroupRestClient = new VnetInfoResourceOperationGroup(_vnetInfoResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotVirtualNetworkConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceVirtualNetworkData, SiteSlotVirtualNetworkConnectionResource>(new MicrosoftWebVnetInfoResourceOperationGroupListVnetConnectionsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceVirtualNetworkData, SiteSlotVirtualNetworkConnectionResource>(new SiteSlotVirtualNetworkConnectionCollectionGetAllAsyncCollectionResultOfT(
                 _vnetInfoResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceVirtualNetworkData, SiteSlotVirtualNetworkConnectionResource>(new MicrosoftWebVnetInfoResourceOperationGroupListVnetConnectionsSlotCollectionResultOfT(
+            return new PageableWrapper<AppServiceVirtualNetworkData, SiteSlotVirtualNetworkConnectionResource>(new SiteSlotVirtualNetworkConnectionCollectionGetAllCollectionResultOfT(
                 _vnetInfoResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(PrivateLinkGroupResource.ResourceType, out string privateLinkGroupApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", PrivateLinkGroupResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, privateLinkGroupApiVersion ?? "2026-01-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkGroupApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkGroupDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkGroupDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

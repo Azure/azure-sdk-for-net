@@ -11,7 +11,10 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Flag indicating whether subvolume operations are enabled on the volume. </summary>
+    /// <summary>
+    /// Flag indicating whether subvolume operations are enabled on the volume
+    /// Deprecated. This type will be removed in a future API version.
+    /// </summary>
     public readonly partial struct EnableNetAppSubvolume : IEquatable<EnableNetAppSubvolume>
     {
         private readonly string _value;

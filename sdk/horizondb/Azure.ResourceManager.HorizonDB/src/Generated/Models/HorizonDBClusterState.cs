@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private const string UpdatingValue = "Updating";
         /// <summary> Is healthy. </summary>
         private const string HealthyValue = "Healthy";
+        /// <summary> Is succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Is upgrading. </summary>
+        private const string UpgradingValue = "Upgrading";
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -65,6 +69,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Is healthy. </summary>
         public static HorizonDBClusterState Healthy { get; } = new HorizonDBClusterState(HealthyValue);
+
+        /// <summary> Is succeeded. </summary>
+        public static HorizonDBClusterState Succeeded { get; } = new HorizonDBClusterState(SucceededValue);
+
+        /// <summary> Is upgrading. </summary>
+        public static HorizonDBClusterState Upgrading { get; } = new HorizonDBClusterState(UpgradingValue);
 
         /// <summary> Determines if two <see cref="HorizonDBClusterState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

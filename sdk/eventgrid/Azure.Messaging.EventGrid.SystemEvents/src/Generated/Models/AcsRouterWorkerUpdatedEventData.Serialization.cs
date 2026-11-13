@@ -279,17 +279,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcsRouterWorkerUpdatedEventData(
                 workerId,
-                queueAssignments,
-                channelConfigurations,
+                queueAssignments ?? new ChangeTrackingList<AcsRouterQueueDetails>(),
+                channelConfigurations ?? new ChangeTrackingList<AcsRouterChannelConfiguration>(),
                 totalCapacity,
-                labels,
-                tags,
-                updatedWorkerProperties,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                updatedWorkerProperties ?? new ChangeTrackingList<AcsRouterUpdatedWorkerProperty>(),
                 additionalBinaryDataProperties);
         }
 

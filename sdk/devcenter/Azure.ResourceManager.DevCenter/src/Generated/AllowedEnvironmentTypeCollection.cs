@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(AllowedEnvironmentTypeResource.ResourceType, out string allowedEnvironmentTypeApiVersion);
             _projectAllowedEnvironmentTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", AllowedEnvironmentTypeResource.ResourceType.Namespace, Diagnostics);
-            _projectAllowedEnvironmentTypesRestClient = new ProjectAllowedEnvironmentTypes(_projectAllowedEnvironmentTypesClientDiagnostics, Pipeline, Endpoint, allowedEnvironmentTypeApiVersion ?? "2026-01-01-preview");
+            _projectAllowedEnvironmentTypesRestClient = new ProjectAllowedEnvironmentTypes(_projectAllowedEnvironmentTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, allowedEnvironmentTypeApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AllowedEnvironmentTypeData, AllowedEnvironmentTypeResource>(new ProjectAllowedEnvironmentTypesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AllowedEnvironmentTypeData, AllowedEnvironmentTypeResource>(new AllowedEnvironmentTypeDataAsyncCollectionResultOfT(
                 _projectAllowedEnvironmentTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AllowedEnvironmentTypeData, AllowedEnvironmentTypeResource>(new ProjectAllowedEnvironmentTypesGetAllCollectionResultOfT(
+            return new PageableWrapper<AllowedEnvironmentTypeData, AllowedEnvironmentTypeResource>(new AllowedEnvironmentTypeDataCollectionResultOfT(
                 _projectAllowedEnvironmentTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

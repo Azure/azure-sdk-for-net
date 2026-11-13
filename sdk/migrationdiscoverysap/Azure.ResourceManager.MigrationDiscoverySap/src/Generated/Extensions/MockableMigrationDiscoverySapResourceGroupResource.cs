@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MigrationDiscoverySap;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMigrationDiscoverySapResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMigrationDiscoverySapResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMigrationDiscoverySapResourceGroupResource for mocking. </summary>
         protected MockableMigrationDiscoverySapResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMigrationDiscoverySapResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMigrationDiscoverySapResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMigrationDiscoverySapResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of SapDiscoverySiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SapDiscoverySiteResources and their operations over a SapDiscoverySiteResource. </returns>
+        /// <summary> Gets a collection of SapDiscoverySites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SapDiscoverySites and their operations over a SapDiscoverySiteResource. </returns>
         public virtual SapDiscoverySiteCollection GetSapDiscoverySites()
         {
             return GetCachedClient(client => new SapDiscoverySiteCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// Gets a SAP Migration discovery site resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SapDiscoverySiteResource>> GetSapDiscoverySiteAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+
             return await GetSapDiscoverySites().GetAsync(sapDiscoverySiteName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// Gets a SAP Migration discovery site resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         [ForwardsClientCalls]
         public virtual Response<SapDiscoverySiteResource> GetSapDiscoverySite(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+
             return GetSapDiscoverySites().Get(sapDiscoverySiteName, cancellationToken);
         }
     }

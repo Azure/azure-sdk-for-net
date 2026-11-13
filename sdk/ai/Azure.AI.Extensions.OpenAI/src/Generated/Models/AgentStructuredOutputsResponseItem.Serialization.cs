@@ -4,22 +4,18 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-    public partial class AgentStructuredOutputsResponseItem : AgentResponseItem, IJsonModel<AgentStructuredOutputsResponseItem>
+    public partial class AgentStructuredOutputsResponseItem : ResponseItem, IJsonModel<AgentStructuredOutputsResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/> for deserialization. </summary>
-        internal AgentStructuredOutputsResponseItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentStructuredOutputsResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -27,7 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentStructuredOutputsResponseItem(document.RootElement, options);
+                        return DeserializeAgentStructuredOutputsResponseItem(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AgentStructuredOutputsResponseItem)} does not support reading '{options.Format}' format.");
@@ -61,6 +57,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgentStructuredOutputsResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -76,15 +80,22 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(AgentStructuredOutputsResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("output"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Output);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Output))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (!Patch.Contains("$.output"u8))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName("output"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Output);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Output))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -93,7 +104,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentStructuredOutputsResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -101,28 +112,31 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(AgentStructuredOutputsResponseItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentStructuredOutputsResponseItem(document.RootElement, options);
+            return DeserializeAgentStructuredOutputsResponseItem(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentStructuredOutputsResponseItem DeserializeAgentStructuredOutputsResponseItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentStructuredOutputsResponseItem DeserializeAgentStructuredOutputsResponseItem(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AgentResponseItemKind @type = default;
+            ResponseItemKind @type = "structured_outputs";
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BinaryData output = default;
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new AgentResponseItemKind(prop.Value.GetString());
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -146,21 +160,18 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = BinaryData.FromString(prop.Value.GetRawText());
+                    output = prop.Value.GetUtf8Bytes();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new AgentStructuredOutputsResponseItem(
                 @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties,
-                output);
+                output,
+                patch);
         }
     }
 }

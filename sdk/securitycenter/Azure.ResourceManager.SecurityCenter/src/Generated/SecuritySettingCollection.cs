@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecuritySettingResource.ResourceType, out string securitySettingApiVersion);
             _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecuritySettingResource.ResourceType.Namespace, Diagnostics);
-            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, securitySettingApiVersion ?? "2022-05-01");
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securitySettingApiVersion ?? "2022-05-01");
             ValidateResourceId(id);
         }
 
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecuritySettingData, SecuritySettingResource>(new SettingsGetAllAsyncCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
+            return new AsyncPageableWrapper<SecuritySettingData, SecuritySettingResource>(new SecuritySettingDataAsyncCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecuritySettingData, SecuritySettingResource>(new SettingsGetAllCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
+            return new PageableWrapper<SecuritySettingData, SecuritySettingResource>(new SecuritySettingDataCollectionResultOfT(_settingsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecuritySettingCollection.GetAll"), data => new SecuritySettingResource(Client, data));
         }
 
         /// <summary>

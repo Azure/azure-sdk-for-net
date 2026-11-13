@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    requestDate = BinaryData.FromString(prop.Value.GetRawText());
+                    requestDate = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("justification"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PrivateStorePlanDetails(

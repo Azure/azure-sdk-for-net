@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(ResourceType, out string purviewPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, purviewPrivateLinkResourceApiVersion ?? "2024-04-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewPrivateLinkResourceApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

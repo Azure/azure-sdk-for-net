@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import {
+import type {
   CodeModel,
   CSharpEmitterContext,
   InputClient,
   InputModelType
-} from "@typespec/http-client-csharp";
+} from "./code-model-types.js";
 import {
   NonResourceMethod,
   ResourceMetadata,
@@ -35,22 +35,20 @@ import {
 import {
   SdkHttpOperation,
   SdkMethod,
-  SdkModelType
+  SdkModelType,
+  getClientNameOverride,
+  getLibraryName
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
   armProviderSchema,
   armResourceInternal,
   armResourceWithParameter,
-  builtInResourceOperationName,
   customAzureResource,
-  extensionResourceOperationName,
   isResourceCollectionAction,
-  legacyExtensionResourceOperationName,
-  legacyResourceOperationName
+  getExplicitResourceName
 } from "./sdk-context-options.js";
 import {
-  DecoratorApplication,
   Model,
   NoTarget,
   getPattern,
@@ -62,11 +60,11 @@ import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
 
-export async function updateClients(
+export function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
-) {
+): ArmProviderSchema {
   let armProviderSchema: ArmProviderSchema;
 
   if (options?.["use-legacy-resource-detection"] === false) {
@@ -76,6 +74,7 @@ export async function updateClients(
   }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+  return armProviderSchema;
 }
 
 /**
@@ -164,7 +163,7 @@ export function buildArmProviderSchema(
     // to a literal
     const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
 
-    let explicitResourceName = getExplicitResourceName(sdkMethod);
+    let explicitResourceName = getExplicitResourceName(sdkMethod?.__raw);
     let resourceNameOverrideMap: Map<string, string> | undefined;
     const clientOptionOverride = extractResourceNameOverride(
       sdkMethod,
@@ -266,7 +265,7 @@ export function buildArmProviderSchema(
       entry.instancePath.equals(opPath)
     );
     if (!matched) continue;
-    matched.explicitResourceName ??= getExplicitResourceName(sdkMethod);
+    matched.explicitResourceName ??= getExplicitResourceName(sdkMethod?.__raw);
     matched.methods.push({
       methodId: method.crossLanguageDefinitionId,
       kind,
@@ -278,10 +277,26 @@ export function buildArmProviderSchema(
   // Build the ArmResourceSchema list from collected entries.
   const resources: ArmResourceSchema[] = [];
   const resourcePathToClientName = new Map<string, string>();
+  const resourcePathToClientNameIsExplicit = new Map<string, boolean>();
   const resourcePathToExplicitName = new Map<string, string>();
   for (const entry of resourceEntries) {
     const model = resourceModelMap.get(entry.modelId);
     resourcePathToClientName.set(entry.instancePath.path, entry.client.name);
+    const readMethod = serviceMethods.get(entry.methods[0].methodId);
+    const rawInterface = readMethod?.__raw?.interface;
+    const clientNameOverride = rawInterface
+      ? getClientNameOverride(sdkContext, rawInterface, "csharp")
+      : undefined;
+    if (rawInterface && clientNameOverride !== undefined) {
+      resourcePathToClientName.set(
+        entry.instancePath.path,
+        getLibraryName(sdkContext, rawInterface, "csharp")
+      );
+    }
+    resourcePathToClientNameIsExplicit.set(
+      entry.instancePath.path,
+      clientNameOverride !== undefined
+    );
     if (entry.explicitResourceName) {
       resourcePathToExplicitName.set(
         entry.instancePath.path,
@@ -296,6 +311,12 @@ export function buildArmProviderSchema(
       scope: buildResourceMethodScope(m.operationPath)
     }));
 
+    const rawModel = models.get(entry.modelId)?.__raw;
+    const modelNameOverride = rawModel
+      ? getClientNameOverride(sdkContext, rawModel, "csharp") !== undefined
+        ? getLibraryName(sdkContext, rawModel, "csharp")
+        : undefined
+      : undefined;
     const metadata: ResourceMetadata = {
       resourceIdPattern: entry.instancePath,
       resourceType: entry.instancePath.resourceType ?? "",
@@ -307,7 +328,14 @@ export function buildArmProviderSchema(
       methods,
       parentResourceId: undefined,
       parentResourceModelId: undefined,
-      resourceName: model?.name ?? "Unknown",
+      resourceName:
+        entry.explicitResourceName ??
+        modelNameOverride ??
+        model?.name ??
+        "Unknown",
+      resourceNameIsExplicit:
+        entry.explicitResourceName !== undefined ||
+        modelNameOverride !== undefined,
       nameConstraints: {},
       apiVersions: [],
       rbacRoles: []
@@ -368,12 +396,15 @@ export function buildArmProviderSchema(
       const explicitName = resourcePathToExplicitName.get(resourcePath);
       if (explicitName) {
         resource.metadata.resourceName = explicitName;
+        resource.metadata.resourceNameIsExplicit = true;
         continue;
       }
       if (list.length > 1) {
         const clientName = resourcePathToClientName.get(resourcePath);
         if (clientName) {
           resource.metadata.resourceName = pluralize.singular(clientName);
+          resource.metadata.resourceNameIsExplicit =
+            resourcePathToClientNameIsExplicit.get(resourcePath) ?? false;
         }
       }
     }
@@ -666,32 +697,6 @@ function operationPathEndsWithResourceType(
     lastTypeSegment !== undefined &&
     operationPath.segments[operationPath.length - 1] === lastTypeSegment
   );
-}
-
-// Only legacy/built-in operation decorators carry an explicit resource name.
-function getExplicitResourceName(
-  method: SdkMethod<SdkHttpOperation> | undefined
-): string | undefined {
-  for (const decorator of method?.__raw?.decorators ?? []) {
-    switch (decorator.definition?.name) {
-      case extensionResourceOperationName:
-        return getStringLiteralArg(decorator, 3);
-      case legacyExtensionResourceOperationName:
-      case legacyResourceOperationName:
-        return getStringLiteralArg(decorator, 2);
-      case builtInResourceOperationName:
-        return getStringLiteralArg(decorator, 3);
-    }
-  }
-  return undefined;
-}
-
-function getStringLiteralArg(
-  decorator: DecoratorApplication,
-  index: number
-): string | undefined {
-  const value = decorator.args[index]?.jsValue;
-  return typeof value === "string" && value.length > 0 ? value : undefined;
 }
 
 /**

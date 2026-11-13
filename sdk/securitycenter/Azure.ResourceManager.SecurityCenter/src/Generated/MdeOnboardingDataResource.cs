@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string mdeOnboardingDataApiVersion);
             _mdeOnboardingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _mdeOnboardingsRestClient = new MdeOnboardings(_mdeOnboardingsClientDiagnostics, Pipeline, Endpoint, mdeOnboardingDataApiVersion ?? "2021-10-01-preview");
+            _mdeOnboardingsRestClient = new MdeOnboardings(_mdeOnboardingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mdeOnboardingDataApiVersion ?? "2021-10-01-preview");
             ValidateResourceId(id);
         }
 

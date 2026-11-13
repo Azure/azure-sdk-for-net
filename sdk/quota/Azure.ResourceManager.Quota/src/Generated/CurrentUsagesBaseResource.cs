@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string currentUsagesBaseApiVersion);
             _currentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
+            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(SphereImageResource.ResourceType, out string sphereImageApiVersion);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, sphereImageApiVersion ?? "2024-04-01");
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereImageApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

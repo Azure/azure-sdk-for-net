@@ -111,6 +111,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("azureMachineId"u8);
                 writer.WriteStringValue(AzureMachineId);
             }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture"u8);
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -165,6 +170,7 @@ namespace Azure.ResourceManager.Hci.Models
             string modelName = default;
             string version = default;
             string azureMachineId = default;
+            HciCpuArchitecture? architecture = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -208,6 +214,15 @@ namespace Azure.ResourceManager.Hci.Models
                     azureMachineId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("architecture"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    architecture = new HciCpuArchitecture(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("error"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -219,7 +234,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OwnershipVoucherValidationDetails(
@@ -230,6 +245,7 @@ namespace Azure.ResourceManager.Hci.Models
                 modelName,
                 version,
                 azureMachineId,
+                architecture,
                 error,
                 additionalBinaryDataProperties);
         }

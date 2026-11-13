@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            IPAddress iPv4Address = default;
+            IPAddress ipv4Address = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     {
                         continue;
                     }
-                    iPv4Address = IPAddress.Parse(prop.Value.GetString());
+                    ipv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateDnsARecordInfo(iPv4Address, additionalBinaryDataProperties);
+            return new PrivateDnsARecordInfo(ipv4Address, additionalBinaryDataProperties);
         }
     }
 }

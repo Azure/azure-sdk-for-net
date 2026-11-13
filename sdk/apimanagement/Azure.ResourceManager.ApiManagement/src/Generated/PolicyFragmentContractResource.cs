@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string policyFragmentContractApiVersion);
             _policyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _policyFragmentRestClient = new PolicyFragment(_policyFragmentClientDiagnostics, Pipeline, Endpoint, policyFragmentContractApiVersion ?? "2025-09-01-preview");
+            _policyFragmentRestClient = new PolicyFragment(_policyFragmentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyFragmentContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PolicyFragmentGetReferencesAsyncCollectionResultOfT(
+            return new ResourceCollectionValueItemAsync0CollectionResultOfT(
                 _policyFragmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PolicyFragmentGetReferencesCollectionResultOfT(
+            return new ResourceCollectionValueItem0CollectionResultOfT(
                 _policyFragmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

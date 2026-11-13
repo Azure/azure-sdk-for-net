@@ -15,7 +15,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Ingestion Source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SharedAccessSignatureTokenIngestionSource"/> and <see cref="ManagedIdentityIngestionSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIdentityIngestionSource"/> and <see cref="SharedAccessSignatureTokenIngestionSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownIngestionSource))]
     public abstract partial class IngestionSource : IJsonModel<IngestionSource>
@@ -102,10 +102,10 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -155,10 +155,10 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 switch (discriminator.GetString())
                 {
-                    case "SasToken":
-                        return SharedAccessSignatureTokenIngestionSource.DeserializeSharedAccessSignatureTokenIngestionSource(element, options);
                     case "BlobManagedIdentity":
                         return ManagedIdentityIngestionSource.DeserializeManagedIdentityIngestionSource(element, options);
+                    case "SasToken":
+                        return SharedAccessSignatureTokenIngestionSource.DeserializeSharedAccessSignatureTokenIngestionSource(element, options);
                 }
             }
             return UnknownIngestionSource.DeserializeUnknownIngestionSource(element, options);

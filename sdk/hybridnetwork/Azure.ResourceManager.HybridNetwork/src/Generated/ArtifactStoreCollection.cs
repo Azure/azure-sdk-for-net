@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(ArtifactStoreResource.ResourceType, out string artifactStoreApiVersion);
             _artifactStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ArtifactStoreResource.ResourceType.Namespace, Diagnostics);
-            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactStoreData, ArtifactStoreResource>(new ArtifactStoresGetByPublisherAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ArtifactStoreData, ArtifactStoreResource>(new ArtifactStoreDataAsyncCollectionResultOfT(
                 _artifactStoresRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactStoreData, ArtifactStoreResource>(new ArtifactStoresGetByPublisherCollectionResultOfT(
+            return new PageableWrapper<ArtifactStoreData, ArtifactStoreResource>(new ArtifactStoreDataCollectionResultOfT(
                 _artifactStoresRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

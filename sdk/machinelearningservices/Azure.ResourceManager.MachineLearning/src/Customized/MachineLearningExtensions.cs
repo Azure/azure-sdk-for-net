@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Gets all machine learning workspaces in a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, CancellationToken cancellationToken = default)
-            => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspacesAsync(resourceGroupName, cancellationToken);
+        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip, CancellationToken cancellationToken = default)
+            => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
 
         /// <summary> Gets all machine learning workspaces in a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string resourceGroupName, CancellationToken cancellationToken = default)
-            => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspaces(resourceGroupName, cancellationToken);
+        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip, CancellationToken cancellationToken = default)
+            => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
 
         // The service now has both workspace-level and managed-network outbound rule routes. TypeSpec resource hierarchy fixes preserve the
         // workspace-level resource type, but the generator only emits ArmClient extension methods for the active route selected from the

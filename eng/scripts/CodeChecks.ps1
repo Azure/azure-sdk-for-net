@@ -186,7 +186,6 @@ try {
         "Azure.AI.Inference",
         "Azure.AI.OpenAI",
         "Azure.AI.OpenAI.Assistants",
-        "Azure.AI.Personalizer",
         "Azure.AI.Vision.Face"
     )
     $serviceRoot = Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory | Resolve-Path

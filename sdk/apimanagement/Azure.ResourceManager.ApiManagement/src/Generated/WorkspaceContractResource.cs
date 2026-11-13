@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string workspaceContractApiVersion);
             _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _workspaceRestClient = new Workspace(_workspaceClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceRestClient = new Workspace(_workspaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
             _workspaceApiExportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _workspaceApiExportRestClient = new WorkspaceApiExport(_workspaceApiExportClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceApiExportRestClient = new WorkspaceApiExport(_workspaceApiExportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

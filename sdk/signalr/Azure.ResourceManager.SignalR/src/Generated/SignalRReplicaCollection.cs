@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRReplicaResource.ResourceType, out string signalRReplicaApiVersion);
             _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRReplicaResource.ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, signalRReplicaApiVersion ?? "2025-01-01-preview");
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRReplicaApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new SignalRReplicaDataAsyncCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new SignalRReplicaDataCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

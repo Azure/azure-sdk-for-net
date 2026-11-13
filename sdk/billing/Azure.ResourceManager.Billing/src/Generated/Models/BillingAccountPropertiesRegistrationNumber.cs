@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Describes the registration number of the organization linked with the billing account. </summary>
-    public partial class BillingAccountPropertiesRegistrationNumber : BillingRegistrationNumber
+    internal partial class BillingAccountPropertiesRegistrationNumber : BillingRegistrationNumber
     {
         /// <summary> Initializes a new instance of <see cref="BillingAccountPropertiesRegistrationNumber"/>. </summary>
         public BillingAccountPropertiesRegistrationNumber()

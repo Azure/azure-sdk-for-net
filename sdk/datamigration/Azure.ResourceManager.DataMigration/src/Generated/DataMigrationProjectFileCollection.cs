@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(DataMigrationProjectFileResource.ResourceType, out string dataMigrationProjectFileApiVersion);
             _filesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationProjectFileResource.ResourceType.Namespace, Diagnostics);
-            _filesRestClient = new Files(_filesClientDiagnostics, Pipeline, Endpoint, dataMigrationProjectFileApiVersion ?? "2025-09-01-preview");
+            _filesRestClient = new Files(_filesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMigrationProjectFileApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMigrationProjectFileData, DataMigrationProjectFileResource>(new FilesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataMigrationProjectFileData, DataMigrationProjectFileResource>(new DataMigrationProjectFileDataAsyncCollectionResultOfT(
                 _filesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMigrationProjectFileData, DataMigrationProjectFileResource>(new FilesGetAllCollectionResultOfT(
+            return new PageableWrapper<DataMigrationProjectFileData, DataMigrationProjectFileResource>(new DataMigrationProjectFileDataCollectionResultOfT(
                 _filesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -29,7 +29,17 @@ namespace Azure.AI.Projects.Agents
         WorkIqPreview,
         /// <summary> FabricIqPreview. </summary>
         FabricIqPreview,
+        /// <summary> ToolboxSearch. </summary>
+        ToolboxSearch,
         /// <summary> ToolboxSearchPreview. </summary>
-        ToolboxSearchPreview
+        ToolboxSearchPreview,
+        /// <summary> A2a. </summary>
+        A2a,
+        /// <summary> Shell. </summary>
+        Shell,
+        /// <summary> WebIqPreview. </summary>
+        WebIqPreview,
+        /// <summary> BrowserAutomation. </summary>
+        BrowserAutomation
     }
 }

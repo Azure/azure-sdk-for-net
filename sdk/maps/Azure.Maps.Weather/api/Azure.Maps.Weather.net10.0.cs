@@ -164,7 +164,7 @@ namespace Azure.Maps.Weather.Models
         public Azure.Maps.Weather.Models.DominantPollutant? DominantPollutant { get { throw null; } }
         public float? GlobalIndex { get { throw null; } }
         public float? Index { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Weather.Models.Pollutant> Pollutants { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Weather.Models.WeatherPollutant> Pollutants { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
     public partial class AirQualityResult
@@ -663,7 +663,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.ActiveStorm ActiveStorm(string year = null, Azure.Maps.Weather.Models.BasinId? basinId = default(Azure.Maps.Weather.Models.BasinId?), string name = null, bool? isActive = default(bool?), bool? isSubtropical = default(bool?), int? govId = default(int?)) { throw null; }
         public static Azure.Maps.Weather.Models.ActiveStormResult ActiveStormResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.ActiveStorm> activeStorms = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Weather.Models.AirAndPollen AirAndPollen(string description = null, int? value = default(int?), string category = null, int? categoryValue = default(int?), string airQualityType = null) { throw null; }
-        public static Azure.Maps.Weather.Models.AirQuality AirQuality(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.DominantPollutant? dominantPollutant = default(Azure.Maps.Weather.Models.DominantPollutant?), string category = null, string categoryColor = null, string description = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.Pollutant> pollutants = null) { throw null; }
+        public static Azure.Maps.Weather.Models.AirQuality AirQuality(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.DominantPollutant? dominantPollutant = default(Azure.Maps.Weather.Models.DominantPollutant?), string category = null, string categoryColor = null, string description = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.WeatherPollutant> pollutants = null) { throw null; }
         public static Azure.Maps.Weather.Models.AirQualityResult AirQualityResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.AirQuality> airQualityResults = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Weather.Models.AlertDetails AlertDetails(string name = null, string description = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.Maps.Weather.Models.LatestStatus latestStatus = null, string details = null, string language = null) { throw null; }
         public static Azure.Maps.Weather.Models.ColorValue ColorValue(int? red = default(int?), int? green = default(int?), int? blue = default(int?), string hex = null) { throw null; }
@@ -695,7 +695,6 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.MinuteForecastResult MinuteForecastResult(Azure.Maps.Weather.Models.MinuteForecastSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.IntervalSummary> intervalSummaries = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.ForecastInterval> intervals = null) { throw null; }
         public static Azure.Maps.Weather.Models.MinuteForecastSummary MinuteForecastSummary(string briefPhrase60 = null, string shortDescription = null, string briefDescription = null, string longPhrase = null, Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?)) { throw null; }
         public static Azure.Maps.Weather.Models.PastHoursTemperature PastHoursTemperature(Azure.Maps.Weather.Models.WeatherValue minimum = null, Azure.Maps.Weather.Models.WeatherValue maximum = null) { throw null; }
-        public static Azure.Maps.Weather.Models.Pollutant Pollutant(Azure.Maps.Weather.Models.PollutantType? type = default(Azure.Maps.Weather.Models.PollutantType?), string name = null, float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.WeatherValue concentration = null) { throw null; }
         public static Azure.Maps.Weather.Models.PrecipitationSummary PrecipitationSummary(Azure.Maps.Weather.Models.WeatherValue pastHour = null, Azure.Maps.Weather.Models.WeatherValue pastThreeHours = null, Azure.Maps.Weather.Models.WeatherValue pastSixHours = null, Azure.Maps.Weather.Models.WeatherValue pastNineHours = null, Azure.Maps.Weather.Models.WeatherValue pastTwelveHours = null, Azure.Maps.Weather.Models.WeatherValue pastEighteenHours = null, Azure.Maps.Weather.Models.WeatherValue pastTwentyFourHours = null) { throw null; }
         public static Azure.Maps.Weather.Models.PressureTendency PressureTendency(string description = null, string code = null) { throw null; }
         public static Azure.Maps.Weather.Models.QuarterDayForecast QuarterDayForecast(System.DateTimeOffset? dateTime = default(System.DateTimeOffset?), System.DateTimeOffset? effectiveDate = default(System.DateTimeOffset?), Azure.Maps.Weather.Models.DayQuarter? quarter = default(Azure.Maps.Weather.Models.DayQuarter?), Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?), string iconPhrase = null, string phrase = null, Azure.Maps.Weather.Models.WeatherValueRange temperature = null, Azure.Maps.Weather.Models.WeatherValueRange realFeelTemperature = null, Azure.Maps.Weather.Models.WeatherValue dewPoint = null, int? relativeHumidity = default(int?), Azure.Maps.Weather.Models.WindDetails wind = null, Azure.Maps.Weather.Models.WindDetails windGust = null, Azure.Maps.Weather.Models.WeatherValue visibility = null, int? cloudCover = default(int?), bool? hasPrecipitation = default(bool?), Azure.Maps.Weather.Models.PrecipitationType? precipitationType = default(Azure.Maps.Weather.Models.PrecipitationType?), string precipitationIntensity = null, int? precipitationProbability = default(int?), int? thunderstormProbability = default(int?), Azure.Maps.Weather.Models.WeatherValue totalLiquid = null, Azure.Maps.Weather.Models.WeatherValue rain = null, Azure.Maps.Weather.Models.WeatherValue snow = null, Azure.Maps.Weather.Models.WeatherValue ice = null) { throw null; }
@@ -719,6 +718,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.WeatherAlongRouteSummary WeatherAlongRouteSummary(Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?), Azure.Maps.Weather.Models.WeatherHazards hazards = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherHazards WeatherHazards(Azure.Maps.Weather.Models.HazardIndex? maxHazardIndex = default(Azure.Maps.Weather.Models.HazardIndex?), System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.HazardDetail> details = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherNotification WeatherNotification(string type = null, Azure.Maps.Weather.Models.HazardIndex? hazardIndex = default(Azure.Maps.Weather.Models.HazardIndex?), string hazardCode = null, string shortDescription = null) { throw null; }
+        public static Azure.Maps.Weather.Models.WeatherPollutant WeatherPollutant(Azure.Maps.Weather.Models.PollutantType? type = default(Azure.Maps.Weather.Models.PollutantType?), string name = null, float? index = default(float?), float? globalIndex = default(float?), Azure.Maps.Weather.Models.WeatherValue concentration = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValue WeatherValue(float? value = default(float?), string unitLabel = null, Azure.Maps.Weather.Models.UnitType? unitType = default(Azure.Maps.Weather.Models.UnitType?)) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValueMaxMinAvg WeatherValueMaxMinAvg(Azure.Maps.Weather.Models.WeatherValue maximum = null, Azure.Maps.Weather.Models.WeatherValue minimum = null, Azure.Maps.Weather.Models.WeatherValue average = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValueRange WeatherValueRange(Azure.Maps.Weather.Models.WeatherValue minimum = null, Azure.Maps.Weather.Models.WeatherValue maximum = null) { throw null; }
@@ -750,15 +750,6 @@ namespace Azure.Maps.Weather.Models
         internal PastHoursTemperature() { }
         public Azure.Maps.Weather.Models.WeatherValue Maximum { get { throw null; } }
         public Azure.Maps.Weather.Models.WeatherValue Minimum { get { throw null; } }
-    }
-    public partial class Pollutant
-    {
-        internal Pollutant() { }
-        public Azure.Maps.Weather.Models.WeatherValue Concentration { get { throw null; } }
-        public float? GlobalIndex { get { throw null; } }
-        public float? Index { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.Maps.Weather.Models.PollutantType? Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PollutantType : System.IEquatable<Azure.Maps.Weather.Models.PollutantType>
@@ -1069,6 +1060,15 @@ namespace Azure.Maps.Weather.Models
         public Azure.Maps.Weather.Models.HazardIndex? HazardIndex { get { throw null; } }
         public string ShortDescription { get { throw null; } }
         public string Type { get { throw null; } }
+    }
+    public partial class WeatherPollutant
+    {
+        internal WeatherPollutant() { }
+        public Azure.Maps.Weather.Models.WeatherValue Concentration { get { throw null; } }
+        public float? GlobalIndex { get { throw null; } }
+        public float? Index { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Maps.Weather.Models.PollutantType? Type { get { throw null; } }
     }
     public partial class WeatherValue
     {

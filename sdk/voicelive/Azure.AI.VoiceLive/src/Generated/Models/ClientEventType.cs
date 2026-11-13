@@ -33,8 +33,6 @@ namespace Azure.AI.VoiceLive
         private const string McpApprovalResponseValue = "mcp_approval_response";
         /// <summary> Client request to clear the avatar output buffer. </summary>
         private const string OutputAudioBufferClearValue = "output_audio_buffer.clear";
-        /// <summary> Sent by the client to initiate a WebRTC session with an SDP offer. </summary>
-        private const string RtcCallSdpCreateValue = "rtc.call.sdp.create";
         /// <summary> Streamed delta of input text content being appended to an item. </summary>
         private const string InputTextDeltaValue = "input_text.delta";
         /// <summary> Signals that the streamed input text content for an item is complete. </summary>
@@ -103,9 +101,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Client request to clear the avatar output buffer. </summary>
         public static ClientEventType OutputAudioBufferClear { get; } = new ClientEventType(OutputAudioBufferClearValue);
-
-        /// <summary> Sent by the client to initiate a WebRTC session with an SDP offer. </summary>
-        public static ClientEventType RtcCallSdpCreate { get; } = new ClientEventType(RtcCallSdpCreateValue);
 
         /// <summary> Streamed delta of input text content being appended to an item. </summary>
         public static ClientEventType InputTextDelta { get; } = new ClientEventType(InputTextDeltaValue);

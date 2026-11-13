@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(AdvancedThreatProtectionResource.ResourceType, out string advancedThreatProtectionApiVersion);
             _advancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", AdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
-            _advancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettings(_advancedThreatProtectionSettingsClientDiagnostics, Pipeline, Endpoint, advancedThreatProtectionApiVersion ?? "2024-12-30");
+            _advancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettings(_advancedThreatProtectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionDataAsyncCollectionResultOfT(
                 _advancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllCollectionResultOfT(
+            return new PageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionDataCollectionResultOfT(
                 _advancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

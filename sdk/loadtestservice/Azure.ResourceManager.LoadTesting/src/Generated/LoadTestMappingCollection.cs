@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(LoadTestMappingResource.ResourceType, out string loadTestMappingApiVersion);
             _loadTestMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestMappingResource.ResourceType.Namespace, Diagnostics);
-            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
+            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllAsyncCollectionResultOfT(_loadTestMappingsRestClient, Id.ToString(), context, "LoadTestMappingCollection.GetAll"), data => new LoadTestMappingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingDataAsyncCollectionResultOfT(_loadTestMappingsRestClient, Id.ToString(), context, "LoadTestMappingCollection.GetAll"), data => new LoadTestMappingResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllCollectionResultOfT(_loadTestMappingsRestClient, Id.ToString(), context, "LoadTestMappingCollection.GetAll"), data => new LoadTestMappingResource(Client, data));
+            return new PageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingDataCollectionResultOfT(_loadTestMappingsRestClient, Id.ToString(), context, "LoadTestMappingCollection.GetAll"), data => new LoadTestMappingResource(Client, data));
         }
 
         /// <summary>

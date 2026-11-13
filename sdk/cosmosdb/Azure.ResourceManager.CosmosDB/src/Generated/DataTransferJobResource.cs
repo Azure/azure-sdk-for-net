@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string dataTransferJobApiVersion);
             _dataTransferJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _dataTransferJobsRestClient = new DataTransferJobs(_dataTransferJobsClientDiagnostics, Pipeline, Endpoint, dataTransferJobApiVersion ?? "2026-04-01-preview");
+            _dataTransferJobsRestClient = new DataTransferJobs(_dataTransferJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataTransferJobApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric
             TryGetApiVersion(ServiceFabricVmSizeResource.ResourceType, out string serviceFabricVmSizeResourceApiVersion);
             _location = location;
             _unsupportedVmSizesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricVmSizeResource.ResourceType.Namespace, Diagnostics);
-            _unsupportedVmSizesRestClient = new UnsupportedVmSizes(_unsupportedVmSizesClientDiagnostics, Pipeline, Endpoint, serviceFabricVmSizeResourceApiVersion ?? "2026-03-01-preview");
+            _unsupportedVmSizesRestClient = new UnsupportedVmSizes(_unsupportedVmSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricVmSizeResourceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new UnsupportedVmSizesGetAllAsyncCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new ServiceFabricVmSizeResourceDataAsyncCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new UnsupportedVmSizesGetAllCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
+            return new PageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new ServiceFabricVmSizeResourceDataCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
         }
 
         /// <summary>

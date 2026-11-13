@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new CacheExpirationActionProperties. </summary>
         public CacheExpirationActionProperties()
         {
+            TypeName.Assign(DeliveryRuleActionParametersType.DeliveryRuleCacheExpirationActionParameters);
         }
 
         /// <summary> Gets or sets the CacheBehavior. </summary>
@@ -71,10 +72,9 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleCacheExpirationActionParameters");
             _cacheBehavior = DefineProperty<CacheBehaviorSetting>(nameof(CacheBehavior), new string[] { "cacheBehavior" }, isRequired: true);
             _cacheType = DefineProperty<CdnCacheLevel>(nameof(CacheType), new string[] { "cacheType" }, isRequired: true);
-            _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" });
+            _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" }, format: "P");
             DefineAdditionalProperties();
         }
 

@@ -95,10 +95,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(AccountKey, options);
+            }
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(SasUri, options);
+            }
+            if (Optional.IsDefined(SasToken))
+            {
+                writer.WritePropertyName("sasToken"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(SasToken, options);
             }
             if (Optional.IsDefined(FileShare))
             {
@@ -171,7 +181,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> userId = default;
             DataFactorySecret password = default;
             DataFactoryElement<string> connectionString = default;
+            DataFactoryKeyVaultSecret accountKey = default;
             DataFactoryElement<string> sasUri = default;
+            DataFactoryKeyVaultSecret sasToken = default;
             DataFactoryElement<string> fileShare = default;
             DataFactoryElement<string> snapshot = default;
             string encryptedCredential = default;
@@ -186,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    host = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    host = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("userId"u8))
@@ -195,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    userId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
@@ -204,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("connectionString"u8))
@@ -213,7 +225,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("accountKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accountKey = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sasUri"u8))
@@ -222,7 +243,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sasUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    sasUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("sasToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sasToken = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("fileShare"u8))
@@ -231,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileShare = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    fileShare = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("snapshot"u8))
@@ -240,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    snapshot = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    snapshot = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -254,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serviceEndpoint = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    serviceEndpoint = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))
@@ -268,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AzureFileStorageLinkedServiceTypeProperties(
@@ -276,7 +306,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 userId,
                 password,
                 connectionString,
+                accountKey,
                 sasUri,
+                sasToken,
                 fileShare,
                 snapshot,
                 encryptedCredential,

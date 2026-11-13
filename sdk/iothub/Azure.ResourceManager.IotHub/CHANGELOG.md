@@ -1,12 +1,51 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0 (2026-11-12)
 
 ### Features Added
 
+- Upgraded API version from `2023-06-30` to `2026-11-01`.
+- Added Azure Device Registry (ADR) integration: `IotHubProperties.DeviceRegistry` (`IotHubDeviceRegistry`) with `DeviceRegistryIdentity`, `DeviceRegistryLinkingProperties` and `DeviceRegistryLinkingErrorDetails`.
+- Added routing to event streams: `RoutingEndpoints.EventStreams` (`RoutingEventStreamProperties`) and the `EventStreamAuthenticationType` enum.
+- Added `IotHubProperties.DeviceHostName` and `IotHubProperties.ServiceHostName`, which support secure connections over TLS 1.3.
+- Added `IotHubProperties.IotHubDetailsGatewayVersion` (`IotHubGatewayVersion`).
+- Added `CertificateAuthorityResourceId` to `IotHubCertificateProperties` and `IotHubCertificatePropertiesWithNonce`.
+- Added `CreateOrUpdate`/`Update` overloads that accept an `ETag?` for `ifMatch`. The existing `string ifMatch` overloads are retained.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Made `Azure.ResourceManager.IotHub` AOT-compatible.
+
+### Other Changes
+
+- Preview-only features from the `1.2.0-beta.*` releases are not included in the stable `2026-11-01` API version: MQTT v5 support (`IotHubConnectionProfile`, `MqttV5TopicGroup`), routing message payload format (`IotHubMessagePayloadFormat`), `RoutingRuleProperties.DataSchema`, encryption (`IotHubEncryptionProperties`, `IotHubKeyVaultKeyProperties`), root certificate (`IotHubRootCertificateProperties`), IP version (`IotHubIPVersion`), device streams, the `GEN2` SKU, and the `DigitalTwinChangeEvents` and `MqttBrokerMessages` routing sources.
+- Upgraded dependent `Azure.Core` to `1.63.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
+
+## 1.2.0-beta.5 (2026-10-12)
+
+### Features Added
+
+- Upgraded API version from `2026-05-01-preview` to `2026-10-01-preview`.
+- Added MQTT v5 support: `IotHubProperties.ConnectionProfile` (`IotHubConnectionProfile`) and `IotHubProperties.MqttV5TopicGroups` (`MqttV5TopicGroup`).
+- Added `MessagePayloadFormat` property (`IotHubMessagePayloadFormat`) to all routing endpoint property models (`RoutingCosmosDBSqlApiProperties`, `RoutingEventHubProperties`, `RoutingEventStreamProperties`, `RoutingServiceBusQueueEndpointProperties`, `RoutingServiceBusTopicEndpointProperties`, `RoutingStorageContainerProperties`).
+- Added `RoutingRuleProperties.DataSchema` property.
+- Added `NamespaceUuid`, `DataPlaneHostName`, `Identity` (`DeviceRegistryIdentity`) and `LinkingProperties` (`DeviceRegistryLinkingProperties`) properties to `IotHubDeviceRegistry`.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Renamed `PolicyResourceId` to `CertificateAuthorityResourceId` on `IotHubCertificateProperties` and `IotHubCertificatePropertiesWithNonce`.
+- `IotHubDeviceRegistry` is now output-only: its public constructor was removed, `IotHubProperties.DeviceRegistry` no longer has a setter, and `IotHubDeviceRegistry.IdentityResourceId` was replaced by `IotHubDeviceRegistry.Identity`.
+
+## 1.2.0-beta.4 (2026-08-12)
+
+### Features Added
+
+- Upgraded API version from `2026-03-01-preview` to `2026-05-01-preview`.
+- Added `RoutingEventStreamProperties` model and `EventStreamAuthenticationType` enum for routing event stream endpoints.
+- Added `RoutingEndpoints.EventStreams` collection property.
+
+### Breaking Changes
+
+- Removed `IotHubSku.Gen2` static property and `IotHubSkuTier.Generation2` enum member — the GEN2 IoT Hub SKU is no longer present in the `2026-05-01-preview` API.
 
 ### Other Changes
 
@@ -100,7 +139,7 @@ Polishing since last public beta release:
 - Prepended `IotHub` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

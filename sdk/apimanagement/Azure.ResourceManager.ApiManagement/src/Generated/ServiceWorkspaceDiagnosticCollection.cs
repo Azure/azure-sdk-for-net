@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceDiagnosticResource.ResourceType, out string serviceWorkspaceDiagnosticApiVersion);
             _workspaceDiagnosticClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            _workspaceDiagnosticRestClient = new WorkspaceDiagnostic(_workspaceDiagnosticClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceDiagnosticApiVersion ?? "2025-09-01-preview");
+            _workspaceDiagnosticRestClient = new WorkspaceDiagnostic(_workspaceDiagnosticClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceDiagnosticApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiagnosticContractData, ServiceWorkspaceDiagnosticResource>(new WorkspaceDiagnosticGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiagnosticContractData, ServiceWorkspaceDiagnosticResource>(new DiagnosticContractDataAsync1CollectionResultOfT(
                 _workspaceDiagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiagnosticContractData, ServiceWorkspaceDiagnosticResource>(new WorkspaceDiagnosticGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DiagnosticContractData, ServiceWorkspaceDiagnosticResource>(new DiagnosticContractData1CollectionResultOfT(
                 _workspaceDiagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

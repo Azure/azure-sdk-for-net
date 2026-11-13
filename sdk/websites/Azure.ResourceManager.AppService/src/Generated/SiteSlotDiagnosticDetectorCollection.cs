@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotDiagnosticDetectorResource.ResourceType, out string siteSlotDiagnosticDetectorApiVersion);
             _detectorDefinitionResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticDetectorResource.ResourceType.Namespace, Diagnostics);
-            _detectorDefinitionResourceOperationGroupRestClient = new DetectorDefinitionResourceOperationGroup(_detectorDefinitionResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotDiagnosticDetectorApiVersion ?? "2026-03-15");
+            _detectorDefinitionResourceOperationGroupRestClient = new DetectorDefinitionResourceOperationGroup(_detectorDefinitionResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDiagnosticDetectorApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DetectorDefinitionResourceData, SiteSlotDiagnosticDetectorResource>(new DetectorDefinitionResourceOperationGroupGetSiteDetectorsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DetectorDefinitionResourceData, SiteSlotDiagnosticDetectorResource>(new DetectorDefinitionResourceDataAsync0CollectionResultOfT(
                 _detectorDefinitionResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DetectorDefinitionResourceData, SiteSlotDiagnosticDetectorResource>(new DetectorDefinitionResourceOperationGroupGetSiteDetectorsSlotCollectionResultOfT(
+            return new PageableWrapper<DetectorDefinitionResourceData, SiteSlotDiagnosticDetectorResource>(new DetectorDefinitionResourceData0CollectionResultOfT(
                 _detectorDefinitionResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

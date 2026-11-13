@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Reservations
             _providerId = providerId;
             _location = location;
             _quotaRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", QuotaRequestDetailResource.ResourceType.Namespace, Diagnostics);
-            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailApiVersion ?? "2020-10-25");
+            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, quotaRequestDetailApiVersion ?? "2020-10-25");
             ValidateResourceId(id);
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestDetailDataAsyncCollectionResultOfT(
                 _quotaRequestStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _providerId,
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllCollectionResultOfT(
+            return new PageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestDetailDataCollectionResultOfT(
                 _quotaRequestStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _providerId,

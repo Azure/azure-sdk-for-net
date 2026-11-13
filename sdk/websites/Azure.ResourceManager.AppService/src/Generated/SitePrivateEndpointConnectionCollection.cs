@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SitePrivateEndpointConnectionResource.ResourceType, out string sitePrivateEndpointConnectionApiVersion);
             _remotePrivateEndpointConnectionARMResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SitePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _remotePrivateEndpointConnectionARMResourceOperationGroupRestClient = new RemotePrivateEndpointConnectionARMResourceOperationGroup(_remotePrivateEndpointConnectionARMResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, sitePrivateEndpointConnectionApiVersion ?? "2026-03-15");
+            _remotePrivateEndpointConnectionARMResourceOperationGroupRestClient = new RemotePrivateEndpointConnectionARMResourceOperationGroup(_remotePrivateEndpointConnectionARMResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sitePrivateEndpointConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SitePrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceOperationGroupGetPrivateEndpointConnectionListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SitePrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceDataAsync2CollectionResultOfT(
                 _remotePrivateEndpointConnectionARMResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SitePrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceOperationGroupGetPrivateEndpointConnectionListCollectionResultOfT(
+            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, SitePrivateEndpointConnectionResource>(new RemotePrivateEndpointConnectionARMResourceData2CollectionResultOfT(
                 _remotePrivateEndpointConnectionARMResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

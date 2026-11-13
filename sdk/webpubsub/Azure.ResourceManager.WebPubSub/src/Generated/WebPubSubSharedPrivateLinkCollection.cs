@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubSharedPrivateLinkResource.ResourceType, out string webPubSubSharedPrivateLinkApiVersion);
             _webPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _webPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResources(_webPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubSharedPrivateLinkApiVersion ?? "2025-08-01-preview");
+            _webPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResources(_webPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubSharedPrivateLinkApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkDataAsyncCollectionResultOfT(
                 _webPubSubSharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkDataCollectionResultOfT(
                 _webPubSubSharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

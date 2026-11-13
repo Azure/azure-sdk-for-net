@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteBackupResource.ResourceType, out string siteBackupApiVersion);
             _backupItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteBackupResource.ResourceType.Namespace, Diagnostics);
-            _backupItemsRestClient = new BackupItems(_backupItemsClientDiagnostics, Pipeline, Endpoint, siteBackupApiVersion ?? "2026-03-15");
+            _backupItemsRestClient = new BackupItems(_backupItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteBackupApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAppBackupData, SiteBackupResource>(new BackupItemsGetBackupsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebAppBackupData, SiteBackupResource>(new WebAppBackupDataAsync2CollectionResultOfT(
                 _backupItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAppBackupData, SiteBackupResource>(new BackupItemsGetBackupsCollectionResultOfT(
+            return new PageableWrapper<WebAppBackupData, SiteBackupResource>(new WebAppBackupData2CollectionResultOfT(
                 _backupItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

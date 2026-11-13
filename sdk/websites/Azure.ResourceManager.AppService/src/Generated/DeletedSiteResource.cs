@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string deletedSiteApiVersion);
             _globalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
+            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebGlobalGetDeletedWebAppSnapshotsAsyncCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
+            return new DeletedSiteResourceGetDeletedWebAppSnapshotsAsyncCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebGlobalGetDeletedWebAppSnapshotsCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
+            return new DeletedSiteResourceGetDeletedWebAppSnapshotsCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
         }
     }
 }

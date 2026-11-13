@@ -66,70 +66,70 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         private ClientDiagnostics ReplicationProtectedItemsClientDiagnostics => _replicationProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectedItems ReplicationProtectedItemsRestClient => _replicationProtectedItemsRestClient ??= new ReplicationProtectedItems(ReplicationProtectedItemsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationProtectedItems ReplicationProtectedItemsRestClient => _replicationProtectedItemsRestClient ??= new ReplicationProtectedItems(ReplicationProtectedItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationProtectionClustersClientDiagnostics => _replicationProtectionClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectionClusters ReplicationProtectionClustersRestClient => _replicationProtectionClustersRestClient ??= new ReplicationProtectionClusters(ReplicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationProtectionClusters ReplicationProtectionClustersRestClient => _replicationProtectionClustersRestClient ??= new ReplicationProtectionClusters(ReplicationProtectionClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationNetworksClientDiagnostics => _replicationNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationNetworks ReplicationNetworksRestClient => _replicationNetworksRestClient ??= new ReplicationNetworks(ReplicationNetworksClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationNetworks ReplicationNetworksRestClient => _replicationNetworksRestClient ??= new ReplicationNetworks(ReplicationNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationNetworkMappingsClientDiagnostics => _replicationNetworkMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationNetworkMappings ReplicationNetworkMappingsRestClient => _replicationNetworkMappingsRestClient ??= new ReplicationNetworkMappings(ReplicationNetworkMappingsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationNetworkMappings ReplicationNetworkMappingsRestClient => _replicationNetworkMappingsRestClient ??= new ReplicationNetworkMappings(ReplicationNetworkMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationProtectionContainersClientDiagnostics => _replicationProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectionContainers ReplicationProtectionContainersRestClient => _replicationProtectionContainersRestClient ??= new ReplicationProtectionContainers(ReplicationProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationProtectionContainers ReplicationProtectionContainersRestClient => _replicationProtectionContainersRestClient ??= new ReplicationProtectionContainers(ReplicationProtectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationMigrationItemsClientDiagnostics => _replicationMigrationItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationMigrationItems ReplicationMigrationItemsRestClient => _replicationMigrationItemsRestClient ??= new ReplicationMigrationItems(ReplicationMigrationItemsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationMigrationItems ReplicationMigrationItemsRestClient => _replicationMigrationItemsRestClient ??= new ReplicationMigrationItems(ReplicationMigrationItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationProtectionContainerMappingsClientDiagnostics => _replicationProtectionContainerMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectionContainerMappings ReplicationProtectionContainerMappingsRestClient => _replicationProtectionContainerMappingsRestClient ??= new ReplicationProtectionContainerMappings(ReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationProtectionContainerMappings ReplicationProtectionContainerMappingsRestClient => _replicationProtectionContainerMappingsRestClient ??= new ReplicationProtectionContainerMappings(ReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationRecoveryServicesProvidersClientDiagnostics => _replicationRecoveryServicesProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationRecoveryServicesProviders ReplicationRecoveryServicesProvidersRestClient => _replicationRecoveryServicesProvidersRestClient ??= new ReplicationRecoveryServicesProviders(ReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationRecoveryServicesProviders ReplicationRecoveryServicesProvidersRestClient => _replicationRecoveryServicesProvidersRestClient ??= new ReplicationRecoveryServicesProviders(ReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationStorageClassificationsClientDiagnostics => _replicationStorageClassificationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationStorageClassifications ReplicationStorageClassificationsRestClient => _replicationStorageClassificationsRestClient ??= new ReplicationStorageClassifications(ReplicationStorageClassificationsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationStorageClassifications ReplicationStorageClassificationsRestClient => _replicationStorageClassificationsRestClient ??= new ReplicationStorageClassifications(ReplicationStorageClassificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationStorageClassificationMappingsClientDiagnostics => _replicationStorageClassificationMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationStorageClassificationMappings ReplicationStorageClassificationMappingsRestClient => _replicationStorageClassificationMappingsRestClient ??= new ReplicationStorageClassificationMappings(ReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationStorageClassificationMappings ReplicationStorageClassificationMappingsRestClient => _replicationStorageClassificationMappingsRestClient ??= new ReplicationStorageClassificationMappings(ReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationvCentersClientDiagnostics => _replicationvCentersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationvCenters ReplicationvCentersRestClient => _replicationvCentersRestClient ??= new ReplicationvCenters(ReplicationvCentersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationvCenters ReplicationvCentersRestClient => _replicationvCentersRestClient ??= new ReplicationvCenters(ReplicationvCentersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationJobsClientDiagnostics => _replicationJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationJobs ReplicationJobsRestClient => _replicationJobsRestClient ??= new ReplicationJobs(ReplicationJobsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationJobs ReplicationJobsRestClient => _replicationJobsRestClient ??= new ReplicationJobs(ReplicationJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationAppliancesClientDiagnostics => _replicationAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationAppliances ReplicationAppliancesRestClient => _replicationAppliancesRestClient ??= new ReplicationAppliances(ReplicationAppliancesClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationAppliances ReplicationAppliancesRestClient => _replicationAppliancesRestClient ??= new ReplicationAppliances(ReplicationAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics SupportedOperatingSystemsClientDiagnostics => _supportedOperatingSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SupportedOperatingSystems SupportedOperatingSystemsRestClient => _supportedOperatingSystemsRestClient ??= new SupportedOperatingSystems(SupportedOperatingSystemsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private SupportedOperatingSystems SupportedOperatingSystemsRestClient => _supportedOperatingSystemsRestClient ??= new SupportedOperatingSystems(SupportedOperatingSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         private ClientDiagnostics ReplicationVaultHealthClientDiagnostics => _replicationVaultHealthClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationVaultHealth ReplicationVaultHealthRestClient => _replicationVaultHealthRestClient ??= new ReplicationVaultHealth(ReplicationVaultHealthClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationVaultHealth ReplicationVaultHealthRestClient => _replicationVaultHealthRestClient ??= new ReplicationVaultHealth(ReplicationVaultHealthClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         /// <summary> Gets a collection of ReplicationProtectionIntents in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <returns> An object representing collection of ReplicationProtectionIntents and their operations over a ReplicationProtectionIntentResource. </returns>
         public virtual ReplicationProtectionIntentCollection GetReplicationProtectionIntents(string resourceName)
         {
-            return GetCachedClient(client => new ReplicationProtectionIntentCollection(client, Id, resourceName));
+            return new ReplicationProtectionIntentCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryAlerts and their operations over a SiteRecoveryAlertResource. </returns>
         public virtual SiteRecoveryAlertCollection GetSiteRecoveryAlerts(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryAlertCollection(client, Id, resourceName));
+            return new SiteRecoveryAlertCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryEvents and their operations over a SiteRecoveryEventResource. </returns>
         public virtual SiteRecoveryEventCollection GetSiteRecoveryEvents(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryEventCollection(client, Id, resourceName));
+            return new SiteRecoveryEventCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryFabrics and their operations over a SiteRecoveryFabricResource. </returns>
         public virtual SiteRecoveryFabricCollection GetSiteRecoveryFabrics(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryFabricCollection(client, Id, resourceName));
+            return new SiteRecoveryFabricCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryJobs and their operations over a SiteRecoveryJobResource. </returns>
         public virtual SiteRecoveryJobCollection GetSiteRecoveryJobs(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryJobCollection(client, Id, resourceName));
+            return new SiteRecoveryJobCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryPolicies and their operations over a SiteRecoveryPolicyResource. </returns>
         public virtual SiteRecoveryPolicyCollection GetSiteRecoveryPolicies(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryPolicyCollection(client, Id, resourceName));
+            return new SiteRecoveryPolicyCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryRecoveryPlans and their operations over a SiteRecoveryRecoveryPlanResource. </returns>
         public virtual SiteRecoveryRecoveryPlanCollection GetSiteRecoveryRecoveryPlans(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryRecoveryPlanCollection(client, Id, resourceName));
+            return new SiteRecoveryRecoveryPlanCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryVaultSettings and their operations over a SiteRecoveryVaultSettingResource. </returns>
         public virtual SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryVaultSettingCollection(client, Id, resourceName));
+            return new SiteRecoveryVaultSettingCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReplicationProtectedItemData, ReplicationProtectedItemResource>(new ReplicationProtectedItemsGetReplicationProtectedItemsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ReplicationProtectedItemData, ReplicationProtectedItemResource>(new ReplicationProtectedItemDataAsync0CollectionResultOfT(
                 ReplicationProtectedItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReplicationProtectedItemData, ReplicationProtectedItemResource>(new ReplicationProtectedItemsGetReplicationProtectedItemsCollectionResultOfT(
+            return new PageableWrapper<ReplicationProtectedItemData, ReplicationProtectedItemResource>(new ReplicationProtectedItemData0CollectionResultOfT(
                 ReplicationProtectedItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new ReplicationProtectionClustersListBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterDataAsync0CollectionResultOfT(
                 ReplicationProtectionClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new ReplicationProtectionClustersListBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterData0CollectionResultOfT(
                 ReplicationProtectionClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new ReplicationNetworksGetSiteRecoveryNetworksAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new SiteRecoveryNetworkDataAsync0CollectionResultOfT(
                 ReplicationNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new ReplicationNetworksGetSiteRecoveryNetworksCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new SiteRecoveryNetworkData0CollectionResultOfT(
                 ReplicationNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryNetworkMappingData, SiteRecoveryNetworkMappingResource>(new ReplicationNetworkMappingsGetSiteRecoveryNetworkMappingsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryNetworkMappingData, SiteRecoveryNetworkMappingResource>(new SiteRecoveryNetworkMappingDataAsync0CollectionResultOfT(
                 ReplicationNetworkMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryNetworkMappingData, SiteRecoveryNetworkMappingResource>(new ReplicationNetworkMappingsGetSiteRecoveryNetworkMappingsCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryNetworkMappingData, SiteRecoveryNetworkMappingResource>(new SiteRecoveryNetworkMappingData0CollectionResultOfT(
                 ReplicationNetworkMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryProtectionContainerData, SiteRecoveryProtectionContainerResource>(new ReplicationProtectionContainersGetSiteRecoveryProtectionContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryProtectionContainerData, SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerDataAsync0CollectionResultOfT(
                 ReplicationProtectionContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryProtectionContainerData, SiteRecoveryProtectionContainerResource>(new ReplicationProtectionContainersGetSiteRecoveryProtectionContainersCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryProtectionContainerData, SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerData0CollectionResultOfT(
                 ReplicationProtectionContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryMigrationItemData, SiteRecoveryMigrationItemResource>(new ReplicationMigrationItemsGetSiteRecoveryMigrationItemsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryMigrationItemData, SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemDataAsync0CollectionResultOfT(
                 ReplicationMigrationItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1154,7 +1154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryMigrationItemData, SiteRecoveryMigrationItemResource>(new ReplicationMigrationItemsGetSiteRecoveryMigrationItemsCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryMigrationItemData, SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemData0CollectionResultOfT(
                 ReplicationMigrationItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingDataAsync0CollectionResultOfT(
                 ReplicationProtectionContainerMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1218,7 +1218,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ReplicationProtectionContainerMappingsGetProtectionContainerMappingsCollectionResultOfT(
+            return new PageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingData0CollectionResultOfT(
                 ReplicationProtectionContainerMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderDataAsync0CollectionResultOfT(
                 ReplicationRecoveryServicesProvidersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new ReplicationRecoveryServicesProvidersGetSiteRecoveryServicesProvidersCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderData0CollectionResultOfT(
                 ReplicationRecoveryServicesProvidersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1335,7 +1335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetStorageClassificationsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageClassificationData, StorageClassificationResource>(new StorageClassificationDataAsync0CollectionResultOfT(
                 ReplicationStorageClassificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetStorageClassificationsCollectionResultOfT(
+            return new PageableWrapper<StorageClassificationData, StorageClassificationResource>(new StorageClassificationData0CollectionResultOfT(
                 ReplicationStorageClassificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new ReplicationStorageClassificationMappingsListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingDataAsync0CollectionResultOfT(
                 ReplicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new ReplicationStorageClassificationMappingsGetStorageClassificationMappingsCollectionResultOfT(
+            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingData0CollectionResultOfT(
                 ReplicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryVCenterData, SiteRecoveryVCenterResource>(new ReplicationvCentersGetSiteRecoveryVCentersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryVCenterData, SiteRecoveryVCenterResource>(new SiteRecoveryVCenterDataAsync0CollectionResultOfT(
                 ReplicationvCentersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryVCenterData, SiteRecoveryVCenterResource>(new ReplicationvCentersGetSiteRecoveryVCentersCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryVCenterData, SiteRecoveryVCenterResource>(new SiteRecoveryVCenterData0CollectionResultOfT(
                 ReplicationvCentersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1627,7 +1627,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1685,7 +1685,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1703,7 +1703,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicationAppliancesGetReplicationAppliancesAsyncCollectionResultOfT(
+            return new SiteRecoveryReplicationApplianceAsyncCollectionResultOfT(
                 ReplicationAppliancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1744,7 +1744,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicationAppliancesGetReplicationAppliancesCollectionResultOfT(
+            return new SiteRecoveryReplicationApplianceCollectionResultOfT(
                 ReplicationAppliancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1767,7 +1767,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1817,7 +1817,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1867,7 +1867,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2021,7 +2021,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

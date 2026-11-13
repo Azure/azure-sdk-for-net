@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenancePropertiesForUpdate"/>. </summary>
-        /// <param name="maintenanceStartOn"> The start time for a maintenance. </param>
+        /// <param name="maintenanceStartsOn"> The start time for a maintenance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenancePropertiesForUpdate(DateTimeOffset? maintenanceStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenancePropertiesForUpdate(DateTimeOffset? maintenanceStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MaintenanceStartOn = maintenanceStartOn;
+            MaintenanceStartsOn = maintenanceStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceStartOn { get; set; }
+        public DateTimeOffset? MaintenanceStartsOn { get; set; }
     }
 }

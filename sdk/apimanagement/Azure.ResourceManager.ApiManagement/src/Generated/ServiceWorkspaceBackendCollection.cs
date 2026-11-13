@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceBackendResource.ResourceType, out string serviceWorkspaceBackendApiVersion);
             _workspaceBackendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceBackendResource.ResourceType.Namespace, Diagnostics);
-            _workspaceBackendRestClient = new WorkspaceBackend(_workspaceBackendClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceBackendApiVersion ?? "2025-09-01-preview");
+            _workspaceBackendRestClient = new WorkspaceBackend(_workspaceBackendClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceBackendApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementBackendData, ServiceWorkspaceBackendResource>(new WorkspaceBackendGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementBackendData, ServiceWorkspaceBackendResource>(new ApiManagementBackendDataAsyncCollectionResultOfT(
                 _workspaceBackendRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementBackendData, ServiceWorkspaceBackendResource>(new WorkspaceBackendGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementBackendData, ServiceWorkspaceBackendResource>(new ApiManagementBackendDataCollectionResultOfT(
                 _workspaceBackendRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RouteNextHopEcmp"/>. </summary>
-        /// <param name="nextHopIpAddresses"> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextHopIpAddresses"/> is null. </exception>
-        public RouteNextHopEcmp(IEnumerable<string> nextHopIpAddresses)
+        /// <param name="nextHopIPAddresses"> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextHopIPAddresses"/> is null. </exception>
+        public RouteNextHopEcmp(IEnumerable<string> nextHopIPAddresses)
         {
-            Argument.AssertNotNull(nextHopIpAddresses, nameof(nextHopIpAddresses));
+            Argument.AssertNotNull(nextHopIPAddresses, nameof(nextHopIPAddresses));
 
-            NextHopIpAddresses = nextHopIpAddresses.ToList();
+            NextHopIPAddresses = nextHopIPAddresses.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteNextHopEcmp"/>. </summary>
-        /// <param name="nextHopIpAddresses"> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </param>
+        /// <param name="nextHopIPAddresses"> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouteNextHopEcmp(IList<string> nextHopIpAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouteNextHopEcmp(IList<string> nextHopIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextHopIpAddresses = nextHopIpAddresses;
+            NextHopIPAddresses = nextHopIPAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </summary>
         [WirePath("nextHopIpAddresses")]
-        public IList<string> NextHopIpAddresses { get; } = new ChangeTrackingList<string>();
+        public IList<string> NextHopIPAddresses { get; } = new ChangeTrackingList<string>();
     }
 }

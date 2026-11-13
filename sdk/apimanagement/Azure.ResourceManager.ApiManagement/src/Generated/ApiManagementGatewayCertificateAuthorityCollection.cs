@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementGatewayCertificateAuthorityResource.ResourceType, out string apiManagementGatewayCertificateAuthorityApiVersion);
             _gatewayCertificateAuthorityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementGatewayCertificateAuthorityResource.ResourceType.Namespace, Diagnostics);
-            _gatewayCertificateAuthorityRestClient = new GatewayCertificateAuthority(_gatewayCertificateAuthorityClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayCertificateAuthorityApiVersion ?? "2025-09-01-preview");
+            _gatewayCertificateAuthorityRestClient = new GatewayCertificateAuthority(_gatewayCertificateAuthorityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGatewayCertificateAuthorityApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new GatewayCertificateAuthorityGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new ApiManagementGatewayCertificateAuthorityDataAsyncCollectionResultOfT(
                 _gatewayCertificateAuthorityRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new GatewayCertificateAuthorityGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new ApiManagementGatewayCertificateAuthorityDataCollectionResultOfT(
                 _gatewayCertificateAuthorityRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

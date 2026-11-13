@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Product profile. </summary>
-    public partial class ProductContractProperties : ProductEntityBaseProperties
+    internal partial class ProductContractProperties : ProductEntityBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="ProductContractProperties"/>. </summary>
         /// <param name="displayName"> Product name. </param>

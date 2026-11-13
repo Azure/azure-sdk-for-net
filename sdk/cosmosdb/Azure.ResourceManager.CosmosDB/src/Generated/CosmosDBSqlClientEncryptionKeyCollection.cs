@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBSqlClientEncryptionKeyResource.ResourceType, out string cosmosDBSqlClientEncryptionKeyApiVersion);
             _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBSqlClientEncryptionKeyResource.ResourceType.Namespace, Diagnostics);
-            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlClientEncryptionKeyApiVersion ?? "2026-04-01-preview");
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBSqlClientEncryptionKeyApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyDataAsyncCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new SqlResourcesGetClientEncryptionKeysCollectionResultOfT(
+            return new PageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyDataCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

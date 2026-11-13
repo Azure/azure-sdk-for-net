@@ -30,8 +30,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="manufacturer"> manufacturer info of the machine. </param>
         /// <param name="serialNumber"> Serial number of the machine. </param>
         /// <param name="processorType"> Process type of the machine. </param>
+        /// <param name="architecture"> CPU architecture of the machine, for example amd64 or arm64. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciDeploymentHardwareProfile(long? cpuCores, long? cpuSockets, long? memoryCapacityInGb, string model, string manufacturer, string serialNumber, string processorType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciDeploymentHardwareProfile(long? cpuCores, long? cpuSockets, long? memoryCapacityInGb, string model, string manufacturer, string serialNumber, string processorType, HciCpuArchitecture? architecture, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CpuCores = cpuCores;
             CpuSockets = cpuSockets;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
             Manufacturer = manufacturer;
             SerialNumber = serialNumber;
             ProcessorType = processorType;
+            Architecture = architecture;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,5 +72,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Process type of the machine. </summary>
         [WirePath("processorType")]
         public string ProcessorType { get; }
+
+        /// <summary> CPU architecture of the machine, for example amd64 or arm64. </summary>
+        [WirePath("architecture")]
+        public HciCpuArchitecture? Architecture { get; }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(AuthorizationAccessPolicyContractResource.ResourceType, out string authorizationAccessPolicyContractApiVersion);
             _authorizationAccessPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", AuthorizationAccessPolicyContractResource.ResourceType.Namespace, Diagnostics);
-            _authorizationAccessPolicyRestClient = new AuthorizationAccessPolicy(_authorizationAccessPolicyClientDiagnostics, Pipeline, Endpoint, authorizationAccessPolicyContractApiVersion ?? "2025-09-01-preview");
+            _authorizationAccessPolicyRestClient = new AuthorizationAccessPolicy(_authorizationAccessPolicyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authorizationAccessPolicyContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthorizationAccessPolicyContractData, AuthorizationAccessPolicyContractResource>(new AuthorizationAccessPolicyGetByAuthorizationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AuthorizationAccessPolicyContractData, AuthorizationAccessPolicyContractResource>(new AuthorizationAccessPolicyContractDataAsyncCollectionResultOfT(
                 _authorizationAccessPolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthorizationAccessPolicyContractData, AuthorizationAccessPolicyContractResource>(new AuthorizationAccessPolicyGetByAuthorizationCollectionResultOfT(
+            return new PageableWrapper<AuthorizationAccessPolicyContractData, AuthorizationAccessPolicyContractResource>(new AuthorizationAccessPolicyContractDataCollectionResultOfT(
                 _authorizationAccessPolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

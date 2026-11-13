@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(PolicyFragmentContractResource.ResourceType, out string policyFragmentContractApiVersion);
             _policyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PolicyFragmentContractResource.ResourceType.Namespace, Diagnostics);
-            _policyFragmentRestClient = new PolicyFragment(_policyFragmentClientDiagnostics, Pipeline, Endpoint, policyFragmentContractApiVersion ?? "2025-09-01-preview");
+            _policyFragmentRestClient = new PolicyFragment(_policyFragmentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyFragmentContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -291,24 +291,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter, orderBy | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| value | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyFragmentContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyFragmentContractResource> GetAllAsync(string filter = default, string @orderby = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyFragmentContractResource> GetAllAsync(string filter = default, string orderBy = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyFragmentContractData, PolicyFragmentContractResource>(new PolicyFragmentGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyFragmentContractData, PolicyFragmentContractResource>(new PolicyFragmentContractDataAsync0CollectionResultOfT(
                 _policyFragmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                @orderby,
+                orderBy,
                 top,
                 skip,
                 context,
@@ -333,24 +333,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter, orderBy | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| value | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyFragmentContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyFragmentContractResource> GetAll(string filter = default, string @orderby = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyFragmentContractResource> GetAll(string filter = default, string orderBy = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyFragmentContractData, PolicyFragmentContractResource>(new PolicyFragmentGetByServiceCollectionResultOfT(
+            return new PageableWrapper<PolicyFragmentContractData, PolicyFragmentContractResource>(new PolicyFragmentContractData0CollectionResultOfT(
                 _policyFragmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                @orderby,
+                orderBy,
                 top,
                 skip,
                 context,

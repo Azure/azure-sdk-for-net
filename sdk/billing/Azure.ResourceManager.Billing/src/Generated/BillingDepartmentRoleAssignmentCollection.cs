@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingDepartmentRoleAssignmentResource.ResourceType, out string billingDepartmentRoleAssignmentApiVersion);
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingDepartmentRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingDepartmentRoleAssignmentApiVersion ?? "2024-04-01");
+            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingDepartmentRoleAssignmentApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingDepartmentRoleAssignmentResource>(new BillingRoleAssignmentsGetByDepartmentAsyncCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentRoleAssignmentCollection.GetAll"), data => new BillingDepartmentRoleAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingDepartmentRoleAssignmentResource>(new BillingRoleAssignmentDataAsync3CollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentRoleAssignmentCollection.GetAll"), data => new BillingDepartmentRoleAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleAssignmentData, BillingDepartmentRoleAssignmentResource>(new BillingRoleAssignmentsGetByDepartmentCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentRoleAssignmentCollection.GetAll"), data => new BillingDepartmentRoleAssignmentResource(Client, data));
+            return new PageableWrapper<BillingRoleAssignmentData, BillingDepartmentRoleAssignmentResource>(new BillingRoleAssignmentData3CollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentRoleAssignmentCollection.GetAll"), data => new BillingDepartmentRoleAssignmentResource(Client, data));
         }
 
         /// <summary>

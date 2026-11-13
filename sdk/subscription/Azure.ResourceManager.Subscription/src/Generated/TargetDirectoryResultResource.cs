@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Subscription
         {
             TryGetApiVersion(ResourceType, out string targetDirectoryResultApiVersion);
             _targetDirectoryResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _targetDirectoryResultsRestClient = new TargetDirectoryResults(_targetDirectoryResultsClientDiagnostics, Pipeline, Endpoint, targetDirectoryResultApiVersion ?? "2025-11-01-preview");
+            _targetDirectoryResultsRestClient = new TargetDirectoryResults(_targetDirectoryResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, targetDirectoryResultApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

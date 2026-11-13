@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiPolicyResource.ResourceType, out string apiPolicyApiVersion);
             _apiPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiPolicyResource.ResourceType.Namespace, Diagnostics);
-            _apiPolicyRestClient = new ApiPolicy(_apiPolicyClientDiagnostics, Pipeline, Endpoint, apiPolicyApiVersion ?? "2025-09-01-preview");
+            _apiPolicyRestClient = new ApiPolicy(_apiPolicyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiPolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyContractData, ApiPolicyResource>(new ApiPolicyGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyContractData, ApiPolicyResource>(new PolicyContractDataAsync2CollectionResultOfT(
                 _apiPolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyContractData, ApiPolicyResource>(new ApiPolicyGetByApiCollectionResultOfT(
+            return new PageableWrapper<PolicyContractData, ApiPolicyResource>(new PolicyContractData2CollectionResultOfT(
                 _apiPolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

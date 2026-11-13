@@ -19,14 +19,22 @@ namespace Azure.ResourceManager.PrivateDns
     /// A class representing a PrivateDnsZone along with the instance operations that can be performed on it.
     /// </summary>
     [CodeGenSuppressAttribute("GetPrivateDnsARecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsARecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    [CodeGenSuppressAttribute("GetPrivateDnsAaaaRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsAaaaRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    [CodeGenSuppressAttribute("GetPrivateDnsCnameRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsCnameRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    [CodeGenSuppressAttribute("GetPrivateDnsMXRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsMXRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    [CodeGenSuppressAttribute("GetPrivateDnsPtrRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsPtrRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    [CodeGenSuppressAttribute("GetPrivateDnsSoaRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsSoaRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    [CodeGenSuppressAttribute("GetPrivateDnsSrvRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsSrvRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    [CodeGenSuppressAttribute("GetPrivateDnsTxtRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("GetPrivateDnsTxtRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]    public partial class PrivateDnsZoneResource
+    [CodeGenSuppressAttribute("GetPrivateDnsARecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsAaaaRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsAaaaRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsCnameRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsCnameRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsMXRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsMXRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsPtrRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsPtrRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsSoaRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsSoaRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsSrvRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsSrvRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsTxtRecordAsync", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetPrivateDnsTxtRecord", typeof(PrivateDnsRecordType), typeof(string), typeof(CancellationToken))]
+    public partial class PrivateDnsZoneResource
     {
         /// <summary> Gets a record set. </summary>
         /// <param name="aRecordName"> The name of the record set, relative to the name of the zone. </param>
@@ -179,5 +187,6 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNullOrEmpty(txtRecordName, nameof(txtRecordName));
             return GetPrivateDnsTxtRecords().Get(txtRecordName, cancellationToken);
-        }    }
+        }
+    }
 }

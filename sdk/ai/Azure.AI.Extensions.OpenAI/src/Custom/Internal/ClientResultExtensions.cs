@@ -5,6 +5,7 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -12,6 +13,7 @@ namespace Azure.AI.Extensions.OpenAI;
 /// <summary> The AgentClient. </summary>
 internal static partial class ClientResultExtensions
 {
+    [Experimental("OPENAI001")]
     public static ClientResult<T> ToOpenAIResult<T>(this ClientResult protocolResult)
         where T : IJsonModel<T>
             => ToTypedResult<T>(protocolResult, OpenAIContext.Default);

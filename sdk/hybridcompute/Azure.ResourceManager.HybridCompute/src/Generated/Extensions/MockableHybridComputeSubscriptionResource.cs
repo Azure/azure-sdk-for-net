@@ -44,19 +44,31 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 
         private ClientDiagnostics LicensesClientDiagnostics => _licensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Licenses LicensesRestClient => _licensesRestClient ??= new Licenses(LicensesClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private Licenses LicensesRestClient => _licensesRestClient ??= new Licenses(
+            LicensesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics MachinesClientDiagnostics => _machinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Machines MachinesRestClient => _machinesRestClient ??= new Machines(MachinesClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private Machines MachinesRestClient => _machinesRestClient ??= new Machines(MachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/machines", out string apiVersion0) ? apiVersion0 : "2026-07-15");
 
         private ClientDiagnostics GatewaysClientDiagnostics => _gatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(GatewaysClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(GatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/gateways", out string apiVersion1) ? apiVersion1 : "2026-07-15");
 
         private ClientDiagnostics PrivateLinkScopesClientDiagnostics => _privateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(
+            PrivateLinkScopesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of HybridComputeExtensionValues in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -65,7 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> An object representing collection of HybridComputeExtensionValues and their operations over a HybridComputeExtensionValueResource. </returns>
         public virtual HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(AzureLocation location, string publisher, string extensionType)
         {
-            return GetCachedClient(client => new HybridComputeExtensionValueCollection(client, Id, location, publisher, extensionType));
+            return new HybridComputeExtensionValueCollection(Client, Id, location, publisher, extensionType);
         }
 
         /// <summary>
@@ -81,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +169,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetBySubscriptionAsyncCollectionResultOfT(LicensesRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new HybridComputeLicenseDataAsync0CollectionResultOfT(LicensesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +185,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +197,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetBySubscriptionCollectionResultOfT(LicensesRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
+            return new PageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new HybridComputeLicenseData0CollectionResultOfT(LicensesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +213,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new MachinesGetBySubscriptionAsyncCollectionResultOfT(MachinesRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new HybridComputeMachineDataAsync0CollectionResultOfT(MachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +241,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,7 +253,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new MachinesGetBySubscriptionCollectionResultOfT(MachinesRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
+            return new PageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new HybridComputeMachineData0CollectionResultOfT(MachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -257,7 +269,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +281,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetBySubscriptionAsyncCollectionResultOfT(GatewaysRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataAsync0CollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -285,7 +297,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +309,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetBySubscriptionCollectionResultOfT(GatewaysRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
+            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayData0CollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +325,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +337,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetAllAsyncCollectionResultOfT(PrivateLinkScopesRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeDataAsync0CollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +353,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +365,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetAllCollectionResultOfT(PrivateLinkScopesRestClient, Id.SubscriptionId, context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeData0CollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -369,7 +381,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +401,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Id.SubscriptionId, HybridComputeLicenseData.ToRequestContent(data), context);
+                HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Guid.Parse(Id.SubscriptionId), HybridComputeLicenseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
                     new HybridComputeLicenseResourceOperationSource(Client),
@@ -424,7 +436,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,7 +456,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Id.SubscriptionId, HybridComputeLicenseData.ToRequestContent(data), context);
+                HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Guid.Parse(Id.SubscriptionId), HybridComputeLicenseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
                     new HybridComputeLicenseResourceOperationSource(Client),
@@ -479,7 +491,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -500,7 +512,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Id.SubscriptionId, privateLinkScopeId, context);
+                HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Guid.Parse(Id.SubscriptionId), privateLinkScopeId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -529,7 +541,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -550,7 +562,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Id.SubscriptionId, privateLinkScopeId, context);
+                HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Guid.Parse(Id.SubscriptionId), privateLinkScopeId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.ResourceType, out string virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion);
             _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(_virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(_virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion ?? "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new VirtualMachineScaleSetNetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationDataAsync0CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new VirtualMachineScaleSetNetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsCollectionResultOfT(
+            return new PageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationData0CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

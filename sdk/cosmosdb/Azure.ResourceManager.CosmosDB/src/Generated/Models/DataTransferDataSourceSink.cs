@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Base class for all DataTransfer source/sink
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/>, <see cref="CosmosMongoVCoreDataTransferDataSourceSink"/>, <see cref="CosmosSqlDataTransferDataSourceSink"/>, and <see cref="AzureBlobDataTransferDataSourceSink"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/>, <see cref="CosmosMongoVCoreDataTransferDataSourceSink"/>, and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
     /// </summary>
     public abstract partial class DataTransferDataSourceSink
     {

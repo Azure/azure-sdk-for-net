@@ -15,7 +15,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Parameters for VirtualHub. </summary>
     internal partial class VirtualHubProperties : IJsonModel<VirtualHubProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -111,10 +110,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(RouteTable))
+            if (Optional.IsDefined(Route))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable, options);
+                writer.WriteObjectValue(Route, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -165,9 +164,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in IPConfigurations)
+                foreach (WritableSubResource item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -196,6 +200,26 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
                 foreach (string item in VirtualRouterIPs)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AddressPrefixV6))
+            {
+                writer.WritePropertyName("addressPrefixV6"u8);
+                writer.WriteStringValue(AddressPrefixV6);
+            }
+            if (Optional.IsCollectionDefined(VirtualRouterIpsV6))
+            {
+                writer.WritePropertyName("virtualRouterIpsV6"u8);
+                writer.WriteStartArray();
+                foreach (string item in VirtualRouterIpsV6)
                 {
                     if (item == null)
                     {
@@ -275,17 +299,19 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource azureFirewall = default;
             NetworkSubResource securityPartnerProvider = default;
             string addressPrefix = default;
-            VirtualHubRouteTable routeTable = default;
+            VirtualHubRouteTable route = default;
             NetworkProvisioningState? provisioningState = default;
             string securityProviderName = default;
             IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S = default;
             string sku = default;
             RoutingState? routingState = default;
             IReadOnlyList<WritableSubResource> bgpConnections = default;
-            IReadOnlyList<NetworkSubResource> ipConfigurations = default;
+            IReadOnlyList<WritableSubResource> ipConfigurations = default;
             IReadOnlyList<WritableSubResource> routeMaps = default;
             long? virtualRouterAsn = default;
             IList<string> virtualRouterIPs = default;
+            string addressPrefixV6 = default;
+            IList<string> virtualRouterIpsV6 = default;
             bool? allowBranchToBranchTraffic = default;
             PreferredRoutingGateway? preferredRoutingGateway = default;
             HubRoutingPreference? hubRoutingPreference = default;
@@ -358,7 +384,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(prop.Value, options);
+                    route = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -430,10 +456,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     ipConfigurations = array;
                     continue;
@@ -489,6 +522,32 @@ namespace Azure.ResourceManager.Network.Models
                     virtualRouterIPs = array;
                     continue;
                 }
+                if (prop.NameEquals("addressPrefixV6"u8))
+                {
+                    addressPrefixV6 = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("virtualRouterIpsV6"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    virtualRouterIpsV6 = array;
+                    continue;
+                }
                 if (prop.NameEquals("allowBranchToBranchTraffic"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -527,7 +586,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VirtualHubProperties(
@@ -538,17 +597,19 @@ namespace Azure.ResourceManager.Network.Models
                 azureFirewall,
                 securityPartnerProvider,
                 addressPrefix,
-                routeTable,
+                route,
                 provisioningState,
                 securityProviderName,
                 virtualHubRouteTableV2S ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(),
                 sku,
                 routingState,
                 bgpConnections ?? new ChangeTrackingList<WritableSubResource>(),
-                ipConfigurations ?? new ChangeTrackingList<NetworkSubResource>(),
+                ipConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
                 routeMaps ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualRouterAsn,
                 virtualRouterIPs ?? new ChangeTrackingList<string>(),
+                addressPrefixV6,
+                virtualRouterIpsV6 ?? new ChangeTrackingList<string>(),
                 allowBranchToBranchTraffic,
                 preferredRoutingGateway,
                 hubRoutingPreference,

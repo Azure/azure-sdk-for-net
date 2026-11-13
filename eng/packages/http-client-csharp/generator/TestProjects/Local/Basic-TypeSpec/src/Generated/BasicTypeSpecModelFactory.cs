@@ -10,6 +10,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
@@ -47,7 +48,7 @@ namespace BasicTypeSpec
                 requiredBadDescription,
                 optionalNullableList.ToList(),
                 requiredNullableList.ToList(),
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> this is a roundtrip model. </summary>
@@ -114,7 +115,7 @@ namespace BasicTypeSpec
                 readOnlyOptionalRecordUnknown,
                 modelWithRequiredNullable,
                 requiredBytes,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A model with a few required nullable properties. </summary>
@@ -124,7 +125,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
-            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties: null);
+            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, default);
         }
 
         /// <summary> this is not a friendly model but with a friendly name. </summary>
@@ -143,19 +144,19 @@ namespace BasicTypeSpec
             return new RenamedModel(name, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ReturnsAnonymousModelResponse. </summary>
-        /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
-        public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
+        /// <summary> The ReturnsAnonymousModelResult. </summary>
+        /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResult"/> instance for mocking. </returns>
+        public static ReturnsAnonymousModelResult ReturnsAnonymousModelResult()
         {
-            return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
+            return new ReturnsAnonymousModelResult(additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The MultipartRequestRequest. </summary>
+        /// <summary> The MultipartRequestContent. </summary>
         /// <param name="name"></param>
-        /// <returns> A new <see cref="BasicTypeSpec.MultipartRequestRequest"/> instance for mocking. </returns>
-        public static MultipartRequestRequest MultipartRequestRequest(string name = default)
+        /// <returns> A new <see cref="BasicTypeSpec.MultipartRequestContent"/> instance for mocking. </returns>
+        public static MultipartRequestContent MultipartRequestContent(string name = default)
         {
-            return new MultipartRequestRequest(name);
+            return new MultipartRequestContent(name);
         }
 
         /// <summary> Model with DataFactoryElement properties. </summary>
@@ -191,7 +192,7 @@ namespace BasicTypeSpec
         /// <param name="nestedModel"> A nested model property. </param>
         /// <param name="optionalNestedModel"> An optional nested model. </param>
         /// <param name="metadata"> A dictionary property. </param>
-        /// <param name="createdAt"> A date-time property. </param>
+        /// <param name="createdOn"> A date-time property. </param>
         /// <param name="duration"> A duration property. </param>
         /// <param name="data"> A bytes property. </param>
         /// <param name="optionalRecordUnknown"> optional record of unknown. </param>
@@ -211,7 +212,7 @@ namespace BasicTypeSpec
         /// <param name="dictionaryListFoo"></param>
         /// <param name="listOfDictionaryFoo"></param>
         /// <returns> A new <see cref="BasicTypeSpec.XmlAdvancedModel"/> instance for mocking. </returns>
-        public static XmlAdvancedModel XmlAdvancedModel(string name = default, int age = default, bool enabled = default, float score = default, string optionalString = default, int? optionalInt = default, string nullableString = default, string id = default, int version = default, bool isActive = default, string originalName = default, string xmlIdentifier = default, string content = default, IEnumerable<string> unwrappedStrings = default, IEnumerable<int> unwrappedCounts = default, IEnumerable<XmlItem> unwrappedItems = default, IEnumerable<string> wrappedColors = default, IEnumerable<XmlItem> items = default, XmlNestedModel nestedModel = default, XmlNestedModel optionalNestedModel = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default, TimeSpan duration = default, BinaryData data = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, StringFixedEnum fixedEnum = default, StringExtensibleEnum extensibleEnum = default, IntFixedEnum? optionalFixedEnum = default, IntExtensibleEnum? optionalExtensibleEnum = default, string label = default, int daysUsed = default, IEnumerable<string> fooItems = default, XmlNestedModel anotherModel = default, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces = default, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default, IEnumerable<IList<XmlItem>> listOfListFoo = default, IDictionary<string, XmlItem> dictionaryFoo = default, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default, IDictionary<string, IList<XmlItem>> dictionaryListFoo = default, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo = default)
+        public static XmlAdvancedModel XmlAdvancedModel(string name = default, int age = default, bool enabled = default, float score = default, string optionalString = default, int? optionalInt = default, string nullableString = default, string id = default, int version = default, bool isActive = default, string originalName = default, string xmlIdentifier = default, string content = default, IEnumerable<string> unwrappedStrings = default, IEnumerable<int> unwrappedCounts = default, IEnumerable<XmlItem> unwrappedItems = default, IEnumerable<string> wrappedColors = default, IEnumerable<XmlItem> items = default, XmlNestedModel nestedModel = default, XmlNestedModel optionalNestedModel = default, IDictionary<string, string> metadata = default, DateTimeOffset createdOn = default, TimeSpan duration = default, BinaryData data = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, StringFixedEnum fixedEnum = default, StringExtensibleEnum extensibleEnum = default, IntFixedEnum? optionalFixedEnum = default, IntExtensibleEnum? optionalExtensibleEnum = default, string label = default, int daysUsed = default, IEnumerable<string> fooItems = default, XmlNestedModel anotherModel = default, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces = default, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default, IEnumerable<IList<XmlItem>> listOfListFoo = default, IDictionary<string, XmlItem> dictionaryFoo = default, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default, IDictionary<string, IList<XmlItem>> dictionaryListFoo = default, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo = default)
         {
             unwrappedStrings ??= new ChangeTrackingList<string>();
             unwrappedCounts ??= new ChangeTrackingList<int>();
@@ -251,7 +252,7 @@ namespace BasicTypeSpec
                 nestedModel,
                 optionalNestedModel,
                 metadata,
-                createdAt,
+                createdOn,
                 duration,
                 data,
                 optionalRecordUnknown,
@@ -349,6 +350,27 @@ namespace BasicTypeSpec
                 fixedEnumPart,
                 intExtensibleEnumPart,
                 intFixedEnumPart);
+        }
+
+        /// <summary> The StreamingItem. </summary>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.StreamingItem"/> instance for mocking. </returns>
+        public static StreamingItem StreamingItem(string message = default)
+        {
+            return new StreamingItem(message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ResourceIdentifierModel. </summary>
+        /// <param name="id"></param>
+        /// <param name="optionalId"></param>
+        /// <param name="nullableId"></param>
+        /// <param name="ids"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.ResourceIdentifierModel"/> instance for mocking. </returns>
+        public static ResourceIdentifierModel ResourceIdentifierModel(ResourceIdentifier id = default, ResourceIdentifier optionalId = default, ResourceIdentifier nullableId = default, IEnumerable<ResourceIdentifier> ids = default)
+        {
+            ids ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new ResourceIdentifierModel(id, optionalId, nullableId, ids.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Tree is a specific type of plant. </summary>

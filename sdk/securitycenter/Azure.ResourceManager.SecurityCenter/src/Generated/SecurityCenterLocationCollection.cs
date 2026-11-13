@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityCenterLocationResource.ResourceType, out string securityCenterLocationApiVersion);
             _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
-            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new LocationsGetAllAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new SecurityCenterLocationDataAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new LocationsGetAllCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
+            return new PageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new SecurityCenterLocationDataCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
         }
 
         /// <summary>
