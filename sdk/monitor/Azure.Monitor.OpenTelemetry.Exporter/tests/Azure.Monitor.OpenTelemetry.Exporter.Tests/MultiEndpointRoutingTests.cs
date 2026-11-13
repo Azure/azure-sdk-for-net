@@ -359,7 +359,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     CreateActivity("ikey-a", EastUs),
                     CreateActivity("ikey-b", EastUs)),
                 resource,
-                sampleRate: 100,
+                fallbackSampleRate: 100,
                 routeBatch);
 
             Assert.Empty(routeBatch[0].TelemetryItems.Where(item => item.Data?.BaseType == "MetricData"));
@@ -386,7 +386,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(
                 CreateBatch(CreateActivity("ikey-a", EastUs, cloudRole: "app-role")),
                 resource,
-                sampleRate: 100,
+                fallbackSampleRate: 100,
                 routeBatch);
 
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
@@ -505,7 +505,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateBatch(CreateActivity("ikey-a", EastUs, cloudRole: "app-role", ingestionAuth: "aad")),
                 null,
                 "exporter-ikey",
-                sampleRate: 100);
+                fallbackSampleRate: 100);
 
             var telemetryItem = telemetryItems.Single();
             Assert.Equal("exporter-ikey", telemetryItem.InstrumentationKey);
@@ -751,13 +751,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateBatch(corpus.Select(create => StripRoutingTags(create())).ToArray()),
                 resource,
                 "ikey-a",
-                sampleRate: 100);
+                fallbackSampleRate: 100);
 
             var routeBatch = new EndpointRouteBatch();
             TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(
                 CreateBatch(corpus.Select(create => create()).ToArray()),
                 resource,
-                sampleRate: 100,
+                fallbackSampleRate: 100,
                 routeBatch);
 
             var singleEndpoint = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(singleEndpointItems));
@@ -970,6 +970,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.DoesNotContain("ingestion endpoint '{", message, StringComparison.Ordinal);
         }
 
+        [Fact]
+        public void RoutedEnvelopesCarryEachSpansSampleRate()
+        {
+            var sampled = CreateActivity("ikey-a", EastUs);
+            sampled.SetTag(SemanticConventions.AttributeMicrosoftSampleRate, 25.0);
+            var unsampled = CreateActivity("ikey-a", EastUs);
+
+            var telemetryItems = Convert(sampled, unsampled)[0].TelemetryItems;
+
+            Assert.Equal(25f, telemetryItems[0].SampleRate);
+            Assert.Null(telemetryItems[1].SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((RequestData)telemetryItems[0].Data.BaseData).Properties.Keys);
+        }
+
         /// <summary>A shared sequence would tie unrelated exports together.</summary>
         [Fact]
         public void EachExportGetsItsOwnSequence()
@@ -989,7 +1003,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var routeBatch = new EndpointRouteBatch();
             routeBatch.BeginExport();
-            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(activities), null, sampleRate: 100, routeBatch);
+            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(activities), null, fallbackSampleRate: 100, routeBatch);
             return routeBatch;
         }
 

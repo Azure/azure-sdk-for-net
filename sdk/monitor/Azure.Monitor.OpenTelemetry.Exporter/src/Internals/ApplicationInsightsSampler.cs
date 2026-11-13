@@ -16,6 +16,7 @@ internal sealed class ApplicationInsightsSampler : Sampler
     private static readonly SamplingResult RecordOnlySamplingResult = new(SamplingDecision.RecordOnly);
     private static readonly SamplingResult RecordAndSampleSamplingResult = new(SamplingDecision.RecordAndSample);
     private readonly float samplingRatio;
+    private readonly SamplingResult sampledInResult;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ApplicationInsightsSampler"/> class.
@@ -34,6 +35,14 @@ internal sealed class ApplicationInsightsSampler : Sampler
 
         this.samplingRatio = samplingRatio;
         Description = "ApplicationInsightsSampler{" + samplingRatio + "}";
+
+        // Built once so a sampled-in span costs no allocation. The rate is what the exporter writes
+        // to the envelope sampleRate, so it is only carried when sampling actually drops spans.
+        sampledInResult = samplingRatio < 1.0F
+            ? new SamplingResult(
+                SamplingDecision.RecordAndSample,
+                new[] { new KeyValuePair<string, object>(SemanticConventions.AttributeMicrosoftSampleRate, SampleRateHelper.FromSamplingRatio(samplingRatio)) })
+            : RecordAndSampleSamplingResult;
     }
 
     /// <summary>
@@ -58,7 +67,7 @@ internal sealed class ApplicationInsightsSampler : Sampler
 
         if (sampleScore < samplingRatio)
         {
-            return RecordAndSampleSamplingResult;
+            return sampledInResult;
         }
         else
         {
