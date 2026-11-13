@@ -106,10 +106,10 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("visualTokens"u8);
                 writer.WriteNumberValue(VisualTokens.Value);
             }
-            if (Optional.IsDefined(Truncated))
+            if (Optional.IsDefined(IsTruncated))
             {
                 writer.WritePropertyName("truncated"u8);
-                writer.WriteBooleanValue(Truncated.Value);
+                writer.WriteBooleanValue(IsTruncated.Value);
             }
             if (Optional.IsDefined(InputTokens))
             {
@@ -166,7 +166,7 @@ namespace Azure.Data.AI
             EmbeddingImageFormat? format = default;
             long? tokens = default;
             long? visualTokens = default;
-            bool? truncated = default;
+            bool? isTruncated = default;
             long? inputTokens = default;
             EmbeddingVectorKind vectorKind = default;
             IList<int> shape = default;
@@ -245,7 +245,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    truncated = prop.Value.GetBoolean();
+                    isTruncated = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("inputTokens"u8))
@@ -298,7 +298,7 @@ namespace Azure.Data.AI
                 format,
                 tokens,
                 visualTokens,
-                truncated,
+                isTruncated,
                 inputTokens,
                 vectorKind,
                 shape ?? new ChangeTrackingList<int>(),

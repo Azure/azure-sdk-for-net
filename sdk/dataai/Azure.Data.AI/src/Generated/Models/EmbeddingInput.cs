@@ -23,7 +23,7 @@ namespace Azure.Data.AI
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingInput"/>. </summary>
         /// <param name="id"> A caller-chosen identifier, up to 256 characters, echoed on the matching result. </param>
-        /// <param name="kind"> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </param>
+        /// <param name="contentKind"> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </param>
         /// <param name="content">
         /// The item, inline. For `text` and `query`: the text, up to 100,000 characters; text over the model's token limit
         /// (currently 8,192 tokens) isn't rejected: only its start is embedded, and the result is flagged with `truncated` and
@@ -42,10 +42,10 @@ namespace Azure.Data.AI
         /// it for one read and never stores, logs or returns it.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingInput(string id, EmbeddingContentKind? kind, string content, Uri uri, string sasToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingInput(string id, EmbeddingContentKind? contentKind, string content, Uri uri, string sasToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Kind = kind;
+            ContentKind = contentKind;
             Content = content;
             Uri = uri;
             SasToken = sasToken;
@@ -54,9 +54,6 @@ namespace Azure.Data.AI
 
         /// <summary> A caller-chosen identifier, up to 256 characters, echoed on the matching result. </summary>
         public string Id { get; set; }
-
-        /// <summary> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </summary>
-        public EmbeddingContentKind? Kind { get; set; }
 
         /// <summary>
         /// The item, inline. For `text` and `query`: the text, up to 100,000 characters; text over the model's token limit

@@ -49,7 +49,7 @@ namespace Azure.Data.AI
         /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
         /// </param>
         /// <param name="visualTokens"> For images: how many of `tokens` were image tokens. </param>
-        /// <param name="truncated">
+        /// <param name="isTruncated">
         /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
         /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
         /// </param>
@@ -64,7 +64,7 @@ namespace Azure.Data.AI
         /// The multi-vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all
         /// their little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalDenseAndMultiVectorEmbedding(EmbeddingDataKind kind, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmbeddingContentKind contentKind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, EmbeddingVectorKind vectorKind, IList<int> shape, BinaryData embedding, BinaryData multiEmbedding) : base(kind, index, id, additionalBinaryDataProperties)
+        internal MultimodalDenseAndMultiVectorEmbedding(EmbeddingDataKind kind, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmbeddingContentKind contentKind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? isTruncated, long? inputTokens, EmbeddingVectorKind vectorKind, IList<int> shape, BinaryData embedding, BinaryData multiEmbedding) : base(kind, index, id, additionalBinaryDataProperties)
         {
             ContentKind = contentKind;
             Width = width;
@@ -72,7 +72,7 @@ namespace Azure.Data.AI
             Format = format;
             Tokens = tokens;
             VisualTokens = visualTokens;
-            Truncated = truncated;
+            IsTruncated = isTruncated;
             InputTokens = inputTokens;
             VectorKind = vectorKind;
             Shape = shape;
@@ -100,12 +100,6 @@ namespace Azure.Data.AI
 
         /// <summary> For images: how many of `tokens` were image tokens. </summary>
         public long? VisualTokens { get; }
-
-        /// <summary>
-        /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
-        /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
-        /// </summary>
-        public bool? Truncated { get; }
 
         /// <summary> For truncated items only: the item's tokens before truncation. </summary>
         public long? InputTokens { get; }

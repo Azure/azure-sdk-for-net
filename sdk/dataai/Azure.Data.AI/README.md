@@ -104,7 +104,7 @@ Use a model version and dimension supported by your endpoint. Omit `dimensions` 
 model's native width. Each input produces a separate embedding, not a fused query/image embedding.
 Anonymous inputs use reflection-based JSON serialization; trimmed or Native AOT applications
 should use the typed `EmbeddingInput` overloads instead. These inputs have a parameterless
-constructor and optional `Kind`, so text inputs only need `Content`. `EmbeddingResult` exposes generic
+constructor and optional `ContentKind`, so text inputs only need `Content`. `EmbeddingResult` exposes generic
 `EmbeddingItem` and `EmbeddingUsage` bases; cast to the concrete multimodal models to access their
 vector payloads and modality-specific metadata.
 

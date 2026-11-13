@@ -78,10 +78,10 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Kind))
+            if (Optional.IsDefined(ContentKind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
+                writer.WriteStringValue(ContentKind.Value.ToString());
             }
             if (Optional.IsDefined(Content))
             {
@@ -141,7 +141,7 @@ namespace Azure.Data.AI
                 return null;
             }
             string id = default;
-            EmbeddingContentKind? kind = default;
+            EmbeddingContentKind? contentKind = default;
             string content = default;
             Uri uri = default;
             string sasToken = default;
@@ -159,7 +159,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    kind = new EmbeddingContentKind(prop.Value.GetString());
+                    contentKind = new EmbeddingContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("content"u8))
@@ -188,7 +188,7 @@ namespace Azure.Data.AI
             }
             return new EmbeddingInput(
                 id,
-                kind,
+                contentKind,
                 content,
                 uri,
                 sasToken,

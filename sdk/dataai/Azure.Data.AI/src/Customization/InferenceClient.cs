@@ -7,6 +7,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +26,10 @@ namespace Azure.Data.AI
     // throws before a request is ever sent. The replacement below picks the policy that
     // matches the configured credential.
     [CodeGenSuppress("InferenceClient", typeof(InferenceClientSettings))]
+    // The typed GetEmbeddings overloads are re-declared below, with the generated bodies, only to
+    // name the multi-vector width multiVectorDimensions instead of the generated multiDimensions.
+    [CodeGenSuppress("GetEmbeddings", typeof(IEnumerable<EmbeddingInput>), typeof(string), typeof(string), typeof(EmbeddingVectorKind?), typeof(int?), typeof(int?), typeof(int?), typeof(EmbeddingOutputDataKind?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingDelivery?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEmbeddingsAsync", typeof(IEnumerable<EmbeddingInput>), typeof(string), typeof(string), typeof(EmbeddingVectorKind?), typeof(int?), typeof(int?), typeof(int?), typeof(EmbeddingOutputDataKind?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingDelivery?), typeof(CancellationToken))]
     public partial class InferenceClient
     {
         /// <summary> Initializes a new instance of InferenceClient from a <see cref="InferenceClientSettings"/>. </summary>
@@ -61,35 +66,113 @@ namespace Azure.Data.AI
         }
 
         /// <summary>
-        /// Embeds text, queries and document images using loosely typed items, for example anonymous objects or dictionaries.
-        /// Each item is serialized to JSON with <see cref="JsonSerializer"/> using camelCase property and dictionary key naming and must produce
-        /// a JSON object with only the wire properties <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c>
-        /// (all optional, string values). C#-cased names such as <c>Content</c> map to the wire names and <see cref="EmbeddingContentKind"/> values
-        /// are written as their string value. <see cref="JsonElement"/> items must use the exact wire names. Unknown or duplicate properties are rejected.
-        /// <see cref="EmbeddingInput"/> instances are used as-is.
+        /// Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
+        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
+        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
+        /// time-limited read-only link.
         /// </summary>
-        /// <param name="inputs"> The items to embed. </param>
-        /// <param name="model"> The model to use. </param>
-        /// <param name="modelVersion"> The model version to use. </param>
-        /// <param name="vectorKind"> The kind of vectors to return. </param>
-        /// <param name="dimensions"> The number of dimensions of the returned vectors. </param>
-        /// <param name="multiDimensions"> The number of dimensions of multi-vector embeddings. </param>
-        /// <param name="maxVectorCount"> The maximum number of vectors per item. </param>
-        /// <param name="outputDataKind"> The data kind of the returned vectors. </param>
-        /// <param name="encodingFormat"> The encoding format of the returned vectors. </param>
-        /// <param name="delivery"> How results are delivered. </param>
+        /// <param name="inputs">
+        /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
+        /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
+        /// of images per request. The request body can be up to 30,000,000 bytes.
+        /// </param>
+        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
+        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
+        /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
+        /// <param name="dimensions">
+        /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
+        /// requested vector kind; the model's native width is the default.
+        /// </param>
+        /// <param name="multiVectorDimensions">
+        /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
+        /// the model's native multi-vector width is the default.
+        /// </param>
+        /// <param name="maxVectorCount"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
+        /// <param name="outputDataKind">
+        /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
+        /// `float16` for `multi` and `dense_multi`.
+        /// </param>
+        /// <param name="encodingFormat"> How vectors are encoded in the response. Defaults to `float`. </param>
+        /// <param name="delivery">
+        /// How to return the results. An explicit value wins. Without it, a request with images gets `link` where the
+        /// endpoint has a result store, and every other request gets `inline`.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
-        /// <exception cref="ArgumentException"> An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-#if NET5_0_OR_GREATER
-        [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
-        [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
-#endif
-        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<EmbeddingInput> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
-            IEnumerable<EmbeddingInput> items = ConvertToContentItems(inputs, nameof(inputs));
-            return GetEmbeddings(items, model, modelVersion, vectorKind, dimensions, multiDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken);
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            EmbedContent spreadModel = new EmbedContent(
+                inputs?.ToList() as IList<EmbeddingInput> ?? new ChangeTrackingList<EmbeddingInput>(),
+                model,
+                modelVersion,
+                vectorKind,
+                dimensions,
+                multiVectorDimensions,
+                maxVectorCount,
+                outputDataKind,
+                encodingFormat,
+                delivery,
+                default);
+            Response result = GetEmbeddings(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((EmbeddingResult)result, result);
+        }
+
+        /// <summary>
+        /// Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
+        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
+        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
+        /// time-limited read-only link.
+        /// </summary>
+        /// <param name="inputs">
+        /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
+        /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
+        /// of images per request. The request body can be up to 30,000,000 bytes.
+        /// </param>
+        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
+        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
+        /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
+        /// <param name="dimensions">
+        /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
+        /// requested vector kind; the model's native width is the default.
+        /// </param>
+        /// <param name="multiVectorDimensions">
+        /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
+        /// the model's native multi-vector width is the default.
+        /// </param>
+        /// <param name="maxVectorCount"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
+        /// <param name="outputDataKind">
+        /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
+        /// `float16` for `multi` and `dense_multi`.
+        /// </param>
+        /// <param name="encodingFormat"> How vectors are encoded in the response. Defaults to `float`. </param>
+        /// <param name="delivery">
+        /// How to return the results. An explicit value wins. Without it, a request with images gets `link` where the
+        /// endpoint has a result store, and every other request gets `inline`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<EmbeddingInput> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            EmbedContent spreadModel = new EmbedContent(
+                inputs?.ToList() as IList<EmbeddingInput> ?? new ChangeTrackingList<EmbeddingInput>(),
+                model,
+                modelVersion,
+                vectorKind,
+                dimensions,
+                multiVectorDimensions,
+                maxVectorCount,
+                outputDataKind,
+                encodingFormat,
+                delivery,
+                default);
+            Response result = await GetEmbeddingsAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((EmbeddingResult)result, result);
         }
 
         /// <summary>
@@ -105,7 +188,7 @@ namespace Azure.Data.AI
         /// <param name="modelVersion"> The model version to use. </param>
         /// <param name="vectorKind"> The kind of vectors to return. </param>
         /// <param name="dimensions"> The number of dimensions of the returned vectors. </param>
-        /// <param name="multiDimensions"> The number of dimensions of multi-vector embeddings. </param>
+        /// <param name="multiVectorDimensions"> The number of dimensions of multi-vector embeddings. </param>
         /// <param name="maxVectorCount"> The maximum number of vectors per item. </param>
         /// <param name="outputDataKind"> The data kind of the returned vectors. </param>
         /// <param name="encodingFormat"> The encoding format of the returned vectors. </param>
@@ -118,10 +201,42 @@ namespace Azure.Data.AI
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
             IEnumerable<EmbeddingInput> items = ConvertToContentItems(inputs, nameof(inputs));
-            return await GetEmbeddingsAsync(items, model, modelVersion, vectorKind, dimensions, multiDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken).ConfigureAwait(false);
+            return GetEmbeddings(items, model, modelVersion, vectorKind, dimensions, multiVectorDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken);
+        }
+
+        /// <summary>
+        /// Embeds text, queries and document images using loosely typed items, for example anonymous objects or dictionaries.
+        /// Each item is serialized to JSON with <see cref="JsonSerializer"/> using camelCase property and dictionary key naming and must produce
+        /// a JSON object with only the wire properties <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c>
+        /// (all optional, string values). C#-cased names such as <c>Content</c> map to the wire names and <see cref="EmbeddingContentKind"/> values
+        /// are written as their string value. <see cref="JsonElement"/> items must use the exact wire names. Unknown or duplicate properties are rejected.
+        /// <see cref="EmbeddingInput"/> instances are used as-is.
+        /// </summary>
+        /// <param name="inputs"> The items to embed. </param>
+        /// <param name="model"> The model to use. </param>
+        /// <param name="modelVersion"> The model version to use. </param>
+        /// <param name="vectorKind"> The kind of vectors to return. </param>
+        /// <param name="dimensions"> The number of dimensions of the returned vectors. </param>
+        /// <param name="multiVectorDimensions"> The number of dimensions of multi-vector embeddings. </param>
+        /// <param name="maxVectorCount"> The maximum number of vectors per item. </param>
+        /// <param name="outputDataKind"> The data kind of the returned vectors. </param>
+        /// <param name="encodingFormat"> The encoding format of the returned vectors. </param>
+        /// <param name="delivery"> How results are delivered. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
+        /// <exception cref="ArgumentException"> An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+#if NET5_0_OR_GREATER
+        [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
+        [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
+#endif
+        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<EmbeddingInput> items = ConvertToContentItems(inputs, nameof(inputs));
+            return await GetEmbeddingsAsync(items, model, modelVersion, vectorKind, dimensions, multiVectorDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken).ConfigureAwait(false);
         }
 
 #if NET5_0_OR_GREATER

@@ -113,7 +113,7 @@ namespace Azure.Data.AI
 
         /// <summary> One item to embed, defaulting to text: an optional `id` and exactly one source, `content` or `url` with `sasToken`. </summary>
         /// <param name="id"> A caller-chosen identifier, up to 256 characters, echoed on the matching result. </param>
-        /// <param name="kind"> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </param>
+        /// <param name="contentKind"> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </param>
         /// <param name="content">
         /// The item, inline. For `text` and `query`: the text, up to 100,000 characters; text over the model's token limit
         /// (currently 8,192 tokens) isn't rejected: only its start is embedded, and the result is flagged with `truncated` and
@@ -132,11 +132,11 @@ namespace Azure.Data.AI
         /// it for one read and never stores, logs or returns it.
         /// </param>
         /// <returns> A new <see cref="AI.EmbeddingInput"/> instance for mocking. </returns>
-        public static EmbeddingInput EmbeddingInput(string id = default, EmbeddingContentKind? kind = default, string content = default, Uri uri = default, string sasToken = default)
+        public static EmbeddingInput EmbeddingInput(string id = default, EmbeddingContentKind? contentKind = default, string content = default, Uri uri = default, string sasToken = default)
         {
             return new EmbeddingInput(
                 id,
-                kind,
+                contentKind,
                 content,
                 uri,
                 sasToken,
@@ -180,7 +180,7 @@ namespace Azure.Data.AI
         /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
         /// </param>
         /// <param name="visualTokens"> For images: how many of `tokens` were image tokens. </param>
-        /// <param name="truncated">
+        /// <param name="isTruncated">
         /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
         /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
         /// </param>
@@ -190,7 +190,7 @@ namespace Azure.Data.AI
         /// `outputDataKind` values.
         /// </param>
         /// <returns> A new <see cref="AI.MultimodalDenseEmbedding"/> instance for mocking. </returns>
-        public static MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, BinaryData embedding = default)
+        public static MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? isTruncated = default, long? inputTokens = default, BinaryData embedding = default)
         {
             return new MultimodalDenseEmbedding(
                 EmbeddingDataKind.MultimodalDense,
@@ -203,7 +203,7 @@ namespace Azure.Data.AI
                 format,
                 tokens,
                 visualTokens,
-                truncated,
+                isTruncated,
                 inputTokens,
                 "dense",
                 embedding);
@@ -221,7 +221,7 @@ namespace Azure.Data.AI
         /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
         /// </param>
         /// <param name="visualTokens"> For images: how many of `tokens` were image tokens. </param>
-        /// <param name="truncated">
+        /// <param name="isTruncated">
         /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
         /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
         /// </param>
@@ -232,7 +232,7 @@ namespace Azure.Data.AI
         /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
         /// <returns> A new <see cref="AI.MultimodalMultiVectorEmbedding"/> instance for mocking. </returns>
-        public static MultimodalMultiVectorEmbedding MultimodalMultiVectorEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, IEnumerable<int> shape = default, BinaryData multiEmbedding = default)
+        public static MultimodalMultiVectorEmbedding MultimodalMultiVectorEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? isTruncated = default, long? inputTokens = default, IEnumerable<int> shape = default, BinaryData multiEmbedding = default)
         {
             shape ??= new ChangeTrackingList<int>();
 
@@ -247,7 +247,7 @@ namespace Azure.Data.AI
                 format,
                 tokens,
                 visualTokens,
-                truncated,
+                isTruncated,
                 inputTokens,
                 "multi",
                 shape.ToList(),
@@ -266,7 +266,7 @@ namespace Azure.Data.AI
         /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
         /// </param>
         /// <param name="visualTokens"> For images: how many of `tokens` were image tokens. </param>
-        /// <param name="truncated">
+        /// <param name="isTruncated">
         /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
         /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
         /// </param>
@@ -281,7 +281,7 @@ namespace Azure.Data.AI
         /// their little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
         /// <returns> A new <see cref="AI.MultimodalDenseAndMultiVectorEmbedding"/> instance for mocking. </returns>
-        public static MultimodalDenseAndMultiVectorEmbedding MultimodalDenseAndMultiVectorEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, IEnumerable<int> shape = default, BinaryData embedding = default, BinaryData multiEmbedding = default)
+        public static MultimodalDenseAndMultiVectorEmbedding MultimodalDenseAndMultiVectorEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? isTruncated = default, long? inputTokens = default, IEnumerable<int> shape = default, BinaryData embedding = default, BinaryData multiEmbedding = default)
         {
             shape ??= new ChangeTrackingList<int>();
 
@@ -296,7 +296,7 @@ namespace Azure.Data.AI
                 format,
                 tokens,
                 visualTokens,
-                truncated,
+                isTruncated,
                 inputTokens,
                 "dense_multi",
                 shape.ToList(),

@@ -35,9 +35,9 @@ namespace Azure.Data.AI.Tests
         [TestCase(true, "link", true)]
         public async Task FlattenedCallsSerializeRequestAndDeserializeResponse(bool async, string kind, bool anonymous)
         {
-            var contents = new[] { new EmbeddingInput { Kind = EmbeddingContentKind.Text, Id = "item-1", Content = "document" } };
+            var contents = new[] { new EmbeddingInput { ContentKind = EmbeddingContentKind.Text, Id = "item-1", Content = "document" } };
             EmbeddingVectorKind vectorKind = kind == "link" ? EmbeddingVectorKind.Dense : new EmbeddingVectorKind(kind);
-            int? multiDimensions = kind == "dense_multi" ? 2 : null;
+            int? multiVectorDimensions = kind == "dense_multi" ? 2 : null;
             int? maxVectorCount = kind == "multi" || kind == "dense_multi" ? 3 : null;
             EmbeddingDelivery delivery = kind == "link" ? EmbeddingDelivery.Link : EmbeddingDelivery.Inline;
             using var handler = new EmbeddingHandler(contents, kind, new Dictionary<string, object>
@@ -46,7 +46,7 @@ namespace Azure.Data.AI.Tests
                 ["modelVersion"] = "v1",
                 ["vectorKind"] = vectorKind.ToString(),
                 ["dimensions"] = 2,
-                ["multiDimensions"] = multiDimensions,
+                ["multiDimensions"] = multiVectorDimensions,
                 ["maxVectorCount"] = maxVectorCount,
                 ["outputDataKind"] = "float16",
                 ["encodingFormat"] = "float",
@@ -61,11 +61,11 @@ namespace Azure.Data.AI.Tests
                 var inputs = new object[] { new { kind = "text", id = "item-1", content = "document" } };
                 response = async
                     ? await client.GetEmbeddingsAsync(inputs, model: "test-model", modelVersion: "v1",
-                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery)
                     : client.GetEmbeddings(inputs, model: "test-model", modelVersion: "v1",
-                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery);
             }
@@ -73,11 +73,11 @@ namespace Azure.Data.AI.Tests
             {
                 response = async
                     ? await client.GetEmbeddingsAsync(contents, model: "test-model", modelVersion: "v1",
-                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery)
                     : client.GetEmbeddings(contents, model: "test-model", modelVersion: "v1",
-                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery);
             }
@@ -167,7 +167,7 @@ namespace Azure.Data.AI.Tests
                 new EmbeddingInput { Id = "item-1", Content = "document" },
                 new EmbeddingInput
                 {
-                    Kind = EmbeddingContentKind.Image,
+                    ContentKind = EmbeddingContentKind.Image,
                     Id = "item-2",
                     Uri = new Uri("https://example.blob.core.windows.net/images/input.png"),
                     SasToken = "fake-sas"
@@ -212,13 +212,13 @@ namespace Azure.Data.AI.Tests
             {
                 new EmbeddingInput
                 {
-                    Kind = EmbeddingContentKind.Query,
+                    ContentKind = EmbeddingContentKind.Query,
                     Id = "map-question",
                     Content = "Which walking route follows the lake?"
                 },
                 new EmbeddingInput
                 {
-                    Kind = EmbeddingContentKind.Image,
+                    ContentKind = EmbeddingContentKind.Image,
                     Id = "trail-map",
                     Uri = new Uri("https://example.blob.core.windows.net/images/trail.png"),
                     SasToken = "fake-sas"
@@ -286,7 +286,7 @@ namespace Azure.Data.AI.Tests
                 var item = (MultimodalDenseEmbedding)response.Value.Data[index];
                 Assert.That(item.Index, Is.EqualTo(index));
                 Assert.That(item.Id, Is.EqualTo(contents[index].Id));
-                Assert.That(item.ContentKind, Is.EqualTo(contents[index].Kind));
+                Assert.That(item.ContentKind, Is.EqualTo(contents[index].ContentKind));
                 Assert.That(item, Is.TypeOf<MultimodalDenseEmbedding>());
                 AssertVector(((MultimodalDenseEmbedding)item).Embedding, dimensions: dimensions ?? 2);
             }
@@ -307,10 +307,10 @@ namespace Azure.Data.AI.Tests
             using JsonDocument json = JsonDocument.Parse(BinaryData.FromObjectAsJson(query));
             var expected = new[]
             {
-                new EmbeddingInput { Kind = EmbeddingContentKind.Query, Id = "item-1", Content = "document" },
+                new EmbeddingInput { ContentKind = EmbeddingContentKind.Query, Id = "item-1", Content = "document" },
                 new EmbeddingInput
                 {
-                    Kind = EmbeddingContentKind.Image,
+                    ContentKind = EmbeddingContentKind.Image,
                     Id = "item-2",
                     Uri = new Uri("https://example.blob.core.windows.net/images/input.png"),
                     SasToken = "fake-sas"
@@ -368,7 +368,7 @@ namespace Azure.Data.AI.Tests
                 new EmbeddingInput { Id = "item-1", Content = "document" },
                 new EmbeddingInput
                 {
-                    Kind = EmbeddingContentKind.Image,
+                    ContentKind = EmbeddingContentKind.Image,
                     Id = "item-2",
                     Uri = new Uri("https://example.blob.core.windows.net/images/input.png"),
                     SasToken = "fake-sas"
@@ -494,7 +494,7 @@ namespace Azure.Data.AI.Tests
         {
             var contents = new[]
             {
-                new EmbeddingInput { Kind = EmbeddingContentKind.Text, Id = "item-1", Content = "document" }
+                new EmbeddingInput { ContentKind = EmbeddingContentKind.Text, Id = "item-1", Content = "document" }
             };
             using var handler = new EmbeddingHandler(contents, "dense");
             using var httpClient = new HttpClient(handler);
@@ -529,7 +529,7 @@ namespace Azure.Data.AI.Tests
         {
             var item = new EmbeddingInput
             {
-                Kind = EmbeddingContentKind.Image,
+                ContentKind = EmbeddingContentKind.Image,
                 Uri = new Uri("https://example.blob.core.windows.net/images/input.png"),
                 SasToken = "fake-sas"
             };
@@ -607,10 +607,10 @@ namespace Azure.Data.AI.Tests
                     JsonElement content = body.GetProperty("inputs")[index];
                     EmbeddingInput expected = _contents[index];
                     bool hasKind = content.TryGetProperty("kind", out JsonElement actualKind);
-                    Assert.That(hasKind, Is.EqualTo(expected.Kind.HasValue));
+                    Assert.That(hasKind, Is.EqualTo(expected.ContentKind.HasValue));
                     if (hasKind)
                     {
-                        Assert.That(actualKind.GetString(), Is.EqualTo(expected.Kind.Value.ToString()));
+                        Assert.That(actualKind.GetString(), Is.EqualTo(expected.ContentKind.Value.ToString()));
                     }
                     Assert.That(content.GetProperty("id").GetString(), Is.EqualTo(expected.Id));
                     if (expected.Content != null)
@@ -659,7 +659,7 @@ namespace Azure.Data.AI.Tests
                 {
                     ["index"] = 0,
                     ["id"] = _contents[0].Id,
-                    ["contentKind"] = (_contents[0].Kind ?? EmbeddingContentKind.Text).ToString(),
+                    ["contentKind"] = (_contents[0].ContentKind ?? EmbeddingContentKind.Text).ToString(),
                     ["kind"] = "multimodal_" + _kind,
                     ["vectorKind"] = _kind
                 };
@@ -682,7 +682,7 @@ namespace Azure.Data.AI.Tests
                         {
                             index = 1,
                             id = _contents[1].Id,
-                            contentKind = (_contents[1].Kind ?? EmbeddingContentKind.Text).ToString(),
+                            contentKind = (_contents[1].ContentKind ?? EmbeddingContentKind.Text).ToString(),
                             kind = "multimodal_dense",
                             vectorKind = "dense",
                             embedding = vector

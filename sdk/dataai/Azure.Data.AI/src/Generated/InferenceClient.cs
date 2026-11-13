@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -246,116 +244,6 @@ namespace Azure.Data.AI
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
-        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
-        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
-        /// time-limited read-only link.
-        /// </summary>
-        /// <param name="inputs">
-        /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
-        /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
-        /// of images per request. The request body can be up to 30,000,000 bytes.
-        /// </param>
-        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
-        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
-        /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
-        /// <param name="dimensions">
-        /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
-        /// requested vector kind; the model's native width is the default.
-        /// </param>
-        /// <param name="multiDimensions">
-        /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
-        /// the model's native multi-vector width is the default.
-        /// </param>
-        /// <param name="maxVectorCount"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
-        /// <param name="outputDataKind">
-        /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
-        /// `float16` for `multi` and `dense_multi`.
-        /// </param>
-        /// <param name="encodingFormat"> How vectors are encoded in the response. Defaults to `float`. </param>
-        /// <param name="delivery">
-        /// How to return the results. An explicit value wins. Without it, a request with images gets `link` where the
-        /// endpoint has a result store, and every other request gets `inline`.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<EmbeddingInput> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            EmbedContent spreadModel = new EmbedContent(
-                inputs?.ToList() as IList<EmbeddingInput> ?? new ChangeTrackingList<EmbeddingInput>(),
-                model,
-                modelVersion,
-                vectorKind,
-                dimensions,
-                multiDimensions,
-                maxVectorCount,
-                outputDataKind,
-                encodingFormat,
-                delivery,
-                default);
-            Response result = GetEmbeddings(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((EmbeddingResult)result, result);
-        }
-
-        /// <summary>
-        /// Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
-        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
-        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
-        /// time-limited read-only link.
-        /// </summary>
-        /// <param name="inputs">
-        /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
-        /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
-        /// of images per request. The request body can be up to 30,000,000 bytes.
-        /// </param>
-        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
-        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
-        /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
-        /// <param name="dimensions">
-        /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
-        /// requested vector kind; the model's native width is the default.
-        /// </param>
-        /// <param name="multiDimensions">
-        /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
-        /// the model's native multi-vector width is the default.
-        /// </param>
-        /// <param name="maxVectorCount"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
-        /// <param name="outputDataKind">
-        /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
-        /// `float16` for `multi` and `dense_multi`.
-        /// </param>
-        /// <param name="encodingFormat"> How vectors are encoded in the response. Defaults to `float`. </param>
-        /// <param name="delivery">
-        /// How to return the results. An explicit value wins. Without it, a request with images gets `link` where the
-        /// endpoint has a result store, and every other request gets `inline`.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<EmbeddingInput> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            EmbedContent spreadModel = new EmbedContent(
-                inputs?.ToList() as IList<EmbeddingInput> ?? new ChangeTrackingList<EmbeddingInput>(),
-                model,
-                modelVersion,
-                vectorKind,
-                dimensions,
-                multiDimensions,
-                maxVectorCount,
-                outputDataKind,
-                encodingFormat,
-                delivery,
-                default);
-            Response result = await GetEmbeddingsAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EmbeddingResult)result, result);
         }
     }
 }
