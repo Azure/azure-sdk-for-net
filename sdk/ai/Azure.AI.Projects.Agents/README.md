@@ -54,8 +54,15 @@ To use Azure AI Agents capabilities, you must have an [Azure subscription](https
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
+dotnet add package Azure.AI.Projects.Agents
+```
+
+To install latest beta version please run:
+
+```dotnetcli
 dotnet add package Azure.AI.Projects.Agents --prerelease
 ```
+
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
 
