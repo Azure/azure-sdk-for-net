@@ -76,6 +76,12 @@ To use Azure AI Projects capabilities, you must have an [Azure subscription](htt
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
+dotnet add package Azure.AI.Projects
+```
+
+To install latest beta version please run:
+
+```dotnetcli
 dotnet add package Azure.AI.Projects --prerelease
 ```
 

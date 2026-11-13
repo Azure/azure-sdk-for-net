@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
-      The official .NET library for performing CRUD opertations on Agents in Microsoft Foundry.
+      The official .NET library for performing CRUD operations on Agents in Microsoft Foundry.
 
       This library features the client to perform Agent administration operations. It depends on and builds from the official OpenAI library for .NET to maintain rapid upstream feature propagation and
       ongoing forward compatibility.

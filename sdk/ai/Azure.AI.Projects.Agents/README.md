@@ -779,7 +779,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
 [samples]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/net/samples
-[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-v1
 [nuget]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/package
 [source_code]: https://aka.ms/Azure.AI.Projects.Agents/net/code
 [product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc
