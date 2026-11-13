@@ -670,6 +670,20 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+    public partial class ComputerTool : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ComputerTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ComputerTool>
+    {
+        public ComputerTool() : base (default(OpenAI.Responses.ResponseToolKind)) { }
+        protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.ComputerTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ComputerTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ComputerTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.ComputerTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ComputerTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ComputerTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ComputerTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public static partial class CreateResponseOptionsExtensions
     {
@@ -1479,8 +1493,19 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ResponseItemExtensions
     {
+        public static System.Collections.Generic.IReadOnlyList<OpenAI.Responses.ComputerCallAction> get_Actions(OpenAI.Responses.ComputerCallResponseItem computerCall) { throw null; }
         public static Azure.AI.Extensions.OpenAI.AgentReference get_AgentReference(OpenAI.Responses.ResponseItem response) { throw null; }
         public static string get_ResponseId(OpenAI.Responses.ResponseItem response) { throw null; }
+        public sealed partial class <G>$A0931DD0A563AF3C05DB1ADC2F63EF29
+        {
+            internal <G>$A0931DD0A563AF3C05DB1ADC2F63EF29() { }
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
+            public System.Collections.Generic.IReadOnlyList<OpenAI.Responses.ComputerCallAction> Actions { get { throw null; } }
+            public static partial class <M>$ECD114FBF93476A51E6FB35E01C9FC63
+            {
+                public static void <Extension>$(OpenAI.Responses.ComputerCallResponseItem computerCall) { }
+            }
+        }
         public sealed partial class <G>$F3F0025ADD8FA456F8E93354548ADC99
         {
             internal <G>$F3F0025ADD8FA456F8E93354548ADC99() { }
@@ -1583,6 +1608,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static OpenAI.Responses.ResponseToolKind get_BrowserAutomation() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_BrowserAutomationPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_CaptureStructuredOutputs() { throw null; }
+        public static OpenAI.Responses.ResponseToolKind get_Computer() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_Custom() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_FabricDataAgentPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_FabricIQPreview() { throw null; }
@@ -1606,6 +1632,7 @@ namespace Azure.AI.Extensions.OpenAI
             public static OpenAI.Responses.ResponseToolKind BrowserAutomation { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind BrowserAutomationPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind CaptureStructuredOutputs { get { throw null; } }
+            public static OpenAI.Responses.ResponseToolKind Computer { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind Custom { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind FabricDataAgentPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind FabricIQPreview { get { throw null; } }
