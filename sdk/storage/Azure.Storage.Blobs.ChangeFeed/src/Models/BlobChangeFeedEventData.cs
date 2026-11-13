@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -40,6 +41,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlobVersion = (string)blobVersionObject;
             record.TryGetValue(Constants.ChangeFeed.EventData.ContainerVersion, out object containerVersionObject);
             ContainerVersion = (string)containerVersionObject;
+            record.TryGetValue(Constants.ChangeFeed.EventData.RestoredContainerVersion, out object restoredContainerVersionObject);
+            RestoredContainerVersion = (string)restoredContainerVersionObject;
             record.TryGetValue(Constants.ChangeFeed.EventData.BlobTier, out object blobTierObject);
             if (blobTierObject != null)
             {
@@ -47,6 +50,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
             record.TryGetValue(Constants.ChangeFeed.EventData.ContentOffset, out object contentOffset);
             ContentOffset = (long?)contentOffset;
+            record.TryGetValue(Constants.ChangeFeed.EventData.CreationTime, out object creationTime);
+            CreationTime = creationTime != null
+                ? DateTimeOffset.Parse((string)creationTime, CultureInfo.InvariantCulture)
+                : (DateTimeOffset?)null;
+            record.TryGetValue(Constants.ChangeFeed.EventData.LastAccessTime, out object lastAccessTime);
+            LastAccessTime = lastAccessTime != null
+                ? DateTimeOffset.Parse((string)lastAccessTime, CultureInfo.InvariantCulture)
+                : (DateTimeOffset?)null;
             record.TryGetValue(Constants.ChangeFeed.EventData.DestinationUrl, out object destinationUrl);
             DestinationUri = !string.IsNullOrEmpty((string)destinationUrl) ? new Uri((string)destinationUrl) : null;
             record.TryGetValue(Constants.ChangeFeed.EventData.SourceUrl, out object sourceUrl);
@@ -115,6 +126,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public string ContainerVersion { get; internal set; }
 
         /// <summary>
+        /// Version of the container that was restored.
+        /// </summary>
+        public string RestoredContainerVersion { get; internal set; }
+
+        /// <summary>
         /// Access Tier of the blob.
         /// </summary>
         public AccessTier? BlobAccessTier { get; internal set; }
@@ -125,6 +141,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// Appears only for events triggered on blob storage accounts that have a hierarchical namespace.
         /// </summary>
         public long? ContentOffset { get; internal set; }
+
+        /// <summary>
+        /// The time the blob was created.
+        /// </summary>
+        public DateTimeOffset? CreationTime { get; internal set; }
+
+        /// <summary>
+        /// The time the blob was last accessed.
+        /// </summary>
+        public DateTimeOffset? LastAccessTime { get; internal set; }
 
         /// <summary>
         /// The url of the file that will exist after the operation completes. For example, if a file is renamed,
