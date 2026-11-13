@@ -1,5 +1,6 @@
 ---
 safe-outputs:
+  report-failed-jobs: false
   report-incomplete:
     max: 1
     create-issue: false

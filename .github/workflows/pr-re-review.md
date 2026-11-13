@@ -368,15 +368,13 @@ For each thread that **is resolved**:
 
 ## Step 3 - Fresh full review pass
 
-<<<<<<< HEAD
-Independently review every changed file from Step 1, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Do not estimate feasibility from the changed-file count or stop because the PR is large. For a large change set, process each `get_files` page in small sequential batches of 10–20 files: finish reviewing and count every file in a batch before moving on, keep a compact ledger of the page, files reviewed, and files remaining, then continue until every page is complete. Retain the ledger and findings rather than all previously read patches. Batching is only an organization strategy; do not sample or skip files, including generated files. Review each file's patch, fetching file contents at the target head only when GitHub omits the patch or more context is needed. Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
-=======
 Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). This overrides the shared skill's guidance to focus a re-review on commits since the previous review: every changed file is in scope, whether or not it changed since then.
 
 A file counts as reviewed only when you have read its entire patch. Never truncate a patch (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. When a tool saves a response to a file, read that file to its end, in consecutive windows if it is long. When GitHub omits a file's patch, read the file with `get_file_contents` instead.
 
+Do not estimate feasibility from the changed-file count or stop because the PR is large. For a large change set, process each `get_files` page in small sequential batches of 10–20 files: finish reviewing and count every file in a batch before moving on, keep a compact ledger of the page, files reviewed, and files remaining, then continue until every page is complete. Retain the ledger and findings rather than all previously read patches. Batching is only an organization strategy; do not sample or skip files, including generated files. Fetch file contents at the target head when GitHub omits the patch or more context is needed.
+
 Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
->>>>>>> 515a1f7193a0f514dd0b4215f6f511977dd987bc
 
 ## Step 4 - Confirm coverage, then submit one review
 

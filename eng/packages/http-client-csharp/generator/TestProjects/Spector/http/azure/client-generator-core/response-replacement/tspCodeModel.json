@@ -277,7 +277,6 @@
               "$id": "17",
               "kind": "bytes",
               "name": "bytes",
-              "encode": "base64",
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             }
