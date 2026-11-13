@@ -13,8 +13,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of subgroup. </summary>
-    public partial class SubgroupProperties : IJsonModel<SubgroupProperties>
+    internal partial class SubgroupProperties : IJsonModel<SubgroupProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -14,6 +14,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Replace envelope-valued factories with the consolidated spec's flattened signatures.
+    [CodeGenSuppress("InterconnectGroupData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(InterconnectGroupPropertiesFormat), typeof(string))]
+    [CodeGenSuppress("InterconnectGroupSubgroupData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(SubgroupProperties))]
+    // Custom serialized members are appended after kind; preserve the consolidated spec's factory parameter order.
+    [CodeGenSuppress("VirtualNetworkApplianceCapabilityData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(VirtualNetworkApplianceCapabilityProperties))]
     // The generated 1.15.0 object-valued health factory adapter otherwise discards the supplied configuration ID.
     [CodeGenSuppress("LoadBalancerHealthPerRulePerBackendAddress", typeof(string), typeof(NetworkInterfaceIPConfigurationData), typeof(string), typeof(string))]
     // The renamed numeric wire property must not consume or discard the legacy string input.
@@ -35,6 +40,58 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("VirtualNetworkGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ExtendedLocation), typeof(ETag?), typeof(ManagedServiceIdentity), typeof(VirtualNetworkGatewayAutoScaleBounds), typeof(IEnumerable<VirtualNetworkGatewayIPConfiguration>), typeof(VirtualNetworkGatewayType?), typeof(VpnType?), typeof(VpnGatewayGeneration?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ResourceIdentifier), typeof(VirtualNetworkGatewaySku), typeof(VpnClientConfiguration), typeof(IEnumerable<VirtualNetworkGatewayPolicyGroup>), typeof(BgpSettings), typeof(VirtualNetworkAddressSpace), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(bool?), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<VirtualNetworkGatewayNatRuleData>), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ExpressRouteGatewayAdminState?), typeof(ExpressRouteGatewayResiliencyModel?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a virtual network appliance capability for mocking. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="systemData"> Resource system metadata. </param>
+        /// <param name="properties"> The resource-specific properties. </param>
+        /// <param name="kind"> The capability kind. </param>
+        /// <returns> A virtual network appliance capability for mocking. </returns>
+        public static VirtualNetworkApplianceCapabilityData VirtualNetworkApplianceCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default, string kind = default)
+        {
+            return new UnknownVirtualNetworkApplianceCapability(id, name, resourceType, systemData, kind is null ? default : new VirtualNetworkApplianceCapabilityKind(kind), properties, default);
+        }
+
+        /// <summary> Initializes an interconnect group for mocking. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="scope"> Scope of the interconnect group. </param>
+        /// <param name="subgroups"> Subgroups of the interconnect group. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="resourceGuid"> Resource GUID. </param>
+        /// <param name="subgroupProfile"> Subgroup profile. </param>
+        /// <param name="eTag"> Resource ETag. </param>
+        /// <returns> An interconnect group for mocking. </returns>
+        public static InterconnectGroupData InterconnectGroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, InterconnectGroupScope? scope = default, IEnumerable<InterconnectGroupSubgroupData> subgroups = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, SubgroupProfile subgroupProfile = default, string eTag = default)
+        {
+            return new InterconnectGroupData(id, name, resourceType, location, tags ?? new ChangeTrackingDictionary<string, string>(), default,
+                scope is null && subgroups is null && provisioningState is null && resourceGuid is null && subgroupProfile is null
+                    ? default
+                    : new InterconnectGroupPropertiesFormat(scope, (subgroups ?? new ChangeTrackingList<InterconnectGroupSubgroupData>()).ToList(), provisioningState, resourceGuid, subgroupProfile, default),
+                eTag);
+        }
+
+        /// <summary> Initializes an interconnect subgroup for mocking. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="internalSubgroupId"> Unique subgroup identifier. </param>
+        /// <param name="virtualMachines"> Virtual machine references. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="interconnectBlockId"> Interconnect block resource ID. </param>
+        /// <returns> An interconnect subgroup for mocking. </returns>
+        public static InterconnectGroupSubgroupData InterconnectGroupSubgroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string internalSubgroupId = default, IEnumerable<NetworkSubResource> virtualMachines = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier interconnectBlockId = default)
+        {
+            return new InterconnectGroupSubgroupData(id, default, name, resourceType,
+                internalSubgroupId is null && interconnectBlockId is null && virtualMachines is null && provisioningState is null
+                    ? default
+                    : new SubgroupProperties(internalSubgroupId, interconnectBlockId is null ? default : new NetworkSubResource(interconnectBlockId, default), (virtualMachines ?? new ChangeTrackingList<NetworkSubResource>()).ToList(), provisioningState, default));
+        }
+
         /// <summary> Initializes DDoS mitigation rule properties for mocking. </summary>
         /// <param name="provisioningState"> The provisioning state of the DDoS mitigation rule. </param>
         /// <param name="trafficScope"> The traffic scope of the mitigation rule. </param>

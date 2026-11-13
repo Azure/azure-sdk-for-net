@@ -11053,49 +11053,6 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
-        /// <summary>
-        /// A capability enabled on a virtual network appliance. The top-level `kind` discriminator selects the
-        /// capability family; every kind shares the same `properties` schema (see
-        /// VirtualNetworkApplianceCapabilityProperties). One capability of a given kind may exist per appliance.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Nat64Capability"/>, <see cref="Models.PLGatewayCapability"/>, <see cref="Models.PLGatewayFastpathCapability"/>, and <see cref="Models.PLIPForwardersCapability"/>.
-        /// </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="kind"> The kind of capability (the top-level discriminator). </param>
-        /// <returns> A new <see cref="Network.VirtualNetworkApplianceCapabilityData"/> instance for mocking. </returns>
-        public static VirtualNetworkApplianceCapabilityData VirtualNetworkApplianceCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default, string kind = default)
-        {
-            return new UnknownVirtualNetworkApplianceCapability(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default,
-                kind is null ? default : new VirtualNetworkApplianceCapabilityKind(kind));
-        }
-
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkApplianceCapabilityBaseData"/> instance for mocking. </returns>
-        public static VirtualNetworkApplianceCapabilityBaseData VirtualNetworkApplianceCapabilityBaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
-        {
-            return new VirtualNetworkApplianceCapabilityBaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties common to every virtual network appliance capability, independent of kind. </summary>
         /// <param name="linkedResourceId"> The Azure resource ID of the owning virtual network. System-derived and read-only. </param>
         /// <param name="provisioningState"> The provisioning state of the capability resource. </param>
@@ -11120,7 +11077,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.PLGatewayFastpathCapability"/> instance for mocking. </returns>
         public static PLGatewayFastpathCapability PLGatewayFastpathCapability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
         {
@@ -11129,9 +11086,9 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
+                VirtualNetworkApplianceCapabilityKind.PLGatewayFastpath,
                 properties,
-                default,
-                VirtualNetworkApplianceCapabilityKind.PLGatewayFastpath);
+                default);
         }
 
         /// <summary>
@@ -11142,7 +11099,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.PLGatewayCapability"/> instance for mocking. </returns>
         public static PLGatewayCapability PLGatewayCapability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
         {
@@ -11151,9 +11108,9 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
+                VirtualNetworkApplianceCapabilityKind.PLGateway,
                 properties,
-                default,
-                VirtualNetworkApplianceCapabilityKind.PLGateway);
+                default);
         }
 
         /// <summary>
@@ -11164,7 +11121,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.PLIPForwardersCapability"/> instance for mocking. </returns>
         public static PLIPForwardersCapability PLIPForwardersCapability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
         {
@@ -11173,9 +11130,9 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
+                VirtualNetworkApplianceCapabilityKind.PLIPForwarders,
                 properties,
-                default,
-                VirtualNetworkApplianceCapabilityKind.PLIPForwarders);
+                default);
         }
 
         /// <summary>
@@ -11188,7 +11145,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.Nat64Capability"/> instance for mocking. </returns>
         public static Nat64Capability Nat64Capability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
         {
@@ -11197,9 +11154,9 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
+                VirtualNetworkApplianceCapabilityKind.NAT64,
                 properties,
-                default,
-                VirtualNetworkApplianceCapabilityKind.NAT64);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -11355,73 +11312,6 @@ namespace Azure.ResourceManager.Network.Models
             addresses ??= new ChangeTrackingList<ServiceGatewayAddress>();
 
             return new ServiceGatewayAddressLocationResponse(addressLocation, (addresses ?? new ChangeTrackingList<ServiceGatewayAddress>()).ToList(), default);
-        }
-
-        /// <summary> An interconnect group resource. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> Properties of the interconnect group. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.InterconnectGroupData"/> instance for mocking. </returns>
-        public static InterconnectGroupData InterconnectGroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, InterconnectGroupPropertiesFormat properties = default, string eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new InterconnectGroupData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                properties,
-                eTag);
-        }
-
-        /// <summary> Interconnect group properties. </summary>
-        /// <param name="scope"> Scope of interconnect group resource. </param>
-        /// <param name="subgroups"> A list of subgroups of the interconnect group. </param>
-        /// <param name="provisioningState"> The provisioning state of the interconnect group resource. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the interconnect group resource. </param>
-        /// <param name="subgroupProfile"> The subgroup profile of the interconnect group resource. </param>
-        /// <returns> A new <see cref="Models.InterconnectGroupPropertiesFormat"/> instance for mocking. </returns>
-        public static InterconnectGroupPropertiesFormat InterconnectGroupPropertiesFormat(InterconnectGroupScope? scope = default, IEnumerable<InterconnectGroupSubgroupData> subgroups = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, SubgroupProfile subgroupProfile = default)
-        {
-            subgroups ??= new ChangeTrackingList<InterconnectGroupSubgroupData>();
-
-            return new InterconnectGroupPropertiesFormat(
-                scope,
-                (subgroups ?? new ChangeTrackingList<InterconnectGroupSubgroupData>()).ToList(),
-                provisioningState,
-                resourceGuid,
-                subgroupProfile,
-                default);
-        }
-
-        /// <summary> A subgroup in an interconnect group. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="properties"> Properties of the subgroup. </param>
-        /// <returns> A new <see cref="Network.InterconnectGroupSubgroupData"/> instance for mocking. </returns>
-        public static InterconnectGroupSubgroupData InterconnectGroupSubgroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, SubgroupProperties properties = default)
-        {
-            return new InterconnectGroupSubgroupData(id, default, name, resourceType, properties);
-        }
-
-        /// <param name="internalSubgroupId"> The unique identifier of the subgroup. </param>
-        /// <param name="interconnectBlockId"> Resource ID. </param>
-        /// <param name="virtualMachines"> A list of virtual machine references. </param>
-        /// <param name="provisioningState"> The provisioning state of the subgroup. </param>
-        /// <returns> A new <see cref="Models.SubgroupProperties"/> instance for mocking. </returns>
-        public static SubgroupProperties SubgroupProperties(string internalSubgroupId = default, ResourceIdentifier interconnectBlockId = default, IEnumerable<NetworkSubResource> virtualMachines = default, NetworkProvisioningState? provisioningState = default)
-        {
-            virtualMachines ??= new ChangeTrackingList<NetworkSubResource>();
-
-            return new SubgroupProperties(internalSubgroupId, interconnectBlockId is null ? default : new NetworkSubResource(interconnectBlockId, default), (virtualMachines ?? new ChangeTrackingList<NetworkSubResource>()).ToList(), provisioningState, default);
         }
 
         /// <summary> Subgroup profile of the interconnect group resource. </summary>

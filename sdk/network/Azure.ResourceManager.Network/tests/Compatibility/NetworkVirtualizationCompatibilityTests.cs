@@ -24,6 +24,125 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private const string ReferenceId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet";
 
+        [Test]
+        public void VirtualNetworkApplianceCapabilitiesUseTheNativeResourceBase()
+        {
+            Type modelType = typeof(VirtualNetworkApplianceCapabilityData);
+            Assert.That(modelType.BaseType, Is.EqualTo(typeof(global::Azure.ResourceManager.Models.ResourceData)));
+            Assert.That(modelType.GetProperty(nameof(VirtualNetworkApplianceCapabilityData.Properties)).DeclaringType, Is.EqualTo(modelType));
+            Assert.That(modelType.Assembly.GetType("Azure.ResourceManager.Network.Models.VirtualNetworkApplianceCapabilityBaseData"), Is.Null);
+        }
+
+        [TestCase("NAT64", typeof(Nat64Capability))]
+        [TestCase("PLGateway", typeof(PLGatewayCapability))]
+        [TestCase("PLGatewayFastpath", typeof(PLGatewayFastpathCapability))]
+        [TestCase("PLIPForwarders", typeof(PLIPForwardersCapability))]
+        public void VirtualNetworkApplianceCapabilitiesPreservePolymorphicWireStorage(string kind, Type expectedType)
+        {
+            const string capabilityId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg/providers/Microsoft.Network/virtualNetworkAppliances/appliance/capabilities/capability";
+            foreach (string format in new[] { "J", "W" })
+            {
+                var options = new ModelReaderWriterOptions(format);
+                var model = ModelReaderWriter.Read<VirtualNetworkApplianceCapabilityData>(BinaryData.FromString(
+                    $$$"""{"id":"{{{capabilityId}}}","name":"capability","type":"Microsoft.Network/virtualNetworkAppliances/capabilities","kind":"{{{kind}}}","properties":{"linkedResourceId":"{{{ReferenceId}}}","provisioningState":"Succeeded"}}"""), options);
+                Assert.That(model.GetType(), Is.EqualTo(expectedType));
+                Assert.That(model.Id.ToString(), Is.EqualTo(capabilityId));
+                Assert.That(model.Properties.LinkedResourceId.ToString(), Is.EqualTo(ReferenceId));
+                Assert.That(model.Properties.ProvisioningState, Is.EqualTo(NetworkProvisioningState.Succeeded));
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+                Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo(kind));
+                if (format == "J")
+                {
+                    Assert.That(json.RootElement.GetProperty("id").GetString(), Is.EqualTo(capabilityId));
+                    Assert.That(json.RootElement.GetProperty("properties").GetProperty("linkedResourceId").GetString(), Is.EqualTo(ReferenceId));
+                    Assert.That(json.RootElement.GetProperty("properties").GetProperty("provisioningState").GetString(), Is.EqualTo("Succeeded"));
+                }
+            }
+        }
+
+        [Test]
+        public void VirtualNetworkApplianceCapabilityFactoryKeepsPropertiesBeforeKind()
+        {
+            var properties = new VirtualNetworkApplianceCapabilityProperties { IPVersion = VirtualNetworkApplianceCapabilityIPVersion.IPv6 };
+            var model = ArmNetworkModelFactory.VirtualNetworkApplianceCapabilityData(default, "capability", default, default, properties, "FutureKind");
+            Assert.That(model.Properties, Is.SameAs(properties));
+            Assert.That(model.Name, Is.EqualTo("capability"));
+            using JsonDocument request = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("W")));
+            Assert.That(request.RootElement.GetProperty("kind").GetString(), Is.EqualTo("FutureKind"));
+            Assert.That(request.RootElement.GetProperty("properties").GetProperty("ipVersion").GetString(), Is.EqualTo("IPv6"));
+        }
+
+        [Test]
+        public void VirtualNetworkApplianceCapabilityCustomPropertiesPreserveRequestAndUnknownKind()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var model = ModelReaderWriter.Read<VirtualNetworkApplianceCapabilityData>(BinaryData.FromString(
+                $$$"""{"kind":"FutureKind","properties":{"linkedResourceId":"{{{ReferenceId}}}","provisioningState":"Succeeded","ipVersion":"IPv6"},"futureField":42}"""), options);
+            Assert.That(model.Properties.IPVersion, Is.EqualTo(VirtualNetworkApplianceCapabilityIPVersion.IPv6));
+            using (JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(model, options)))
+            {
+                Assert.That(persisted.RootElement.GetProperty("kind").GetString(), Is.EqualTo("FutureKind"));
+                Assert.That(persisted.RootElement.GetProperty("futureField").GetInt32(), Is.EqualTo(42));
+                Assert.That(persisted.RootElement.GetProperty("properties").GetProperty("linkedResourceId").GetString(), Is.EqualTo(ReferenceId));
+            }
+            model.Properties.IPVersion = VirtualNetworkApplianceCapabilityIPVersion.DualStack;
+            using JsonDocument request = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("W")));
+            JsonElement properties = request.RootElement.GetProperty("properties");
+            Assert.That(properties.GetProperty("ipVersion").GetString(), Is.EqualTo("DualStack"));
+            Assert.That(properties.TryGetProperty("linkedResourceId", out _), Is.False);
+            Assert.That(properties.TryGetProperty("provisioningState", out _), Is.False);
+            Assert.That(request.RootElement.TryGetProperty("futureField", out _), Is.False);
+        }
+
+        [Test]
+        public void InterconnectFactoriesPreserveAbsentPropertyDefaults()
+        {
+            var group = ArmNetworkModelFactory.InterconnectGroupData();
+            Assert.That(group.Scope, Is.Null);
+            Assert.That(group.SubgroupProfile, Is.Null);
+            Assert.That(group.Subgroups, Is.Empty);
+            var subgroup = ArmNetworkModelFactory.InterconnectGroupSubgroupData();
+            Assert.That(subgroup.InternalSubgroupId, Is.Null);
+            Assert.That(subgroup.VirtualMachines, Is.Null);
+            Assert.That(subgroup.InterconnectBlockId, Is.Null);
+        }
+
+        [Test]
+        public void InterconnectGroupFlattenedSettersKeepNestedWireStorage()
+        {
+            var group = new InterconnectGroupData { Scope = InterconnectGroupScope.InfiniBand };
+            Assert.That(group.Subgroups, Is.Empty);
+            foreach (string format in new[] { "J", "W" })
+            {
+                var options = new ModelReaderWriterOptions(format);
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(group, options));
+                Assert.That(json.RootElement.GetProperty("properties").GetProperty("scope").GetString(), Is.EqualTo("InfiniBand"));
+                Assert.That(json.RootElement.TryGetProperty("scope", out _), Is.False);
+            }
+        }
+
+        [Test]
+        public void InterconnectFactoriesPreserveFlattenedResponseProperties()
+        {
+            var subgroup = ArmNetworkModelFactory.InterconnectGroupSubgroupData(
+                internalSubgroupId: "subgroup-id",
+                provisioningState: NetworkProvisioningState.Succeeded,
+                interconnectBlockId: new ResourceIdentifier(ReferenceId));
+            var group = ArmNetworkModelFactory.InterconnectGroupData(
+                scope: InterconnectGroupScope.InfiniBand,
+                subgroups: new[] { subgroup },
+                provisioningState: NetworkProvisioningState.Succeeded,
+                resourceGuid: "resource-guid");
+            var options = new ModelReaderWriterOptions("J");
+            var roundTrip = ModelReaderWriter.Read<InterconnectGroupData>(ModelReaderWriter.Write(group, options), options);
+            Assert.That(roundTrip.Scope, Is.EqualTo(InterconnectGroupScope.InfiniBand));
+            Assert.That(roundTrip.ResourceGuid, Is.EqualTo("resource-guid"));
+            Assert.That(roundTrip.ProvisioningState, Is.EqualTo(NetworkProvisioningState.Succeeded));
+            Assert.That(roundTrip.Subgroups.Single().InternalSubgroupId, Is.EqualTo("subgroup-id"));
+            Assert.That(roundTrip.Subgroups.Single().InterconnectBlockId.ToString(), Is.EqualTo(ReferenceId));
+            Assert.That(roundTrip.Subgroups.Single().VirtualMachines, Is.Empty);
+        }
+
         [TestCase("GetNetworkInterfaceLoadBalancers", typeof(Pageable<LoadBalancerResource>))]
         [TestCase("GetNetworkInterfaceLoadBalancersAsync", typeof(AsyncPageable<LoadBalancerResource>))]
         public void NetworkInterfaceLoadBalancerMethodsKeepReleasedNamesAndSignatures(string methodName, Type returnType)

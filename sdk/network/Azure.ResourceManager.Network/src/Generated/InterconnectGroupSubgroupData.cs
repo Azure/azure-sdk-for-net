@@ -30,9 +30,5 @@ namespace Azure.ResourceManager.Network
         {
             Properties = properties;
         }
-
-        /// <summary> Properties of the subgroup. </summary>
-        [WirePath("properties")]
-        public SubgroupProperties Properties { get; }
     }
 }
