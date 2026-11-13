@@ -1,14 +1,24 @@
 # Release History
 
-## 1.2.0-beta.6 (Unreleased)
+## 1.2.0 (2026-11-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded API version from `2023-06-30` to `2026-11-01`.
+- Added Azure Device Registry (ADR) integration: `IotHubProperties.DeviceRegistry` (`IotHubDeviceRegistry`) with `DeviceRegistryIdentity`, `DeviceRegistryLinkingProperties` and `DeviceRegistryLinkingErrorDetails`.
+- Added routing to event streams: `RoutingEndpoints.EventStreams` (`RoutingEventStreamProperties`) and the `EventStreamAuthenticationType` enum.
+- Added `IotHubProperties.DeviceHostName` and `IotHubProperties.ServiceHostName`, which support secure connections over TLS 1.3.
+- Added `IotHubProperties.IotHubDetailsGatewayVersion` (`IotHubGatewayVersion`).
+- Added `CertificateAuthorityResourceId` to `IotHubCertificateProperties` and `IotHubCertificatePropertiesWithNonce`.
+- Added `CreateOrUpdate`/`Update` overloads that accept an `ETag?` for `ifMatch`. The existing `string ifMatch` overloads are retained.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Made `Azure.ResourceManager.IotHub` AOT-compatible.
 
 ### Other Changes
+
+- Preview-only features from the `1.2.0-beta.*` releases are not included in the stable `2026-11-01` API version: MQTT v5 support (`IotHubConnectionProfile`, `MqttV5TopicGroup`), routing message payload format (`IotHubMessagePayloadFormat`), `RoutingRuleProperties.DataSchema`, encryption (`IotHubEncryptionProperties`, `IotHubKeyVaultKeyProperties`), root certificate (`IotHubRootCertificateProperties`), IP version (`IotHubIPVersion`), device streams, the `GEN2` SKU, and the `DigitalTwinChangeEvents` and `MqttBrokerMessages` routing sources.
+- Upgraded dependent `Azure.Core` to `1.63.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.2.0-beta.5 (2026-10-12)
 
@@ -129,7 +139,7 @@ Polishing since last public beta release:
 - Prepended `IotHub` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

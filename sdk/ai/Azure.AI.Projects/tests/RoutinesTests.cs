@@ -14,7 +14,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
-#pragma warning disable AAIP001
+#pragma warning disable AAIP001, AAIP002
 
 public class RoutinesTests : ProjectsClientTestBase
 {

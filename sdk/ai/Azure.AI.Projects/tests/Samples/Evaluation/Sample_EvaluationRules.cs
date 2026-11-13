@@ -18,7 +18,7 @@ using OpenAI.Evals;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
-
+#pragma warning disable AAIP002
 public class Sample_EvaluationRules : EvaluationSampleBase
 {
     #region Snippet:Sample_GetRunIDs_EvaluationRules_Async

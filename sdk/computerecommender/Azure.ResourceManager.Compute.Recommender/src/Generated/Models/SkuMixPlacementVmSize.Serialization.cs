@@ -9,56 +9,61 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotHub;
+using Azure.ResourceManager.Compute.Recommender;
 
-namespace Azure.ResourceManager.IotHub.Models
+namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> Settings for an Event Grid-backed MQTT v5 IoT hub. </summary>
-    internal partial class MqttV5Settings : IJsonModel<MqttV5Settings>
+    /// <summary> A VM size with optional rank for prioritization. </summary>
+    public partial class SkuMixPlacementVmSize : IJsonModel<SkuMixPlacementVmSize>
     {
+        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVmSize"/> for deserialization. </summary>
+        internal SkuMixPlacementVmSize()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MqttV5Settings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SkuMixPlacementVmSize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MqttV5Settings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMqttV5Settings(document.RootElement, options);
+                        return DeserializeSkuMixPlacementVmSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MqttV5Settings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MqttV5Settings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MqttV5Settings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MqttV5Settings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SkuMixPlacementVmSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MqttV5Settings IPersistableModel<MqttV5Settings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SkuMixPlacementVmSize IPersistableModel<SkuMixPlacementVmSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MqttV5Settings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SkuMixPlacementVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MqttV5Settings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SkuMixPlacementVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +74,17 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MqttV5Settings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MqttV5Settings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(TopicGroups))
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Rank))
             {
-                writer.WritePropertyName("topicGroups"u8);
-                writer.WriteStartArray();
-                foreach (MqttV5TopicGroup item in TopicGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("rank"u8);
+                writer.WriteNumberValue(Rank.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,45 +105,46 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MqttV5Settings IJsonModel<MqttV5Settings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SkuMixPlacementVmSize IJsonModel<SkuMixPlacementVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MqttV5Settings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SkuMixPlacementVmSize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MqttV5Settings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MqttV5Settings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMqttV5Settings(document.RootElement, options);
+            return DeserializeSkuMixPlacementVmSize(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MqttV5Settings DeserializeMqttV5Settings(JsonElement element, ModelReaderWriterOptions options)
+        internal static SkuMixPlacementVmSize DeserializeSkuMixPlacementVmSize(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<MqttV5TopicGroup> topicGroups = default;
+            string name = default;
+            int? rank = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("topicGroups"u8))
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("rank"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<MqttV5TopicGroup> array = new List<MqttV5TopicGroup>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(MqttV5TopicGroup.DeserializeMqttV5TopicGroup(item, options));
-                    }
-                    topicGroups = array;
+                    rank = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MqttV5Settings(topicGroups ?? new ChangeTrackingList<MqttV5TopicGroup>(), additionalBinaryDataProperties);
+            return new SkuMixPlacementVmSize(name, rank, additionalBinaryDataProperties);
         }
     }
 }

@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotHub;
+using Azure.ResourceManager.Compute.Recommender;
 
-namespace Azure.ResourceManager.IotHub.Models
+namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> The device streams properties of iothub. </summary>
-    internal partial class IotHubPropertiesDeviceStreams : IJsonModel<IotHubPropertiesDeviceStreams>
+    /// <summary> Contains additional properties of a placement scores resource. </summary>
+    internal partial class ComputeRecommenderPlacementScoresProperties : IJsonModel<ComputeRecommenderPlacementScoresProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IotHubPropertiesDeviceStreams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderPlacementScoresProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubPropertiesDeviceStreams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIotHubPropertiesDeviceStreams(document.RootElement, options);
+                        return DeserializeComputeRecommenderPlacementScoresProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubPropertiesDeviceStreams)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubPropertiesDeviceStreams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubPropertiesDeviceStreams)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IotHubPropertiesDeviceStreams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeRecommenderPlacementScoresProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IotHubPropertiesDeviceStreams IPersistableModel<IotHubPropertiesDeviceStreams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeRecommenderPlacementScoresProperties IPersistableModel<ComputeRecommenderPlacementScoresProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IotHubPropertiesDeviceStreams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeRecommenderPlacementScoresProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IotHubPropertiesDeviceStreams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeRecommenderPlacementScoresProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubPropertiesDeviceStreams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubPropertiesDeviceStreams)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(StreamingEndpoints))
+            if (Optional.IsCollectionDefined(ComputeRecommenderDiagnosticSupportedResourceTypes))
             {
-                writer.WritePropertyName("streamingEndpoints"u8);
+                writer.WritePropertyName("supportedResourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (string item in StreamingEndpoints)
+                foreach (string item in ComputeRecommenderDiagnosticSupportedResourceTypes)
                 {
                     if (item == null)
                     {
@@ -108,34 +108,34 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IotHubPropertiesDeviceStreams IJsonModel<IotHubPropertiesDeviceStreams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeRecommenderPlacementScoresProperties IJsonModel<ComputeRecommenderPlacementScoresProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IotHubPropertiesDeviceStreams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderPlacementScoresProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IotHubPropertiesDeviceStreams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubPropertiesDeviceStreams)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIotHubPropertiesDeviceStreams(document.RootElement, options);
+            return DeserializeComputeRecommenderPlacementScoresProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IotHubPropertiesDeviceStreams DeserializeIotHubPropertiesDeviceStreams(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeRecommenderPlacementScoresProperties DeserializeComputeRecommenderPlacementScoresProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> streamingEndpoints = default;
+            IList<string> computeRecommenderDiagnosticSupportedResourceTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("streamingEndpoints"u8))
+                if (prop.NameEquals("supportedResourceTypes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotHub.Models
                             array.Add(item.GetString());
                         }
                     }
-                    streamingEndpoints = array;
+                    computeRecommenderDiagnosticSupportedResourceTypes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotHubPropertiesDeviceStreams(streamingEndpoints ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ComputeRecommenderPlacementScoresProperties(computeRecommenderDiagnosticSupportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
