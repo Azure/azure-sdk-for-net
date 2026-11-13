@@ -16,35 +16,35 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     internal partial class DataProtectionBackupRecoveryPointData0CollectionResultOfT : Pageable<DataProtectionBackupRecoveryPointData>
     {
-        private readonly FetchSecondaryRecoveryPointsOperationGroup _client;
+        private readonly RecoveryPointsFromDppCrossTenantVault _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly AzureLocation _location;
-        private readonly RequestContent _content;
+        private readonly string _vaultName;
+        private readonly string _mappingName;
+        private readonly string _backupInstanceName;
         private readonly string _filter;
-        private readonly string _skipToken;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The FetchSecondaryRecoveryPointsOperationGroup client used to send requests. </param>
+        /// <param name="client"> The RecoveryPointsFromDppCrossTenantVault client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
+        /// <param name="mappingName"> The name of the CrossTenantVaultMapping. </param>
+        /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DataProtectionBackupRecoveryPointData0CollectionResultOfT(FetchSecondaryRecoveryPointsOperationGroup client, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContent content, string filter, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DataProtectionBackupRecoveryPointData0CollectionResultOfT(RecoveryPointsFromDppCrossTenantVault client, Guid subscriptionId, string resourceGroupName, string vaultName, string mappingName, string backupInstanceName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _location = location;
-            _content = content;
+            _vaultName = vaultName;
+            _mappingName = mappingName;
+            _backupInstanceName = backupInstanceName;
             _filter = filter;
-            _skipToken = skipToken;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSecondaryRecoveryPointsRequest(nextLink, _subscriptionId, _resourceGroupName, _location, _content, _filter, _skipToken, _context) : _client.CreateGetSecondaryRecoveryPointsRequest(_subscriptionId, _resourceGroupName, _location, _content, _filter, _skipToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _mappingName, _backupInstanceName, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _mappingName, _backupInstanceName, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
