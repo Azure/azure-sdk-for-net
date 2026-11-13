@@ -28,13 +28,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="processors"> number of processors for the virtual machine instance. </param>
         /// <param name="memoryInMB"> RAM in MB for the virtual machine instance. </param>
         /// <param name="virtualMachineGPUs"> virtualMachineGPUs - updated list of GPUs on the virtual machine instance. </param>
+        /// <param name="dynamicMemoryConfig"> Dynamic memory config for day-2 updates and static-to-dynamic conversion of the virtual machine instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceHardwareProfilePatch(HciVmSize? vmSize, int? processors, long? memoryInMB, IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceHardwareProfilePatch(HciVmSize? vmSize, int? processors, long? memoryInMB, IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs, HciVmInstanceHardwareProfileDynamicMemoryConfiguration dynamicMemoryConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Processors = processors;
             MemoryInMB = memoryInMB;
             VirtualMachineGPUs = virtualMachineGPUs;
+            DynamicMemoryConfig = dynamicMemoryConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,5 +51,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> virtualMachineGPUs - updated list of GPUs on the virtual machine instance. </summary>
         public IList<HciVmInstanceHardwareProfileGpuConfiguration> VirtualMachineGPUs { get; }
+
+        /// <summary> Dynamic memory config for day-2 updates and static-to-dynamic conversion of the virtual machine instance. </summary>
+        public HciVmInstanceHardwareProfileDynamicMemoryConfiguration DynamicMemoryConfig { get; set; }
     }
 }

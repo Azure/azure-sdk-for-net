@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         private NetworkInterfaces _networkInterfacesRestClient;
         private ClientDiagnostics _networkSecurityGroupsClientDiagnostics;
         private NetworkSecurityGroups _networkSecurityGroupsRestClient;
+        private ClientDiagnostics _snapshotsClientDiagnostics;
+        private Snapshots _snapshotsRestClient;
         private ClientDiagnostics _storageContainersClientDiagnostics;
         private StorageContainers _storageContainersRestClient;
         private ClientDiagnostics _virtualHardDisksClientDiagnostics;
@@ -56,47 +58,51 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
 
         private ClientDiagnostics GalleryImagesClientDiagnostics => _galleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/galleryImages", out string apiVersion) ? apiVersion : "2025-09-01-preview");
+        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/galleryImages", out string apiVersion) ? apiVersion : "2026-07-01-preview");
 
         private ClientDiagnostics LogicalNetworksClientDiagnostics => _logicalNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LogicalNetworks LogicalNetworksRestClient => _logicalNetworksRestClient ??= new LogicalNetworks(LogicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/logicalNetworks", out string apiVersion0) ? apiVersion0 : "2025-09-01-preview");
+        private LogicalNetworks LogicalNetworksRestClient => _logicalNetworksRestClient ??= new LogicalNetworks(LogicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/logicalNetworks", out string apiVersion0) ? apiVersion0 : "2026-07-01-preview");
 
         private ClientDiagnostics MarketplaceGalleryImagesClientDiagnostics => _marketplaceGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceGalleryImages MarketplaceGalleryImagesRestClient => _marketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImages(MarketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/marketplaceGalleryImages", out string apiVersion1) ? apiVersion1 : "2025-09-01-preview");
+        private MarketplaceGalleryImages MarketplaceGalleryImagesRestClient => _marketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImages(MarketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/marketplaceGalleryImages", out string apiVersion1) ? apiVersion1 : "2026-07-01-preview");
 
         private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkInterfaces", out string apiVersion2) ? apiVersion2 : "2025-09-01-preview");
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkInterfaces", out string apiVersion2) ? apiVersion2 : "2026-07-01-preview");
 
         private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkSecurityGroups", out string apiVersion3) ? apiVersion3 : "2025-09-01-preview");
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkSecurityGroups", out string apiVersion3) ? apiVersion3 : "2026-07-01-preview");
+
+        private ClientDiagnostics SnapshotsClientDiagnostics => _snapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/snapshots", out string apiVersion4) ? apiVersion4 : "2026-07-01-preview");
 
         private ClientDiagnostics StorageContainersClientDiagnostics => _storageContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/storageContainers", out string apiVersion4) ? apiVersion4 : "2025-09-01-preview");
+        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/storageContainers", out string apiVersion5) ? apiVersion5 : "2026-07-01-preview");
 
         private ClientDiagnostics VirtualHardDisksClientDiagnostics => _virtualHardDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/virtualHardDisks", out string apiVersion5) ? apiVersion5 : "2025-09-01-preview");
+        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/virtualHardDisks", out string apiVersion6) ? apiVersion6 : "2026-07-01-preview");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/virtualNetworks", out string apiVersion6) ? apiVersion6 : "2025-09-01-preview");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/virtualNetworks", out string apiVersion7) ? apiVersion7 : "2026-07-01-preview");
 
         private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/publicIPAddresses", out string apiVersion7) ? apiVersion7 : "2025-09-01-preview");
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/publicIPAddresses", out string apiVersion8) ? apiVersion8 : "2026-07-01-preview");
 
         private ClientDiagnostics NatGatewaysClientDiagnostics => _natGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/natGateways", out string apiVersion8) ? apiVersion8 : "2025-09-01-preview");
+        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/natGateways", out string apiVersion9) ? apiVersion9 : "2026-07-01-preview");
 
         private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/loadBalancers", out string apiVersion9) ? apiVersion9 : "2025-09-01-preview");
+        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/loadBalancers", out string apiVersion10) ? apiVersion10 : "2026-07-01-preview");
 
         /// <summary>
         /// Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images.
@@ -111,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +145,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +201,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,7 +257,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +285,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,7 +313,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +341,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,7 +369,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,6 +385,62 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         }
 
         /// <summary>
+        /// Lists all of the snapshots in the specified subscription. Use the nextLink property in the response to get the next page of snapshots.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/snapshots. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshots_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SnapshotResource> GetSnapshotsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SnapshotData, SnapshotResource>(new SnapshotDataAsync0CollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all of the snapshots in the specified subscription. Use the nextLink property in the response to get the next page of snapshots.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/snapshots. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshots_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SnapshotResource> GetSnapshots(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SnapshotData, SnapshotResource>(new SnapshotData0CollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
+        }
+
+        /// <summary>
         /// Lists all of the storage containers in the specified subscription. Use the nextLink property in the response to get the next page of storage containers.
         /// <list type="bullet">
         /// <item>
@@ -391,7 +453,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -419,7 +481,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,7 +509,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -475,7 +537,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,7 +565,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -531,7 +593,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -559,7 +621,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,7 +649,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -615,7 +677,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -643,7 +705,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -671,7 +733,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -699,7 +761,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

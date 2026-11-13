@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Initializes a new instance of <see cref="HciVmVirtualHardDiskProperties"/>. </summary>
         /// <param name="blockSizeInBytes"> Block size in bytes. </param>
+        /// <param name="creationData"> Data used when creating a virtual hard disk. </param>
         /// <param name="diskSizeInGB"> Size of the disk in GB. </param>
         /// <param name="isDynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
         /// <param name="logicalSectorInBytes"> Logical sector in bytes. </param>
@@ -38,9 +39,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, long? diskSizeInGB, bool? isDynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, string localVhdPath, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, HciVmCreationContent creationData, long? diskSizeInGB, bool? isDynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, string localVhdPath, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlockSizeInBytes = blockSizeInBytes;
+            CreationData = creationData;
             DiskSizeInGB = diskSizeInGB;
             IsDynamic = isDynamic;
             LogicalSectorInBytes = logicalSectorInBytes;
@@ -59,6 +61,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Block size in bytes. </summary>
         public int? BlockSizeInBytes { get; set; }
+
+        /// <summary> Data used when creating a virtual hard disk. </summary>
+        public HciVmCreationContent CreationData { get; set; }
 
         /// <summary> Size of the disk in GB. </summary>
         public long? DiskSizeInGB { get; set; }

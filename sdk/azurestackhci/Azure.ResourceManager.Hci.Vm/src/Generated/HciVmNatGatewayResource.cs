@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         internal HciVmNatGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _natGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/natGateways", out string natGatewaysApiVersionOverride) ? natGatewaysApiVersionOverride : "2025-09-01-preview");
+            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/natGateways", out string natGatewaysApiVersionOverride) ? natGatewaysApiVersionOverride : "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -675,6 +675,39 @@ namespace Azure.ResourceManager.Hci.Vm
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of InboundRules in the <see cref="HciVmNatGatewayResource"/>. </summary>
+        /// <returns> An object representing collection of InboundRules and their operations over a InboundRuleResource. </returns>
+        public virtual InboundRuleCollection GetInboundRules()
+        {
+            return GetCachedClient(client => new InboundRuleCollection(client, Id));
+        }
+
+        /// <summary> The operation to get an inbound rule. </summary>
+        /// <param name="inboundRuleName"> Name of the inbound rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InboundRuleResource>> GetInboundRuleAsync(string inboundRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundRuleName, nameof(inboundRuleName));
+
+            return await GetInboundRules().GetAsync(inboundRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> The operation to get an inbound rule. </summary>
+        /// <param name="inboundRuleName"> Name of the inbound rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<InboundRuleResource> GetInboundRule(string inboundRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundRuleName, nameof(inboundRuleName));
+
+            return GetInboundRules().Get(inboundRuleName, cancellationToken);
         }
     }
 }

@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("targetMemoryBuffer"u8);
                 writer.WriteNumberValue(TargetMemoryBuffer.Value);
             }
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             long? maximumMemoryInMB = default;
             long? minimumMemoryInMB = default;
             int? targetMemoryBuffer = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +170,21 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     targetMemoryBuffer = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("enabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HciVmInstanceHardwareProfileDynamicMemoryConfiguration(maximumMemoryInMB, minimumMemoryInMB, targetMemoryBuffer, additionalBinaryDataProperties);
+            return new HciVmInstanceHardwareProfileDynamicMemoryConfiguration(maximumMemoryInMB, minimumMemoryInMB, targetMemoryBuffer, enabled, additionalBinaryDataProperties);
         }
     }
 }
