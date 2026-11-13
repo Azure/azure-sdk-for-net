@@ -77,7 +77,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public ClientResult<SessionFileWriteResult> Upload(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual ClientResult<SessionFileWriteResult> Upload(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));

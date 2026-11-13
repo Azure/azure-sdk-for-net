@@ -22,17 +22,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
-        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
-        internal AzureAIModelTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, ModelSamplingParams samplingParams) : base(@type, additionalBinaryDataProperties)
+        internal AzureAIModelTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
-            SamplingParams = samplingParams;
         }
 
         /// <summary> The name of the model deployment to invoke as the evaluation target. </summary>
         public string Model { get; set; }
-
-        /// <summary> The parameters used to control the sampling behavior of the model during text generation. </summary>
-        public ModelSamplingParams SamplingParams { get; set; }
     }
 }
