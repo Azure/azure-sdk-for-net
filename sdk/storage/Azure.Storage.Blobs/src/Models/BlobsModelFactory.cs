@@ -217,7 +217,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastAccessed = default,
             BlobImmutabilityPolicy immutabilityPolicy = default,
             bool hasLegalHold = default,
-            string smartAccessTier = default)
+            string smartAccessTier = default,
+            TurboStatus? turboStatus = default,
+            TierManagedBy? tierManagedBy = default)
                 => new BlobProperties(
                     lastModified: lastModified,
                     createdOn: createdOn,
@@ -263,7 +265,108 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
                     hasLegalHold: hasLegalHold,
-                    smartAccessTier: smartAccessTier);
+                    smartAccessTier: smartAccessTier,
+                    turboStatus: turboStatus,
+                    tierManagedBy: tierManagedBy);
+
+        /// <summary>
+        /// Creates a new BlobProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobProperties BlobProperties(
+            DateTimeOffset lastModified,
+            LeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            LeaseState leaseState,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            long blobSequenceNumber,
+            LeaseDurationType leaseDuration,
+            string acceptRanges,
+            string destinationSnapshot,
+            int blobCommittedBlockCount,
+            bool isIncrementalCopy,
+            bool isServerEncrypted,
+            CopyStatus? blobCopyStatus,
+            string encryptionKeySha256,
+            Uri copySource,
+            string encryptionScope,
+            string copyProgress,
+            string accessTier,
+            string copyId,
+            bool accessTierInferred,
+            string copyStatusDescription,
+            string archiveStatus,
+            DateTimeOffset copyCompletedOn,
+            DateTimeOffset accessTierChangedOn,
+            BlobType blobType,
+            string versionId,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            bool isLatestVersion,
+            string objectReplicationDestinationPolicyId,
+            long tagCount,
+            IDictionary<string, string> metadata,
+            DateTimeOffset expiresOn,
+            DateTimeOffset createdOn,
+            bool isSealed,
+            string rehydratePriority,
+            byte[] contentHash,
+            DateTimeOffset lastAccessed,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool hasLegalHold,
+            string smartAccessTier)
+                => new BlobProperties(
+                    lastModified: lastModified,
+                    createdOn: createdOn,
+                    metadata: metadata,
+                    objectReplicationDestinationPolicyId: objectReplicationDestinationPolicyId,
+                    objectReplicationSourceProperties: objectReplicationSourceProperties,
+                    blobType: blobType,
+                    copyCompletedOn: copyCompletedOn,
+                    copyStatusDescription: copyStatusDescription,
+                    copyId: copyId,
+                    copyProgress: copyProgress,
+                    copySource: copySource,
+                    blobCopyStatus: blobCopyStatus,
+                    isIncrementalCopy: isIncrementalCopy,
+                    destinationSnapshot: destinationSnapshot,
+                    leaseDuration: leaseDuration,
+                    leaseState: leaseState,
+                    leaseStatus: leaseStatus,
+                    contentLength: contentLength,
+                    contentType: contentType,
+                    eTag: eTag,
+                    contentHash: contentHash,
+                    contentEncoding: contentEncoding,
+                    contentDisposition: contentDisposition,
+                    contentLanguage: contentLanguage,
+                    cacheControl: cacheControl,
+                    blobSequenceNumber: blobSequenceNumber,
+                    acceptRanges: acceptRanges,
+                    blobCommittedBlockCount: blobCommittedBlockCount,
+                    isServerEncrypted: isServerEncrypted,
+                    encryptionKeySha256: encryptionKeySha256,
+                    encryptionScope: encryptionScope,
+                    accessTier: accessTier,
+                    accessTierInferred: accessTierInferred,
+                    archiveStatus: archiveStatus,
+                    accessTierChangedOn: accessTierChangedOn,
+                    versionId: versionId,
+                    isLatestVersion: isLatestVersion,
+                    tagCount: tagCount,
+                    expiresOn: expiresOn,
+                    isSealed: isSealed,
+                    rehydratePriority: rehydratePriority,
+                    lastAccessed: lastAccessed,
+                    immutabilityPolicy: immutabilityPolicy,
+                    hasLegalHold: hasLegalHold,
+                    smartAccessTier: smartAccessTier,
+                    turboStatus: default, // Not provided, see non-deprecated model
+                    tierManagedBy: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -359,7 +462,9 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
                     hasLegalHold: hasLegalHold,
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    turboStatus: default, // Not provided, see non-deprecated model
+                    tierManagedBy: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -455,7 +560,9 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
                     hasLegalHold: hasLegalHold,
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    turboStatus: default, // Not provided, see non-deprecated model
+                    tierManagedBy: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -549,7 +656,9 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    turboStatus: default, // Not provided, see non-deprecated model
+                    tierManagedBy: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -642,7 +751,9 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    turboStatus: default, // Not provided, see non-deprecated model
+                    tierManagedBy: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -727,7 +838,9 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    turboStatus: default, // Not provided, see non-deprecated model
+                    tierManagedBy: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -811,7 +924,9 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    turboStatus: default, // Not provided, see non-deprecated model
+                    tierManagedBy: default); // Not provided, see non-deprecated model
         #endregion
 
         #region BlobItemProperties
@@ -856,7 +971,98 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset? copyCompletedOn = default,
             DateTimeOffset? deletedOn = default,
             DateTimeOffset? accessTierChangedOn = default,
-            AccessTier? smartAccessTier = default)
+            AccessTier? smartAccessTier = default,
+            TurboStatus? turboStatus = default,
+            TierManagedBy? tierManagedBy = default)
+        {
+            return new BlobItemProperties()
+            {
+                AccessTierInferred = accessTierInferred,
+                ServerEncrypted = serverEncrypted,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                ContentLanguage = contentLanguage,
+                ContentHash = contentHash,
+                ContentDisposition = contentDisposition,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                BlobType = blobType,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+                CopySource = copySource,
+                CopyProgress = copyProgress,
+                CopyStatusDescription = copyStatusDescription,
+                ContentLength = contentLength,
+                IncrementalCopy = incrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
+                RemainingRetentionDays = remainingRetentionDays,
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ArchiveStatus = archiveStatus,
+                CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
+                TagCount = tagCount,
+                ExpiresOn = expiresOn,
+                IsSealed = isSealed,
+                RehydratePriority = rehydratePriority,
+                LastAccessedOn = lastAccessedOn,
+                ETag = eTag,
+                CreatedOn = createdOn,
+                CopyCompletedOn = copyCompletedOn,
+                DeletedOn = deletedOn,
+                AccessTierChangedOn = accessTierChangedOn,
+                SmartAccessTier = smartAccessTier,
+                TurboStatus = turboStatus,
+                TierManagedBy = tierManagedBy,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobItemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobItemProperties BlobItemProperties(
+            bool accessTierInferred,
+            bool? serverEncrypted,
+            string contentType,
+            string contentEncoding,
+            string contentLanguage,
+            byte[] contentHash,
+            string contentDisposition,
+            string cacheControl,
+            long? blobSequenceNumber,
+            BlobType? blobType,
+            LeaseStatus? leaseStatus,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            string copyId,
+            CopyStatus? copyStatus,
+            Uri copySource,
+            string copyProgress,
+            string copyStatusDescription,
+            long? contentLength,
+            bool? incrementalCopy,
+            string destinationSnapshot,
+            int? remainingRetentionDays,
+            AccessTier? accessTier,
+            DateTimeOffset? lastModified,
+            ArchiveStatus? archiveStatus,
+            string customerProvidedKeySha256,
+            string encryptionScope,
+            long? tagCount,
+            DateTimeOffset? expiresOn,
+            bool? isSealed,
+            RehydratePriority? rehydratePriority,
+            DateTimeOffset? lastAccessedOn,
+            ETag? eTag,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? copyCompletedOn,
+            DateTimeOffset? deletedOn,
+            DateTimeOffset? accessTierChangedOn,
+            AccessTier? smartAccessTier)
         {
             return new BlobItemProperties()
             {
@@ -1776,7 +1982,100 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset accessTierChangedOn = default,
             string smartAccessTier = default,
             ETag eTag = default,
-            DownloadHint? downloadHint = default)
+            DownloadHint? downloadHint = default,
+            TurboStatus? turboStatus = default,
+            TierManagedBy? tierManagedBy = default)
+            => new BlobDownloadDetails
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                BlobSequenceNumber = blobSequenceNumber,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                AcceptRanges = acceptRanges,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobContentHash = blobContentHash,
+                TagCount = tagCount,
+                VersionId = versionId,
+                IsSealed = isSealed,
+                ObjectReplicationSourceProperties = objectReplicationSourceProperties,
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy,
+                HasLegalHold = hasLegalHold,
+                CreatedOn = createdOn,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                AccessTierChangedOn = accessTierChangedOn,
+                SmartAccessTier = smartAccessTier,
+                ETag = eTag,
+                DownloadHint = downloadHint,
+                TurboStatus = turboStatus,
+                TierManagedBy = tierManagedBy
+            };
+
+        /// <summary>
+        /// Creates a new BlobDownloadDetails instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobDownloadDetails BlobDownloadDetails(
+            BlobType blobType,
+            long contentLength,
+            string contentType,
+            byte[] contentHash,
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            long blobSequenceNumber,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            LeaseDurationType leaseDuration,
+            LeaseState leaseState,
+            LeaseStatus leaseStatus,
+            string acceptRanges,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope,
+            byte[] blobContentHash,
+            long tagCount,
+            string versionId,
+            bool isSealed,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            string objectReplicationDestinationPolicy,
+            bool hasLegalHold,
+            DateTimeOffset createdOn,
+            string accessTier,
+            bool accessTierInferred,
+            DateTimeOffset accessTierChangedOn,
+            string smartAccessTier,
+            ETag eTag,
+            DownloadHint? downloadHint)
             => new BlobDownloadDetails
             {
                 BlobType = blobType,

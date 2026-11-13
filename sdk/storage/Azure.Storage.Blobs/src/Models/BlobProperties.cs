@@ -213,6 +213,7 @@ namespace Azure.Storage.Blobs.Models
         ///  <item><description>Cool</description></item>
         ///  <item><description>Archive</description></item>
         ///  <item><description>Smart</description></item>
+        ///  <item><description>Turbo</description></item>
         /// </list>
         /// </summary>
         public string AccessTier { get; }
@@ -245,6 +246,18 @@ namespace Azure.Storage.Blobs.Models
         /// </list>
         /// </summary>
         public string SmartAccessTier { get; }
+
+        /// <summary>
+        /// Indicates whether migration to Turbo storage is pending. Only returned if the blob is in Turbo tier
+        /// and its migration to Turbo storage has not completed.
+        /// </summary>
+        public TurboStatus? TurboStatus { get; }
+
+        /// <summary>
+        /// Indicates whether the blob's tier was implicitly set to Turbo on ingestion (<see cref="Models.TierManagedBy.System"/>)
+        /// or explicitly set to Turbo by the user (<see cref="Models.TierManagedBy.User"/>). Only returned if the blob is in Turbo tier.
+        /// </summary>
+        public TierManagedBy? TierManagedBy { get; }
 
         /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header
@@ -349,7 +362,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastAccessed,
             BlobImmutabilityPolicy immutabilityPolicy,
             bool hasLegalHold,
-            string smartAccessTier)
+            string smartAccessTier,
+            TurboStatus? turboStatus,
+            TierManagedBy? tierManagedBy)
         {
             LastModified = lastModified;
             LeaseStatus = leaseStatus;
@@ -396,6 +411,8 @@ namespace Azure.Storage.Blobs.Models
             ImmutabilityPolicy = immutabilityPolicy;
             HasLegalHold = hasLegalHold;
             SmartAccessTier = smartAccessTier;
+            TurboStatus = turboStatus;
+            TierManagedBy = tierManagedBy;
         }
     }
 }

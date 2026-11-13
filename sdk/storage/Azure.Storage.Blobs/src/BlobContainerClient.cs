@@ -3116,6 +3116,8 @@ namespace Azure.Storage.Blobs
                 StringArray accessTierCol = GetArrowColumn(batch, "AccessTier") as StringArray;
                 BooleanArray accessTierInferredCol = GetArrowColumn(batch, "AccessTierInferred") as BooleanArray;
                 StringArray archiveStatusCol = GetArrowColumn(batch, "ArchiveStatus") as StringArray;
+                StringArray turboStatusCol = GetArrowColumn(batch, "TurboStatus") as StringArray;
+                StringArray tierManagedByCol = GetArrowColumn(batch, "TierManagedBy") as StringArray;
                 StringArray smartAccessTierCol = GetArrowColumn(batch, "SmartAccessTier") as StringArray;
                 StringArray customerProvidedKeySha256Col = GetArrowColumn(batch, "CustomerProvidedKeySha256") as StringArray;
                 StringArray encryptionScopeCol = GetArrowColumn(batch, "EncryptionScope") as StringArray;
@@ -3178,6 +3180,8 @@ namespace Azure.Storage.Blobs
                         accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
                         accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
                         archiveStatus: ReadEnum(archiveStatusCol, i, s => s.ToArchiveStatus()),
+                        turboStatus: ReadEnum(turboStatusCol, i, s => new TurboStatus(s)),
+                        tierManagedBy: ReadEnum(tierManagedByCol, i, s => new TierManagedBy(s)),
                         smartAccessTier: ReadEnum(smartAccessTierCol, i, s => new AccessTier(s)),
                         customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
                         encryptionScope: encryptionScopeCol?.GetString(i),
