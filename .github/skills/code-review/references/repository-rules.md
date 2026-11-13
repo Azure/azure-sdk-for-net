@@ -457,8 +457,8 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
   or major for new API or a new service API version
 - **`CHANGELOG.md` reflects the PR's public changes.** New or changed public API or
   customer-visible behavior must be described in the current entry 🟡. If nothing public
-  changes, as in a post-release version bump, an empty entry is correct. PR builds only check
-  that the entry exists; the release pipeline rejects an empty one
+  or behavioral changes, as in a post-release version bump, an empty entry is correct. PR
+  builds only check that the entry exists; the release pipeline rejects an empty one
 - A management library's major-version increase needs explicit .NET architecture approval for
   a coordinated management SDK major release. This coordination does not waive compatibility
   requirements.
