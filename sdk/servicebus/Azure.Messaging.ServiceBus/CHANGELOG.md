@@ -8,6 +8,8 @@
 
 ### Breaking Changes
 
+- `ServiceBusSessionProcessor` now cancels active message handlers' processing tokens and raises `SessionLockLostAsync` as soon as the client detects loss of the established session receive link, rather than waiting for another receive, renewal, or local expiry. Set the AppContext switch `Azure.Messaging.ServiceBus.DisableEagerSessionLockLostNotification` to `true` before starting the processor to restore the previous timing. Local lock-expiry notifications remain unchanged. ([#49057](https://github.com/Azure/azure-sdk-for-net/issues/49057))
+
 - `ServiceBusProcessor` and `ServiceBusSessionProcessor` tracing now focuses on processing and settlement in both Application Insights/DiagnosticListener and experimental ActivitySource modes. Application-initiated receives continue to emit `Receive` activities. Migrate monitoring of internal receive loops, including idle polling and shutdown cancellation, from processor `Receive` activities to EventSource receive logs. ([#47985](https://github.com/Azure/azure-sdk-for-net/issues/47985))
 
 ### Bugs Fixed

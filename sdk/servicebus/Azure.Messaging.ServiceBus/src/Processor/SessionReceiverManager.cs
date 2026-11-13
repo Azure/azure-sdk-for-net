@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -32,7 +33,11 @@ namespace Azure.Messaging.ServiceBus
         private ServiceBusSessionReceiver _receiver;
         private CancellationTokenSource _sessionLockRenewalCancellationSource;
         private Task _sessionLockRenewalTask;
-        // This token source will be cancelled when the processor is shutting down or when we receive a lock lost exception during message settlement.
+        private Task _sessionLockLostNotificationTask;
+        private readonly bool _enableEagerSessionLockLostNotification;
+        internal const string DisableEagerSessionLockLostSwitch = "Azure.Messaging.ServiceBus.DisableEagerSessionLockLostNotification";
+        internal const string DisableEagerSessionLockLostEnvironmentVariable = "AZURE_SERVICEBUS_DISABLE_EAGER_SESSION_LOCK_LOST_NOTIFICATION";
+        // This token source will be cancelled when the session is released or its lock is known to be lost.
         private CancellationTokenSource _sessionCancellationSource;
         // This token source will be cancelled when we receive a lock lost exception or when the lock expiration time has passed.
         private CancellationTokenSource _sessionLockCancellationTokenSource;
@@ -62,6 +67,8 @@ namespace Azure.Messaging.ServiceBus
             _sessionId = sessionId;
             _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;
             _sessionProcessor = sessionProcessor;
+            _enableEagerSessionLockLostNotification = !AppContextSwitchHelper.GetConfigValue(
+                DisableEagerSessionLockLostSwitch, DisableEagerSessionLockLostEnvironmentVariable);
         }
 
         private async Task<bool> EnsureCanProcess(CancellationToken cancellationToken)
@@ -124,15 +131,96 @@ namespace Azure.Messaging.ServiceBus
             _sessionLockCancellationTokenSource = new CancellationTokenSource();
             _sessionLockCancellationTokenSource.CancelAfterLockExpired(_receiver);
 
-            if (AutoRenewLock)
+            _sessionLockLostNotificationTask = _enableEagerSessionLockLostNotification
+                ? NotifySessionLockLostAsync(
+                    _receiver.InnerReceiver.SessionLockLostTask,
+                    _sessionCancellationSource,
+                    _sessionLockCancellationTokenSource)
+                : Task.CompletedTask;
+            try
             {
-                _sessionLockRenewalTask = RenewSessionLock();
+                if (AutoRenewLock)
+                {
+                    _sessionLockRenewalTask = RenewSessionLock();
+                }
+
+                if (Processor._sessionInitializingAsync != null)
+                {
+                    var args = new ProcessSessionEventArgs(this, Processor.Identifier, processorCancellationToken);
+                    await Processor.OnSessionInitializingAsync(args).ConfigureAwait(false);
+                }
+            }
+            catch
+            {
+                await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
+                throw;
+            }
+        }
+
+        private async Task NotifySessionLockLostAsync(
+            Task<Exception> sessionLockLostTask,
+            CancellationTokenSource sessionCancellationSource,
+            CancellationTokenSource sessionLockCancellationSource)
+        {
+            if (sessionLockLostTask == null)
+            {
+                return;
             }
 
-            if (Processor._sessionInitializingAsync != null)
+            CancellationToken sessionCancellationToken = sessionCancellationSource.Token;
+            var retired = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            using var registration = sessionCancellationToken.Register(() => retired.TrySetResult(true));
+            if (await Task.WhenAny(sessionLockLostTask, retired.Task).ConfigureAwait(false) != sessionLockLostTask)
             {
-                var args = new ProcessSessionEventArgs(this, Processor.Identifier, processorCancellationToken);
-                await Processor.OnSessionInitializingAsync(args).ConfigureAwait(false);
+                return;
+            }
+
+            try
+            {
+                var exception = await sessionLockLostTask.ConfigureAwait(false);
+                await SignalSessionLockLostAsync(exception, sessionCancellationSource, sessionLockCancellationSource).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) when (sessionLockLostTask.IsCanceled)
+            {
+                // A normal transport close retires the notification without reporting lock loss.
+            }
+        }
+
+        private async Task SignalSessionLockLostAsync(
+            Exception exception,
+            CancellationTokenSource sessionCancellationSource,
+            CancellationTokenSource sessionLockCancellationSource)
+        {
+            CancellationToken sessionCancellationToken = sessionCancellationSource.Token;
+            SessionLockLostException = exception;
+            Exception callbackException = null;
+            try
+            {
+                sessionLockCancellationSource.Cancel();
+            }
+            catch (Exception notificationException)
+            {
+                callbackException = notificationException;
+            }
+            try
+            {
+                sessionCancellationSource.Cancel();
+            }
+            catch (Exception cancellationException)
+            {
+                callbackException = callbackException == null
+                    ? cancellationException
+                    : new AggregateException(callbackException, cancellationException);
+            }
+            if (callbackException != null)
+            {
+                await RaiseExceptionReceived(new ProcessErrorEventArgs(
+                    callbackException,
+                    ServiceBusErrorSource.Receive,
+                    Processor.FullyQualifiedNamespace,
+                    Processor.EntityPath,
+                    Processor.Identifier,
+                    sessionCancellationToken)).ConfigureAwait(false);
             }
         }
 
@@ -274,6 +362,7 @@ namespace Azure.Messaging.ServiceBus
                         // end up in a bad state.
                         _receiver = null;
                         _receiveTimeout = false;
+                        _sessionLockLostNotificationTask = null;
                     }
                 }
             }
@@ -342,6 +431,12 @@ namespace Azure.Messaging.ServiceBus
                     // single message at one time, so cancelling the token there would serve no purpose.
                     if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
+                        if (_enableEagerSessionLockLostNotification)
+                        {
+                            await SignalSessionLockLostAsync(
+                                sbException, _sessionCancellationSource, _sessionLockCancellationTokenSource).ConfigureAwait(false);
+                        }
+
                         // this will be awaited when closing the receiver
                         _ = CancelAsync();
                     }
@@ -410,8 +505,16 @@ namespace Azure.Messaging.ServiceBus
                     var serviceBusException = ex as ServiceBusException;
                     if (serviceBusException?.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
-                        SessionLockLostException = ex;
-                        _sessionLockCancellationTokenSource.Cancel();
+                        if (_enableEagerSessionLockLostNotification)
+                        {
+                            await SignalSessionLockLostAsync(
+                                ex, _sessionCancellationSource, _sessionLockCancellationTokenSource).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            SessionLockLostException = ex;
+                            _sessionLockCancellationTokenSource.Cancel();
+                        }
                     }
 
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockException(Processor.Identifier, ex.ToString(), _receiver.SessionId);
@@ -463,6 +566,11 @@ namespace Azure.Messaging.ServiceBus
             if (_sessionLockRenewalTask != null)
             {
                 await _sessionLockRenewalTask.ConfigureAwait(false);
+            }
+
+            if (_sessionLockLostNotificationTask != null)
+            {
+                await _sessionLockLostNotificationTask.ConfigureAwait(false);
             }
 
             // We do not dispose _sessionLockCancellationSource here because it is exposed to users via the SessionLockLostAsync
