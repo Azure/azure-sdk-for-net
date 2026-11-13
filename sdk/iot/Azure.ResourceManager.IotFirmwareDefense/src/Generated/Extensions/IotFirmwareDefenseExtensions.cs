@@ -8,9 +8,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.IotFirmwareDefense.Mocking;
-using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
@@ -18,49 +19,32 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// <summary> A class to add extension methods to Azure.ResourceManager.IotFirmwareDefense. </summary>
     public static partial class IotFirmwareDefenseExtensions
     {
+        /// <param name="client"></param>
         private static MockableIotFirmwareDefenseArmClient GetMockableIotFirmwareDefenseArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableIotFirmwareDefenseArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableIotFirmwareDefenseArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableIotFirmwareDefenseResourceGroupResource GetMockableIotFirmwareDefenseResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableIotFirmwareDefenseResourceGroupResource GetMockableIotFirmwareDefenseResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableIotFirmwareDefenseResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableIotFirmwareDefenseResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableIotFirmwareDefenseSubscriptionResource GetMockableIotFirmwareDefenseSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableIotFirmwareDefenseSubscriptionResource GetMockableIotFirmwareDefenseSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableIotFirmwareDefenseSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableIotFirmwareDefenseSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareAnalysisWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="IotFirmwareResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetIotFirmwareResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
-        public static FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareAnalysisWorkspaceResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IotFirmwareResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotFirmwareResource.CreateResourceIdentifier" /> to create an <see cref="IotFirmwareResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetIotFirmwareResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="IotFirmwareResource"/> object. </returns>
@@ -72,14 +56,31 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareAnalysisSummaryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier(string,string,string,string,FirmwareAnalysisSummaryType)" /> to create a <see cref="FirmwareAnalysisSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FirmwareAnalysisWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisSummaryResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisWorkspaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
+        public static FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareAnalysisWorkspaceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FirmwareAnalysisSummaryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisSummaryResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="FirmwareAnalysisSummaryResource"/> object. </returns>
@@ -91,14 +92,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UsageMetricResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UsageMetricResource.CreateResourceIdentifier" /> to create an <see cref="UsageMetricResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="UsageMetricResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetUsageMetricResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetUsageMetricResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="UsageMetricResource"/> object. </returns>
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Gets a collection of FirmwareAnalysisWorkspaceResources in the ResourceGroupResource.
+        /// Gets a collection of FirmwareAnalysisWorkspaces in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareAnalysisWorkspaces()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareAnalysisWorkspaces()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of FirmwareAnalysisWorkspaceResources and their operations over a FirmwareAnalysisWorkspaceResource. </returns>
+        /// <returns> An object representing collection of FirmwareAnalysisWorkspaces and their operations over a FirmwareAnalysisWorkspaceResource. </returns>
         public static FirmwareAnalysisWorkspaceCollection GetFirmwareAnalysisWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -128,34 +128,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary>
         /// Get firmware analysis workspace.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareAnalysisWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareAnalysisWorkspaceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FirmwareAnalysisWorkspaceResource>> GetFirmwareAnalysisWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -166,34 +147,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary>
         /// Get firmware analysis workspace.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareAnalysisWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareAnalysisWorkspace(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -204,33 +166,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary>
         /// Lists all of the firmware analysis workspaces in the specified subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspacesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -240,30 +184,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary>
         /// Lists all of the firmware analysis workspaces in the specified subscription.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>

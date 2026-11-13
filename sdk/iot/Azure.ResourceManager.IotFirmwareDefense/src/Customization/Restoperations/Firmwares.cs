@@ -10,7 +10,8 @@ using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    internal partial class FirmwaresRestOperations
+    // These historical download actions are no longer in the spec, but remain part of the shipped SDK.
+    internal partial class Firmwares
     {
         internal RequestUriBuilder CreateGenerateDownloadUriRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
         {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         internal HttpMessage CreateGenerateDownloadUriRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
         {
-            var message = _pipeline.CreateMessage();
+            var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -68,14 +69,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var message = CreateGenerateDownloadUriRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         FirmwareUriToken value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
+                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,14 +100,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var message = CreateGenerateDownloadUriRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            _pipeline.Send(message, cancellationToken);
+            Pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         FirmwareUriToken value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
+                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         internal HttpMessage CreateGenerateFilesystemDownloadUriRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
         {
-            var message = _pipeline.CreateMessage();
+            var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -170,14 +171,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var message = CreateGenerateFilesystemDownloadUriRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         FirmwareUriToken value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
+                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -201,14 +202,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var message = CreateGenerateFilesystemDownloadUriRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            _pipeline.Send(message, cancellationToken);
+            Pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         FirmwareUriToken value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
+                        value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
