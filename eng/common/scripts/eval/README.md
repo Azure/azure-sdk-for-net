@@ -51,7 +51,6 @@ explicit bootstrap, without changing dependency checks or the frozen lock.
 | Control | Current use |
 | --- | --- |
 | `publishDashboardResults` | Defaults to `true` in the three tools entrypoints. Set `false` to disable both upload and Azure Storage egress |
-| `allowFeatureBranchPublishing` | Defaults to `false`. A caller may explicitly enable manual feature-branch test publication; PRs and forks remain excluded |
 | `EvalStorageAccountName` | Pipeline-owner configuration. Upload is skipped when absent; set it to `evaltestsummary` for this dashboard |
 | `EvalDashboardRefreshUrl` | Pipeline-owner configuration: `https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net/api/refresh` |
 | `EvalDashboardResource` | Pipeline-owner configuration: `api://258998df-81ec-460c-bdd7-56a9bdde1e48` (resource URI, not a `/.default` scope) |
@@ -68,21 +67,20 @@ publishing to another account does not redirect the reader. Service-connection
 authorization, approved branch checks and existing RBAC remain required.
 
 Publishing policy stays in YAML: organization `https://dev.azure.com/azure-sdk/`,
-project `internal`, an Azure-owned repository whose name does not end in `-pr`,
-exact `refs/heads/main`, and a CI, scheduled or manual reason by default. There is no per-repo
-or definition-ID allowlist in shared code. New Azure SDK repos do not need another
+project `internal`, and an Azure-owned repository whose name does not end in `-pr`.
+Trusted manual DevOps runs do not require a main branch or an additional branch
+opt-in. CI and scheduled publication still require exact `refs/heads/main`.
+There is no per-repo or definition-ID allowlist in shared code. New Azure SDK repos do not need another
 shared-template edit. Personal forks, private `-pr` repos, PRs,
 pull refs and public-project runs do not get the credential-bearing task. At runtime
 it also requires a complete summary and a configured storage account.
 
-For a manual feature-branch test, explicitly set both `publishDashboardResults`
-and `allowFeatureBranchPublishing` to `true` in an entrypoint that exposes the
-test switch. Only normal `refs/heads/` branches in the trusted internal context
-qualify. Feature CI, scheduled runs, pull refs and tags stay blocked. Saved
-metadata retains the actual branch, commit and build identity; a test is never
-relabeled as main. The existing service connection, branch checks, approvals,
-storage configuration and completeness checks still apply. Test builds can
-appear in the dashboard's pipeline history under their actual feature branch.
+For a manual feature-branch test, use the existing `publishDashboardResults`
+setting. No separate feature-branch flag is needed. Saved metadata retains the
+actual branch, commit and build identity; a test is never relabeled as main.
+The existing service connection, branch checks, approvals, storage configuration
+and completeness checks still apply. Test builds can appear in the dashboard's
+pipeline history under their actual source ref.
 
 Each consuming pipeline must opt in through its repo-local entrypoint. A repo-local
 1ES redirect must expose the existing `AllowAzureStorage` hook. The pipeline owner
