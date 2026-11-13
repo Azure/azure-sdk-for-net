@@ -5118,6 +5118,7 @@ namespace Azure.AI.Projects.Agents
         public System.Collections.Generic.IList<Azure.AI.Projects.Agents.CallableToolAllowedCaller> AllowedCallers { get { throw null; } set { } }
         public OpenAI.Responses.McpToolFilter AllowedTools { get { throw null; } set { } }
         public string Authorization { get { throw null; } set { } }
+        [System.ObsoleteAttribute("deprecated")]
         public OpenAI.Responses.McpToolConnectorId? ConnectorId { get { throw null; } set { } }
         public bool? DeferLoading { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } set { } }
@@ -8949,6 +8950,7 @@ namespace Azure.AI.Projects.Agents
         public string ServerLabel { get { throw null; } set { } }
         public System.Uri ServerUrl { get { throw null; } set { } }
         public OpenAI.Responses.McpToolCallApprovalPolicy ToolCallApprovalPolicy { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version.")]
         public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Projects.Agents.VoiceAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

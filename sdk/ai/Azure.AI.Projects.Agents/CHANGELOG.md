@@ -18,6 +18,7 @@
 - Restored the experimental legacy Skills API, including skill-version operations on the `/skills` routes with the preview `api-version` query, plus MCP toolbox request-header bindings.
 
 ### Breaking Changes
+- Marked `MCPToolboxTool.ConnectorId` and `VoiceAgentMcpTool.ToolConfigs` as obsolete, matching their existing service deprecations.
 - The preview `ProjectsAgentsModelFactory.VoiceAgentDefinition` overload containing `postCall` now requires all arguments to avoid ambiguous calls to the optional GA overload. For named-argument usage, create the GA definition and then set its preview `PostCall` property. The full positional preview signature is retained.
 - `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
 - `AgentOptimizationJob.Status` now uses the shared `AgentsJobStatus`. The `AgentOptimizationJobStatus` type and its named `Skipped` value were removed; existing list filters continue to accept `AgentsJobStatus`.

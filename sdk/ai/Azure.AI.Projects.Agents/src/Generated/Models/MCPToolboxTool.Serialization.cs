@@ -98,11 +98,15 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("server_url"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connector_id"u8);
                 writer.WriteObjectValue<McpToolConnectorId?>(ConnectorId.Value, options);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             if (Optional.IsDefined(TunnelId))
             {
                 writer.WritePropertyName("tunnel_id"u8);
