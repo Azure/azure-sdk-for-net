@@ -765,6 +765,13 @@ Describe 'Re-review prompt' {
         $script:PromptBody | Should -Match '(?i)cannot.*single successful tool result.*report_incomplete'
     }
 
+    It 'tells the agent to read parts whole in small batches, never through a filter' {
+        $step3 = [regex]::Match($script:PromptBody, '(?ms)^## Step 3\b.*?(?=^## |\z)').Value
+        $step3 | Should -Match '(?i)plain `cat`, at most four parts per command'
+        $step3 | Should -Match '(?i)never pipe them through `grep`, `cut`, `tail`, or any other filter'
+        $step3 | Should -Match '(?i)generated files such as compiled `\*\.lock\.yml`'
+    }
+
     It 'routes <Area> to the changelog rule even when the changelog is unchanged' -ForEach @(
         @{ Area = '`api/*.cs`, new or changed `public`/`protected` API' }
         @{ Area = 'Client or model implementation under `src/**`' }
