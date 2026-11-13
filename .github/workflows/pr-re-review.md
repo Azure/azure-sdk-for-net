@@ -374,7 +374,7 @@ on top of that shared foundation.
 
 ## Step 1 - Gather review history
 
-Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch file under `patches/`; where GitHub omitted a patch, the input contains head content and, for an existing file, its merge-base content. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
+Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch file under `patches/`; where GitHub omitted a patch, the input contains a diff computed from the merge-base and head content, the full text of an added or removed file, or a note for binary content or an unchanged rename. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
 
 Read GitHub data with the GitHub MCP `pull_request_read` tool. Page every list to its end; a first page is not the full history.
 
