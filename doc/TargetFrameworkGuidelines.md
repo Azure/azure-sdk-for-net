@@ -162,6 +162,9 @@ When a new .NET version ships:
    removed.
 7. For each framework that leaves the test targets, find what else hard-codes
    it (see [Finding hard-coded frameworks](#finding-hard-coded-frameworks)).
+   For an LTS, also search for the outgoing LTS and move standalone samples,
+   and scripts, tools, and Dockerfiles that use a single framework, to the new
+   LTS. Its package and test targets stay.
 8. Update API listings (`api/<Package>.<framework>.cs`) for packages whose
    targets changed. `eng/scripts/Export-API.ps1` generates listings for added
    frameworks but leaves listings for removed frameworks in place, so delete
@@ -199,9 +202,11 @@ For each hit:
 
 - Leave package targets, and conditions on a framework that packages still
   target.
-- Update test, sample, perf, and stress projects, CI matrices, scripts,
-  Dockerfiles, and docs. Scripts and tools that need a single framework use the
-  current LTS.
+- For a framework that left the test targets, update test, sample, perf, and
+  stress projects, CI matrices, scripts, Dockerfiles, and docs. Scripts and
+  tools that need a single framework use the current LTS.
+- For the outgoing LTS, update only standalone samples, and the scripts, tools,
+  and Dockerfiles that use a single framework.
 - Reword comments that list frameworks so they don't name versions, for example
   "the LTS framework", instead of updating the numbers.
 - Make changes to files under `eng/common` in
