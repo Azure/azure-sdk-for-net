@@ -80,7 +80,7 @@ namespace Azure.Communication.PhoneNumbers
         { }
 
         private PhoneNumbersClient(string endpoint, TokenCredential tokenCredential, PhoneNumbersClientOptions options)
-            : this(endpoint, options.BuildPhoneNumbersHttpPipeline(tokenCredential), options)
+            : this(endpoint, options.BuildPhoneNumbersHttpPipeline(tokenCredential, endpoint), options)
         { }
 
         private PhoneNumbersClient(string endpoint, HttpPipeline httpPipeline, PhoneNumbersClientOptions options)

@@ -42,13 +42,14 @@ namespace Azure.Communication.PhoneNumbers
             return HttpPipelineBuilder.Build(pipelineOptions, httpPipelineTransportOptions);
         }
 
-        public static HttpPipeline BuildPhoneNumbersHttpPipeline(this ClientOptions options, TokenCredential tokenCredential)
+        public static HttpPipeline BuildPhoneNumbersHttpPipeline(this ClientOptions options, TokenCredential tokenCredential, string endpoint)
         {
             var pipelineOptions = new HttpPipelineOptions(options)
             {
                 RequestFailedDetailsParser = new CommunicationRequestFailedDetailsParser(),
                 PerRetryPolicies =
                 {
+                    new PhoneNumbersEndpointValidationPolicy(endpoint),
                     new BearerTokenAuthenticationPolicy(tokenCredential, "https://communication.azure.com//.default"),
                     new MSUserAgentPolicy()
                 }
