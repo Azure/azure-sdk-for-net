@@ -1,12 +1,29 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 2.0.0 (Unreleased)
 
 ### Features Added
 
+- Added support for service API version `2026-10-01`.
+- Added mixed-VM pool configuration through `VirtualMachineSkuProfile` and the `VmSkuProfile` property on pool models.
+- Added hardware customization, zone placement, and resiliency settings to `VirtualMachineConfiguration`.
+- Exposed the new placement policy model as `ZonePlacement`.
+- Added `BatchNode.PublicIPAddress` and `BatchNode.PublicIPv6Address`.
+
 ### Breaking Changes
 
+- Changed `ContainerRegistryReference.RegistryServerUri` from `Uri` to `string` and `InboundEndpoint.PublicIpAddress` from `IPAddress` to `string` to match service API version `2026-10-01`. The corresponding model-factory parameters now accept strings.
+- Removed `RetainedData` from `BatchNodeDeallocateOption`, `BatchNodeDeallocationOption`, `BatchNodeRebootKind`, and `BatchNodeReimageOption` because the service no longer supports it. Use `TaskCompletion` and upload task data to Azure Storage instead.
+- Removed `BatchClient.GetPoolUsageMetrics` and `GetPoolUsageMetricsAsync`, including their typed and protocol overloads, and the `BatchPoolUsageMetrics` model and model-factory method, following their removal from the service API.
+- Removed `BatchPoolStatistics.UsageStatistics`, the `BatchPoolUsageStatistics` model, and the associated model-factory APIs, following their removal from the service API.
+- Disk I/O statistics now use JSON numbers instead of strings. Previously persisted models containing string-encoded `diskReadIOps` or `diskWriteIOps` values must be converted to numeric values before deserialization.
+
 ### Bugs Fixed
+
+- Preserved positional argument ordering in `ComputeBatchModelFactory.BatchNode`, `BatchPool`, `BatchPoolCreateOptions`, and `BatchPoolUpdateOptions` by appending new optional parameters and retaining the original binary-compatible overloads.
+- Added `BatchClientOptions.Audience` to support Microsoft Entra authentication in Azure Government, Azure China, and custom clouds while retaining Azure Public Cloud as the default.
+- Fixed deserialization of numeric `diskReadIOps` and `diskWriteIOps` values returned by the service.
+- Fixed shared-key authentication to include the content length when signing POST requests with an empty body.
 
 ### Other Changes
 

@@ -46,6 +46,31 @@ BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), credential);
 ```
 
+#### Authenticate in a sovereign cloud
+
+Set both the Batch audience and the credential's authority host for the cloud containing your Batch account.
+The audience defaults to `BatchAudience.AzurePublicCloud` and is not inferred from the endpoint.
+
+```csharp
+var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+{
+    AuthorityHost = AzureAuthorityHosts.AzureGovernment
+});
+var options = new BatchClientOptions
+{
+    Audience = BatchAudience.AzureGovernment
+};
+var batchClient = new BatchClient(
+    new Uri("https://<your account>.usgovvirginia.batch.usgovcloudapi.net"),
+    credential,
+    options);
+```
+
+For Azure China, use `BatchAudience.AzureChina`, `AzureAuthorityHosts.AzureChina`, and your account's Azure China endpoint.
+For a custom cloud, construct a `BatchAudience` using the cloud's Microsoft Entra resource URI.
+The URI must preserve any trailing slash required by the service; the client appends `/.default` to form the token scope.
+Changing the audience does not change the credential's authority host. The audience option is ignored when using Shared Key authentication.
+
 #### Authenticate using Shared Key
 
 You can also use Shared Key authentication to sign into your Batch account. This method uses your Batch account access keys to authenticate Azure commands for the Batch service.  You can find your batch account shared keys in the portal under the "keys" section or you can run the following [CLI command](https://learn.microsoft.com/cli/azure/batch/account/keys?view=azure-cli-latest) 
@@ -414,17 +439,8 @@ foreach (BatchPoolNodeCounts item in batchClient.GetPoolNodeCounts())
 
 #### List PoolUsageMetrics
 
-`GetPoolUsageMetricsAsync` can be used to list pool usage metrics.
-
-```C# Snippet:Batch_Migration_GetPoolUsageMetrics
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchPoolUsageMetrics item in batchClient.GetPoolUsageMetrics())
-{
-    // do something
-}
-```
+Pool usage metrics are no longer supported by service API version `2026-10-01`.
+`Azure.Compute.Batch` version `2.0.0` removes the pool usage-metrics methods and models.
 
 #### Get Supported Images
 

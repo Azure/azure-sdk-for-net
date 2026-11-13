@@ -20,8 +20,6 @@ namespace Azure.Compute.Batch
         private const string TerminateValue = "terminate";
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Restart the Compute Node when all Tasks have completed. </summary>
         private const string TaskCompletionValue = "taskcompletion";
-        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Restart the Compute Node when all Task retention periods have expired. </summary>
-        private const string RetainedDataValue = "retaineddata";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeRebootKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,9 +39,6 @@ namespace Azure.Compute.Batch
 
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Restart the Compute Node when all Tasks have completed. </summary>
         public static BatchNodeRebootKind TaskCompletion { get; } = new BatchNodeRebootKind(TaskCompletionValue);
-
-        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Restart the Compute Node when all Task retention periods have expired. </summary>
-        public static BatchNodeRebootKind RetainedData { get; } = new BatchNodeRebootKind(RetainedDataValue);
 
         /// <summary> Determines if two <see cref="BatchNodeRebootKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
