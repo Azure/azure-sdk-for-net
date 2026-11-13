@@ -13,9 +13,9 @@ public class ResourceReferenceTests
     public void ClearingScopeOmitsReference(bool assignFirst)
     {
         ConfigurationStore store = new("store");
-        ExtensionAssignment extension = new("extension") { Name = "assignment" };
+        ExternalChildResourceExternalResourceExtensionAssignment extension = new("extension") { Name = "assignment" };
         Assert.That(extension.Scope, Is.Null);
-        IBicepValue reference = extension.ProvisionableProperties[nameof(ExtensionAssignment.Scope)];
+        IBicepValue reference = extension.ProvisionableProperties[nameof(ExternalChildResourceExternalResourceExtensionAssignment.Scope)];
         Assert.That(reference.IsRequired, Is.False);
         Assert.That(reference.IsOutput, Is.False);
         if (assignFirst)
@@ -87,7 +87,7 @@ public class ResourceReferenceTests
     [Test]
     public void OrdinaryPropertyNullRemainsExplicitUntilCleared()
     {
-        ExtensionAssignment extension = new("extension") { Name = "assignment" };
+        ExternalChildResourceExternalResourceExtensionAssignment extension = new("extension") { Name = "assignment" };
         extension.ExtensionAssignmentDisplayName = new BicepValue<string>((string)null!);
 
         Assert.That(extension.ExtensionAssignmentDisplayName.IsEmpty, Is.False);
