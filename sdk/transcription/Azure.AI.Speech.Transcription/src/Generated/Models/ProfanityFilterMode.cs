@@ -58,7 +58,7 @@ namespace Azure.AI.Speech.Transcription
 
         /// <summary> Converts a string to a <see cref="ProfanityFilterMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProfanityFilterMode?(string value) => value == null ? null : new ProfanityFilterMode(value);
+        public static implicit operator ProfanityFilterMode?(string value) => value == null ? (ProfanityFilterMode?)null : new ProfanityFilterMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
