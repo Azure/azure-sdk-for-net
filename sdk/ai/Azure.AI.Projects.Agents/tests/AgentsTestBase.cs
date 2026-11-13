@@ -382,7 +382,10 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider());
+
+        try
+        {
+            AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider());
 
         // Remove Agents.
         foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))
@@ -446,6 +449,11 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                     await Task.Delay(500);
                 }
             }
+        }
+        }
+        catch (ClientResultException e) when (e.Status == 403)
+        {
+            TestContext.WriteLine("Skipping Agents sample cleanup due to missing Microsoft.CognitiveServices/accounts/AIServices/agents/read permission.");
         }
     }
     #endregion
