@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Search
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
             uri.AppendPath(searchServiceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Search
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
             uri.AppendPath(searchServiceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Search
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
             uri.AppendPath(searchServiceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Search
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
             uri.AppendPath(searchServiceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Search
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Search/searchServices", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Search
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Search
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Search/searchServices", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Search
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Search
             uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
             uri.AppendPath(searchServiceName, true);
             uri.AppendPath("/upgrade", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Search/searchServices") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

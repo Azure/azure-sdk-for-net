@@ -1,14 +1,26 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.4.0 (2026-11-01)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded the default API version to `2026-11-01`.
+
+Compared with the previous GA SDK release (`1.3.0`, API version `2025-05-01`), this release includes the following capabilities introduced in the `1.4.0` previews:
+
+- Create serverless search services with `SearchServiceSkuName.Serverless`.
+- Configure knowledge-retrieval billing through `SearchServiceData.KnowledgeRetrieval` and `SearchServicePatch.KnowledgeRetrieval`, using `SearchKnowledgeRetrieval.Free` or `SearchKnowledgeRetrieval.Standard`.
+- Read stopped services and future service statuses through `ServiceStatus` on `SearchServiceData` and `SearchServicePatch`, using the extensible `SearchServiceState` type. The legacy `Status` properties retain the existing `SearchServiceStatus` enum and return `null` for statuses it cannot represent.
 
 ### Bugs Fixed
 
+- Fixed the legacy `SkuName` getters on `SearchServiceData` and `SearchServicePatch` to return `null` instead of throwing for Serverless and other SKUs the legacy enum cannot represent.
+- Fixed the legacy `PublicNetworkAccess` getters on `SearchServiceData` and `SearchServicePatch` to return `null` instead of throwing for missing values, `SecuredByPerimeter`, and other values the legacy enum cannot represent.
+- Fixed assigning `null` to the legacy `PublicNetworkAccess` properties on `SearchServiceData` and `SearchServicePatch`.
+
 ### Other Changes
+
+- Marked the legacy `Status` properties on `SearchServiceData` and `SearchServicePatch` obsolete. Use `ServiceStatus` instead to read all service statuses. Accessing `Status` now produces a compiler warning.
 
 ## 1.4.0-beta.3 (2026-09-04)
 
