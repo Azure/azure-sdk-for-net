@@ -41,11 +41,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of <see cref="FirewallDeploymentProperties"/>. </summary>
         /// <param name="panETag"> panEtag info. </param>
         /// <param name="firewallSku"> Firewall SKU type, Default will be STANDARD. </param>
+        /// <param name="sessionDrainTimeoutInMinutes"> Time in minutes to keep serving existing traffic during scale-in or upgrade events before removing a firewall instance. Can only be set on PUT, not updatable via PATCH, Default will be 15. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="panoramaConfig"> Panorama Configuration. </param>
         /// <param name="strataCloudManagerConfig"> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </param>
+        /// <param name="firewallMode">
+        /// The firewall mode this resource provisions, derived by the service from the Marketplace plan.
+        /// This property is read-only: any caller-supplied value is discarded and replaced with the mode
+        /// derived from the plan. It is absent on firewalls stored before this property was introduced,
+        /// and a reader must treat an absent value as CNGFW.
+        /// </param>
         /// <param name="associatedRulestack"> Associated Rulestack. </param>
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
         /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
@@ -53,15 +60,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallDeploymentProperties(ETag? panETag, string firewallSku, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, StrataCloudManagerConfig strataCloudManagerConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallDeploymentProperties(ETag? panETag, string firewallSku, int? sessionDrainTimeoutInMinutes, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, StrataCloudManagerConfig strataCloudManagerConfig, FirewallMode? firewallMode, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PanETag = panETag;
             FirewallSku = firewallSku;
+            SessionDrainTimeoutInMinutes = sessionDrainTimeoutInMinutes;
             NetworkProfile = networkProfile;
             IsPanoramaManaged = isPanoramaManaged;
             IsStrataCloudManaged = isStrataCloudManaged;
             PanoramaConfig = panoramaConfig;
             StrataCloudManagerConfig = strataCloudManagerConfig;
+            FirewallMode = firewallMode;
             AssociatedRulestack = associatedRulestack;
             DnsSettings = dnsSettings;
             FrontEndSettings = frontEndSettings;
@@ -77,6 +86,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Firewall SKU type, Default will be STANDARD. </summary>
         public string FirewallSku { get; set; }
 
+        /// <summary> Time in minutes to keep serving existing traffic during scale-in or upgrade events before removing a firewall instance. Can only be set on PUT, not updatable via PATCH, Default will be 15. </summary>
+        public int? SessionDrainTimeoutInMinutes { get; set; }
+
         /// <summary> Network settings. </summary>
         public FirewallNetworkProfile NetworkProfile { get; set; }
 
@@ -90,7 +102,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public FirewallPanoramaConfiguration PanoramaConfig { get; set; }
 
         /// <summary> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </summary>
-        internal StrataCloudManagerConfig StrataCloudManagerConfig { get; set; }
+        public StrataCloudManagerConfig StrataCloudManagerConfig { get; set; }
+
+        /// <summary>
+        /// The firewall mode this resource provisions, derived by the service from the Marketplace plan.
+        /// This property is read-only: any caller-supplied value is discarded and replaced with the mode
+        /// derived from the plan. It is absent on firewalls stored before this property was introduced,
+        /// and a reader must treat an absent value as CNGFW.
+        /// </summary>
+        public FirewallMode? FirewallMode { get; }
 
         /// <summary> Associated Rulestack. </summary>
         public RulestackDetails AssociatedRulestack { get; set; }
@@ -109,18 +129,5 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Marketplace details. </summary>
         public PanFirewallMarketplaceDetails MarketplaceDetails { get; set; }
-
-        /// <summary> Strata Cloud Manager name which is intended to manage the policy for this firewall. </summary>
-        public string CloudManagerName
-        {
-            get
-            {
-                return StrataCloudManagerConfig is null ? default : StrataCloudManagerConfig.CloudManagerName;
-            }
-            set
-            {
-                StrataCloudManagerConfig = new StrataCloudManagerConfig(value);
-            }
-        }
     }
 }

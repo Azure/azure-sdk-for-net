@@ -94,6 +94,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <summary> Time in minutes to keep serving existing traffic during scale-in or upgrade events before removing a firewall instance. Can only be set on PUT, not updatable via PATCH, Default will be 15. </summary>
+        public int? SessionDrainTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionDrainTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.SessionDrainTimeoutInMinutes = value;
+            }
+        }
+
         /// <summary> Network settings. </summary>
         public FirewallNetworkProfile NetworkProfile
         {
@@ -159,6 +176,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     Properties = new FirewallDeploymentProperties();
                 }
                 Properties.PanoramaConfig = value;
+            }
+        }
+
+        /// <summary> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </summary>
+        public StrataCloudManagerConfig StrataCloudManagerConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StrataCloudManagerConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.StrataCloudManagerConfig = value;
+            }
+        }
+
+        /// <summary>
+        /// The firewall mode this resource provisions, derived by the service from the Marketplace plan.
+        /// This property is read-only: any caller-supplied value is discarded and replaced with the mode
+        /// derived from the plan. It is absent on firewalls stored before this property was introduced,
+        /// and a reader must treat an absent value as CNGFW.
+        /// </summary>
+        public FirewallMode? FirewallMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirewallMode;
             }
         }
 
@@ -249,23 +297,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     Properties = new FirewallDeploymentProperties();
                 }
                 Properties.MarketplaceDetails = value;
-            }
-        }
-
-        /// <summary> Strata Cloud Manager name which is intended to manage the policy for this firewall. </summary>
-        public string CloudManagerName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CloudManagerName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FirewallDeploymentProperties();
-                }
-                Properties.CloudManagerName = value;
             }
         }
     }
