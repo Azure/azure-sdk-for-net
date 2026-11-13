@@ -3,15 +3,14 @@
 
 using System.Net;
 using System.Net.ServerSentEvents;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Azure.AI.AgentServer.Responses.Internal;
-using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -57,6 +56,7 @@ public class TaskStreamTerminalPatchFailureProtocolTests
                 },
             };
             var logger = new CapturingLogger<ResponseEndpointHandler>();
+            string responseId = IdGenerator.NewResponseId();
 
             using var factory = new TestWebApplicationFactory(
                 configureOptions: options => options.ResilientBackground = true,
@@ -70,7 +70,6 @@ public class TaskStreamTerminalPatchFailureProtocolTests
                     }
                 });
             using HttpClient client = factory.CreateClient();
-            string responseId = IdGenerator.NewResponseId();
             var payload = new Dictionary<string, object?>
             {
                 ["model"] = "test",
@@ -94,16 +93,19 @@ public class TaskStreamTerminalPatchFailureProtocolTests
 
             using HttpResponseMessage response = await client.SendAsync(
                 request,
-                HttpCompletionOption.ResponseHeadersRead);
+                HttpCompletionOption.ResponseHeadersRead).WaitAsync(TimeSpan.FromSeconds(10));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             string body = await response.Content.ReadAsStringAsync()
                 .WaitAsync(TimeSpan.FromSeconds(10));
             Assert.That(body, Does.Contain("event: response.created"));
-            Assert.That(body.IndexOf("event: response.created", StringComparison.Ordinal),
-                Is.LessThan(body.IndexOf("event: error", StringComparison.Ordinal)));
+            Assert.That(body, Does.Contain("event: response.completed"));
             Assert.That(body, Does.Contain("event: error"),
                 "The relay must surface the task completion failure instead of waiting forever for EOF.");
+            Assert.That(body.IndexOf("event: response.created", StringComparison.Ordinal),
+                Is.LessThan(body.IndexOf("event: response.completed", StringComparison.Ordinal)));
+            Assert.That(body.IndexOf("event: response.completed", StringComparison.Ordinal),
+                Is.LessThan(body.IndexOf("event: error", StringComparison.Ordinal)));
             Assert.That(logger.LastException, Is.InstanceOf<ResilientTaskException>(),
                 "SseResult must handle the task completion fault, not a concurrent enumerator cleanup error.");
 

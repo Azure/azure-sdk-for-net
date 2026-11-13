@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
@@ -96,21 +97,30 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
-        [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FormTrainingClientPropagatesEndpointFailures(bool gatewayResponse)
         {
-            var client = CreateClient();
+            var transport = new MockTransport(_ => gatewayResponse
+                ? new MockResponse(502)
+                : throw new RequestFailedException("Endpoint unavailable.", new HttpRequestException("Injected connection failure.")));
+            var client = CreateClient(new FormRecognizerClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            });
 
-            try
+            if (gatewayResponse)
             {
-                await client.GetAccountPropertiesAsync();
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetAccountPropertiesAsync());
+                Assert.That(exception.Status, Is.EqualTo(502));
             }
-            catch (AggregateException ex)
+            else
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                var exception = Assert.ThrowsAsync<AggregateException>(async () => await client.GetAccountPropertiesAsync());
+                Assert.That(exception.InnerExceptions, Has.All.TypeOf<RequestFailedException>());
             }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         [Test]
