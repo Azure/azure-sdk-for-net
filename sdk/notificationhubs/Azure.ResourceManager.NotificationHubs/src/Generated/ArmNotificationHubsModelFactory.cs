@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static SharedAccessAuthorizationRuleProperties SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision)
         {
             return new SharedAccessAuthorizationRuleProperties(
-                default,
+                new ChangeTrackingList<AuthorizationRuleAccessRightExt>(),
                 primaryKey,
                 secondaryKey,
                 keyName,

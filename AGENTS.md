@@ -219,8 +219,8 @@ Clone to short paths (e.g., `C:\git`) to avoid 260-character path limit. Paths i
 
 ### Target Frameworks
 
-- **Client Libraries**: Use `$(RequiredTargetFrameworks)` from `eng/Directory.Build.Data.props`
-- **Management Libraries**: Use `$(SdkTargetFx)` from `AzSdk.reference.props`
+- **Client and Management Libraries**: Use `$(RequiredTargetFrameworks)` from `eng/Directory.Build.Common.props`
+- See the [target framework guidelines](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/TargetFrameworkGuidelines.md) for what each package type targets and how targets change with each .NET release
 
 ### Dependency Management
 

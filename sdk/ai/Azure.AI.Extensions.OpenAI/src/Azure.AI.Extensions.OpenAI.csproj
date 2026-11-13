@@ -8,12 +8,11 @@
       ongoing forward compatibility.
     </Description>
     <AssemblyTitle>Microsoft Foundry OpenAI .NET Extensions</AssemblyTitle>
-    <Version>3.0.0-beta.7</Version>
+    <Version>3.0.0</Version>
     <PackageTags>Azure.AI.Extensions.OpenAI</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <PropertyGroup>

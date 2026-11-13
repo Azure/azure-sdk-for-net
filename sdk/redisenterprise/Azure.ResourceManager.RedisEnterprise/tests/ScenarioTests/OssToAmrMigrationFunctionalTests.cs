@@ -16,8 +16,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
     [NonParallelizable]
     public class OssToAmrMigrationFunctionalTests : RedisEnterpriseManagementTestBase
     {
-        private AzureLocation OssMigrationLocation => new("centralindia");
-
         public OssToAmrMigrationFunctionalTests(bool isAsync)
             : base(isAsync)
         {
@@ -126,12 +124,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         {
             string sourceName = Recording.GenerateAssetName("RedisSource");
             string targetName = Recording.GenerateAssetName("RedisEnterpriseTarget");
-            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync(OssMigrationLocation);
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync(DefaultLocation);
 
             try
             {
                 RedisModels.RedisCreateOrUpdateContent sourceData = new(
-                    OssMigrationLocation,
+                    DefaultLocation,
                     new RedisModels.RedisSku(
                         RedisModels.RedisSkuName.Basic,
                         RedisModels.RedisSkuFamily.BasicOrStandard,
@@ -173,7 +171,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 }
 
                 RedisEnterpriseClusterData targetData = new(
-                    OssMigrationLocation,
+                    DefaultLocation,
                     new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))
                 {
                     MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
