@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
@@ -29,8 +30,9 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="workspaceId"> The workspace ID in GUID format. </param>
         /// <param name="reporting"> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </param>
         /// <param name="storageUri"> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </param>
+        /// <param name="subnetId"> The ARM resource ID of the virtual network subnet to inject the workspace into for private network connectivity. This is of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/virtualNetworks/{virtualNetwork}/subnets/{subnet}'. This value cannot be changed after the workspace is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId, PlaywrightEnablementStatus? reporting, Uri storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId, PlaywrightEnablementStatus? reporting, Uri storageUri, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DataplaneUri = dataplaneUri;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Playwright.Models
             WorkspaceId = workspaceId;
             Reporting = reporting;
             StorageUri = storageUri;
+            SubnetId = subnetId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -62,5 +65,8 @@ namespace Azure.ResourceManager.Playwright.Models
 
         /// <summary> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </summary>
         public Uri StorageUri { get; set; }
+
+        /// <summary> The ARM resource ID of the virtual network subnet to inject the workspace into for private network connectivity. This is of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/virtualNetworks/{virtualNetwork}/subnets/{subnet}'. This value cannot be changed after the workspace is created. </summary>
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }
