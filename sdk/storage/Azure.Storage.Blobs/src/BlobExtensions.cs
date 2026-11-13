@@ -717,7 +717,13 @@ namespace Azure.Storage.Blobs
                 lastAccessed: response.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
                 immutabilityPolicy: immutabilityPolicy,
                 hasLegalHold: response.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
-                smartAccessTier: response.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null);
+                smartAccessTier: response.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null,
+                turboStatus: response.Headers.TryGetValue("x-ms-turbo-status", out string turboStatus) && turboStatus != null
+                    ? new TurboStatus(turboStatus)
+                    : (TurboStatus?)null,
+                tierManagedBy: response.Headers.TryGetValue("x-ms-tier-managed-by", out string tierManagedBy) && tierManagedBy != null
+                    ? new TierManagedBy(tierManagedBy)
+                    : (TierManagedBy?)null);
         }
 
         internal static BlobLayoutInfo ToBlobLayoutInfo(this NullableResponse<BlobLayout> response)
@@ -1016,6 +1022,12 @@ namespace Azure.Storage.Blobs
                     AccessTierInferred = rawResponse.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? accessTierInferred) && accessTierInferred.GetValueOrDefault(),
                     AccessTierChangedOn = rawResponse.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? accessTierChangedOn) ? accessTierChangedOn.GetValueOrDefault() : default,
                     SmartAccessTier = rawResponse.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null,
+                    TurboStatus = rawResponse.Headers.TryGetValue("x-ms-turbo-status", out string turboStatus) && turboStatus != null
+                        ? new TurboStatus(turboStatus)
+                        : (TurboStatus?)null,
+                    TierManagedBy = rawResponse.Headers.TryGetValue("x-ms-tier-managed-by", out string tierManagedBy) && tierManagedBy != null
+                        ? new TierManagedBy(tierManagedBy)
+                        : (TierManagedBy?)null,
                     DownloadHint = rawResponse.Headers.TryGetValue("x-ms-download-hint", out string downloadHint) && downloadHint != null
                         ? new DownloadHint(downloadHint)
                         : (DownloadHint?)null,
@@ -1275,7 +1287,9 @@ namespace Azure.Storage.Blobs
                 AccessTierChangedOn = blobPropertiesInternal.AccessTierChangedOn,
                 ImmutabilityPolicy = immutabilityPolicy,
                 HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault(),
-                SmartAccessTier = blobPropertiesInternal.SmartAccessTier
+                SmartAccessTier = blobPropertiesInternal.SmartAccessTier,
+                TurboStatus = blobPropertiesInternal.TurboStatus,
+                TierManagedBy = blobPropertiesInternal.TierManagedBy
             };
         }
 

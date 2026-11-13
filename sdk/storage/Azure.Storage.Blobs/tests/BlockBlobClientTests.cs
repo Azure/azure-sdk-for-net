@@ -1352,6 +1352,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task CommitBlockListAsync_TurboAccessTier()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Size);
+            string blockName = GetNewBlockName();
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(ToBase64(blockName), stream);
+            }
+
+            List<string> blockList = new List<string> { ToBase64(blockName) };
+            CommitBlockListOptions options = new CommitBlockListOptions
+            {
+                AccessTier = AccessTier.Turbo
+            };
+            await blob.CommitBlockListAsync(blockList, options);
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(AccessTier.Turbo.ToString(), response.Value.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, response.Value.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), response.Value.TurboStatus);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CommitBlockListAsync_Tags()
         {
@@ -2288,6 +2320,36 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task UploadAsync_TurboAccessTier()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+
+            // Act
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                AccessTier = AccessTier.Turbo
+            };
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(
+                    content: stream,
+                    options: options);
+            }
+
+            // Assert
+            Response<BlobProperties> properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Turbo.ToString(), properties.Value.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, properties.Value.TierManagedBy);
+            properties.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), properties.Value.TurboStatus);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UploadAsync_Tags()
         {
@@ -3056,6 +3118,36 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
             Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
             Assert.NotNull(response.Value.SmartAccessTier);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task SyncUploadFromUriAsync_TurboAccessTier()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            await sourceBlob.UploadAsync(stream, new BlobUploadOptions());
+
+            // Act
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions()
+            {
+                AccessTier = AccessTier.Turbo
+            };
+            await destBlob.SyncUploadFromUriAsync(
+                sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)), options);
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Turbo.ToString(), response.Value.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, response.Value.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), response.Value.TurboStatus);
         }
 
         [RecordedTest]

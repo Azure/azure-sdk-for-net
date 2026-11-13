@@ -830,6 +830,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task SetBlobAccessTier_Turbo()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            // Explicitly tier to Hot first so the blobs are not implicitly Turbo via the account default tier.
+            foreach (BlobClient blob in blobs)
+            {
+                await blob.SetAccessTierAsync(AccessTier.Hot);
+            }
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Turbo);
+
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Turbo, blobs);
+        }
+
+        [RecordedTest]
         public async Task SetBlobAccessTier_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();

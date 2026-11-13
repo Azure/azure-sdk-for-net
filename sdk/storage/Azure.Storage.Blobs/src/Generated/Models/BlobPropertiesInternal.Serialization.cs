@@ -272,6 +272,18 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteValue(ArchiveStatus.Value.ToSerialString());
                 writer.WriteEndElement();
             }
+            if (Optional.IsDefined(TurboStatus))
+            {
+                writer.WriteStartElement("TurboStatus");
+                writer.WriteValue(TurboStatus.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TierManagedBy))
+            {
+                writer.WriteStartElement("TierManagedBy");
+                writer.WriteValue(TierManagedBy.Value.ToString());
+                writer.WriteEndElement();
+            }
             if (Optional.IsDefined(SmartAccessTier))
             {
                 writer.WriteStartElement("SmartAccessTier");
@@ -384,6 +396,8 @@ namespace Azure.Storage.Blobs.Models
             AccessTier? accessTier = default;
             bool? accessTierInferred = default;
             ArchiveStatus? archiveStatus = default;
+            TurboStatus? turboStatus = default;
+            TierManagedBy? tierManagedBy = default;
             AccessTier? smartAccessTier = default;
             string customerProvidedKeySha256 = default;
             string encryptionScope = default;
@@ -545,6 +559,16 @@ namespace Azure.Storage.Blobs.Models
                     archiveStatus = ((string)child).ToArchiveStatus();
                     continue;
                 }
+                if (localName == "TurboStatus")
+                {
+                    turboStatus = new TurboStatus((string)child);
+                    continue;
+                }
+                if (localName == "TierManagedBy")
+                {
+                    tierManagedBy = new TierManagedBy((string)child);
+                    continue;
+                }
                 if (localName == "SmartAccessTier")
                 {
                     smartAccessTier = new AccessTier((string)child);
@@ -636,6 +660,8 @@ namespace Azure.Storage.Blobs.Models
                 accessTier,
                 accessTierInferred,
                 archiveStatus,
+                turboStatus,
+                tierManagedBy,
                 smartAccessTier,
                 customerProvidedKeySha256,
                 encryptionScope,

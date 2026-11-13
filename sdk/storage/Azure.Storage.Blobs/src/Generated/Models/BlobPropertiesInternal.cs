@@ -50,6 +50,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="accessTier"> The access tier of the blob. </param>
         /// <param name="accessTierInferred"> Whether the access tier is inferred. </param>
         /// <param name="archiveStatus"> The archive status of the blob. </param>
+        /// <param name="turboStatus"> Indicates whether migration to Turbo storage is pending. Omitted after migration to SSD storage completes. </param>
+        /// <param name="tierManagedBy"> Indicates whether Turbo was implicitly assigned on ingestion or explicitly selected by the user. </param>
         /// <param name="smartAccessTier"> The smart access tier of the blob. </param>
         /// <param name="customerProvidedKeySha256"> The SHA-256 hash of the blob's encryption key, if provided. </param>
         /// <param name="encryptionScope"> The encryption scope of the blob. </param>
@@ -62,7 +64,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="immutabilityPolicyExpiresOn"> The date-time the immutability policy of the blob expires. </param>
         /// <param name="immutabilityPolicyMode"> The immutability policy mode of the blob. </param>
         /// <param name="legalHold"> Whether the blob is under legal hold. </param>
-        internal BlobPropertiesInternal(DateTimeOffset? createdOn, DateTimeOffset lastModified, string eTag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangedOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        internal BlobPropertiesInternal(DateTimeOffset? createdOn, DateTimeOffset lastModified, string eTag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, TurboStatus? turboStatus, TierManagedBy? tierManagedBy, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangedOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             CreatedOn = createdOn;
             LastModified = lastModified;
@@ -93,6 +95,8 @@ namespace Azure.Storage.Blobs.Models
             AccessTier = accessTier;
             AccessTierInferred = accessTierInferred;
             ArchiveStatus = archiveStatus;
+            TurboStatus = turboStatus;
+            TierManagedBy = tierManagedBy;
             SmartAccessTier = smartAccessTier;
             CustomerProvidedKeySha256 = customerProvidedKeySha256;
             EncryptionScope = encryptionScope;
@@ -208,6 +212,12 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> The archive status of the blob. </summary>
         public ArchiveStatus? ArchiveStatus { get; }
+
+        /// <summary> Indicates whether migration to Turbo storage is pending. Omitted after migration to SSD storage completes. </summary>
+        public TurboStatus? TurboStatus { get; }
+
+        /// <summary> Indicates whether Turbo was implicitly assigned on ingestion or explicitly selected by the user. </summary>
+        public TierManagedBy? TierManagedBy { get; }
 
         /// <summary> The smart access tier of the blob. </summary>
         public AccessTier? SmartAccessTier { get; }

@@ -452,6 +452,32 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task UploadAsync_Stream_AccessTier_Turbo()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                AccessTier = AccessTier.Turbo
+            };
+
+            // Act
+            await blob.UploadAsync(stream, options);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Turbo.ToString(), response.Value.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, response.Value.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), response.Value.TurboStatus);
+        }
+
+        [RecordedTest]
         public async Task UploadAsync_BinaryData()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

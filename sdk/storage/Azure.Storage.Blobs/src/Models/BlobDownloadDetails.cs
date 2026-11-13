@@ -223,6 +223,7 @@ namespace Azure.Storage.Blobs.Models
         ///  <item><description>Cool</description></item>
         ///  <item><description>Archive</description></item>
         ///  <item><description>Smart</description></item>
+        ///  <item><description>Turbo</description></item>
         /// </list>
         /// Supported by x-ms-version 2017-04-17 and later.
         /// </summary>
@@ -252,6 +253,20 @@ namespace Azure.Storage.Blobs.Models
         /// Supported by x-ms-version 2026-02-06 and later.
         /// </summary>
         public string SmartAccessTier { get; internal set; }
+
+        /// <summary>
+        /// Indicates whether migration to Turbo storage is pending. Only returned if the blob is in Turbo tier
+        /// and its migration to Turbo storage has not completed.
+        /// Supported by x-ms-version 2027-05-07 and later.
+        /// </summary>
+        public TurboStatus? TurboStatus { get; internal set; }
+
+        /// <summary>
+        /// Indicates whether the blob's tier was implicitly set to Turbo on ingestion (<see cref="Models.TierManagedBy.System"/>)
+        /// or explicitly set to Turbo by the user (<see cref="Models.TierManagedBy.User"/>). Only returned if the blob is in Turbo tier.
+        /// Supported by x-ms-version 2027-05-07 and later.
+        /// </summary>
+        public TierManagedBy? TierManagedBy { get; internal set; }
 
         /// <summary>
         /// Indicates the download hint for the blob.

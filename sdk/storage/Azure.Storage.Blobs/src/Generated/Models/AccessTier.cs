@@ -49,6 +49,8 @@ namespace Azure.Storage.Blobs.Models
         private const string ColdValue = "Cold";
         /// <summary> The Smart access tier. </summary>
         private const string SmartValue = "Smart";
+        /// <summary> The low-latency SSD-backed tier for Block blobs. Transitions between Turbo and Hot, Cool, or Cold are supported. Archive blobs must first be rehydrated to a supported online tier. </summary>
+        private const string TurboValue = "Turbo";
 
         /// <summary> Initializes a new instance of <see cref="AccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -110,6 +112,9 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> The Smart access tier. </summary>
         public static AccessTier Smart { get; } = new AccessTier(SmartValue);
+
+        /// <summary> The low-latency SSD-backed tier for Block blobs. Transitions between Turbo and Hot, Cool, or Cold are supported. Archive blobs must first be rehydrated to a supported online tier. </summary>
+        public static AccessTier Turbo { get; } = new AccessTier(TurboValue);
 
         /// <summary> Determines if two <see cref="AccessTier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

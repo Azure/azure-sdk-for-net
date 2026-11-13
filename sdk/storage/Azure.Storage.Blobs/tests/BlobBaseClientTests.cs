@@ -2153,6 +2153,37 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task StartCopyFromUriAsync_TurboAccessTier()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            // Explicitly tier the source to Hot so it is not implicitly Turbo via the account default tier.
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            await srcBlob.SetAccessTierAsync(AccessTier.Hot);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Turbo
+            };
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Turbo.ToString(), response.Value.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, response.Value.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), response.Value.TurboStatus);
+        }
+
+        [RecordedTest]
         [TestCase(nameof(BlobRequestConditions.LeaseId))]
         public async Task StartCopyFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
         {
@@ -2980,6 +3011,33 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
             Assert.AreEqual(AccessTier.Smart.ToString(), response.Value.AccessTier);
             Assert.NotNull(response.Value.SmartAccessTier);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task SyncCopyFromUriAsync_TurboAccessTier()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            Uri srcBlobSasUri = srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1));
+            srcBlob = InstrumentClient(new BlobBaseClient(srcBlobSasUri, GetOptions()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions()
+            {
+                AccessTier = AccessTier.Turbo
+            };
+            await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Turbo.ToString(), response.Value.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, response.Value.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), response.Value.TurboStatus);
         }
 
         [RecordedTest]
@@ -7210,6 +7268,140 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.AreEqual(ArchiveStatus.RehydratePendingToSmart, blobItem.Properties.ArchiveStatus);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task SetTierAsync_Turbo()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            // Explicitly tier to Hot first so the blob is not implicitly Turbo via the account default tier.
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            await blob.SetAccessTierAsync(AccessTier.Hot);
+
+            // Act
+            await blob.SetAccessTierAsync(AccessTier.Turbo);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Turbo.ToString(), response.Value.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, response.Value.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), response.Value.TurboStatus);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task SetTierAsync_Turbo_DownloadContentAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            // Explicitly tier to Hot first so the blob is not implicitly Turbo via the account default tier.
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            await blob.SetAccessTierAsync(AccessTier.Hot);
+            await blob.SetAccessTierAsync(AccessTier.Turbo);
+
+            // Act
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync();
+
+            // Assert
+            BlobDownloadDetails details = response.Value.Details;
+            Assert.AreEqual(AccessTier.Turbo.ToString(), details.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, details.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), details.TurboStatus);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task SetTierAsync_Turbo_DownloadStreamingAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            // Explicitly tier to Hot first so the blob is not implicitly Turbo via the account default tier.
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            await blob.SetAccessTierAsync(AccessTier.Hot);
+            await blob.SetAccessTierAsync(AccessTier.Turbo);
+
+            // Act
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync();
+
+            // Assert
+            BlobDownloadDetails details = response.Value.Details;
+            Assert.AreEqual(AccessTier.Turbo.ToString(), details.AccessTier);
+            Assert.AreEqual(TierManagedBy.User, details.TierManagedBy);
+            response.GetRawResponse().Headers.TryGetValue("x-ms-turbo-status", out string rawTurboStatus);
+            Assert.AreEqual(rawTurboStatus == null ? (TurboStatus?)null : new TurboStatus(rawTurboStatus), details.TurboStatus);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        [TestCase(StorageResponseFormat.Xml)]
+        [TestCase(StorageResponseFormat.Arrow)]
+        public async Task SetTierAsync_Turbo_GetBlobsAsync(StorageResponseFormat responseFormat)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            // Explicitly tier to Hot first so the blobs are not implicitly Turbo via the account default tier.
+            BlobBaseClient blob1 = await GetNewBlobClient(test.Container, "turboBlob1");
+            BlobBaseClient blob2 = await GetNewBlobClient(test.Container, "turboBlob2");
+            await blob1.SetAccessTierAsync(AccessTier.Hot);
+            await blob2.SetAccessTierAsync(AccessTier.Hot);
+            await blob1.SetAccessTierAsync(AccessTier.Turbo);
+            await blob2.SetAccessTierAsync(AccessTier.Turbo);
+
+            // Act
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(new GetBlobsOptions
+            {
+                ResponseFormat = responseFormat
+            }).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobItems.Count);
+            foreach (BlobItem blobItem in blobItems)
+            {
+                Assert.AreEqual(AccessTier.Turbo, blobItem.Properties.AccessTier);
+                Assert.AreEqual(TierManagedBy.User, blobItem.Properties.TierManagedBy);
+                Assert.That(blobItem.Properties.TurboStatus, Is.Null.Or.EqualTo(TurboStatus.Pending));
+            }
+
+            // Act
+            IList<BlobHierarchyItem> blobHierarchyItems = await test.Container.GetBlobsByHierarchyAsync(new GetBlobsByHierarchyOptions
+            {
+                ResponseFormat = responseFormat
+            }).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobHierarchyItems.Count);
+            foreach (BlobHierarchyItem blobHierarchyItem in blobHierarchyItems)
+            {
+                Assert.AreEqual(AccessTier.Turbo, blobHierarchyItem.Blob.Properties.AccessTier);
+                Assert.AreEqual(TierManagedBy.User, blobHierarchyItem.Blob.Properties.TierManagedBy);
+                Assert.That(blobHierarchyItem.Blob.Properties.TurboStatus, Is.Null.Or.EqualTo(TurboStatus.Pending));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task SetTierAsync_TurboToHot()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            await blob.SetAccessTierAsync(AccessTier.Turbo);
+
+            // Act
+            await blob.SetAccessTierAsync(AccessTier.Hot);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Hot.ToString(), response.Value.AccessTier);
         }
 
         [RecordedTest]

@@ -144,6 +144,18 @@ namespace Azure.Storage.Blobs.Models
         public AccessTier? SmartAccessTier { get; internal set; }
 
         /// <summary>
+        /// Indicates whether migration to Turbo storage is pending. Only returned if the blob is in Turbo tier
+        /// and its migration to Turbo storage has not completed.
+        /// </summary>
+        public TurboStatus? TurboStatus { get; internal set; }
+
+        /// <summary>
+        /// Indicates whether the blob's tier was implicitly set to Turbo on ingestion (<see cref="Models.TierManagedBy.System"/>)
+        /// or explicitly set to Turbo by the user (<see cref="Models.TierManagedBy.User"/>). Only returned if the blob is in Turbo tier.
+        /// </summary>
+        public TierManagedBy? TierManagedBy { get; internal set; }
+
+        /// <summary>
         /// CustomerProvidedKeySha256.
         /// </summary>
         public string CustomerProvidedKeySha256 { get; internal set; }
