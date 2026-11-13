@@ -269,9 +269,10 @@ function Get-CommonInstallDirectory {
         New-Item -ItemType Directory -Path $installDirectory -Force | Out-Null
     }
 
-    # Update PATH in current session
+    # PATH uses ':' on Linux/macOS and ';' on Windows. A hard-coded ';' merges this
+    # directory into the final Unix PATH entry instead of adding a separate entry.
     if (-not ($env:PATH -like "*$InstallDirectory*")) {
-        $env:PATH += ";$InstallDirectory"
+        $env:PATH += "$([IO.Path]::PathSeparator)$InstallDirectory"
     }
 
     return $installDirectory
