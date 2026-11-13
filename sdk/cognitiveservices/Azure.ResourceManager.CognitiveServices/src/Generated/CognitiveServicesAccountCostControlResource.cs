@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesAccountCostControlResource : ArmResource
     {
-        private readonly ClientDiagnostics _costControlsClientDiagnostics;
-        private readonly CostControls _costControlsRestClient;
+        private readonly ClientDiagnostics _accountCostControlsClientDiagnostics;
+        private readonly AccountCostControls _accountCostControlsRestClient;
         private readonly CognitiveServicesAccountCostControlData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/costControls";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CognitiveServicesAccountCostControlResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesAccountCostControlApiVersion);
-            _costControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _costControlsRestClient = new CostControls(_costControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-09-15-preview");
+            _accountCostControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _accountCostControlsRestClient = new AccountCostControls(_accountCostControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control and its representation entity tag.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Get");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Get");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control and its representation entity tag.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesAccountCostControlResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Get");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Get");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +189,10 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Updates selected properties of a cost control.
+        /// Updates an account-owned cost control. Omitting properties preserves all existing cost control properties; setting properties to null or an empty object ({}) clears them all.
+        /// A non-empty properties object updates selected fields, preserving omitted fields; a successful update that leaves the cost control unchanged retains its entity tag.
+        /// The complete merged result may contain at most one notification, including disabled notifications, and one Block action.
+        /// Exceeding either limit returns HTTP 400 without changing the stored definition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -197,11 +200,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Update. </description>
+        /// <description> AccountCostControls_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,14 +213,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> UpdateAsync(CognitiveServicesAccountCostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> UpdateAsync(CostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Update");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Update");
             scope.Start();
             try
             {
@@ -225,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesAccountCostControlPatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CostControlPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Updates selected properties of a cost control.
+        /// Updates an account-owned cost control. Omitting properties preserves all existing cost control properties; setting properties to null or an empty object ({}) clears them all.
+        /// A non-empty properties object updates selected fields, preserving omitted fields; a successful update that leaves the cost control unchanged retains its entity tag.
+        /// The complete merged result may contain at most one notification, including disabled notifications, and one Block action.
+        /// Exceeding either limit returns HTTP 400 without changing the stored definition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -250,11 +256,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Update. </description>
+        /// <description> AccountCostControls_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,14 +269,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<CognitiveServicesAccountCostControlResource> Update(CognitiveServicesAccountCostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesAccountCostControlResource> Update(CostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Update");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Update");
             scope.Start();
             try
             {
@@ -278,7 +284,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesAccountCostControlPatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CostControlPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +301,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes a cost control.
+        /// Deletes an account-owned cost control.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -303,11 +309,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Delete. </description>
+        /// <description> AccountCostControls_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -316,11 +322,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Delete");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Delete");
             scope.Start();
             try
             {
@@ -328,7 +334,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -347,7 +353,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes a cost control.
+        /// Deletes an account-owned cost control.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -355,11 +361,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Delete. </description>
+        /// <description> AccountCostControls_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -368,11 +374,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Delete");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Delete");
             scope.Start();
             try
             {
@@ -380,7 +386,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
