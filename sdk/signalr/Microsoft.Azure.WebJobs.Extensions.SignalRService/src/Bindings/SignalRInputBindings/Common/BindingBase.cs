@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -40,12 +41,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
         }
 
-        protected abstract Task<IValueProvider> BuildAsync(TAttribute attrResolved, IReadOnlyDictionary<string, object> bindingContext);
+        protected abstract Task<IValueProvider> BuildAsync(
+            TAttribute attrResolved,
+            IReadOnlyDictionary<string, object> bindingContext,
+            CancellationToken cancellationToken);
 
         public async Task<IValueProvider> BindAsync(BindingContext context)
         {
             var attrResolved = Cloner.ResolveFromBindingData(context);
-            return await BuildAsync(attrResolved, context.BindingData).ConfigureAwait(false);
+            return await BuildAsync(attrResolved, context.BindingData, context.CancellationToken).ConfigureAwait(false);
         }
 
         public Task<IValueProvider> BindAsync(object value, ValueBindingContext context)

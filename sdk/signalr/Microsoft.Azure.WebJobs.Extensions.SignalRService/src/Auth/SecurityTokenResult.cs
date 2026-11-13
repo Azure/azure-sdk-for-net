@@ -29,17 +29,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         [JsonProperty("exception")]
         public Exception Exception { get; }
 
-        private SecurityTokenResult(SecurityTokenStatus status, ClaimsPrincipal principal = null, Exception exception = null)
+        /// <summary>
+        /// Gets the validated token's authentication expiration, when available.
+        /// </summary>
+        [JsonProperty("expiresOn")]
+        public DateTimeOffset? ExpiresOn { get; }
+
+        private SecurityTokenResult(SecurityTokenStatus status, ClaimsPrincipal principal = null, Exception exception = null, DateTimeOffset? expiresOn = null)
         {
             Status = status;
             Principal = principal;
             Exception = exception;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary>
         /// Static initializer for creating validation result of a valid token.
         /// </summary>
         public static SecurityTokenResult Success(ClaimsPrincipal principal) => new SecurityTokenResult(SecurityTokenStatus.Valid, principal: principal);
+
+        /// <summary>
+        /// Static initializer for creating a validation result with the validated authentication expiration.
+        /// </summary>
+        public static SecurityTokenResult Success(ClaimsPrincipal principal, DateTimeOffset? expiresOn) =>
+            new SecurityTokenResult(SecurityTokenStatus.Valid, principal: principal, expiresOn: expiresOn);
 
         /// <summary>
         /// Static initializer for creating validation result of an invalid token.

@@ -35,5 +35,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public const string ServerEndpointKey = "serverEndpoint";
         public const string ClientEndpointKey = "clientEndpoint";
         public const string TypeKey = "type";
+
+        // The Management SDK's default client access-token lifetime.
+        public const int DefaultAccessTokenLifetimeSeconds = 3600;
     }
 }

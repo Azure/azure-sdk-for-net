@@ -10,7 +10,7 @@
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageVersion Include="Microsoft.Azure.WebJobs" Version="3.0.44" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
-    <PackageVersion Include="Microsoft.Azure.SignalR.Management" Version="1.32.0" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Management" Version="1.34.0" />
   </ItemGroup>
 
   <ItemGroup Condition ="'$(IsClientLibrary)' == 'true'
@@ -26,9 +26,9 @@
     <PackageVersion Include="Google.Protobuf" Version="3.33.2" />
     <PackageVersion Include="Grpc.Tools" Version="2.76.0" PrivateAssets="all" />
     <PackageVersion Include="MessagePack" Version="2.5.307" />
-    <PackageVersion Include="Microsoft.Azure.SignalR" Version="1.32.0" />
-    <PackageVersion Include="Microsoft.Azure.SignalR.Protocols" Version="1.32.0" />
-    <PackageVersion Include="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.11.1" />
+    <PackageVersion Include="Microsoft.Azure.SignalR" Version="1.34.0" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Protocols" Version="1.34.0" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Sources" Version="3.0.44" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.44" />
     <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />

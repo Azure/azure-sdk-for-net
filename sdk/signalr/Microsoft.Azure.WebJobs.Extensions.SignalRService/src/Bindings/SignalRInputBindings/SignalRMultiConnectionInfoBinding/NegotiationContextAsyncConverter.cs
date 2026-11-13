@@ -30,7 +30,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 var subHubContext = serviceHubContext.WithEndpoints(new ServiceEndpoint[] { e });
                 var azureSignalRClient = new AzureSignalRClient(subHubContext);
-                var connectionInfo = await azureSignalRClient.GetClientConnectionInfoAsync(input.UserId, input.IdToken, input.ClaimTypeList, null).ConfigureAwait(false);
+                var connectionInfo = await azureSignalRClient.GetClientConnectionInfoAsync(
+                    input.UserId, input.IdToken, input.ClaimTypeList, httpContext: null,
+                    input.EnableAuthenticationRefresh, input.TokenLifetimeSeconds,
+                    authenticationExpiresOn: null, input.CloseOnAuthenticationExpiration,
+                    cancellationToken).ConfigureAwait(false);
                 return new EndpointConnectionInfo(e) { ConnectionInfo = connectionInfo };
             })).ConfigureAwait(false);
             return new NegotiationContext { Endpoints = endpointConnectionInfo };
