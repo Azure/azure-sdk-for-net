@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Override the vulnerable transitive dependency from Microsoft.AspNetCore.Http for CVE-2026-118750. -->
+    <PackageVersion Update="Microsoft.AspNetCore.WebUtilities" Version="2.3.14" />
+  </ItemGroup>
+</Project>
