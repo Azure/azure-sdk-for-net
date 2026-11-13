@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(ResourceType, out string horizonDBPrivateEndpointConnectionApiVersion);
             _horizonDBPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBPrivateEndpointConnectionsRestClient = new HorizonDBPrivateEndpointConnections(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBPrivateEndpointConnectionApiVersion ?? "2026-05-01-preview");
+            _horizonDBPrivateEndpointConnectionsRestClient = new HorizonDBPrivateEndpointConnections(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBPrivateEndpointConnectionApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateEndpointConnections_Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateEndpointConnections_Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateEndpointConnections_Delete. </description>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateEndpointConnections_Delete. </description>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateEndpointConnections_UpdateStatus. </description>
+        /// <description> PrivateEndpointConnections_ApproveOrReject. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -322,12 +322,15 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateUpdateStatusPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBPrivateEndpointConnectionData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HorizonDBPrivateEndpointConnectionData> response = Response.FromValue(HorizonDBPrivateEndpointConnectionData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource>(Response.FromValue(new HorizonDBPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource>(
+                    new HorizonDBPrivateEndpointConnectionResourceOperationSource(Client),
+                    _horizonDBPrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -350,11 +353,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateEndpointConnections_UpdateStatus. </description>
+        /// <description> PrivateEndpointConnections_ApproveOrReject. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -378,12 +381,15 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateUpdateStatusPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBPrivateEndpointConnectionData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HorizonDBPrivateEndpointConnectionData> response = Response.FromValue(HorizonDBPrivateEndpointConnectionData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource>(Response.FromValue(new HorizonDBPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnectionResource>(
+                    new HorizonDBPrivateEndpointConnectionResourceOperationSource(Client),
+                    _horizonDBPrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

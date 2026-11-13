@@ -45,5 +45,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Gets or sets the Id. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
+
+        internal bool IsTestSubResourceEmptyForFlattening()
+        {
+            return true && Id is null;
+        }
     }
 }

@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="HorizonDBCapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public virtual HorizonDBCapabilityResource GetHorizonDBCapabilityResource(ResourceIdentifier id)
+        {
+            HorizonDBCapabilityResource.ValidateResourceId(id);
+            return new HorizonDBCapabilityResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="HorizonDBClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HorizonDBClusterResource"/> object. </returns>
@@ -42,15 +51,6 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         {
             HorizonDBPoolResource.ValidateResourceId(id);
             return new HorizonDBPoolResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="HorizonDBReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDBReplicaResource"/> object. </returns>
-        public virtual HorizonDBReplicaResource GetHorizonDBReplicaResource(ResourceIdentifier id)
-        {
-            HorizonDBReplicaResource.ValidateResourceId(id);
-            return new HorizonDBReplicaResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HorizonDBFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -89,13 +89,121 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             return new HorizonDBParameterGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HorizonDBAdministratorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBDefaultParameterGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HorizonDBAdministratorResource"/> object. </returns>
-        public virtual HorizonDBAdministratorResource GetHorizonDBAdministratorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBDefaultParameterGroupResource"/> object. </returns>
+        public virtual HorizonDBDefaultParameterGroupResource GetHorizonDBDefaultParameterGroupResource(ResourceIdentifier id)
         {
-            HorizonDBAdministratorResource.ValidateResourceId(id);
-            return new HorizonDBAdministratorResource(Client, id);
+            HorizonDBDefaultParameterGroupResource.ValidateResourceId(id);
+            return new HorizonDBDefaultParameterGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MicrosoftEntraAdministratorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MicrosoftEntraAdministratorResource"/> object. </returns>
+        public virtual MicrosoftEntraAdministratorResource GetMicrosoftEntraAdministratorResource(ResourceIdentifier id)
+        {
+            MicrosoftEntraAdministratorResource.ValidateResourceId(id);
+            return new MicrosoftEntraAdministratorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HorizonDBPasswordAuthenticationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBPasswordAuthenticationResource"/> object. </returns>
+        public virtual HorizonDBPasswordAuthenticationResource GetHorizonDBPasswordAuthenticationResource(ResourceIdentifier id)
+        {
+            HorizonDBPasswordAuthenticationResource.ValidateResourceId(id);
+            return new HorizonDBPasswordAuthenticationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MicrosoftEntraAuthenticationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MicrosoftEntraAuthenticationResource"/> object. </returns>
+        public virtual MicrosoftEntraAuthenticationResource GetMicrosoftEntraAuthenticationResource(ResourceIdentifier id)
+        {
+            MicrosoftEntraAuthenticationResource.ValidateResourceId(id);
+            return new MicrosoftEntraAuthenticationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChangeDataCaptureCapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChangeDataCaptureCapabilityResource"/> object. </returns>
+        public virtual ChangeDataCaptureCapabilityResource GetChangeDataCaptureCapabilityResource(ResourceIdentifier id)
+        {
+            ChangeDataCaptureCapabilityResource.ValidateResourceId(id);
+            return new ChangeDataCaptureCapabilityResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChangeDataCaptureDestinationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChangeDataCaptureDestinationResource"/> object. </returns>
+        public virtual ChangeDataCaptureDestinationResource GetChangeDataCaptureDestinationResource(ResourceIdentifier id)
+        {
+            ChangeDataCaptureDestinationResource.ValidateResourceId(id);
+            return new ChangeDataCaptureDestinationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChangeDataCaptureIdentityAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChangeDataCaptureIdentityAssignmentResource"/> object. </returns>
+        public virtual ChangeDataCaptureIdentityAssignmentResource GetChangeDataCaptureIdentityAssignmentResource(ResourceIdentifier id)
+        {
+            ChangeDataCaptureIdentityAssignmentResource.ValidateResourceId(id);
+            return new ChangeDataCaptureIdentityAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChangeDataCaptureConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChangeDataCaptureConfigurationResource"/> object. </returns>
+        public virtual ChangeDataCaptureConfigurationResource GetChangeDataCaptureConfigurationResource(ResourceIdentifier id)
+        {
+            ChangeDataCaptureConfigurationResource.ValidateResourceId(id);
+            return new ChangeDataCaptureConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HorizonDBEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBEndpointResource"/> object. </returns>
+        public virtual HorizonDBEndpointResource GetHorizonDBEndpointResource(ResourceIdentifier id)
+        {
+            HorizonDBEndpointResource.ValidateResourceId(id);
+            return new HorizonDBEndpointResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HorizonDBMaintenanceEventResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBMaintenanceEventResource"/> object. </returns>
+        public virtual HorizonDBMaintenanceEventResource GetHorizonDBMaintenanceEventResource(ResourceIdentifier id)
+        {
+            HorizonDBMaintenanceEventResource.ValidateResourceId(id);
+            return new HorizonDBMaintenanceEventResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HorizonDBNodeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBNodeResource"/> object. </returns>
+        public virtual HorizonDBNodeResource GetHorizonDBNodeResource(ResourceIdentifier id)
+        {
+            HorizonDBNodeResource.ValidateResourceId(id);
+            return new HorizonDBNodeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HorizonDBLogCaptureConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBLogCaptureConfigurationResource"/> object. </returns>
+        public virtual HorizonDBLogCaptureConfigurationResource GetHorizonDBLogCaptureConfigurationResource(ResourceIdentifier id)
+        {
+            HorizonDBLogCaptureConfigurationResource.ValidateResourceId(id);
+            return new HorizonDBLogCaptureConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HorizonDBLogFileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBLogFileResource"/> object. </returns>
+        public virtual HorizonDBLogFileResource GetHorizonDBLogFileResource(ResourceIdentifier id)
+        {
+            HorizonDBLogFileResource.ValidateResourceId(id);
+            return new HorizonDBLogFileResource(Client, id);
         }
     }
 }

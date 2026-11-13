@@ -647,16 +647,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="endpointProp"> Gets or sets the Prop. </param>
+        /// <param name="prop"> Gets or sets the Prop. </param>
         /// <returns> A new <see cref="Tests.EndpointResourceData"/> instance for mocking. </returns>
-        public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
+        public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string prop = default)
         {
             return new EndpointResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                endpointProp is null ? default : new EndpointProperties(endpointProp, default),
+                prop is null ? default : new EndpointProperties(prop, default),
                 default);
         }
 
@@ -760,16 +760,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="hciVmInstanceSku"> Gets the Sku. </param>
+        /// <param name="sku"> Gets the Sku. </param>
         /// <returns> A new <see cref="Tests.HciVmInstanceData"/> instance for mocking. </returns>
-        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hciVmInstanceSku = default)
+        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default)
         {
             return new HciVmInstanceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                hciVmInstanceSku is null ? default : new HciVmInstanceProperties(hciVmInstanceSku, default),
+                sku is null ? default : new HciVmInstanceProperties(sku, default),
                 default);
         }
 
@@ -1020,11 +1020,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ExtendedLocationOptionalModel(name, @type, default);
         }
 
-        /// <param name="bestPracticeUpdateDescription"> The description of the best practice. </param>
+        /// <param name="description"> The description of the best practice. </param>
         /// <returns> A new <see cref="Models.BestPracticeUpdate"/> instance for mocking. </returns>
-        public static BestPracticeUpdate BestPracticeUpdate(string bestPracticeUpdateDescription = default)
+        public static BestPracticeUpdate BestPracticeUpdate(string description = default)
         {
-            return new BestPracticeUpdate(bestPracticeUpdateDescription is null ? default : new BestPracticeUpdateProperties(bestPracticeUpdateDescription, default), default);
+            return new BestPracticeUpdate(description is null ? default : new BestPracticeUpdateProperties(description, default), default);
         }
 
         /// <summary> Test resource with nullable ResourceType properties. </summary>
@@ -1612,9 +1612,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="deleteFinalResultTestMarker"> Gets or sets the Marker. </param>
+        /// <param name="marker"> Gets or sets the Marker. </param>
         /// <returns> A new <see cref="Tests.DeleteFinalResultTestData"/> instance for mocking. </returns>
-        public static DeleteFinalResultTestData DeleteFinalResultTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string deleteFinalResultTestMarker = default)
+        public static DeleteFinalResultTestData DeleteFinalResultTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string marker = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1625,7 +1625,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                deleteFinalResultTestMarker is null ? default : new DeleteFinalResultTestProperties(deleteFinalResultTestMarker, default),
+                marker is null ? default : new DeleteFinalResultTestProperties(marker, default),
                 default);
         }
 
@@ -1635,9 +1635,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="customBaseTypeResourceDescription"> Gets or sets the Description. </param>
+        /// <param name="description"> Gets or sets the Description. </param>
         /// <returns> A new <see cref="Models.CustomBaseTypeResourceData"/> instance for mocking. </returns>
-        public static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string customBaseTypeResourceDescription = default)
+        public static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1648,7 +1648,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                customBaseTypeResourceDescription is null ? default : new CustomBaseTypeResourceProperties(customBaseTypeResourceDescription, default),
+                description is null ? default : new CustomBaseTypeResourceProperties(description, default),
                 default);
         }
 
@@ -1656,16 +1656,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="testCertificateThumbprint"> Gets the Thumbprint. </param>
+        /// <param name="thumbprint"> Gets the Thumbprint. </param>
         /// <returns> A new <see cref="Tests.TestCertificateData"/> instance for mocking. </returns>
-        public static TestCertificateData TestCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string testCertificateThumbprint = default)
+        public static TestCertificateData TestCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string thumbprint = default)
         {
             return new TestCertificateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                testCertificateThumbprint is null ? default : new TestCertificateProperties(testCertificateThumbprint, default),
+                thumbprint is null ? default : new TestCertificateProperties(thumbprint, default),
                 default);
         }
 
@@ -1736,9 +1736,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="containerItemLikeSomething"> A simple string property. </param>
+        /// <param name="something"> A simple string property. </param>
         /// <returns> A new <see cref="Models.ContainerItemLike"/> instance for mocking. </returns>
-        public static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, string containerItemLikeSomething = default)
+        public static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, string something = default)
         {
             return new ContainerItemLike(
                 id,
@@ -1747,7 +1747,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 eTag,
                 default,
-                containerItemLikeSomething is null ? default : new ContainerItemLikeProperties(containerItemLikeSomething, default));
+                something is null ? default : new ContainerItemLikeProperties(something, default));
         }
 
         /// <summary> Entity Resource Like. </summary>
@@ -1876,9 +1876,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="typeAPolyDeviceDescription"> Gets or sets the Description. </param>
+        /// <param name="description"> Gets or sets the Description. </param>
         /// <returns> A new <see cref="Models.TypeAPolyDevice"/> instance for mocking. </returns>
-        public static TypeAPolyDevice TypeAPolyDevice(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string typeAPolyDeviceDescription = default)
+        public static TypeAPolyDevice TypeAPolyDevice(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default)
         {
             return new TypeAPolyDevice(
                 id,
@@ -1887,7 +1887,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 "TypeA",
                 default,
-                typeAPolyDeviceDescription is null ? default : new TypeAPolyDeviceProperties(typeAPolyDeviceDescription, default));
+                description is null ? default : new TypeAPolyDeviceProperties(description, default));
         }
 
         /// <summary> Paged collection of GrandparentFlattenLeaf items. </summary>
@@ -1906,9 +1906,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
-        /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <param name="disclaimer"> Gets the Disclaimer. </param>
         /// <returns> A new <see cref="Models.GrandparentFlattenLeaf"/> instance for mocking. </returns>
-        public static GrandparentFlattenLeaf GrandparentFlattenLeaf(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        public static GrandparentFlattenLeaf GrandparentFlattenLeaf(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string disclaimer = default)
         {
             return new GrandparentFlattenLeaf(
                 id,
@@ -1917,7 +1917,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, default),
                 default,
-                grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, default));
+                disclaimer is null ? default : new GrandparentFlattenLeafProperties(disclaimer, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1925,9 +1925,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
-        /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <param name="disclaimer"> Gets the Disclaimer. </param>
         /// <returns> A new <see cref="Models.GrandparentFlattenProxyGrandparentFlattenLeafProperties"/> instance for mocking. </returns>
-        public static GrandparentFlattenProxyGrandparentFlattenLeafProperties GrandparentFlattenProxyGrandparentFlattenLeafProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        public static GrandparentFlattenProxyGrandparentFlattenLeafProperties GrandparentFlattenProxyGrandparentFlattenLeafProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string disclaimer = default)
         {
             return new GrandparentFlattenProxyGrandparentFlattenLeafProperties(
                 id,
@@ -1936,7 +1936,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, default),
                 default,
-                grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, default));
+                disclaimer is null ? default : new GrandparentFlattenLeafProperties(disclaimer, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2015,9 +2015,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="eventGridTopicEndpoint"> Topic endpoint. </param>
+        /// <param name="endpoint"> Topic endpoint. </param>
         /// <returns> A new <see cref="Tests.EventGridTopicData"/> instance for mocking. </returns>
-        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridTopicEndpoint = default)
+        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string endpoint = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2028,7 +2028,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                eventGridTopicEndpoint is null ? default : new EventGridTopicProperties(eventGridTopicEndpoint, default),
+                endpoint is null ? default : new EventGridTopicProperties(endpoint, default),
                 default);
         }
 
@@ -2038,9 +2038,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="eventGridDomainEndpoint"> Domain endpoint. </param>
+        /// <param name="endpoint"> Domain endpoint. </param>
         /// <returns> A new <see cref="Tests.EventGridDomainData"/> instance for mocking. </returns>
-        public static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridDomainEndpoint = default)
+        public static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string endpoint = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2051,7 +2051,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                eventGridDomainEndpoint is null ? default : new EventGridDomainProperties(eventGridDomainEndpoint, default),
+                endpoint is null ? default : new EventGridDomainProperties(endpoint, default),
                 default);
         }
 
@@ -2087,9 +2087,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
-        /// <param name="solutionsApplicationDefinitionDisplayName"> The managed application definition display name. </param>
+        /// <param name="displayName"> The managed application definition display name. </param>
         /// <returns> A new <see cref="Tests.SolutionsApplicationDefinitionData"/> instance for mocking. </returns>
-        public static SolutionsApplicationDefinitionData SolutionsApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string solutionsApplicationDefinitionDisplayName = default)
+        public static SolutionsApplicationDefinitionData SolutionsApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string displayName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2100,7 +2100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 managedBy,
-                solutionsApplicationDefinitionDisplayName is null ? default : new SolutionsApplicationDefinitionProperties(solutionsApplicationDefinitionDisplayName, default));
+                displayName is null ? default : new SolutionsApplicationDefinitionProperties(displayName, default));
         }
 
         /// <summary> Reduced Solutions generic resource. </summary>
@@ -2150,16 +2150,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="ipAddress"> The address value. </param>
+        /// <param name="address"> The address value. </param>
         /// <returns> A new <see cref="Tests.IPAddressData"/> instance for mocking. </returns>
-        public static IPAddressData IPAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string ipAddress = default)
+        public static IPAddressData IPAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string address = default)
         {
             return new IPAddressData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                ipAddress is null ? default : new IPAddressProperties(ipAddress, default),
+                address is null ? default : new IPAddressProperties(address, default),
                 default);
         }
 
@@ -2169,9 +2169,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="acronymWidgetDescription"> Gets the Description. </param>
+        /// <param name="description"> Gets the Description. </param>
         /// <returns> A new <see cref="Tests.AcronymWidgetData"/> instance for mocking. </returns>
-        public static AcronymWidgetData AcronymWidgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string acronymWidgetDescription = default)
+        public static AcronymWidgetData AcronymWidgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2182,7 +2182,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                acronymWidgetDescription is null ? default : new AcronymWidgetProperties(acronymWidgetDescription, default),
+                description is null ? default : new AcronymWidgetProperties(description, default),
                 default);
         }
 

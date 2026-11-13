@@ -43,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Gets or sets the Prop. </summary>
         [WirePath("properties.prop")]
-        public string EndpointProp
+        public string Prop
         {
             get
             {

@@ -53,11 +53,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new MultiFlattenProperties();
                 }
                 Properties.Channel = value;
+                if (Properties.IsMultiFlattenPropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
 
@@ -71,11 +79,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new MultiFlattenProperties();
                 }
                 Properties.Disabled = value;
+                if (Properties.IsMultiFlattenPropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
 
@@ -107,11 +123,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new MultiFlattenProperties();
                 }
                 Properties.InnerSelectionType = value;
+                if (Properties.IsMultiFlattenPropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

@@ -18,26 +18,24 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupProperties"/>. </summary>
-        public HorizonDBParameterGroupProperties()
+        /// <param name="postgreSqlVersion"> The PostgreSQL major version for the parameter group. This property is required during creation and is immutable thereafter. The service selects the unique location-scoped default parameter group for this version in the resource location. The DefaultParameterGroups APIs return at most one default parameter group for each PostgreSQL version in a location, so this selection is unambiguous. </param>
+        public HorizonDBParameterGroupProperties(PostgreSqlVersion postgreSqlVersion)
         {
             Parameters = new ChangeTrackingList<HorizonDBParameterProperties>();
+            PostgreSqlVersion = postgreSqlVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupProperties"/>. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
-        /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="postgreSqlVersion"> PostgreSQL version for the parameter group. </param>
-        /// <param name="version"> Current version of the parameter group. </param>
-        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="description"> Description of the parameter group. The maximum length is 1024 characters. </param>
+        /// <param name="postgreSqlVersion"> The PostgreSQL major version for the parameter group. This property is required during creation and is immutable thereafter. The service selects the unique location-scoped default parameter group for this version in the resource location. The DefaultParameterGroups APIs return at most one default parameter group for each PostgreSQL version in a location, so this selection is unambiguous. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterGroupProperties(IList<HorizonDBParameterProperties> parameters, string description, int? postgreSqlVersion, int? version, bool? shouldApplyImmediately, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupProperties(IList<HorizonDBParameterProperties> parameters, string description, PostgreSqlVersion postgreSqlVersion, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
             PostgreSqlVersion = postgreSqlVersion;
-            Version = version;
-            ShouldApplyImmediately = shouldApplyImmediately;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,17 +43,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Parameters in the parameter group. </summary>
         public IList<HorizonDBParameterProperties> Parameters { get; }
 
-        /// <summary> Description of the parameter group. </summary>
+        /// <summary> Description of the parameter group. The maximum length is 1024 characters. </summary>
         public string Description { get; set; }
 
-        /// <summary> PostgreSQL version for the parameter group. </summary>
-        public int? PostgreSqlVersion { get; set; }
-
-        /// <summary> Current version of the parameter group. </summary>
-        public int? Version { get; }
-
-        /// <summary> Indicates whether the parameters should be applied immediately. </summary>
-        public bool? ShouldApplyImmediately { get; set; }
+        /// <summary> The PostgreSQL major version for the parameter group. This property is required during creation and is immutable thereafter. The service selects the unique location-scoped default parameter group for this version in the resource location. The DefaultParameterGroups APIs return at most one default parameter group for each PostgreSQL version in a location, so this selection is unambiguous. </summary>
+        public PostgreSqlVersion PostgreSqlVersion { get; set; }
 
         /// <summary> The provisioning state of the parameter group. </summary>
         public HorizonDBProvisioningState? ProvisioningState { get; }

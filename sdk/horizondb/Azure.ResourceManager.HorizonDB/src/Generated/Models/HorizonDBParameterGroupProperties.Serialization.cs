@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
     /// <summary> Properties of a HorizonDB parameter group. </summary>
     public partial class HorizonDBParameterGroupProperties : IJsonModel<HorizonDBParameterGroupProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupProperties"/> for deserialization. </summary>
+        internal HorizonDBParameterGroupProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HorizonDBParameterGroupProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -89,21 +94,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(PostgreSqlVersion))
-            {
-                writer.WritePropertyName("pgVersion"u8);
-                writer.WriteNumberValue(PostgreSqlVersion.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteNumberValue(Version.Value);
-            }
-            if (Optional.IsDefined(ShouldApplyImmediately))
-            {
-                writer.WritePropertyName("applyImmediately"u8);
-                writer.WriteBooleanValue(ShouldApplyImmediately.Value);
-            }
+            writer.WritePropertyName("postgreSqlVersion"u8);
+            writer.WriteStringValue(PostgreSqlVersion.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -153,9 +145,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             IList<HorizonDBParameterProperties> parameters = default;
             string description = default;
-            int? postgreSqlVersion = default;
-            int? version = default;
-            bool? shouldApplyImmediately = default;
+            PostgreSqlVersion postgreSqlVersion = default;
             HorizonDBProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -179,31 +169,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("pgVersion"u8))
+                if (prop.NameEquals("postgreSqlVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    postgreSqlVersion = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("version"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    version = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("applyImmediately"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    shouldApplyImmediately = prop.Value.GetBoolean();
+                    postgreSqlVersion = new PostgreSqlVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -220,14 +188,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HorizonDBParameterGroupProperties(
-                parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>(),
-                description,
-                postgreSqlVersion,
-                version,
-                shouldApplyImmediately,
-                provisioningState,
-                additionalBinaryDataProperties);
+            return new HorizonDBParameterGroupProperties(parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>(), description, postgreSqlVersion, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

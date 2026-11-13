@@ -13,6 +13,60 @@ namespace Azure.Generator.Management.Tests.Providers;
 
 internal class ConstructorApiVersionResolutionTests
 {
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    public void UnrelatedListRouteDoesNotAcquireChildResourceOverride(bool unrelatedListRoute, bool nonListAction)
+    {
+        var (client, models) = InputResourceData.ClientWithChildListOnParentResource(
+            unrelatedListRoute: unrelatedListRoute, nonListAction: nonListAction);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = restClient.RestClient.Methods.Single(method => method.Signature.Name == "CreateGetAuthenticationsRequest")
+            .BodyStatements!.ToDisplayString();
+        Assert.Multiple(() =>
+        {
+            Assert.That(client.NeedsOperationApiVersion, Is.False);
+            Assert.That(request, Does.Not.Contain("_getApiVersion"));
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", _apiVersion"));
+        });
+    }
+
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    public void ChildListOnParentResourceUsesChildApiVersionOverride(bool separateListClient, bool pagingAction)
+    {
+        var (client, models) = InputResourceData.ClientWithChildListOnParentResource(separateListClient, pagingAction: pagingAction);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client.Parent ?? client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = restClient.RestClient.Methods.Single(method => method.Signature.Name == "CreateGetAuthenticationsRequest")
+            .BodyStatements!.ToDisplayString();
+        Assert.Multiple(() =>
+        {
+            if (separateListClient)
+            {
+                Assert.That(client.ConstructorApiVersion?.ResourceType, Is.EqualTo("Microsoft.Tests/tests/authentications"));
+                var callers = plugin.Object.OutputLibrary.TypeProviders
+                    .Where(provider => provider is ResourceClientProvider or ResourceCollectionClientProvider)
+                    .SelectMany(provider => provider.Constructors)
+                    .Select(constructor => constructor.BodyStatements?.ToDisplayString() ?? string.Empty);
+                var authenticationInitialization = string.Join("\n", callers).Split('\n')
+                    .Single(line => line.Contains("_authenticationsRestClient ="));
+                Assert.That(authenticationInitialization, Does.Contain("TryGetApiVersion(\"Microsoft.Tests/tests/authentications\""));
+                Assert.That(authenticationInitialization, Does.Contain(": \"2023-01-01\""));
+                Assert.That(authenticationInitialization, Does.Not.Contain("responseTypeApiVersion"));
+            }
+            else
+            {
+                Assert.That(client.ConstructorApiVersion, Is.Null, "The parent read and child list require separate override keys.");
+                Assert.That(request, Does.Contain("\"Microsoft.Tests/tests/authentications\""));
+                Assert.That(request, Does.Not.Contain("Invoke(\"Microsoft.Tests/tests\")"));
+            }
+        });
+    }
+
     [TestCase(false, false)]
     [TestCase(true, false)]
     [TestCase(false, true)]

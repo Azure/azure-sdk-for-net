@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDB firewall rule. </summary>
+    /// <summary> Represents a customer-managed firewall rule for a HorizonDB pool. </summary>
     public partial class HorizonDBFirewallRuleData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

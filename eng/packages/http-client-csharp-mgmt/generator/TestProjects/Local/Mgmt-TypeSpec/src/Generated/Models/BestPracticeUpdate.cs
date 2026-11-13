@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The description of the best practice. </summary>
         [WirePath("properties.description")]
-        public string BestPracticeUpdateDescription
+        public string Description
         {
             get
             {
@@ -45,11 +45,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new BestPracticeUpdateProperties();
                 }
                 Properties.Description = value;
+                if (Properties.IsBestPracticeUpdatePropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

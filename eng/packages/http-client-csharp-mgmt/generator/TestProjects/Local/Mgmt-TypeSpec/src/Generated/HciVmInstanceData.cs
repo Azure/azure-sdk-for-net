@@ -43,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Gets the Sku. </summary>
         [WirePath("properties.sku")]
-        public string HciVmInstanceSku
+        public string Sku
         {
             get
             {

@@ -11,30 +11,20 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Current states. </summary>
+    /// <summary> Current state of a HorizonDB cluster. </summary>
     public readonly partial struct HorizonDBClusterState : IEquatable<HorizonDBClusterState>
     {
         private readonly string _value;
         /// <summary> Is ready and operational. </summary>
         private const string ReadyValue = "Ready";
-        /// <summary> Is being dropped/deleted. </summary>
-        private const string DroppingValue = "Dropping";
-        /// <summary> Is disabled. </summary>
-        private const string DisabledValue = "Disabled";
-        /// <summary> Is starting up. </summary>
-        private const string StartingValue = "Starting";
-        /// <summary> Is stopping. </summary>
-        private const string StoppingValue = "Stopping";
-        /// <summary> Is stopped. </summary>
-        private const string StoppedValue = "Stopped";
+        /// <summary> Is provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Is inaccessible. </summary>
+        private const string InaccessibleValue = "Inaccessible";
         /// <summary> Is being updated. </summary>
         private const string UpdatingValue = "Updating";
-        /// <summary> Is healthy. </summary>
-        private const string HealthyValue = "Healthy";
-        /// <summary> Is succeeded. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> Is upgrading. </summary>
-        private const string UpgradingValue = "Upgrading";
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -49,32 +39,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Is ready and operational. </summary>
         public static HorizonDBClusterState Ready { get; } = new HorizonDBClusterState(ReadyValue);
 
-        /// <summary> Is being dropped/deleted. </summary>
-        public static HorizonDBClusterState Dropping { get; } = new HorizonDBClusterState(DroppingValue);
+        /// <summary> Is provisioning. </summary>
+        public static HorizonDBClusterState Provisioning { get; } = new HorizonDBClusterState(ProvisioningValue);
 
-        /// <summary> Is disabled. </summary>
-        public static HorizonDBClusterState Disabled { get; } = new HorizonDBClusterState(DisabledValue);
+        /// <summary> Is being deleted. </summary>
+        public static HorizonDBClusterState Deleting { get; } = new HorizonDBClusterState(DeletingValue);
 
-        /// <summary> Is starting up. </summary>
-        public static HorizonDBClusterState Starting { get; } = new HorizonDBClusterState(StartingValue);
-
-        /// <summary> Is stopping. </summary>
-        public static HorizonDBClusterState Stopping { get; } = new HorizonDBClusterState(StoppingValue);
-
-        /// <summary> Is stopped. </summary>
-        public static HorizonDBClusterState Stopped { get; } = new HorizonDBClusterState(StoppedValue);
+        /// <summary> Is inaccessible. </summary>
+        public static HorizonDBClusterState Inaccessible { get; } = new HorizonDBClusterState(InaccessibleValue);
 
         /// <summary> Is being updated. </summary>
         public static HorizonDBClusterState Updating { get; } = new HorizonDBClusterState(UpdatingValue);
-
-        /// <summary> Is healthy. </summary>
-        public static HorizonDBClusterState Healthy { get; } = new HorizonDBClusterState(HealthyValue);
-
-        /// <summary> Is succeeded. </summary>
-        public static HorizonDBClusterState Succeeded { get; } = new HorizonDBClusterState(SucceededValue);
-
-        /// <summary> Is upgrading. </summary>
-        public static HorizonDBClusterState Upgrading { get; } = new HorizonDBClusterState(UpgradingValue);
 
         /// <summary> Determines if two <see cref="HorizonDBClusterState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

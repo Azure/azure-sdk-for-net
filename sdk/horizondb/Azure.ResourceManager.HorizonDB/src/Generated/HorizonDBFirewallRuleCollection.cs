@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.HorizonDB
     /// </summary>
     public partial class HorizonDBFirewallRuleCollection : ArmCollection, IEnumerable<HorizonDBFirewallRuleResource>, IAsyncEnumerable<HorizonDBFirewallRuleResource>
     {
-        private readonly ClientDiagnostics _horizonDBFirewallRulesClientDiagnostics;
-        private readonly HorizonDBFirewallRules _horizonDBFirewallRulesRestClient;
+        private readonly ClientDiagnostics _firewallRulesClientDiagnostics;
+        private readonly FirewallRules _firewallRulesRestClient;
 
         /// <summary> Initializes a new instance of HorizonDBFirewallRuleCollection for mocking. </summary>
         protected HorizonDBFirewallRuleCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.HorizonDB
         internal HorizonDBFirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(HorizonDBFirewallRuleResource.ResourceType, out string horizonDBFirewallRuleApiVersion);
-            _horizonDBFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBFirewallRulesRestClient = new HorizonDBFirewallRules(_horizonDBFirewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBFirewallRuleApiVersion ?? "2026-05-01-preview");
+            _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBFirewallRuleResource.ResourceType.Namespace, Diagnostics);
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBFirewallRuleApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Creates a new HorizonDB firewall rule or updates an existing rule.
+        /// Creates or replaces a HorizonDB pool firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_CreateOrUpdate. </description>
+        /// <description> FirewallRules_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HorizonDB
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, HorizonDBFirewallRuleData.ToRequestContent(data), context);
+                HttpMessage message = _firewallRulesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, HorizonDBFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDBFirewallRuleResource>(
                     new HorizonDBFirewallRuleResourceOperationSource(Client),
-                    _horizonDBFirewallRulesClientDiagnostics,
+                    _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Creates a new HorizonDB firewall rule or updates an existing rule.
+        /// Creates or replaces a HorizonDB pool firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_CreateOrUpdate. </description>
+        /// <description> FirewallRules_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HorizonDB
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, HorizonDBFirewallRuleData.ToRequestContent(data), context);
+                HttpMessage message = _firewallRulesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, HorizonDBFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDBFirewallRuleResource>(
                     new HorizonDBFirewallRuleResourceOperationSource(Client),
-                    _horizonDBFirewallRulesClientDiagnostics,
+                    _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDB firewall rule.
+        /// Gets information about a HorizonDB pool firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -179,15 +179,15 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_Get. </description>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Get");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HorizonDBFirewallRuleData> response = Response.FromValue(HorizonDBFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDB firewall rule.
+        /// Gets information about a HorizonDB pool firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -228,15 +228,15 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_Get. </description>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Get");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HorizonDBFirewallRuleData> response = Response.FromValue(HorizonDBFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_List. </description>
+        /// <description> FirewallRules_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HorizonDB
                 CancellationToken = cancellationToken
             };
             return new AsyncPageableWrapper<HorizonDBFirewallRuleData, HorizonDBFirewallRuleResource>(new HorizonDBFirewallRuleDataAsyncCollectionResultOfT(
-                _horizonDBFirewallRulesRestClient,
+                _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -312,11 +312,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_List. </description>
+        /// <description> FirewallRules_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.HorizonDB
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<HorizonDBFirewallRuleData, HorizonDBFirewallRuleResource>(new HorizonDBFirewallRuleDataCollectionResultOfT(
-                _horizonDBFirewallRulesRestClient,
+                _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -347,15 +347,15 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_Get. </description>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HorizonDBFirewallRuleData> response = default;
@@ -404,15 +404,15 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_Get. </description>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HorizonDBFirewallRuleData> response = default;
@@ -461,15 +461,15 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_Get. </description>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HorizonDBFirewallRuleData> response = default;
@@ -522,15 +522,15 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbFirewallRules_Get. </description>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using DiagnosticScope scope = _horizonDBFirewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("HorizonDBFirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HorizonDBFirewallRuleData> response = default;

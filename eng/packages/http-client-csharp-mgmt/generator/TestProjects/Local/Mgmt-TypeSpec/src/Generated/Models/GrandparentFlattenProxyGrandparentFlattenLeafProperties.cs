@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets the Disclaimer. </summary>
         [WirePath("properties.disclaimer")]
-        public string GrandparentFlattenLeafDisclaimer
+        public string Disclaimer
         {
             get
             {

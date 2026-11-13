@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.HorizonDB
     internal partial class HorizonDBParameterGroups
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of HorizonDBParameterGroups for mocking. </summary>
         protected HorizonDBParameterGroups()
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal HorizonDBParameterGroups(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal HorizonDBParameterGroups(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(HorizonDBParameterGroups).Assembly, applicationId);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups/", false);
             uri.AppendPath(parameterGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HorizonDB
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string parameterGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrReplaceRequest(Guid subscriptionId, string resourceGroupName, string parameterGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups/", false);
             uri.AppendPath(parameterGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups/", false);
             uri.AppendPath(parameterGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups/", false);
             uri.AppendPath(parameterGroupName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups") ?? "2026-10-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups/", false);
             uri.AppendPath(parameterGroupName, true);
             uri.AppendPath("/connections", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups/connections") ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -237,53 +237,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetVersionsRequest(Guid subscriptionId, string resourceGroupName, string parameterGroupName, int? version, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HorizonDb/parameterGroups/", false);
-            uri.AppendPath(parameterGroupName, true);
-            uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
-            if (version != null)
-            {
-                uri.AppendQuery("version", TypeFormatters.ConvertToString(version), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetVersionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string parameterGroupName, int? version, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.HorizonDb/parameterGroups/connections") ?? "2026-10-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

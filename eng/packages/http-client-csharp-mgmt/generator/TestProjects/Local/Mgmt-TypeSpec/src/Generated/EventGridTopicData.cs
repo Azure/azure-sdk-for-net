@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Topic endpoint. </summary>
         [WirePath("properties.endpoint")]
-        public string EventGridTopicEndpoint
+        public string Endpoint
         {
             get
             {
@@ -54,11 +54,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new EventGridTopicProperties();
                 }
                 Properties.Endpoint = value;
+                if (Properties.IsEventGridTopicPropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

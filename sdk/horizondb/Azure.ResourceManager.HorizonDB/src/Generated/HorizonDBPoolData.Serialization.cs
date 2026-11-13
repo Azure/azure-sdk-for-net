@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HorizonDBPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="horizonDBPoolData"> The <see cref="HorizonDBPoolData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HorizonDBPoolData horizonDBPoolData)
+        {
+            if (horizonDBPoolData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(horizonDBPoolData, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBPoolData"/> from. </param>
         internal static HorizonDBPoolData FromResponse(Response response)
         {
@@ -90,22 +100,6 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -154,7 +148,6 @@ namespace Azure.ResourceManager.HorizonDB
             ResourceType resourceType = default;
             SystemData systemData = default;
             HorizonDBPoolProperties properties = default;
-            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,27 +192,6 @@ namespace Azure.ResourceManager.HorizonDB
                     properties = HorizonDBPoolProperties.DeserializeHorizonDBPoolProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -231,7 +203,6 @@ namespace Azure.ResourceManager.HorizonDB
                 resourceType,
                 systemData,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }
