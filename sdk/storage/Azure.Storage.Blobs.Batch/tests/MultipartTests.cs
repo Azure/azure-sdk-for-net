@@ -16,17 +16,24 @@ namespace Azure.Storage.Blobs.Test
         [TestCase("tag\nx-ms-delete-snapshots: include")]
         public void CreateAsync_RejectsHeaderValuesContainingNewLines(string ifTags)
         {
-            using HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
-            message.Request.Method = RequestMethod.Delete;
-            message.Request.Uri.Reset(new Uri("https://account.blob.core.windows.net/container/blob"));
+            var request = new TestMockRequest();
+            using HttpMessage message = new HttpMessage(request, new ResponseClassifier());
+            request.Method = RequestMethod.Delete;
+            request.Uri.Reset(new Uri("https://account.blob.core.windows.net/container/blob"));
+
+            request.SetRawHeader("x-ms-if-tags", ifTags);
 
             ArgumentException exception = Assert.ThrowsAsync<ArgumentException>(async () =>
             {
-                message.Request.Headers.SetValue("x-ms-if-tags", ifTags);
                 await Multipart.CreateAsync(new[] { message }, "batch", async: true, CancellationToken.None);
             });
 
             StringAssert.Contains("x-ms-if-tags", exception.Message);
+        }
+
+        private class TestMockRequest : MockRequest
+        {
+            public void SetRawHeader(string name, string value) => SetHeader(name, value);
         }
     }
 }
