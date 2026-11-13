@@ -22,6 +22,10 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningTypeFactory : ManagementTypeFactory
     {
+        /// <inheritdoc/>
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
+            => new NewProvisioningProjectScaffolding();
+
         /// <summary>
         /// Builds the resource provider name from the provisioning namespace.
         /// For instance, "Azure.Provisioning.KeyVault" returns "KeyVault".

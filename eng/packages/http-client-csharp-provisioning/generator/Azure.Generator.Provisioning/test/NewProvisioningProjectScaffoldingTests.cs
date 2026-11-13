@@ -1,0 +1,310 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Generator.Provisioning.Primitives;
+using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Microsoft.TypeSpec.Generator;
+using NUnit.Framework;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace Azure.Generator.Provisioning.Tests
+{
+    public class NewProvisioningProjectScaffoldingTests
+    {
+        private const string PackageName = "Azure.Provisioning.Tests";
+        private string _root = null!;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _root = Path.Combine(Path.GetTempPath(), $"provisioning-scaffolding-{Guid.NewGuid():N}");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (Directory.Exists(_root))
+            {
+                Directory.Delete(_root, recursive: true);
+            }
+        }
+
+        [Test]
+        public void FactorySelectsProvisioningScaffolding()
+        {
+            var generator = ProvisioningMockHelpers.LoadMockPlugin();
+            Assert.That(generator.Object.TypeFactory.CreateNewProjectScaffolding(),
+                Is.TypeOf<NewProvisioningProjectScaffolding>());
+        }
+
+        [Test]
+        public void SourceProjectUsesProvisioningMetadataAndDependencies()
+        {
+            LoadGenerator("sdk");
+            var project = new TestableScaffolding().SourceProject();
+            var properties = project.Root!.Element("PropertyGroup")!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(properties.Element("Description")?.Value,
+                    Is.EqualTo($"{PackageName} simplifies declarative resource provisioning in .NET."));
+                Assert.That(properties.Element("Version")?.Value, Is.EqualTo("1.0.0-beta.1"));
+                Assert.That(properties.Elements().Select(p => p.Name.LocalName),
+                    Is.EqualTo(new[] { "Description", "Version", "TargetFrameworks" }));
+                Assert.That(properties.Element("TargetFrameworks")?.Value, Is.EqualTo("$(RequiredTargetFrameworks)"));
+                Assert.That(project.Descendants("PackageReference").Select(p => p.Attribute("Include")?.Value),
+                    Is.EquivalentTo(new[] { "Azure.Provisioning" }));
+                Assert.That(project.Descendants("Compile"), Is.Empty);
+            });
+        }
+
+        [TestCase("sdk", false)]
+        [TestCase("sdk", true)]
+        [TestCase("eng", false)]
+        [TestCase("eng", true)]
+        public void TestProjectReferencesProvisioningInfrastructure(string directory, bool trailingSeparator)
+        {
+            string outputDir = LoadGenerator(directory, trailingSeparator);
+            var project = new TestableScaffolding().TestProject();
+            var references = project.Descendants("ProjectReference")
+                .Select(p => p.Attribute("Include")!.Value)
+                .Select(p => ResolveTestPath(outputDir, p));
+            Assert.Multiple(() =>
+            {
+                Assert.That(references, Is.EquivalentTo(new[]
+                {
+                    Path.Combine(_root, "sdk", "core", "Azure.Core.TestFramework", "src", "Azure.Core.TestFramework.csproj"),
+                    Path.Combine(outputDir, "src", $"{PackageName}.csproj"),
+                    Path.Combine(_root, "sdk", "provisioning", "Azure.Provisioning", "src", "Azure.Provisioning.csproj"),
+                    Path.Combine(_root, "sdk", "provisioning", "Azure.Provisioning.Deployment", "src", "Azure.Provisioning.Deployment.csproj")
+                }));
+                Assert.That(ResolveTestPath(outputDir, project.Descendants("Compile").Single().Attribute("Include")!.Value),
+                    Is.EqualTo(Path.Combine(_root, "common", "ProvisioningTestShared", "*.cs")));
+                Assert.That(project.Descendants("ProjectReference").Any(p => p.Attribute("Include")?.Value == $@"..\src\{PackageName}.csproj"), Is.True);
+                Assert.That(project.Descendants("PackageReference"), Is.Empty);
+                Assert.That(project.Descendants().Attributes("Condition"), Is.Empty);
+                Assert.That(project.Descendants("PropertyGroup").Elements().Select(p => p.Name.LocalName),
+                    Is.EqualTo(new[] { "Nullable" }));
+                Assert.That(project.Descendants("Nullable").Single().Value, Is.EqualTo("enable"));
+                if (directory == "sdk")
+                {
+                    Assert.That(project.Descendants("Compile").Single().Attribute("Include")?.Value,
+                        Is.EqualTo(@"..\..\..\..\common\ProvisioningTestShared\*.cs"));
+                }
+            });
+        }
+
+        [Test]
+        public async Task SdkScaffoldingCreatesProvisioningFiles()
+        {
+            string outputDir = LoadGenerator("sdk");
+            var scaffolding = new TestableScaffolding();
+            await scaffolding.Execute();
+
+            string readme = File.ReadAllText(Path.Combine(outputDir, "README.md"));
+            string changelog = File.ReadAllText(Path.Combine(outputDir, "CHANGELOG.md"));
+            var props = XDocument.Load(Path.Combine(outputDir, "Directory.Build.props"));
+            XNamespace ns = props.Root!.Name.Namespace;
+            var solution = scaffolding.Solution();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(readme, Does.Contain(PackageName).And.Contain("BicepValue<T>").And.Contain("## Examples"));
+                Assert.That(readme, Does.Not.Contain("{packageName}").And.Not.Contain("management client"));
+                Assert.That(changelog, Does.Contain("## 1.0.0-beta.1 (Unreleased)"));
+                Assert.That(props.Descendants(ns + "IsMgmtLibrary").Single().Value, Is.EqualTo("true"));
+                Assert.That(props.Descendants(ns + "Nullable"), Is.Empty);
+                Assert.That(props.Descendants(ns + "Import").Single().Attribute("Project")?.Value, Does.Contain("GetDirectoryNameOfFileAbove"));
+                Assert.That(File.ReadAllText(Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj")),
+                    Is.EqualTo(scaffolding.TestProjectContent()));
+                Assert.That(solution.Descendants("Project").Select(p => p.Attribute("Path")?.Value),
+                    Is.EquivalentTo(new[] { $"src/{PackageName}.csproj", $"tests/{PackageName}.Tests.csproj" }));
+            });
+        }
+
+        [Test]
+        public async Task SdkDirectoryBuildPropsUseNormalizedTemplate()
+        {
+            string outputDir = LoadGenerator("sdk");
+            await new TestableScaffolding().Execute();
+
+            string content = File.ReadAllText(Path.Combine(outputDir, "Directory.Build.props"));
+            var props = XDocument.Parse(content);
+            XNamespace ns = props.Root!.Name.Namespace;
+            Assert.Multiple(() =>
+            {
+                Assert.That(content, Is.EqualTo(ExpectedDirectoryBuildProps));
+                Assert.That(props.Descendants(ns + "PropertyGroup").SelectMany(g => g.Elements())
+                    .Select(p => p.Name.LocalName), Is.EquivalentTo(new[] { "TargetFrameworks", "IsMgmtLibrary", "NoWarn" }));
+                Assert.That(props.Descendants(ns + "Compile").Single().Attribute("Include")?.Value,
+                    Is.EqualTo("$(AzureCoreSharedSources)ExperimentalAttribute.cs"));
+                Assert.That(props.Descendants(ns + "PackageReference").Single().Attribute("Include")?.Value,
+                    Is.EqualTo("Azure.Core"));
+            });
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ScaffoldingPreservesSdkDocumentationAndBuildPropsButRecreatesProjects(bool existingSourceProject)
+        {
+            string outputDir = LoadGenerator("sdk");
+            string[] paths = ["README.md", "CHANGELOG.md", "Directory.Build.props"];
+            Directory.CreateDirectory(Path.Combine(outputDir, "tests"));
+            foreach (string path in paths)
+            {
+                File.WriteAllText(Path.Combine(outputDir, path), "customized content");
+            }
+
+            string testProject = Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj");
+            string sourceProject = Path.Combine(outputDir, "src", $"{PackageName}.csproj");
+            File.WriteAllText(testProject, "customized test project");
+            if (existingSourceProject)
+            {
+                File.WriteAllText(sourceProject, "customized source project");
+            }
+            var scaffolding = new TestableScaffolding();
+            await scaffolding.Execute();
+
+            foreach (string path in paths)
+            {
+                Assert.That(File.ReadAllText(Path.Combine(outputDir, path)), Is.EqualTo("customized content"), path);
+            }
+            Assert.That(File.ReadAllText(testProject), Is.EqualTo(scaffolding.TestProjectContent()));
+            Assert.That(XDocument.Load(sourceProject).ToString(), Is.EqualTo(scaffolding.SourceProject().ToString()));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ExistingRepositoryBuildPropsArePreserved(bool trailingSeparator)
+        {
+            string outputDir = LoadGenerator("eng", trailingSeparator);
+            string propsPath = Path.Combine(outputDir, "Directory.Build.props");
+            File.WriteAllText(propsPath, "old fixture properties");
+
+            await new TestableScaffolding().Execute();
+
+            Assert.That(File.ReadAllText(propsPath), Is.EqualTo("old fixture properties"));
+        }
+
+        [Test]
+        public async Task FixtureScaffoldingCreatesProjectsWithoutBuildPropsOrDocumentation()
+        {
+            string outputDir = LoadGenerator("eng");
+            await new TestableScaffolding().Execute();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(File.Exists(Path.Combine(outputDir, "README.md")), Is.False);
+                Assert.That(File.Exists(Path.Combine(outputDir, "CHANGELOG.md")), Is.False);
+                Assert.That(File.Exists(Path.Combine(outputDir, "Directory.Build.props")), Is.False);
+                Assert.That(File.Exists(Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj")), Is.True);
+            });
+        }
+
+        [TestCase("eng", false)]
+        [TestCase("eng", true)]
+        [TestCase("standalone", false)]
+        [TestCase("standalone", true)]
+        public async Task NonSdkScaffoldingDoesNotWriteBuildProps(string directory, bool existingBuildProps)
+        {
+            string outputDir = LoadGenerator(directory == "eng" ? "other-eng" : "standalone");
+            string propsPath = Path.Combine(outputDir, "Directory.Build.props");
+            if (existingBuildProps)
+            {
+                File.WriteAllText(propsPath, "customized build properties");
+            }
+
+            await new TestableScaffolding().Execute();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(File.Exists(propsPath), Is.EqualTo(existingBuildProps));
+                if (existingBuildProps)
+                {
+                    Assert.That(File.ReadAllText(propsPath), Is.EqualTo("customized build properties"));
+                }
+                var testProject = XDocument.Load(Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj"));
+                Assert.That(testProject.Descendants("Compile").Count(), Is.EqualTo(directory == "eng" ? 1 : 0));
+                Assert.That(testProject.Descendants("ProjectReference").Any(p =>
+                    p.Attribute("Include")?.Value == $@"..\src\{PackageName}.csproj"), Is.True);
+            });
+        }
+
+        private string LoadGenerator(string directory, bool trailingSeparator = false)
+        {
+            string outputDir = directory switch
+            {
+                "sdk" => Path.Combine(_root, "sdk", "service", PackageName),
+                "eng" => Path.Combine(_root, "eng", "packages", "generator", "TestProjects", "Local", PackageName),
+                "other-eng" => Path.Combine(_root, "eng", "custom", PackageName),
+                _ => Path.Combine(_root, "my-spec")
+            };
+            if (trailingSeparator)
+            {
+                outputDir += Path.DirectorySeparatorChar;
+            }
+            Directory.CreateDirectory(outputDir);
+            Directory.CreateDirectory(Path.Combine(outputDir, "src"));
+            var generator = ProvisioningMockHelpers.LoadMockPlugin();
+            typeof(Configuration).GetField("<OutputDirectory>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(generator.Object.Configuration, outputDir);
+            return outputDir;
+        }
+
+        private static string ResolveTestPath(string outputDir, string path)
+            => Path.GetFullPath(Path.Combine(outputDir, "tests", path.Replace('\\', Path.DirectorySeparatorChar)));
+
+        private const string ExpectedDirectoryBuildProps = """
+            <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+              <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+              <PropertyGroup>
+                <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+                <IsMgmtLibrary>true</IsMgmtLibrary>
+              </PropertyGroup>
+
+              <!--
+                Temporarily disable warnings from new analyzers:
+                  AZC0034: Typename is already used in another library.
+                  AZC0035: Missing model factory method
+
+                  Tracked by # 51311
+              -->
+              <PropertyGroup>
+                <NoWarn>
+                  $(NoWarn);
+                  AZC0034;
+                  AZC0035;
+                </NoWarn>
+              </PropertyGroup>
+
+              <ItemGroup>
+                <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
+              </ItemGroup>
+              <ItemGroup>
+                <!--
+                Azure.Core isn't being found on builds with
+                dotnet build .\Azure.Provisioning.sln /p:UseProjectReferenceToAzureClients=true
+                for some reason.  Temporarily adding an explicit Azure.Core reference so
+                it's correctly replaced in all projects for those build targets.
+                -->
+                <PackageReference Include="Azure.Core" Condition="$(UseProjectReferenceToAzureClients) == 'true'" />
+              </ItemGroup>
+
+            </Project>
+            """ + "\n";
+
+        private class TestableScaffolding : NewProvisioningProjectScaffolding
+        {
+            public XDocument SourceProject() => XDocument.Parse(GetSourceProjectFileContent());
+            public XDocument TestProject() => XDocument.Parse(GetTestProjectFileContent());
+            public XDocument Solution() => XDocument.Parse(GetSolutionFileContent());
+            public string TestProjectContent() => GetTestProjectFileContent();
+        }
+    }
+}
