@@ -516,21 +516,35 @@ public class ProjectsRealtimeClientTests
             }
             return true;
 
-            void ReadOne(string id)
+            async void ReadOne(string id)
             {
                 if (protocol)
                 {
-                    using IEnumerator<ClientResult> events = session.ReceiveUpdates(new RequestOptions { CancellationToken = timeout.Token }).GetEnumerator();
-                    Assert.That(events.MoveNext(), Is.True);
-                    using JsonDocument document = JsonDocument.Parse(events.Current.GetRawResponse().Content);
-                    Assert.That(document.RootElement.GetProperty("response").GetProperty("id").GetString(), Is.EqualTo(id));
+                    IAsyncEnumerator<ClientResult> events = session.ReceiveUpdatesAsync(new RequestOptions { CancellationToken = timeout.Token }).GetAsyncEnumerator();
+                    try
+                    {
+                        Assert.That(await events.MoveNextAsync(), Is.True);
+                        using JsonDocument document = JsonDocument.Parse(events.Current.GetRawResponse().Content);
+                        Assert.That(document.RootElement.GetProperty("response").GetProperty("id").GetString(), Is.EqualTo(id));
+                    }
+                    finally
+                    {
+                        await events.DisposeAsync();
+                    }
                 }
                 else
                 {
-                    using IEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdates(timeout.Token).GetEnumerator();
-                    Assert.That(events.MoveNext(), Is.True);
-                    Assert.That(events.Current, Is.TypeOf<RealtimeServerUpdateResponseCreated>());
-                    Assert.That(((RealtimeServerUpdateResponseCreated)events.Current).Response.Id, Is.EqualTo(id));
+                    IAsyncEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdatesAsync(timeout.Token).GetAsyncEnumerator();
+                    try
+                    {
+                        Assert.That(await events.MoveNextAsync(), Is.True);
+                        Assert.That(events.Current, Is.TypeOf<RealtimeServerUpdateResponseCreated>());
+                        Assert.That(((RealtimeServerUpdateResponseCreated)events.Current).Response.Id, Is.EqualTo(id));
+                    }
+                    finally
+                    {
+                        await events.DisposeAsync();
+                    }
                 }
             }
         });
@@ -568,17 +582,31 @@ public class ProjectsRealtimeClientTests
         receiving.CancelAfter(200);
         try
         {
-            Task<bool> reader = Task.Run(() =>
+            Task<bool> reader = Task.Run(async () =>
             {
                 if (protocol)
                 {
-                    using IEnumerator<ClientResult> events = session.ReceiveUpdates(new RequestOptions { CancellationToken = receiving.Token }).GetEnumerator();
-                    Assert.Catch<OperationCanceledException>(() => events.MoveNext());
+                    IAsyncEnumerator<ClientResult> events = session.ReceiveUpdatesAsync(new RequestOptions { CancellationToken = receiving.Token }).GetAsyncEnumerator();
+                    try
+                    {
+                        Assert.CatchAsync<OperationCanceledException>(async () => await events.MoveNextAsync());
+                    }
+                    finally
+                    {
+                        await events.DisposeAsync();
+                    }
                 }
                 else
                 {
-                    using IEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdates(receiving.Token).GetEnumerator();
-                    Assert.Catch<OperationCanceledException>(() => events.MoveNext());
+                    IAsyncEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdatesAsync(receiving.Token).GetAsyncEnumerator();
+                    try
+                    {
+                        Assert.CatchAsync<OperationCanceledException>(async () => await events.MoveNextAsync());
+                    }
+                    finally
+                    {
+                        await events.DisposeAsync();
+                    }
                 }
                 return true;
             });

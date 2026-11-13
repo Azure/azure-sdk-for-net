@@ -73,45 +73,6 @@ namespace Azure.AI.Projects
         }
 #pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConversationsDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ConversationsDataGenerationJobConfiguration)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxSamples))
-            {
-                writer.WritePropertyName("max_samples"u8);
-                writer.WriteNumberValue(MaxSamples.Value);
-            }
-            if (Optional.IsDefined(RedactPrivateContent))
-            {
-                writer.WritePropertyName("redact_private_content"u8);
-                writer.WriteBooleanValue(RedactPrivateContent.Value);
-            }
-            if (Optional.IsDefined(GenerateTestCaseDescription))
-            {
-                writer.WritePropertyName("generate_test_case_description"u8);
-                writer.WriteBooleanValue(GenerateTestCaseDescription.Value);
-            }
-            if (Optional.IsDefined(GenerateTestCaseRubric))
-            {
-                writer.WritePropertyName("generate_test_case_rubric"u8);
-                writer.WriteBooleanValue(GenerateTestCaseRubric.Value);
-            }
-            if (Optional.IsDefined(ModelOptions))
-            {
-                writer.WritePropertyName("model_options"u8);
-                writer.WriteObjectValue(ModelOptions, options);
-            }
-        }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
 #pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.

@@ -184,7 +184,7 @@ public class VoiceAgentContractCompatibilityTests
     [TestCase(typeof(BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResult))]
     [TestCase(typeof(BetaVoiceAgentsTelephonyGetTelephonyCallJobsCollectionResult))]
     [TestCase(typeof(BetaVoiceAgentsTelephonyGetTelephonyCallJobsAsyncCollectionResult))]
-    [TestCase(typeof(GenerateVoiceAgentRequest))]
+    [TestCase(typeof(GenerateVoiceAgentContent))]
     public void CoreVoiceTypesAreNotBlanketPreview(Type type)
     {
         Assert.That(type.GetCustomAttribute<ExperimentalAttribute>(), Is.Null,

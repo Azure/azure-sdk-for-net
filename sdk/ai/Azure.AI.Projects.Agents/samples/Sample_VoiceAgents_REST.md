@@ -207,11 +207,17 @@ TelephonyCampaign proposedCampaign = new(
     source: new PhoneNumber("+15555550100"));
 proposedCampaign.Recipients.Add(new TelephonyRecipient(new PhoneNumber("+15555550101")));
 TelephonyTransferTarget teamsTransfer = new(
-    "teams-support", "Transfer to a Teams support account.",
-    new TeamsAddress("11111111-2222-3333-4444-555555555555"));
+    "Transfer to a Teams support account.",
+    new TeamsAddress("11111111-2222-3333-4444-555555555555"))
+{
+    Name= "teams-support"
+};
 TelephonyTransferTarget sipTransfer = new(
-    "sip-support", "Transfer to a SIP support address.",
-    new SipAddress("sip:support@contoso.com"));
+    "Transfer to a SIP support address.",
+    new SipAddress("sip:support@contoso.com"))
+{
+    Name = "sip-support"
+};
 Console.WriteLine(
     $"Prepared (but did not submit) {proposedCampaign.Recipients.Count} typed recipients.");
 Console.WriteLine($"Prepared transfer targets '{teamsTransfer.Name}' and '{sipTransfer.Name}' without submitting them.");

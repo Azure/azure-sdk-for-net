@@ -143,14 +143,7 @@ public class AgentTelephonyTests : AgentsTestBase
 
         TelephonyTransferTarget newTarget = new(
             description: "Transfers to the sales desk for pricing questions.",
-<<<<<<< HEAD
             destination: new PhoneNumber("+14255550123"));
-=======
-            destination: new PSTNTelephonyTransferDestination("+14255550123"))
-        {
-            Name = "sales_desk",
-        };
->>>>>>> 515a1f7193a0f514dd0b4215f6f511977dd987bc
 
         TelephonyTransferTargets replaced = await telephonyClient.ReplaceTelephonyTransferTargetsAsync(agentName, "*", [newTarget], CancellationToken.None);
         Assert.That(replaced.TransferTargets, Has.Count.EqualTo(1));

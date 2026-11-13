@@ -181,8 +181,8 @@ public class AgentTelephonyProtocolTests
     {
         var (_, transport, administration) = CreateClient();
         ArgumentNullException exception = isAsync
-            ? Assert.ThrowsAsync<ArgumentNullException>(async () => await administration.GenerateAgentAsync((GenerateVoiceAgentRequest)null))
-            : Assert.Throws<ArgumentNullException>(() => administration.GenerateAgent((GenerateVoiceAgentRequest)null));
+            ? Assert.ThrowsAsync<ArgumentNullException>(async () => await administration.GenerateAgentAsync((GenerateVoiceAgentContent)null))
+            : Assert.Throws<ArgumentNullException>(() => administration.GenerateAgent((GenerateVoiceAgentContent)null));
         Assert.Multiple(() =>
         {
             Assert.That(exception.ParamName, Is.EqualTo("body"));
@@ -489,7 +489,9 @@ public class AgentTelephonyProtocolTests
     {
         TwilioTelephonyBinding binding = new("connection", "+15555550100") { Label = "support" };
         TelephonyCallJobCreate callJob = new(new PhoneNumber("+15555550101"), "connection", new PhoneNumber("+15555550100"));
-        TelephonyTransferTarget[] targets = [new("support", "Customer support", new PhoneNumber("+15555550100"))];
+        TelephonyTransferTarget[] targets = [new("Customer support", new PhoneNumber("+15555550100")) {
+            Name="support"
+        }];
         return operation switch
         {
             "CreateTelephonyBinding" => isAsync ? await client.CreateTelephonyBindingAsync("fake-agent", binding, cancellationToken) : client.CreateTelephonyBinding("fake-agent", binding, cancellationToken),

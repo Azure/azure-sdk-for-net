@@ -134,7 +134,10 @@ public class TelephonyAddressSerializationTests
         }
         else
         {
-            TelephonyTransferTarget[] targets = [new("support", "Support", destination)];
+            TelephonyTransferTarget[] targets = [new("Support", destination)
+            {
+                Name = "support"
+            }];
             BetaVoiceAgentsTelephony client = administration.GetBetaVoiceAgentTelephony();
             if (isAsync)
             {
