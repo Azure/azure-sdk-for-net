@@ -447,7 +447,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 changeFeedEvent.EventType);
             Assert.AreEqual(
                 DateTimeOffset.Parse("2022-02-17T13:12:11.5746587Z"),
-                changeFeedEvent.EventTime);
+                changeFeedEvent.EventOccurredOn);
             Assert.AreEqual(
                 Guid.Parse("62616073-8020-0000-00ff-233467060cc0"),
                 changeFeedEvent.Id);
@@ -573,7 +573,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 changeFeedEvent.EventType);
             Assert.AreEqual(
                 DateTimeOffset.Parse("2022-02-17T13:12:11.5746587Z"),
-                changeFeedEvent.EventTime);
+                changeFeedEvent.EventOccurredOn);
             Assert.AreEqual(
                 Guid.Parse("62616073-8020-0000-00ff-233467060cc0"),
                 changeFeedEvent.Id);
@@ -703,7 +703,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 changeFeedEvent.EventType);
             Assert.AreEqual(
                 DateTimeOffset.Parse("2022-02-17T13:12:11.5746587Z"),
-                changeFeedEvent.EventTime);
+                changeFeedEvent.EventOccurredOn);
             Assert.AreEqual(
                 Guid.Parse("62616073-8020-0000-00ff-233467060cc0"),
                 changeFeedEvent.Id);
