@@ -590,6 +590,22 @@ Describe 'Compiled re-review publication guard' {
         $with['path'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input'
     }
 
+    It 'reads the session log where gh-aw downloads the agent artifact' {
+        $sessionLog = (Get-StepMapping (Get-Step 'Require complete re-review coverage before publishing') 'env')['AGENT_SESSION_LOG']
+        $directory = $sessionLog.Substring(0, $sessionLog.LastIndexOf('/') + 1)
+        $agentSteps = Get-CompiledSteps 'agent'
+        $upload = @($agentSteps | Where-Object Name -ceq 'Upload agent artifacts')
+        $upload.Count | Should -Be 1
+        $uploadWith = Get-YamlBlock $upload[0].Lines.ToArray() 'with:' 8
+        $uploadWith | Should -Contain '          name: agent'
+        $paths = @((Get-YamlBlock $uploadWith 'path: |' 10) | ForEach-Object Trim | Where-Object { $_ })
+        $paths | Should -Contain $sessionLog
+        @($paths | Where-Object { !$_.StartsWith($directory, [StringComparison]::Ordinal) }) | Should -BeNullOrEmpty
+        $download = Get-StepMapping (Get-Step 'Download agent output artifact') 'with'
+        $download['pattern'].Trim('"') -split '[{},]' | Should -Contain 'agent'
+        $download['path'] | Should -BeExactly $directory
+    }
+
     It 'grants the publishing job read access for that checkout' {
         $permissions = Get-YamlBlock (Get-CompiledJob) 'permissions:' 4
         $permissions | Should -Contain '      contents: read'
