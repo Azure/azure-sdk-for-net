@@ -116,7 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var batch = MockStatsbeatScope.CreateRouteBatch(
                 (first, EastUs), ("second", EastUs), (duplicate, EastUs), ("", EastUs), ("First", EastUs),
                 (duplicate, WestEurope), ("second", WestEurope), (first, WestEurope));
-            batch.GetOrAdd(WestEurope, isAad: true).TelemetryItems.Add(
+            batch.GetOrAdd(WestEurope, isAad: true).Add(
                 new TelemetryItem(DateTime.UtcNow, resource: null, first));
 
             registry.Observe(batch, Start);
@@ -184,7 +184,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Assert.Empty(group.TelemetryItems);
                 var reusedGroup = batch.GetOrAdd(endpoint);
                 Assert.Same(group, reusedGroup);
-                reusedGroup.TelemetryItems.Add(new TelemetryItem(DateTime.UtcNow, resource: null, "new"));
+                reusedGroup.Add(new TelemetryItem(DateTime.UtcNow, resource: null, "new"));
 
                 now += Interval;
                 registry.Observe(batch, now);
