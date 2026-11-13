@@ -1,4 +1,10 @@
-# Release History
+﻿# Release History
+
+## 1.10.0 (2026-11-13)
+
+### Features Added
+- Upgraded api-version to 2026-09-01
+- Removed deprecated models and properties
 
 ## 1.10.0-beta.2 (Unreleased)
 
