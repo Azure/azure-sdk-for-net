@@ -244,7 +244,6 @@ Package versions are centrally managed in `eng/Packages.Data.props`. When adding
 
 - **Client Libraries**: `sdk/service/ci.yml` files define CI for each service
 - **Management Libraries**: `sdk/resourcemanager/ci.mgmt.yml` for management plane
-- **CI Updates**: Run `eng/scripts/Update-Mgmt-CI.ps1` after adding management libraries
 
 ### API Compatibility Verification
 
