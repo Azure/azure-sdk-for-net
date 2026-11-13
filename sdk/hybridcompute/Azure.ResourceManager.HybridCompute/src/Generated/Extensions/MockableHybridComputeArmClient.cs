@@ -75,6 +75,15 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputeMachineRunCommandResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="VmApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmApplicationResource"/> object. </returns>
+        public virtual VmApplicationResource GetVmApplicationResource(ResourceIdentifier id)
+        {
+            VmApplicationResource.ValidateResourceId(id);
+            return new VmApplicationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ArcGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ArcGatewayResource"/> object. </returns>

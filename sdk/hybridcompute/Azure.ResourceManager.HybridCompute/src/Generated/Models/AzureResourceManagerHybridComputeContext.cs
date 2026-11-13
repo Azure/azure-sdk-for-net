@@ -158,6 +158,13 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(VmApplicationData))]
+    [ModelReaderWriterBuildable(typeof(VmApplicationInstanceView))]
+    [ModelReaderWriterBuildable(typeof(VmApplicationInstanceViewAction))]
+    [ModelReaderWriterBuildable(typeof(VmApplicationPatch))]
+    [ModelReaderWriterBuildable(typeof(VmApplicationProperties))]
+    [ModelReaderWriterBuildable(typeof(VmApplicationResource))]
+    [ModelReaderWriterBuildable(typeof(VmApplicationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(VolumeLicenseDetails))]
     public partial class AzureResourceManagerHybridComputeContext : ModelReaderWriterContext
     {
