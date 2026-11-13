@@ -1,3 +1,12 @@
+<#
+.SYNOPSIS
+Requests API change detection for modified packages.
+
+.PARAMETER TargetBranch
+Comparison target used to select modified packages. Defaults to the pull request
+target branch from the environment; an explicit value overrides that default.
+#>
+
 # cSpell:ignore PULLREQUEST
 # cSpell:ignore TARGETBRANCH
 [CmdletBinding()]
@@ -98,7 +107,9 @@ function Submit-Request($filePath, $packageInfo)
 function Should-Process-Package($packageInfo)
 {
     $packagePath = $packageInfo.DirectoryPath
-    $modifiedFiles  = @(Get-ChangedFiles -DiffPath "$packagePath/*" -DiffFilterType '')
+    # The helper has its own environment-derived default. Pass our target so an
+    # explicit -TargetBranch controls which packages require API change detection.
+    $modifiedFiles  = @(Get-ChangedFiles -TargetCommittish $TargetBranch -DiffPath "$packagePath/*" -DiffFilterType '')
     $filteredFileCount = $modifiedFiles.Count
     LogInfo "Number of modified files for package: $filteredFileCount"
     return ($filteredFileCount -gt 0 -and $packageInfo.IsNewSdk)
