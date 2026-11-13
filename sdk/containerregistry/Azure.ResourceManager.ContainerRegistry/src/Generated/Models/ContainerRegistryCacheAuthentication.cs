@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary>
     /// Authentication configuration used by a cache rule to access an upstream registry.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GoogleArtifactRegistryCacheAuthentication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsElasticContainerRegistryCacheAuthentication"/>, <see cref="EntraFederatedIdentityCredentialCacheAuthentication"/>, and <see cref="GoogleArtifactRegistryCacheAuthentication"/>.
     /// </summary>
     public abstract partial class ContainerRegistryCacheAuthentication
     {
@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheAuthentication"/>. </summary>
-        /// <param name="authenticationType"> Authentication type discriminator. </param>
+        /// <param name="authenticationType"> Authentication type discriminator. The authentication type cannot change once configured. </param>
         private protected ContainerRegistryCacheAuthentication(AdditionalAuthenticationType authenticationType)
         {
             AuthenticationType = authenticationType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheAuthentication"/>. </summary>
-        /// <param name="authenticationType"> Authentication type discriminator. </param>
+        /// <param name="authenticationType"> Authentication type discriminator. The authentication type cannot change once configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerRegistryCacheAuthentication(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Authentication type discriminator. </summary>
+        /// <summary> Authentication type discriminator. The authentication type cannot change once configured. </summary>
         [WirePath("authenticationType")]
         internal AdditionalAuthenticationType AuthenticationType { get; set; }
     }
