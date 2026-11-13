@@ -27,13 +27,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="keyVaultUri"> The URI of the key containing the secret. </param>
         /// <param name="secretName"> The name of the secret in the key vault. </param>
         /// <param name="secretVersion"> The version of the secret in the key vault. </param>
+        /// <param name="encryptionPublicKey"> The public key used by the platform to encrypt the archived credential before it was written to the secret archive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretArchiveReference(ResourceIdentifier keyVaultId, Uri keyVaultUri, string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecretArchiveReference(ResourceIdentifier keyVaultId, Uri keyVaultUri, string secretName, string secretVersion, string encryptionPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
             SecretName = secretName;
             SecretVersion = secretVersion;
+            EncryptionPublicKey = encryptionPublicKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,5 +50,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The version of the secret in the key vault. </summary>
         public string SecretVersion { get; }
+
+        /// <summary> The public key used by the platform to encrypt the archived credential before it was written to the secret archive. </summary>
+        public string EncryptionPublicKey { get; }
     }
 }

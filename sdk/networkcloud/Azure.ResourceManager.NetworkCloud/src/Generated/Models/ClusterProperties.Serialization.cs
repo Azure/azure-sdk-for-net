@@ -215,6 +215,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
+            if (options.Format != "W" && Optional.IsDefined(EdgeManagementServiceCACertificate))
+            {
+                writer.WritePropertyName("edgeManagementServiceCaCertificate"u8);
+                writer.WriteObjectValue(EdgeManagementServiceCACertificate, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
@@ -338,6 +343,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ResourceIdentifier clusterManagerId = default;
             ClusterDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
+            NetworkCloudCertificateInfo edgeManagementServiceCACertificate = default;
             Resources.Models.ExtendedLocation hybridAksExtendedLocation = default;
             DateTimeOffset? lastSuccessfulVersionUpdateOn = default;
             IReadOnlyList<string> managedCredentials = default;
@@ -573,6 +579,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     detailedStatusMessage = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("edgeManagementServiceCaCertificate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    edgeManagementServiceCACertificate = NetworkCloudCertificateInfo.DeserializeNetworkCloudCertificateInfo(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("hybridAksExtendedLocation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -692,6 +707,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 clusterManagerId,
                 detailedStatus,
                 detailedStatusMessage,
+                edgeManagementServiceCACertificate,
                 hybridAksExtendedLocation,
                 lastSuccessfulVersionUpdateOn,
                 managedCredentials ?? new ChangeTrackingList<string>(),

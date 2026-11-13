@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesVersions/", false);
             uri.AppendPath(kubernetesVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesVersions/", false);
             uri.AppendPath(kubernetesVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesVersions/", false);
             uri.AppendPath(kubernetesVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesVersions/", false);
             uri.AppendPath(kubernetesVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesVersions", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesVersions", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

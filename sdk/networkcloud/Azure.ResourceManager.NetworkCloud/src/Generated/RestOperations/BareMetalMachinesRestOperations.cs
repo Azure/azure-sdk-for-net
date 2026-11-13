@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/cordon", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/powerOff", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/replace", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/restart", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/runCommand", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/runDataExtracts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/runDataExtractsRestricted", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/runReadCommands", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
             uri.AppendPath(bareMetalMachineName, true);
             uri.AppendPath("/uncordon", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

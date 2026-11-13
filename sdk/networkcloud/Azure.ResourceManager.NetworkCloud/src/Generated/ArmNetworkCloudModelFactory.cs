@@ -418,10 +418,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="keyVaultUri"> The URI of the key containing the secret. </param>
         /// <param name="secretName"> The name of the secret in the key vault. </param>
         /// <param name="secretVersion"> The version of the secret in the key vault. </param>
+        /// <param name="encryptionPublicKey"> The public key used by the platform to encrypt the archived credential before it was written to the secret archive. </param>
         /// <returns> A new <see cref="Models.SecretArchiveReference"/> instance for mocking. </returns>
-        public static SecretArchiveReference SecretArchiveReference(ResourceIdentifier keyVaultId = default, Uri keyVaultUri = default, string secretName = default, string secretVersion = default)
+        public static SecretArchiveReference SecretArchiveReference(ResourceIdentifier keyVaultId = default, Uri keyVaultUri = default, string secretName = default, string secretVersion = default, string encryptionPublicKey = default)
         {
-            return new SecretArchiveReference(keyVaultId, keyVaultUri, secretName, secretVersion, default);
+            return new SecretArchiveReference(
+                keyVaultId,
+                keyVaultUri,
+                secretName,
+                secretVersion,
+                encryptionPublicKey,
+                default);
         }
 
         /// <param name="machineDetails"> The details provided by the customer during the creation of rack manifests that allows for custom data to be associated with this machine. </param>
@@ -648,57 +655,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new CloudServicesNetworkStorageOptionsPatch(mode, sizeMiB, storageApplianceId, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics workspace that is used for the logs collection. </param>
-        /// <param name="availabilityZones"> The Azure availability zones within the region that will be used to support the cluster manager resource. </param>
-        /// <param name="clusterVersions"> The list of the cluster versions the manager supports. It is used as input in clusterVersion property of a cluster resource. </param>
-        /// <param name="detailedStatus"> The detailed status that provides additional information about the cluster manager. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="fabricControllerId"> The resource ID of the fabric controller that has one to one mapping with the cluster manager. </param>
-        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
-        /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
-        /// <param name="vmSize"> The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
-        /// <param name="relayNamespaceId"> The resource ID of the Azure relay namespace managed by the cluster manager. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="kind"> The kind of the cluster manager. </param>
-        /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterManagerData"/> instance for mocking. </returns>
-        public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier analyticsWorkspaceId, IEnumerable<string> availabilityZones, IEnumerable<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Resources.Models.ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize, ResourceIdentifier relayNamespaceId, ETag? eTag, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudClusterManagerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                analyticsWorkspaceId is null && availabilityZones is null && clusterVersions is null && detailedStatus is null && detailedStatusMessage is null && fabricControllerId is null && managedResourceGroupConfiguration is null && managerExtendedLocation is null && provisioningState is null && relayNamespaceId is null && vmSize is null ? default : new ClusterManagerProperties(
-                    analyticsWorkspaceId,
-                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
-                    (clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>()).ToList(),
-                    detailedStatus,
-                    detailedStatusMessage,
-                    fabricControllerId,
-                    managedResourceGroupConfiguration,
-                    managerExtendedLocation,
-                    provisioningState,
-                    relayNamespaceId is null ? default : new ClusterManagerRelayConfiguration(relayNamespaceId, default),
-                    vmSize,
-                    default),
-                eTag,
-                identity,
-                kind,
-                default);
-        }
-
         /// <summary> ClusterAvailableVersion represents the cluster version that the cluster manager can be asked to create and manage. </summary>
         /// <param name="supportExpiryDate"> The last date the version of the platform is supported. </param>
         /// <param name="targetClusterVersion"> The version of the cluster to be deployed. </param>
@@ -717,17 +673,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new ManagedResourceGroupConfiguration(location, name, default);
         }
 
-        /// <summary> ClusterManagerPatchParameters represents the body of the request to patch the cluster properties. </summary>
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkCloudClusterManagerPatch"/> instance for mocking. </returns>
-        public static NetworkCloudClusterManagerPatch NetworkCloudClusterManagerPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudClusterManagerPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
         /// <summary> ClusterManagerUpdateRelayPrivateEndpointConnectionParameters represents the body of the request to approve or reject the relay private endpoint connection for the private relay managed by a cluster manager. </summary>
         /// <param name="connectionState"> The state to set for the private endpoint connection. </param>
         /// <param name="description"> The description to associate with the private endpoint connection. </param>
@@ -736,103 +681,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(NetworkCloudRelayPrivateEndpointConnectionState connectionState = default, string description = default, ResourceIdentifier privateEndpointResourceId = default)
         {
             return new NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(connectionState, description, privateEndpointResourceId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
-        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
-        /// <param name="analyticsWorkspaceId"> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
-        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
-        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
-        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
-        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
-        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
-        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
-        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
-        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
-        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
-        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
-        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
-        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
-        /// <param name="actionStates"> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </param>
-        /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
-        /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
-        /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
-        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
-        /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
-        /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
-        /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
-        /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
-        /// <param name="lastSuccessfulVersionUpdateOn"> The date and time of the end of the last successful version update for the cluster. </param>
-        /// <param name="managedCredentials"> The list of credentials that are managed for the cluster and can be rotated on-demand. </param>
-        /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
-        /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
-        /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="vulnerabilityScanningContainerScan"> The mode selection for container vulnerability scanning. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
-        /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterData"/> instance for mocking. </returns>
-        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier networkFabricId = default, RuntimeProtectionConfiguration runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default, ClusterCapacity clusterCapacity = default, ClusterConnectionStatus? clusterConnectionStatus = default, Resources.Models.ExtendedLocation clusterExtendedLocation = default, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default, ResourceIdentifier clusterManagerId = default, ClusterDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, Resources.Models.ExtendedLocation hybridAksExtendedLocation = default, DateTimeOffset? lastSuccessfulVersionUpdateOn = default, IEnumerable<string> managedCredentials = default, long? manualActionCount = default, DateTimeOffset? supportExpireOn = default, IEnumerable<ResourceIdentifier> workloadResourceIds = default, ClusterProvisioningState? provisioningState = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, ETag? eTag = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, NetworkCloudDeploymentType? kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                new ClusterProperties(
-                    aggregatorOrSingleRackDefinition,
-                    analyticsOutputSettings,
-                    analyticsWorkspaceId,
-                    clusterLocation,
-                    clusterServicePrincipal,
-                    clusterType,
-                    clusterVersion,
-                    commandOutputSettings,
-                    computeDeploymentThreshold,
-                    (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
-                    managedResourceGroupConfiguration,
-                    networkFabricId,
-                    runtimeProtectionConfiguration,
-                    secretArchive,
-                    secretArchiveSettings,
-                    updateStrategy,
-                    vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
-                    (actionStates ?? new ChangeTrackingList<NetworkCloudActionState>()).ToList(),
-                    (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
-                    clusterCapacity,
-                    clusterConnectionStatus,
-                    clusterExtendedLocation,
-                    clusterManagerConnectionStatus,
-                    clusterManagerId,
-                    detailedStatus,
-                    detailedStatusMessage,
-                    hybridAksExtendedLocation,
-                    lastSuccessfulVersionUpdateOn,
-                    (managedCredentials ?? new ChangeTrackingList<string>()).ToList(),
-                    manualActionCount,
-                    supportExpireOn,
-                    (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    provisioningState,
-                    default),
-                eTag,
-                extendedLocation,
-                identity,
-                kind,
-                default);
         }
 
         /// <summary> RackDefinition represents details regarding the rack. </summary>
@@ -974,13 +822,78 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new ClusterSecretArchive(keyVaultId, useKeyVault, default);
         }
 
-        /// <summary> SecretArchiveSettings represents the settings for the secret archive used to hold credentials for the cluster. </summary>
-        /// <param name="associatedIdentity"> The selection of the managed identity to use with this vault URI. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="vaultUri"> The URI of the secret archive endpoint. The URI must use the `https://` scheme. </param>
-        /// <returns> A new <see cref="Models.SecretArchiveSettings"/> instance for mocking. </returns>
-        public static SecretArchiveSettings SecretArchiveSettings(ManagedServiceIdentitySelector associatedIdentity = default, Uri vaultUri = default)
+        /// <summary>
+        /// SecretArchiveProviderConfiguration represents the base configuration for a self-supplied secret archive provider.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CyberArkSecretArchiveProviderConfiguration"/>, <see cref="Models.HashiCorpVaultSecretArchiveProviderConfiguration"/>, and <see cref="Models.OpenBaoSecretArchiveProviderConfiguration"/>.
+        /// </summary>
+        /// <param name="provider"> The provider of the secret archive. </param>
+        /// <returns> A new <see cref="Models.SecretArchiveProviderConfiguration"/> instance for mocking. </returns>
+        public static SecretArchiveProviderConfiguration SecretArchiveProviderConfiguration(string provider = default)
         {
-            return new SecretArchiveSettings(associatedIdentity, vaultUri, default);
+            return new UnknownSecretArchiveProviderConfiguration(provider is null ? default : new SecretArchiveProviderType(provider), default);
+        }
+
+        /// <summary> The configuration for a CyberArk secret archive provider. </summary>
+        /// <param name="applicationId"> The CyberArk application ID. </param>
+        /// <param name="safeName"> The safe name for credential storage. </param>
+        /// <param name="folderName"> The folder name within the safe. When not specified, the service uses `Root`. </param>
+        /// <param name="objectNameTemplate"> The object naming pattern within the safe. The tokens `{namespace}` and `{name}` may appear in the template and are substituted at archive time. </param>
+        /// <returns> A new <see cref="Models.CyberArkSecretArchiveProviderConfiguration"/> instance for mocking. </returns>
+        public static CyberArkSecretArchiveProviderConfiguration CyberArkSecretArchiveProviderConfiguration(string applicationId = default, string safeName = default, string folderName = default, string objectNameTemplate = default)
+        {
+            return new CyberArkSecretArchiveProviderConfiguration(
+                SecretArchiveProviderType.CyberArk,
+                default,
+                applicationId,
+                safeName,
+                folderName,
+                objectNameTemplate);
+        }
+
+        /// <summary> The configuration for a HashiCorp Vault secret archive provider. Authentication credentials required by the selected authenticationMethod (for example, the AppRole secret, or client certificate and private key) are supplied out of band. </summary>
+        /// <param name="mountPath"> The key value secrets engine mount path. When not specified, the service uses `secret`. </param>
+        /// <param name="keyValueVersion"> The key value engine version. Supports values `V1` and `V2`. When not specified, the service uses `V2`. </param>
+        /// <param name="namespace"> The vault namespace. </param>
+        /// <param name="pathTemplate"> The secret path pattern. The tokens `{namespace}` and `{name}` may appear in the template and are substituted at archive time. When not specified, the service uses `edge-credentials/{namespace}/{name}`. </param>
+        /// <param name="authenticationMethod"> The authentication method used for the archive. When set to `AppRole`, `applicationRoleId` is required; when set to `ClientCertificate`, `applicationRoleId` is ignored. </param>
+        /// <param name="applicationRoleId"> The Role ID, required when `authenticationMethod` is `AppRole`; ignored for other authentication methods. </param>
+        /// <param name="authenticationMountPath"> The authentication method mount path in the archive. </param>
+        /// <returns> A new <see cref="Models.HashiCorpVaultSecretArchiveProviderConfiguration"/> instance for mocking. </returns>
+        public static HashiCorpVaultSecretArchiveProviderConfiguration HashiCorpVaultSecretArchiveProviderConfiguration(string mountPath = default, KeyValueVersion? keyValueVersion = default, string @namespace = default, string pathTemplate = default, VaultAuthenticationMethod authenticationMethod = default, string applicationRoleId = default, string authenticationMountPath = default)
+        {
+            return new HashiCorpVaultSecretArchiveProviderConfiguration(
+                SecretArchiveProviderType.HashiCorpVault,
+                default,
+                mountPath,
+                keyValueVersion,
+                @namespace,
+                pathTemplate,
+                authenticationMethod,
+                applicationRoleId,
+                authenticationMountPath);
+        }
+
+        /// <summary> The configuration for an OpenBao secret archive provider. Authentication credentials required by the selected authenticationMethod (for example, the AppRole secret, or client certificate and private key) are supplied out of band. </summary>
+        /// <param name="mountPath"> The key value secrets engine mount path. When not specified, the service uses `secret`. </param>
+        /// <param name="keyValueVersion"> The key value engine version. Supports values `V1` and `V2`. When not specified, the service uses `V2`. </param>
+        /// <param name="namespace"> The vault namespace. </param>
+        /// <param name="pathTemplate"> The secret path pattern. The tokens `{namespace}` and `{name}` may appear in the template and are substituted at archive time. When not specified, the service uses `edge-credentials/{namespace}/{name}`. </param>
+        /// <param name="authenticationMethod"> The authentication method used for the archive. When set to `AppRole`, `applicationRoleId` is required; when set to `ClientCertificate`, `applicationRoleId` is ignored. </param>
+        /// <param name="applicationRoleId"> The Role ID, required when `authenticationMethod` is `AppRole`; ignored for other authentication methods. </param>
+        /// <param name="authenticationMountPath"> The authentication method mount path in the archive. </param>
+        /// <returns> A new <see cref="Models.OpenBaoSecretArchiveProviderConfiguration"/> instance for mocking. </returns>
+        public static OpenBaoSecretArchiveProviderConfiguration OpenBaoSecretArchiveProviderConfiguration(string mountPath = default, KeyValueVersion? keyValueVersion = default, string @namespace = default, string pathTemplate = default, VaultAuthenticationMethod authenticationMethod = default, string applicationRoleId = default, string authenticationMountPath = default)
+        {
+            return new OpenBaoSecretArchiveProviderConfiguration(
+                SecretArchiveProviderType.OpenBao,
+                default,
+                mountPath,
+                keyValueVersion,
+                @namespace,
+                pathTemplate,
+                authenticationMethod,
+                applicationRoleId,
+                authenticationMountPath);
         }
 
         /// <summary> ClusterUpdateStrategy represents the strategy for updating the cluster. </summary>
@@ -2794,6 +2707,194 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new NetworkCloudVirtualMachineConsolePatch(enabled is null && expireOn is null && keyData is null ? default : new ConsolePatchProperties(enabled, expireOn, keyData is null ? default : new NetworkCloudSshPublicKeyPatch(keyData, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> SecretArchiveReference represents the reference to a secret in a key vault. </summary>
+        /// <param name="keyVaultId"> The resource ID of the key vault containing the secret. </param>
+        /// <param name="keyVaultUri"> The URI of the key containing the secret. </param>
+        /// <param name="secretName"> The name of the secret in the key vault. </param>
+        /// <param name="secretVersion"> The version of the secret in the key vault. </param>
+        /// <returns> A new <see cref="Models.SecretArchiveReference"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecretArchiveReference SecretArchiveReference(ResourceIdentifier keyVaultId, Uri keyVaultUri, string secretName, string secretVersion)
+        {
+            return new SecretArchiveReference(
+                keyVaultId,
+                keyVaultUri,
+                secretName,
+                secretVersion,
+                default,
+                default);
+        }
+
+        /// <summary> ClusterManager represents a control-plane to manage one or more on-premises clusters. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics workspace that is used for the logs collection. </param>
+        /// <param name="availabilityZones"> The Azure availability zones within the region that will be used to support the cluster manager resource. </param>
+        /// <param name="clusterVersions"> The list of the cluster versions the manager supports. It is used as input in clusterVersion property of a cluster resource. </param>
+        /// <param name="detailedStatus"> The detailed status that provides additional information about the cluster manager. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
+        /// <param name="fabricControllerId"> The resource ID of the fabric controller that has one to one mapping with the cluster manager. </param>
+        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
+        /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
+        /// <param name="vmSize"> The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
+        /// <param name="relayNamespaceId"> The resource ID of the Azure relay namespace managed by the cluster manager. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="kind"> The kind of the cluster manager. </param>
+        /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterManagerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier analyticsWorkspaceId, IEnumerable<string> availabilityZones, IEnumerable<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Resources.Models.ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize, ResourceIdentifier relayNamespaceId, ETag? eTag, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind)
+        {
+            return new NetworkCloudClusterManagerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                analyticsWorkspaceId is null && availabilityZones is null && clusterVersions is null && detailedStatus is null && detailedStatusMessage is null && fabricControllerId is null && managedResourceGroupConfiguration is null && managerExtendedLocation is null && provisioningState is null && relayNamespaceId is null && vmSize is null ? default : new ClusterManagerProperties(
+                    analyticsWorkspaceId,
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    (clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>()).ToList(),
+                    detailedStatus,
+                    detailedStatusMessage,
+                    fabricControllerId,
+                    managedResourceGroupConfiguration,
+                    managerExtendedLocation,
+                    provisioningState,
+                    relayNamespaceId is null ? default : new ClusterManagerRelayConfiguration(relayNamespaceId, default),
+                    default,
+                    vmSize,
+                    default),
+                eTag,
+                identity,
+                kind,
+                default);
+        }
+
+        /// <summary> ClusterManagerPatchParameters represents the body of the request to patch the cluster properties. </summary>
+        /// <param name="identity"> The identity for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkCloudClusterManagerPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterManagerPatch NetworkCloudClusterManagerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags)
+        {
+            return new NetworkCloudClusterManagerPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), default, default);
+        }
+
+        /// <summary> Cluster represents the on-premises Network Cloud cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
+        /// <param name="analyticsWorkspaceId"> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
+        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
+        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
+        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
+        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
+        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
+        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
+        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
+        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
+        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
+        /// <param name="actionStates"> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </param>
+        /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
+        /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
+        /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
+        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
+        /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
+        /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
+        /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
+        /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
+        /// <param name="lastSuccessfulVersionUpdateOn"> The date and time of the end of the last successful version update for the cluster. </param>
+        /// <param name="managedCredentials"> The list of credentials that are managed for the cluster and can be rotated on-demand. </param>
+        /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
+        /// <param name="supportExpireOn"></param>
+        /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="vulnerabilityScanningContainerScan"> The mode selection for container vulnerability scanning. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
+        /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, IEnumerable<NetworkCloudActionState> actionStates, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, Resources.Models.ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Resources.Models.ExtendedLocation hybridAksExtendedLocation, DateTimeOffset? lastSuccessfulVersionUpdateOn, IEnumerable<string> managedCredentials, long? manualActionCount, DateTimeOffset? supportExpireOn, IEnumerable<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind)
+        {
+            return new NetworkCloudClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new ClusterProperties(
+                    aggregatorOrSingleRackDefinition,
+                    analyticsOutputSettings,
+                    analyticsWorkspaceId,
+                    clusterLocation,
+                    clusterServicePrincipal,
+                    clusterType,
+                    clusterVersion,
+                    commandOutputSettings,
+                    computeDeploymentThreshold,
+                    (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
+                    managedResourceGroupConfiguration,
+                    networkFabricId,
+                    runtimeProtectionConfiguration,
+                    secretArchive,
+                    secretArchiveSettings,
+                    updateStrategy,
+                    vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
+                    (actionStates ?? new ChangeTrackingList<NetworkCloudActionState>()).ToList(),
+                    (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
+                    clusterCapacity,
+                    clusterConnectionStatus,
+                    clusterExtendedLocation,
+                    clusterManagerConnectionStatus,
+                    clusterManagerId,
+                    detailedStatus,
+                    detailedStatusMessage,
+                    default,
+                    hybridAksExtendedLocation,
+                    lastSuccessfulVersionUpdateOn,
+                    (managedCredentials ?? new ChangeTrackingList<string>()).ToList(),
+                    manualActionCount,
+                    default,
+                    (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    provisioningState,
+                    default),
+                eTag,
+                extendedLocation,
+                identity,
+                kind,
+                default);
+        }
+
+        /// <summary> SecretArchiveSettings represents the settings for the secret archive used to hold credentials for the cluster. </summary>
+        /// <param name="associatedIdentity"> The selection of the managed identity to use with this vault URI. The identity type must be either system assigned or user assigned. </param>
+        /// <param name="vaultUri"> The URI of the secret archive endpoint. The URI must use the `https://` scheme. </param>
+        /// <returns> A new <see cref="Models.SecretArchiveSettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecretArchiveSettings SecretArchiveSettings(ManagedServiceIdentitySelector associatedIdentity, Uri vaultUri)
+        {
+            return new SecretArchiveSettings(associatedIdentity, default, default, vaultUri, default);
+        }
+
         /// <summary> KubernetesClusterNode represents the details of a node in a Kubernetes cluster. </summary>
         /// <param name="agentPoolId"></param>
         /// <param name="availabilityZone"> The availability zone this node is running within. </param>
@@ -3132,6 +3233,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     default,
                     provisioningState,
                     default,
+                    default,
                     vmSize,
                     default),
                 etag,
@@ -3219,6 +3321,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     clusterManagerId,
                     detailedStatus,
                     detailedStatusMessage,
+                    default,
                     default,
                     default,
                     default,
@@ -4172,7 +4275,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecretArchiveReference SecretArchiveReference(ResourceIdentifier keyVaultId, string secretName, string secretVersion)
         {
-            return new SecretArchiveReference(keyVaultId, default, secretName, secretVersion, default);
+            return new SecretArchiveReference(
+                keyVaultId,
+                default,
+                secretName,
+                secretVersion,
+                default,
+                default);
         }
 
         /// <summary> Upon creation, the additional services that are provided by the platform will be allocated and represented in the status of this resource. All resources associated with this cloud services network will be part of the same layer 2 (L2) isolation domain. At least one service network must be created but may be reused across many virtual machines and/or Hybrid AKS clusters. </summary>
@@ -4304,6 +4413,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     clusterManagerId,
                     detailedStatus,
                     detailedStatusMessage,
+                    default,
                     default,
                     default,
                     default,
@@ -4742,6 +4852,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     default,
                     provisioningState,
                     default,
+                    default,
                     vmSize,
                     default),
                 default,
@@ -4824,6 +4935,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     clusterManagerId,
                     detailedStatus,
                     detailedStatusMessage,
+                    default,
                     default,
                     default,
                     default,
@@ -5670,6 +5782,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     default,
                     provisioningState,
                     default,
+                    default,
                     vmSize,
                     default),
                 default,
@@ -5747,6 +5860,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     clusterManagerId,
                     detailedStatus,
                     detailedStatusMessage,
+                    default,
                     default,
                     default,
                     default,
