@@ -21,6 +21,7 @@
   
   <ItemGroup>
     <PackageReference Include="OpenAI" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
