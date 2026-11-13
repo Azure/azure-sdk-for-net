@@ -1,4 +1,4 @@
-name: PR Re-Review Tests
+name: API PR Re-Review Tests
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   test:
-    name: PR re-review guards and routing
+    name: API PR re-review guards and routing
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -22,13 +22,13 @@ jobs:
           persist-credentials: false
           sparse-checkout: .github
 
-      - name: Run PR re-review guard and routing tests
+      - name: Run API PR re-review guard and routing tests
         shell: pwsh
         run: |
           Import-Module Pester -MinimumVersion 5.3.3 -ErrorAction Stop
-          $result = Invoke-Pester -Path .github/workflows/pr-re-review, .github/workflows/test -Output Detailed -PassThru
+          $result = Invoke-Pester -Path .github/workflows/test -Output Detailed -PassThru
           if ($result.TotalCount -eq 0 -or $result.Result -ne 'Passed') {
-            throw 'PR re-review guard and routing tests did not pass.'
+            throw 'API PR re-review guard and routing tests did not pass.'
           }
           # GitHub's wrapper otherwise propagates the last native test command's exit code.
           exit 0

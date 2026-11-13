@@ -8,6 +8,8 @@ $ErrorActionPreference = 'Stop'
 # pr-re-review.md asks the agent for this line verbatim; Guard.Tests.ps1 keeps the two in sync.
 $script:CoverageTemplate = 'Coverage: <fetched>/<total> threads fetched, <verified>/<unresolved> unresolved threads verified, <reviewed>/<changed> changed files reviewed'
 $script:CoveragePattern = '^coverage\s*:\s*(?<fetched>[0-9]{1,6})\s*/\s*(?<total>[0-9]{1,6})\s+threads\s+fetched\s*,\s*(?<verified>[0-9]{1,6})\s*/\s*(?<unresolved>[0-9]{1,6})\s+unresolved\s+threads\s+verified\s*,\s*(?<reviewed>[0-9]{1,6})\s*/\s*(?<changed>[0-9]{1,6})\s+changed\s+files\s+reviewed\s*\.?$'
+$script:ApiCoverageTemplate = 'API coverage: <reviewed>/<changed> API files reviewed'
+$script:ApiCoveragePattern = '^api\s+coverage\s*:\s*(?<reviewed>[0-9]{1,6})\s*/\s*(?<changed>[0-9]{1,6})\s+API\s+files\s+reviewed\s*\.?$'
 # The same output types that shared/agent-output-validation.md fails the run on.
 $script:IncompleteTypes = @('report_incomplete', 'missing_tool', 'missing_data')
 $script:TotalsQuery = @'
@@ -33,6 +35,8 @@ function ConvertFrom-PrReReviewJson {
 }
 
 function Get-PrReReviewCoverageTemplate {
+    param([switch]$ApiOnly)
+    if ($ApiOnly) { return $script:ApiCoverageTemplate }
     return $script:CoverageTemplate
 }
 
@@ -92,20 +96,115 @@ function Get-PrReReviewTotals {
 }
 
 function Get-PrReReviewCoverageLine {
-    param([Parameter(Mandatory)][AllowEmptyString()][string]$Body)
+    param([Parameter(Mandatory)][AllowEmptyString()][string]$Body, [switch]$ApiOnly)
 
+    $prefix = if ($ApiOnly) { '^api\s+coverage\s*:' } else { '^coverage\s*:' }
+    $template = Get-PrReReviewCoverageTemplate -ApiOnly:$ApiOnly
     $candidates = @(
         foreach ($line in $Body -split '\r?\n') {
             $text = (($line -replace '[*_`]', '').Trim() -replace '^(?:>\s*)+', '' -replace '^[-+]\s+', '').Trim()
-            if ($text -match '^coverage\s*:') {
+            if ($text -match $prefix) {
                 $text
             }
         }
     )
     if ($candidates.Count -ne 1) {
-        throw "The review body must contain exactly one Coverage line, but it has $($candidates.Count). Expected: $script:CoverageTemplate"
+        throw "The review body must contain exactly one $(if ($ApiOnly) { 'API coverage' } else { 'Coverage' }) line, but it has $($candidates.Count). Expected: $template"
     }
     return $candidates[0]
+}
+
+function Test-PrReReviewNonnegativeInteger {
+    param($Value)
+    return ($Value -is [byte] -or $Value -is [sbyte] -or $Value -is [int16] -or $Value -is [uint16] -or
+        $Value -is [int32] -or $Value -is [uint32] -or $Value -is [int64] -or $Value -is [uint64]) -and $Value -ge 0
+}
+
+function Assert-PrReReviewApiExpected {
+    param([System.Collections.IDictionary]$Expected)
+
+    if ($Expected.Scope -cne 'api') { throw 'Invalid API input scope.' }
+    foreach ($sha in @($Expected.HeadSha, $Expected.AnalyzedHeadSha)) {
+        if ($sha -isnot [string] -or $sha -notmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$') { throw 'Missing or malformed API review head SHA.' }
+    }
+    if ($Expected.HeadSha -cne $Expected.AnalyzedHeadSha) { throw 'The pull request head moved; refusing stale API review publication.' }
+    if (!(Test-PrReReviewNonnegativeInteger $Expected.ChangedApiFiles) -or !(Test-PrReReviewNonnegativeInteger $Expected.ChangedFiles) -or $Expected.ChangedApiFiles -gt $Expected.ChangedFiles) {
+        throw 'Missing or malformed independently captured API file count.'
+    }
+    if ($Expected.ApiFilePaths -isnot [array] -or $Expected.ApiFilePaths.Count -ne $Expected.ChangedApiFiles) {
+        throw 'Missing or malformed independently captured API file set.'
+    }
+    $paths = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($path in $Expected.ApiFilePaths) {
+        if ($path -isnot [string] -or !$path -or !$paths.Add($path)) { throw 'Missing or duplicate independently captured API file path.' }
+    }
+    if ($Expected.InlineTargets -isnot [array]) { throw 'Missing or malformed scoped source candidates.' }
+    $sourcePaths = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($target in $Expected.InlineTargets) {
+        if ($null -eq $target -or $target.path -isnot [string] -or !$target.path -or !$sourcePaths.Add($target.path) -or $target.lineRanges -isnot [array]) {
+            throw 'Missing, duplicate, or malformed scoped source candidate.'
+        }
+        foreach ($range in $target.lineRanges) {
+            if ($null -eq $range -or !(Test-PrReReviewNonnegativeInteger $range.start) -or !(Test-PrReReviewNonnegativeInteger $range.end) -or $range.start -eq 0 -or $range.end -lt $range.start) {
+                throw 'Malformed scoped source diff range.'
+            }
+        }
+    }
+}
+
+function Assert-PrReReviewApiOutput {
+    param([System.Collections.IDictionary]$AgentOutput, [System.Collections.IDictionary]$Expected)
+    $items = @($AgentOutput.items)
+    foreach ($item in @($items | Where-Object { $_.type -cin @('submit_pull_request_review', 'create_pull_request_review_comment') })) {
+        if ($item.Contains('repo') -and (!$Expected.Repository -or $item.repo -isnot [string] -or ![StringComparer]::OrdinalIgnoreCase.Equals($item.repo, $Expected.Repository))) {
+            throw 'The review output targets a different repository than the captured API scope.'
+        }
+        if ($item.Contains('pull_request_number') -and (!(Test-PrReReviewNonnegativeInteger $item.pull_request_number) -or $item.pull_request_number -ne $Expected.Number)) {
+            throw 'The review output targets a different pull request than the captured API scope.'
+        }
+    }
+    if ($Expected.ChangedApiFiles -eq 0) {
+        if ($items.Count -ne 1 -or $items[0].type -cne 'noop') {
+            throw 'An empty API scope requires exactly one no-op, not a review or other publication.'
+        }
+        return 'API review not required: the pull request has no API-file changes.'
+    }
+    if (@($items | Where-Object { $_.type -ceq 'noop' }).Count -gt 0) {
+        throw 'A no-op cannot replace the review of changed API files.'
+    }
+    foreach ($item in @($items | Where-Object { $_.type -ceq 'create_pull_request_review_comment' })) {
+        if ($item.path -isnot [string] -or !$item.path) { throw 'An API finding needs a valid source path.' }
+        if ($item.path -cmatch '^sdk/.+/api/[^/]+\.cs$' -or @($Expected.ApiFilePaths | Where-Object { [StringComparer]::Ordinal.Equals($_, $item.path) }).Count -gt 0) {
+            throw 'Do not post inline on an API listing; map the symbol to its source file or use the review body.'
+        }
+        $targets = @($Expected.InlineTargets | Where-Object { [StringComparer]::Ordinal.Equals($_.path, $item.path) })
+        if ($targets.Count -ne 1) { throw "The inline source path '$($item.path)' is not a unique scoped source candidate." }
+        $line = 0
+        if (![int]::TryParse([string]$item.line, [Globalization.NumberStyles]::None, [Globalization.CultureInfo]::InvariantCulture, [ref]$line) -or $line -le 0) {
+            throw 'An inline API finding requires a positive source diff line.'
+        }
+        if (($item.side -and $item.side -cne 'RIGHT') -or $item.start_line) {
+            throw 'Use a single current source diff line, or put the API finding in the review body.'
+        }
+        if (@($targets[0].lineRanges | Where-Object { $line -ge $_.start -and $line -le $_.end }).Count -eq 0) {
+            throw "Line $line is not in the available source diff for '$($item.path)'; use the review body instead."
+        }
+    }
+    $reviews = @($items | Where-Object { $_.type -ceq 'submit_pull_request_review' })
+    if ($reviews.Count -ne 1 -or $reviews[0].body -isnot [string]) { throw 'A completed API review must submit exactly one text review.' }
+    if ($reviews[0].event -cne 'COMMENT') { throw 'The API review must use the configured COMMENT event.' }
+    foreach ($bodyLine in $reviews[0].body -split '\r?\n') {
+        $text = (($bodyLine -replace '[*_`]', '').Trim() -replace '^(?:>\s*)+', '' -replace '^[-+]\s+', '').Trim()
+        if ($text -match '^coverage\s*:') { throw 'An API-only review must not claim full PR or thread Coverage.' }
+    }
+    $line = Get-PrReReviewCoverageLine $reviews[0].body -ApiOnly
+    $match = [regex]::Match($line, $script:ApiCoveragePattern, [Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    if (!$match.Success) { throw "The API coverage line must match: $script:ApiCoverageTemplate" }
+    $reviewed = [int]$match.Groups['reviewed'].Value
+    $changed = [int]$match.Groups['changed'].Value
+    if ($reviewed -ne $changed) { throw "The API review is incomplete ($line)." }
+    if ($changed -ne $Expected.ChangedApiFiles) { throw "The API coverage count $changed differs from the independently captured $($Expected.ChangedApiFiles) API files." }
+    return "API-surface review coverage is complete: $line"
 }
 
 function Assert-PrReReviewOutput {
@@ -123,6 +222,19 @@ function Assert-PrReReviewOutput {
         }
     }
 
+    if ($Expected -and $Expected.Contains('Scope')) {
+        Assert-PrReReviewApiExpected $Expected
+    }
+    if ($Expected -and $Expected.Scope -ceq 'api') {
+        $threadActions = @('resolve_pull_request_review_thread', 'unresolve_review_thread', 'reply_to_pull_request_review_comment')
+        if (@($AgentOutput.items | Where-Object { $threadActions -ccontains $_.type }).Count -gt 0) {
+            throw 'The first API-only review must leave existing thread state and replies untouched.'
+        }
+        $apiTypes = @('submit_pull_request_review', 'create_pull_request_review_comment', 'noop') + $script:IncompleteTypes
+        if (@($AgentOutput.items | Where-Object { $apiTypes -cnotcontains $_.type }).Count -gt 0) {
+            throw 'The API-only review contains an out-of-scope publication type.'
+        }
+    }
     $incompleteTypes = $script:IncompleteTypes
     $incomplete = @($AgentOutput.items | ForEach-Object { $_.type } | Where-Object { $incompleteTypes -ccontains $_ } | Select-Object -Unique)
     $reviews = @($AgentOutput.items | Where-Object { $_.type -ceq 'submit_pull_request_review' })
@@ -132,6 +244,9 @@ function Assert-PrReReviewOutput {
             throw "The agent reported incomplete work ($($incomplete -join ', ')) but also submitted a review or inline review comments; a partial re-review must not be published."
         }
         return "The agent reported incomplete work ($($incomplete -join ', ')) and submitted no review; terminal validation fails the run."
+    }
+    if ($Expected -and $Expected.Scope -ceq 'api') {
+        return Assert-PrReReviewApiOutput $AgentOutput $Expected
     }
     if ($reviews.Count -ne 1) {
         throw "A completed re-review must submit exactly one submit_pull_request_review, but the agent submitted $($reviews.Count)."
@@ -169,26 +284,80 @@ function Assert-PrReReviewOutput {
     return "Re-review coverage is complete: $line"
 }
 
+function ConvertFrom-PrReReviewNumberedView {
+    param([string]$Text)
+
+    # Only called for successful, correlated view results. Validate the entire
+    # window before using any part of it; numbers may start at any positive line.
+    $Text = $Text.Replace("`r`n", "`n")
+    $decoded = [System.Text.StringBuilder]::new()
+    $offset = 0
+    [long]$previous = 0
+    while ($offset -lt $Text.Length) {
+        $end = $Text.IndexOf([char]"`n", $offset)
+        if ($end -lt 0) { $end = $Text.Length }
+        $dot = $Text.IndexOf([char]'.', $offset, $end - $offset)
+        if ($dot -le $offset -or $dot + 1 -ge $end -or $Text[$dot + 1] -ne [char]' ') { return $null }
+        [long]$number = 0
+        if (![long]::TryParse($Text.Substring($offset, $dot - $offset), [System.Globalization.NumberStyles]::None, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$number) -or $number -le 0) { return $null }
+        if ($previous -ne 0 -and ($previous -eq [long]::MaxValue -or $number -ne $previous + 1)) { return $null }
+        $previous = $number
+        [void]$decoded.Append($Text, $dot + 2, $end - $dot - 2)
+        if ($end -lt $Text.Length) { [void]$decoded.Append([char]"`n") }
+        $offset = $end + 1
+    }
+    if ($previous -eq 0) { return $null }
+    return $decoded.ToString()
+}
+
 function Assert-PrReReviewReadCoverage {
     param(
         [AllowNull()]$AgentOutput,
         [Parameter(Mandatory)][AllowEmptyString()][string]$MarkersPath,
-        [Parameter(Mandatory)][AllowEmptyString()][string]$SessionLogPath
+        [Parameter(Mandatory)][AllowEmptyString()][string]$SessionLogPath,
+        [System.Collections.IDictionary]$Expected
     )
 
+    if ($Expected -and $Expected.Contains('Scope')) { Assert-PrReReviewApiExpected $Expected }
     if (@($AgentOutput.items | Where-Object { $_.type -ceq 'submit_pull_request_review' }).Count -eq 0) {
         return 'No review was submitted, so there is no read coverage to verify.'
     }
     if (!$MarkersPath -or ![IO.File]::Exists($MarkersPath)) {
         throw "The guard cannot verify read coverage without the exported-patch markers at '$MarkersPath'."
     }
-    if (!$SessionLogPath -or ![IO.File]::Exists($SessionLogPath)) {
-        throw "The guard cannot verify read coverage without the agent's tool log at '$SessionLogPath'."
+    $sessionLogs = @(
+        if ($SessionLogPath -and [IO.File]::Exists($SessionLogPath)) {
+            $SessionLogPath
+        } elseif ($SessionLogPath -and [IO.Directory]::Exists($SessionLogPath)) {
+            foreach ($session in [IO.Directory]::EnumerateDirectories($SessionLogPath)) {
+                $eventLog = [IO.Path]::Combine($session, 'events.jsonl')
+                if ([IO.File]::Exists($eventLog)) { $eventLog }
+            }
+        }
+    )
+    if ($sessionLogs.Count -eq 0) {
+        throw "The guard cannot verify read coverage without the agent's tool log or session event logs at '$SessionLogPath'."
     }
 
-    $files = @((ConvertFrom-PrReReviewJson ([IO.File]::ReadAllText($MarkersPath))).files)
+    $markers = ConvertFrom-PrReReviewJson ([IO.File]::ReadAllText($MarkersPath))
+    $files = @($markers.files)
+    if ($Expected -and $Expected.Scope -ceq 'api') {
+        if ($markers.files -isnot [array]) { throw 'The exported API file set is malformed.' }
+        if ($markers.scope -cne 'api') { throw 'The read markers do not identify the API scope.' }
+        if ($markers.headSha -cne $Expected.AnalyzedHeadSha) { throw 'The API read markers belong to a different head commit.' }
+        if ($files.Count -ne $Expected.ChangedApiFiles -or @($Expected.ApiFilePaths).Count -ne $files.Count) {
+            throw 'The exported read markers do not cover the independently captured API file set.'
+        }
+        $paths = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+        foreach ($file in $files) {
+            if ($file.path -isnot [string] -or !$paths.Add($file.path)) { throw 'The API read marker paths are missing or duplicated.' }
+        }
+        foreach ($path in $Expected.ApiFilePaths) {
+            if (!$paths.Contains($path)) { throw "The read markers omit API file '$path'." }
+        }
+    }
     foreach ($file in $files) {
-        if ($file -isnot [System.Collections.IDictionary] -or $file.marker -isnot [string] -or $file.marker.Length -lt 16 -or @($file.chunks).Count -eq 0) {
+        if ($file -isnot [System.Collections.IDictionary] -or $file.marker -isnot [string] -or $file.marker.Length -lt 16 -or $file.chunks -isnot [array] -or $file.chunks.Count -eq 0) {
             throw 'The guard cannot verify read coverage because the exported-patch markers are malformed.'
         }
         foreach ($chunk in $file.chunks) {
@@ -201,22 +370,49 @@ function Assert-PrReReviewReadCoverage {
     # Check for ordinary missed or truncated reads. The agent can influence its session log,
     # so these matches are not tamper-proof evidence and cannot establish comprehension.
     # Each complete chunk must appear in one successful tool result.
-    $results = [System.Collections.Generic.List[string]]::new()
-    foreach ($line in [IO.File]::ReadLines($SessionLogPath)) {
-        if (!$line.Contains('"tool.execution_complete"', [StringComparison]::Ordinal)) { continue }
-        try { $event = ConvertFrom-PrReReviewJson $line } catch { continue }
-        if ($event -isnot [System.Collections.IDictionary] -or $event.type -cne 'tool.execution_complete' -or $event.data.success -eq $false) { continue }
-        $content = $event.data.result.content
-        if ($null -eq $content) { continue }
-        $text = if ($content -is [string]) { $content } else { ConvertTo-Json -InputObject $content -Depth 20 -Compress }
-        $results.Add($text)
+    $results = [System.Collections.Generic.List[object]]::new()
+    foreach ($sessionLog in $sessionLogs) {
+        # Call IDs are scoped to one session; ambiguous or reused IDs cannot
+        # qualify a completion as a view. Legacy raw results remain independent.
+        $starts = [System.Collections.Generic.Dictionary[string,string]]::new([StringComparer]::Ordinal)
+        $seen = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+        foreach ($line in [IO.File]::ReadLines($sessionLog)) {
+            if (!$line.Contains('"tool.execution_start"', [StringComparison]::Ordinal) -and !$line.Contains('"tool.execution_complete"', [StringComparison]::Ordinal)) { continue }
+            try { $event = ConvertFrom-PrReReviewJson $line } catch { continue }
+            if ($event -isnot [System.Collections.IDictionary] -or $event.data -isnot [System.Collections.IDictionary]) { continue }
+            $id = $event.data.toolCallId
+            if ($event.type -ceq 'tool.execution_start') {
+                if ($id -is [string] -and $id.Length -gt 0) {
+                    if ($seen.Add($id)) { $starts[$id] = [string]$event.data.toolName } else { [void]$starts.Remove($id) }
+                }
+                continue
+            }
+            if ($event.type -cne 'tool.execution_complete') { continue }
+            $isView = $false
+            if ($id -is [string] -and $id.Length -gt 0) {
+                if ($starts.ContainsKey($id)) {
+                    $isView = $starts[$id] -ceq 'view' -and $event.data.success -is [bool] -and $event.data.success
+                    [void]$starts.Remove($id)
+                } else { [void]$seen.Add($id) }
+            }
+            if ($event.data.success -eq $false) { continue }
+            $content = $event.data.result.content
+            if ($null -eq $content) { continue }
+            $text = if ($content -is [string]) { $content } else { ConvertTo-Json -InputObject $content -Depth 20 -Compress }
+            $decoded = if ($isView) { ConvertFrom-PrReReviewNumberedView -Text $text } else { $null }
+            $results.Add(@{ text = $text; decoded = $decoded })
+        }
     }
 
     $unread = @(
         foreach ($file in $files) {
             foreach ($chunk in $file.chunks) {
-                $expected = $chunk.content.TrimEnd([char[]]"`r`n")
-                if (!@($results | Where-Object { $_.Contains($expected, [StringComparison]::Ordinal) }).Count) {
+                $expectedChunk = $chunk.content.TrimEnd([char[]]"`r`n")
+                $normalizedChunk = $expectedChunk.Replace("`r`n", "`n")
+                if (!$expectedChunk -or !@($results | Where-Object {
+                    $_.text.Contains($expectedChunk, [StringComparison]::Ordinal) -or
+                    ($null -ne $_.decoded -and $_.decoded.Contains($normalizedChunk, [StringComparison]::Ordinal))
+                }).Count) {
                     [string]$file.path
                     break
                 }

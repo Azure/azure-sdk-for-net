@@ -4,9 +4,11 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+param([string]$GuardModulePath = (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1'))
+
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewInput.psm1') -Force
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewInput.psm1') -Force
+    Import-Module $GuardModulePath -Force
 
     function New-ChangedFile {
         param([string]$Path, [string]$Status = 'modified', [AllowNull()]$Patch = "@@ -1 +1 @@`n-old`n+new")
@@ -356,9 +358,9 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         }
     }
 
-    It 'exports the old text when a binary modification has no patch or line counts' {
+    It 'exports the old API text when a binary modification has no patch or line counts' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
-            '[[{"filename":"src/Changed.cs","status":"modified","sha":"2222222222222222222222222222222222222222","additions":0,"deletions":0}]]'
+            '[[{"filename":"sdk/widgets/Azure.Widgets/api/Azure.Widgets.net8.0.cs","status":"modified","sha":"2222222222222222222222222222222222222222","additions":0,"deletions":0}]]'
         }
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/compare/*' } {
             '{"merge_base_commit":{"sha":"0123456789012345678901234567890123456789"}}'
@@ -375,7 +377,7 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         $env:PR_BASE_SHA = 'base'
         $env:REVIEW_INPUT_DIR = Join-Path $root 'input'
         $env:REVIEW_INPUT_MARKERS = Join-Path $root 'private' 'markers.json'
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         $files = (Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json).files
         $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].patchFile) -Raw
         $text | Should -Match '// deleted declaration'
@@ -383,9 +385,9 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -like '*/compare/*' }
     }
 
-    It 'passes the resolved merge base to the exporter when a modified patch is absent' {
+    It 'passes the resolved merge base to the exporter when a modified API patch is absent' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
-            '[[{"filename":"src/Changed.cs","status":"modified","additions":1,"deletions":1}]]'
+            '[[{"filename":"sdk/widgets/Azure.Widgets/api/Azure.Widgets.net8.0.cs","status":"modified","additions":1,"deletions":1}]]'
         }
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/compare/*' } {
             '{"merge_base_commit":{"sha":"0123456789012345678901234567890123456789"}}'
@@ -402,11 +404,11 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         $env:PR_BASE_SHA = 'base'
         $env:REVIEW_INPUT_DIR = Join-Path $root 'input'
         $env:REVIEW_INPUT_MARKERS = Join-Path $root 'private' 'markers.json'
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         $files = (Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json).files
         $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].patchFile) -Raw
         $text | Should -Match '// deleted declaration'
         $text | Should -Match '// new declaration'
-        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/contents/src/Changed.cs?ref=0123456789012345678901234567890123456789' }
+        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/contents/sdk/widgets/Azure.Widgets/api/Azure.Widgets.net8.0.cs?ref=0123456789012345678901234567890123456789' }
     }
 }

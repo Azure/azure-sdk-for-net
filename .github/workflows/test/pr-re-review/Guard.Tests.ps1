@@ -5,8 +5,8 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    $script:GuardDirectory = $PSScriptRoot
-    $script:RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..')).Path
+    $script:GuardDirectory = Join-Path $PSScriptRoot '..' '..' 'pr-re-review'
+    $script:RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..' '..')).Path
     $script:Complete = 'Coverage: 64/64 threads fetched, 14/14 unresolved threads verified, 32/32 changed files reviewed'
     $script:HeadSha = 'a' * 40
     $script:GuardEnvironment = @{
@@ -100,12 +100,21 @@ BeforeAll {
 
 Describe 'Assert-PrReReviewOutput' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
     }
 
     It 'rejects run 40400877253, which reviewed 50 of 64 threads and skipped Steps 2 and 3' {
         { Assert-PrReReviewOutput (ConvertFrom-PrReReviewJson $script:Run40400877253) } |
             Should -Throw -ExpectedMessage '*exactly one Coverage line*'
+    }
+
+    It 'rejects the unchanged run 40400877253 fixture in API mode for missing scoped coverage' {
+        $expected = @{
+            Scope = 'api'; AnalyzedHeadSha = $script:HeadSha; HeadSha = $script:HeadSha
+            ChangedFiles = 32; ChangedApiFiles = 1; ApiFilePaths = @('sdk/widgets/Widgets/api/Widgets.cs'); InlineTargets = @()
+        }
+        { Assert-PrReReviewOutput (ConvertFrom-PrReReviewJson $script:Run40400877253) -Expected $expected } |
+            Should -Throw -ExpectedMessage '*exactly one API coverage line*'
     }
 
     It 'rejects run 40400877253 even when it states its real coverage' {
@@ -243,8 +252,11 @@ Describe 'Assert-PrReReviewOutput' {
 
 Describe 'Get-PrReReviewTotals' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
         $script:TotalsArguments = @{ Repository = 'Azure/azure-sdk-for-net'; Number = 63126; AnalyzedHeadSha = $script:HeadSha; Since = '2026-11-03T00:35:00Z'; Token = 'token' }
+    }
+    BeforeEach {
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest { throw 'Unexpected network transport in guard test.' }
     }
 
     It 'counts every thread and the threads opened before the run across pages' {
@@ -325,7 +337,7 @@ Describe 'Invoke-PrReReviewGuard.ps1' {
 
 Describe 'Compiled re-review publication guard' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
         $script:Steps = Get-CompiledSteps
         $script:StepNames = [string[]]@($script:Steps | ForEach-Object Name)
 
@@ -340,26 +352,52 @@ Describe 'Compiled re-review publication guard' {
         function Invoke-CompiledGuard {
             param([string]$AgentOutputPath)
 
-            $guard = Get-Step 'Require complete re-review coverage before publishing'
+            $guard = Get-Step 'Require complete API review coverage and valid source anchors'
             Get-StepProperty $guard 'shell' | Should -BeExactly 'pwsh'
             $environment = Get-StepMapping $guard 'env'
-            @($environment.Keys | Sort-Object) | Should -Be @('AGENT_OUTPUT', 'GH_TOKEN', 'PR_HEAD_SHA', 'PR_NUMBER', 'PR_UPDATED_AT')
+            @($environment.Keys | Sort-Object) | Should -Be @('AGENT_OUTPUT', 'AGENT_SESSION_LOG', 'GH_TOKEN', 'PR_BASE_SHA', 'PR_HEAD_SHA', 'PR_NUMBER', 'PR_UPDATED_AT', 'REVIEW_INPUT_MARKERS')
             $environment['AGENT_OUTPUT'] | Should -BeExactly '${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}'
             $environment['GH_TOKEN'] | Should -BeExactly '${{ github.token }}'
             $environment['PR_NUMBER'] | Should -BeExactly '${{ github.event.pull_request.number }}'
             $environment['PR_HEAD_SHA'] | Should -BeExactly '${{ github.event.pull_request.head.sha }}'
+            $environment['PR_BASE_SHA'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
             $environment['PR_UPDATED_AT'] | Should -BeExactly '${{ github.event.pull_request.updated_at }}'
-            $values = $script:GuardEnvironment + @{ AGENT_OUTPUT = $AgentOutputPath }
+            $environment['REVIEW_INPUT_MARKERS'] | Should -BeExactly '${{ runner.temp }}/api-review-markers/markers.json'
+            $environment['AGENT_SESSION_LOG'] | Should -BeExactly '${{ runner.temp }}/api-review-agent-log/sandbox/agent/logs/copilot-session-state'
+            Get-StepProperty $guard 'run' | Should -BeExactly './.github/workflows/pr-re-review/Invoke-PrReReviewGuard.ps1 -ApiOnly'
+
+            # Execute the compiled command against the real guard and a transport-free input fixture.
+            $root = Join-Path $TestDrive ([guid]::NewGuid().ToString())
+            $directory = Join-Path $root '.github/workflows/pr-re-review'
+            [void][IO.Directory]::CreateDirectory($directory)
+            Copy-Item (Join-Path $script:GuardDirectory 'Invoke-PrReReviewGuard.ps1'), (Join-Path $script:GuardDirectory 'PrReReviewGuard.psm1') $directory
+            $inputFixture = @'
+function Get-PrReReviewPullRequestInput {
+    param($Repository, $Number, $ExpectedHeadSha, $ExpectedBaseSha, [switch]$ApiOnly)
+    if (!$ApiOnly) { throw 'Scope switch missing.' }
+    return @{ HeadSha = $ExpectedHeadSha; PrChangedFiles = 32; Files = @(@{filename = 'sdk/widgets/Widgets/api/Widgets.cs'}); InlineTargets = @() }
+}
+function Assert-PrReReviewCurrentState { param($Repository, $Number, $ExpectedHeadSha, $ExpectedBaseSha) return 'fresh' }
+Export-ModuleMember -Function Get-PrReReviewPullRequestInput, Assert-PrReReviewCurrentState
+'@
+            [IO.File]::WriteAllText((Join-Path $directory 'PrReReviewInput.psm1'), $inputFixture)
+            $markers = Join-Path $root 'markers.json'; $log = Join-Path $root 'session.jsonl'
+            $markerData = @{scope = 'api'; headSha = $script:HeadSha; files = @(@{path = 'sdk/widgets/Widgets/api/Widgets.cs'; marker = '0123456789abcdef'; chunks = @(@{content = 'Exact API patch'})})}
+            $event = @{type = 'tool.execution_complete'; data = @{success = $true; result = @{content = 'Exact API patch'}}}
+            [IO.File]::WriteAllText($markers, (ConvertTo-Json $markerData -Depth 10))
+            [IO.File]::WriteAllText($log, (ConvertTo-Json $event -Depth 10 -Compress))
+            $values = $script:GuardEnvironment + @{ AGENT_OUTPUT = $AgentOutputPath; PR_BASE_SHA = ('b' * 40); REVIEW_INPUT_MARKERS = $markers; AGENT_SESSION_LOG = $log }
             $previous = @{}
             foreach ($entry in $values.GetEnumerator()) {
                 $previous[$entry.Key] = [Environment]::GetEnvironmentVariable($entry.Key)
                 [Environment]::SetEnvironmentVariable($entry.Key, $entry.Value)
             }
-            Push-Location $script:RepoRoot
+            Push-Location $root
             try {
                 & ([scriptblock]::Create((Get-StepProperty $guard 'run')))
             } finally {
                 Pop-Location
+                Get-Module PrReReviewInput, PrReReviewGuard | Where-Object { $_.Path -and (Split-Path $_.Path) -ceq $directory } | Remove-Module -ErrorAction SilentlyContinue
                 foreach ($entry in $previous.GetEnumerator()) {
                     [Environment]::SetEnvironmentVariable($entry.Key, $entry.Value)
                 }
@@ -375,7 +413,7 @@ Describe 'Compiled re-review publication guard' {
         $checkout = Get-Step 'Checkout trusted re-review publication guard'
         Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
         $with = Get-StepMapping $checkout 'with'
-        $with['ref'] | Should -BeExactly '${{ github.sha }}'
+        $with['ref'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
         $with['persist-credentials'] | Should -BeExactly 'false'
         $with['sparse-checkout'] | Should -BeExactly '.github/workflows/pr-re-review'
     }
@@ -389,17 +427,23 @@ Describe 'Compiled re-review publication guard' {
     It 'runs after the agent output is located and before anything is published' {
         $located = [array]::IndexOf($script:StepNames, 'Setup agent output environment variable')
         $checkout = [array]::IndexOf($script:StepNames, 'Checkout trusted re-review publication guard')
-        $guard = [array]::IndexOf($script:StepNames, 'Require complete re-review coverage before publishing')
+        $markers = [array]::IndexOf($script:StepNames, 'Download independent API read markers')
+        $log = [array]::IndexOf($script:StepNames, 'Download agent tool-read evidence')
+        $guard = [array]::IndexOf($script:StepNames, 'Require complete API review coverage and valid source anchors')
         $publish = [array]::IndexOf($script:StepNames, 'Process Safe Outputs')
         $located | Should -BeGreaterOrEqual 0
         $checkout | Should -BeGreaterThan $located
-        $guard | Should -BeGreaterThan $checkout
+        $markers | Should -BeGreaterThan $checkout
+        $log | Should -BeGreaterThan $markers
+        $guard | Should -BeGreaterThan $log
         $publish | Should -BeGreaterThan $guard
     }
 
     It '<Name> has no condition or continue-on-error that could bypass a failed guard' -ForEach @(
         @{ Name = 'Checkout trusted re-review publication guard' }
-        @{ Name = 'Require complete re-review coverage before publishing' }
+        @{ Name = 'Download independent API read markers' }
+        @{ Name = 'Download agent tool-read evidence' }
+        @{ Name = 'Require complete API review coverage and valid source anchors' }
         @{ Name = 'Process Safe Outputs' }
     ) {
         $step = Get-Step $Name
@@ -410,35 +454,34 @@ Describe 'Compiled re-review publication guard' {
     It 'blocks run 40400877253 when the compiled step runs the guard' {
         $path = Join-Path $TestDrive 'agent_output.json'
         [IO.File]::WriteAllText($path, $script:Run40400877253)
-        { Invoke-CompiledGuard $path } | Should -Throw -ExpectedMessage '*exactly one Coverage line*'
+        { Invoke-CompiledGuard $path } | Should -Throw -ExpectedMessage '*exactly one API coverage line*'
     }
 
-    It 'passes a complete re-review when the compiled step runs the guard' {
+    It 'passes a complete API review when the compiled step runs the guard' {
         $path = Join-Path $TestDrive 'agent_output.json'
-        $output = New-AgentOutput @(New-Review "Re-review of head abc1234.`n`n$script:Complete`n`nNo new findings.")
+        $output = New-AgentOutput @(New-Review "API-surface review.`n`nAPI coverage: 1/1 API files reviewed`n`nNo new findings.")
         [IO.File]::WriteAllText($path, (ConvertTo-Json -InputObject $output -Depth 10 -Compress))
         { Invoke-CompiledGuard $path } | Should -Not -Throw
     }
 
     It 'blocks a review whose changed-file total does not match GitHub when the compiled step runs the guard' {
-        Mock -ModuleName PrReReviewGuard Invoke-WebRequest { New-ThreadsPage -Opened (@('2026-11-01T00:00:00Z') * 64) -TotalCount 64 -ChangedFiles 33 }
         $path = Join-Path $TestDrive 'agent_output.json'
-        $output = New-AgentOutput @(New-Review "Re-review of head abc1234.`n`n$script:Complete`n`nNo new findings.")
+        $output = New-AgentOutput @(New-Review 'API coverage: 2/2 API files reviewed')
         [IO.File]::WriteAllText($path, (ConvertTo-Json -InputObject $output -Depth 10 -Compress))
-        { Invoke-CompiledGuard $path } | Should -Throw -ExpectedMessage '*changed files*'
+        { Invoke-CompiledGuard $path } | Should -Throw -ExpectedMessage '*API*count*'
     }
 }
 
 Describe 'Re-review prompt' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
         $script:Frontmatter, $script:PromptBody = ([IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md')) -split '(?m)^---\s*$', 3)[1, 2]
-        $script:Step4 = [regex]::Match($script:PromptBody, '(?ms)^## Step 4\b.*?(?=^## |\z)').Value
+        $script:ReportingStep = [regex]::Match($script:PromptBody, '(?ms)^## Step 3\b.*?(?=^## |\z)').Value
     }
 
     It 'asks for the exact coverage line the guard enforces' {
         $prompt = [IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md'))
-        $prompt.Contains((Get-PrReReviewCoverageTemplate), [StringComparison]::Ordinal) | Should -BeTrue
+        $prompt.Contains((Get-PrReReviewCoverageTemplate -ApiOnly), [StringComparison]::Ordinal) | Should -BeTrue
     }
 
     It 'accepts that coverage line once every placeholder is a matching count' {
@@ -446,14 +489,16 @@ Describe 'Re-review prompt' {
         { Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n`n$line")) } | Should -Not -Throw
     }
 
-    It 'reads GitHub through the MCP tools, not the unauthenticated gh CLI' {
+    It 'reads the trusted exported API assignment rather than using unauthenticated gh or a full-PR worklist' {
         $script:PromptBody | Should -Not -Match '\bgh\s+(?:pr\s+(?:diff|view)|api\s+graphql)\b'
-        $script:PromptBody | Should -Match '\bpull_request_read\b'
+        $script:PromptBody | Should -Match 'files\.json'
+        $script:PromptBody | Should -Match 'Do not fetch the complete PR diff'
+        $script:PromptBody | Should -Match 'Read every listed `readFiles` part in full'
     }
 
-    It 'pages review threads with the get_review_comments cursor' {
-        $script:PromptBody | Should -Match '\bget_review_comments\b'
-        $script:PromptBody | Should -Match '`after`'
+    It 'checks relevant prior comments for duplicates without re-reviewing the entire history' {
+        $script:PromptBody | Should -Match 'check relevant existing review comments'
+        $script:PromptBody | Should -Match 'do not re-verify every old resolved/unresolved thread'
     }
 
     It 'states the same time limit as timeout-minutes' {
@@ -465,8 +510,8 @@ Describe 'Re-review prompt' {
     }
 
     It 'reserves report_incomplete for failures that happen, not a size estimate' {
-        $script:Step4 | Should -Match '\breport_incomplete\b'
-        $script:Step4 | Should -Match '(?i)\bestimate\b'
-        $script:Step4 | Should -Match '(?i)\blist the files you reviewed\b'
+        $script:ReportingStep | Should -Match '\breport_incomplete\b'
+        $script:ReportingStep | Should -Match 'actual completed/remaining API files'
+        $script:PromptBody | Should -Match 'predicted whole-PR context cost is not a reason to stop'
     }
 }
