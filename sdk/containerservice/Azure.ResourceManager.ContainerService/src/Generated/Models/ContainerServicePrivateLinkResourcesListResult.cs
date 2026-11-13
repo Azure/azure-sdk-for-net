@@ -25,15 +25,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkResourcesListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
+        /// <param name="nextLink"> The link to the next page, if any. Omitted when all results are returned in a single response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServicePrivateLinkResourcesListResult(IList<ContainerServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServicePrivateLinkResourcesListResult(IList<ContainerServicePrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
+            NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The collection value. </summary>
         [WirePath("value")]
         public IList<ContainerServicePrivateLinkResourceData> Value { get; }
+
+        /// <summary> The link to the next page, if any. Omitted when all results are returned in a single response. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

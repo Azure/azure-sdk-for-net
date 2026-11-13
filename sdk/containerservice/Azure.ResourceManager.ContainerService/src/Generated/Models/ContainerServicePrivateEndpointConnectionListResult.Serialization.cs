@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IList<ContainerServicePrivateEndpointConnectionData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,12 +158,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     value = array;
                     continue;
                 }
+                if (prop.NameEquals("nextLink"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerServicePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ContainerServicePrivateEndpointConnectionData>(), additionalBinaryDataProperties);
+            return new ContainerServicePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ContainerServicePrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
