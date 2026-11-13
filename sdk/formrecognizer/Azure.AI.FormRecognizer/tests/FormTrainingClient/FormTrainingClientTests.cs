@@ -96,21 +96,33 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
-        [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(0)]
+        [TestCase(502)]
+        public void FormTrainingClientThrowsOnRequestFailure(int status)
         {
-            var client = CreateClient();
+            var transport = new MockTransport(_ => status == 0
+                ? throw new RequestFailedException(0, "Connection failed.")
+                : new MockResponse(status))
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
+            var client = InstrumentClient(CreateClient(new FormRecognizerClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            }));
 
-            try
+            if (status == 0)
             {
-                await client.GetAccountPropertiesAsync();
+                var exception = Assert.ThrowsAsync<AggregateException>(() => client.GetAccountPropertiesAsync());
+                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(4));
+                Assert.That(exception.InnerExceptions.All(ex => ex is RequestFailedException { Status: 0 }), Is.True);
             }
-            catch (AggregateException ex)
+            else
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                Assert.That(Assert.ThrowsAsync<RequestFailedException>(() => client.GetAccountPropertiesAsync()).Status, Is.EqualTo(status));
             }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         [Test]
