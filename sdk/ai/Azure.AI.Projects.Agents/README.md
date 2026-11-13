@@ -146,14 +146,14 @@ In most of the code snippets we will show only the asynchronous sample for brevi
 
 ### Voice Agents REST administration and telephony
 
-Use the [Voice Agents REST sample](samples/Sample_VoiceAgents_REST.md) to create and inspect a
+Use the [Voice Agents REST sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects.Agents/samples/Sample_VoiceAgents_REST.md) to create and inspect a
 typed voice agent definition and to read existing telephony bindings, call history, call jobs,
 transfer targets, and campaign status. The telephony examples are read-only and do not place calls
 or submit campaigns.
 
 For runtime scenarios that use WebSockets, realtime sessions, or GPT Live audio, see the
-[`Azure.AI.Projects` voice agent sample](../Azure.AI.Projects/samples/Sample_VoiceAgent.md) and
-[`Azure.AI.Projects` GPT Live sample](../Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md).
+[`Azure.AI.Projects` voice agent sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent.md) and
+[`Azure.AI.Projects` GPT Live sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md).
 
 ### Declarative Agents
 

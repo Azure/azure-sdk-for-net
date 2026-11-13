@@ -267,5 +267,5 @@ await foreach (TelephonyCampaignValidationError validationError
 ```
 
 For realtime and GPT Live runtime scenarios, including audio and WebSocket sessions, use the
-[`Azure.AI.Projects` voice agent REST/realtime sample](../../Azure.AI.Projects/samples/Sample_VoiceAgent.md)
-and the [`Azure.AI.Projects` GPT Live sample](../../Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md).
+[`Azure.AI.Projects` voice agent REST/realtime sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent.md)
+and the [`Azure.AI.Projects` GPT Live sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md).

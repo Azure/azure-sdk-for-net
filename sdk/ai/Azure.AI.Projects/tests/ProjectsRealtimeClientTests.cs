@@ -495,7 +495,7 @@ public class ProjectsRealtimeClientTests
         {
             options.Headers.Add("Foundry-Features", "Other=V2Preview,VoiceAgents=V1Preview");
         }
-        using RealtimeSessionClient session = await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, options, timeout.Token);
+        using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, options, timeout.Token);
         Task<bool> reader = Task.Run(() =>
         {
             SynchronizationContext previous = SynchronizationContext.Current;
@@ -516,35 +516,21 @@ public class ProjectsRealtimeClientTests
             }
             return true;
 
-            async void ReadOne(string id)
+            void ReadOne(string id)
             {
                 if (protocol)
                 {
-                    IAsyncEnumerator<ClientResult> events = session.ReceiveUpdatesAsync(new RequestOptions { CancellationToken = timeout.Token }).GetAsyncEnumerator();
-                    try
-                    {
-                        Assert.That(await events.MoveNextAsync(), Is.True);
-                        using JsonDocument document = JsonDocument.Parse(events.Current.GetRawResponse().Content);
-                        Assert.That(document.RootElement.GetProperty("response").GetProperty("id").GetString(), Is.EqualTo(id));
-                    }
-                    finally
-                    {
-                        await events.DisposeAsync();
-                    }
+                    using IEnumerator<ClientResult> events = session.ReceiveUpdates(new RequestOptions { CancellationToken = timeout.Token }).GetEnumerator();
+                    Assert.That(events.MoveNext(), Is.True);
+                    using JsonDocument document = JsonDocument.Parse(events.Current.GetRawResponse().Content);
+                    Assert.That(document.RootElement.GetProperty("response").GetProperty("id").GetString(), Is.EqualTo(id));
                 }
                 else
                 {
-                    IAsyncEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdatesAsync(timeout.Token).GetAsyncEnumerator();
-                    try
-                    {
-                        Assert.That(await events.MoveNextAsync(), Is.True);
-                        Assert.That(events.Current, Is.TypeOf<RealtimeServerUpdateResponseCreated>());
-                        Assert.That(((RealtimeServerUpdateResponseCreated)events.Current).Response.Id, Is.EqualTo(id));
-                    }
-                    finally
-                    {
-                        await events.DisposeAsync();
-                    }
+                    using IEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdates(timeout.Token).GetEnumerator();
+                    Assert.That(events.MoveNext(), Is.True);
+                    Assert.That(events.Current, Is.TypeOf<RealtimeServerUpdateResponseCreated>());
+                    Assert.That(((RealtimeServerUpdateResponseCreated)events.Current).Response.Id, Is.EqualTo(id));
                 }
             }
         });
@@ -577,36 +563,22 @@ public class ProjectsRealtimeClientTests
             await finished.Task;
         });
         AIProjectClient project = new(new Uri($"http://127.0.0.1:{port}/api/projects/project"), new FakeTokenProvider());
-        using RealtimeSessionClient session = await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, cancellationToken: timeout.Token);
+        using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, cancellationToken: timeout.Token);
         using CancellationTokenSource receiving = CancellationTokenSource.CreateLinkedTokenSource(timeout.Token);
         receiving.CancelAfter(200);
         try
         {
-            Task<bool> reader = Task.Run(async () =>
+            Task<bool> reader = Task.Run(() =>
             {
                 if (protocol)
                 {
-                    IAsyncEnumerator<ClientResult> events = session.ReceiveUpdatesAsync(new RequestOptions { CancellationToken = receiving.Token }).GetAsyncEnumerator();
-                    try
-                    {
-                        Assert.CatchAsync<OperationCanceledException>(async () => await events.MoveNextAsync());
-                    }
-                    finally
-                    {
-                        await events.DisposeAsync();
-                    }
+                    using IEnumerator<ClientResult> events = session.ReceiveUpdates(new RequestOptions { CancellationToken = receiving.Token }).GetEnumerator();
+                    Assert.Catch<OperationCanceledException>(() => events.MoveNext());
                 }
                 else
                 {
-                    IAsyncEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdatesAsync(receiving.Token).GetAsyncEnumerator();
-                    try
-                    {
-                        Assert.CatchAsync<OperationCanceledException>(async () => await events.MoveNextAsync());
-                    }
-                    finally
-                    {
-                        await events.DisposeAsync();
-                    }
+                    using IEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdates(receiving.Token).GetEnumerator();
+                    Assert.Catch<OperationCanceledException>(() => events.MoveNext());
                 }
                 return true;
             });

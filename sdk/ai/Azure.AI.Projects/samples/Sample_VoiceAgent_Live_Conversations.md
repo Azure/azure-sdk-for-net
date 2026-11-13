@@ -4,7 +4,7 @@ Use `BetaVoiceAgentsLiveConversations` to list saved conversations, read message
 audio. The examples include synchronous, asynchronous, typed, and protocol methods.
 
 To create and save an audio conversation first, use `StoredConversationAsync` in the
-[Live guide](Sample_VoiceAgent_Live.md#stored-live-history). The examples below read an
+[Live guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md#stored-live-history). The examples below read an
 existing conversation.
 
 ## Prerequisites
@@ -21,7 +21,7 @@ existing conversation.
 
 ## Run an example
 
-Copy the [complete sample class](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live_Conversations.cs)
+Copy the [complete sample class](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_Live_Conversations.cs)
 into your application; it is sample code, not part of the SDK. Set the environment variables
 to your saved session's values, then call:
 

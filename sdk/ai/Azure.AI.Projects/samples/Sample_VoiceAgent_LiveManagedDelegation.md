@@ -110,4 +110,4 @@ public static async Task RunAsync(
 
 Expected output logs only the preflight commentary, then reports the spoken marker and audio.
 Inline section headers are rejected. The temporary Live agent is cleaned up without deleting the
-caller-owned managed agent; see [connection cleanup](Sample_VoiceAgent_Live.md#connect-and-close-a-session).
+caller-owned managed agent; see [connection cleanup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md#connect-and-close-a-session).

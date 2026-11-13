@@ -4,9 +4,9 @@ Use `AIProjectClient.ProjectsLiveClient` to send text or audio to a GPT Live voi
 Realtime agents use `ProjectsRealtimeClient` instead; the two clients use different commands
 and events.
 
-The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live.cs) includes the helpers
+The [complete sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_Live.cs) includes the helpers
 used below. To read saved conversations and download recordings, see the
-[Live history samples](Sample_VoiceAgent_Live_Conversations.md).
+[Live history samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live_Conversations.md).
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ used below. To read saved conversations and download recordings, see the
   passes it explicitly. Native Live connections and stored-history operations also require preview.
 - For text and function calls, a separate Responses-compatible model deployment in the same resource.
 - For audio, a mono, 16-bit PCM WAV file at 24 kHz. You can use the repository's
-  [recorded weather question](../../../openai/Azure.AI.OpenAI/tests/Assets/whats_the_weather_pcm16_24khz_mono.wav).
+  [recorded weather question](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/tests/Assets/whats_the_weather_pcm16_24khz_mono.wav).
 
 Pass a cancellation token with a timeout. The examples create temporary agents and delete them
 in `finally`.
@@ -553,7 +553,7 @@ Live does not provide a speech-finished event.
 ## Stored Live history
 
 `StoredConversationAsync` creates a temporary agent, saves an audio conversation with `Store = true`,
-and downloads recordings using the [REST samples](Sample_VoiceAgent_Live_Conversations.md).
+and downloads recordings using the [REST samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live_Conversations.md).
 After closing, it waits up to 30 seconds for storage status `completed`. A failed status or
 cancellation stops the read.
 

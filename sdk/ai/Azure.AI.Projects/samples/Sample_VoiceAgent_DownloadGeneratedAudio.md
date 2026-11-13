@@ -56,9 +56,9 @@ The output is a WAV file. A missing artifact returns 404: cancellation alone doe
 that the service retained unplayed audio. Customer-storage items must be downloaded using your
 own storage credentials; the service content route returns 409 for those items.
 
-The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_DownloadGeneratedAudio.cs)
+The [complete sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_DownloadGeneratedAudio.cs)
 is self-contained. Call `DownloadAsync` with the stored conversation/item IDs; it creates only
 the requested output file and does not create or delete your agent or conversation.
 
 For saved messages and responses, use the existing
-[Read a conversation](Sample_VoiceAgent_ReadConversation.md) sample.
+[Read a conversation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_ReadConversation.md) sample.

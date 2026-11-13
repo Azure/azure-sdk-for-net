@@ -5,10 +5,10 @@ message payloads. The same setup works for audio and function calls.
 
 ## Prerequisites
 
-- Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
+- Follow the [Realtime prerequisites and authentication guidance](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent.md#prerequisites).
 - Also reference `OpenTelemetry.Exporter.Console`.
 
-The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Telemetry.cs) includes the
+The [complete sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_Telemetry.cs) includes the
 required imports and setup.
 
 ## Configure tracing and logging

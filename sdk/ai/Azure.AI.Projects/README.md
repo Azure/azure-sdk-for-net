@@ -110,9 +110,9 @@ Once the `AIProjectClient` is created, you can use properties such as `.Datasets
 Use `AIProjectClient.ProjectsLiveClient` for GPT Live voice agents. Realtime agents use
 `ProjectsRealtimeClient` instead.
 
-- [GPT Live guide](samples/Sample_VoiceAgent_Live.md): connect, send text or audio, call functions,
+- [GPT Live guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md): connect, send text or audio, call functions,
   and manage sessions.
-- [Saved conversations and recordings](samples/Sample_VoiceAgent_Live_Conversations.md): read
+- [Saved conversations and recordings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Live_Conversations.md): read
   history and download audio using synchronous or asynchronous REST methods.
 
 ### Voice Agent realtime transport
@@ -142,12 +142,12 @@ inline/Handoff, SIP transfer destinations, or post-call delivery, explicitly sup
 required opt-in by default. `AAIP002` and `OPENAI002` are separate SDK experimental diagnostics,
 not the Foundry service's feature stages.
 
-For runnable examples, see [text and function calls](samples/Sample_VoiceAgent.md),
-[WebSocket transport and saved history](samples/Sample_VoiceAgent_ReadConversation.md),
-and [audio streaming](samples/Sample_VoiceAgent_WebSocketAudio.md).
+For runnable examples, see [text and function calls](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent.md),
+[WebSocket transport and saved history](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_ReadConversation.md),
+and [audio streaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_WebSocketAudio.md).
 Two additional examples cover
-[audio retained after an interruption](samples/Sample_VoiceAgent_DownloadGeneratedAudio.md) and
-[delegation to a Foundry-managed agent](samples/Sample_VoiceAgent_LiveManagedDelegation.md).
+[audio retained after an interruption](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_DownloadGeneratedAudio.md) and
+[delegation to a Foundry-managed agent](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_LiveManagedDelegation.md).
 
 ### Performing Agent operations
 
@@ -2037,8 +2037,8 @@ instructions, transcripts, and tool arguments/results; keep it disabled for sens
 Voice Agent creation traces do not record request/response bodies. Other REST diagnostics
 follow their existing settings.
 
-See the [REST tracing sample](samples/Sample_VoiceAgent_Telemetry_Rest.md) and
-[Realtime tracing sample](samples/Sample_VoiceAgent_Telemetry_Realtime.md) for console-export examples.
+See the [REST tracing sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Rest.md) and
+[Realtime tracing sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Realtime.md) for console-export examples.
 
 ### Enabling content recording
 

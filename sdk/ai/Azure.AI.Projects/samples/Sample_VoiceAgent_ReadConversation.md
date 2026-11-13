@@ -5,8 +5,8 @@ responses using `BetaVoiceAgentsConversations`. Reading saved history uses REST,
 This sample also demonstrates explicit WebSocket transport selection and cleanup of a temporary
 agent.
 
-Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
-The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_ReadConversation.cs)
+Follow the [Realtime prerequisites and authentication guidance](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent.md#prerequisites).
+The [complete sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_ReadConversation.cs)
 includes client setup and cleanup.
 
 Choose a unique agent name, set a timeout, and create the project client:

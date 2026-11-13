@@ -5,10 +5,10 @@ response transcript and the raw audio bytes sent and received.
 
 ## Prerequisites
 
-- Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
+- Follow the [Realtime prerequisites and authentication guidance](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent.md#prerequisites).
 - Set `VOICE_SAMPLE_AUDIO_PATH` to a mono, 16-bit PCM WAV recording at 24 kHz.
 
-The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_WebSocketAudio.cs)
+The [complete sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_WebSocketAudio.cs)
 includes the WAV reader. It removes the WAV header before sending audio.
 
 1. Create a voice agent that uses mono PCM16 audio at 24 kHz.
@@ -119,4 +119,4 @@ ClientResult deleteResult = await projectClient.AgentAdministrationClient.Delete
 Console.WriteLine($"Deleted voice agent {agentName}: HTTP {deleteResult.GetRawResponse().Status}");
 ```
 
-For WebRTC signaling requirements, see [transport selection and saved history](Sample_VoiceAgent_ReadConversation.md).
+For WebRTC signaling requirements, see [transport selection and saved history](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_ReadConversation.md).

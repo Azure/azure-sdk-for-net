@@ -12,7 +12,7 @@ Realtime commands and events with your Foundry voice agent.
 - The Realtime client depends on experimental OpenAI SDK types. Suppress diagnostics `AAIP002`
   and `OPENAI002` when building the sample; the Realtime service features shown here are GA.
 
-Run the snippets in an asynchronous method. The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent.cs)
+Run the snippets in an asynchronous method. The [complete sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent.cs)
 includes the required imports, timeout, and cleanup.
 
 ## Authentication
