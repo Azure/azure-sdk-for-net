@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Binary hardening features. </summary>
     public partial class BinaryHardeningFeatures
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningFeatures"/>. </summary>
         public BinaryHardeningFeatures()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="relocationReadOnly"> Flag indicating the binary has enabled relocation read-only protections. </param>
         /// <param name="canary"> Flag indicating if the binary was compiled with stack canaries enabled. </param>
         /// <param name="stripped"> Flag indicating if debug symbols have been stripped from the binary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryHardeningFeatures(bool? noExecute, bool? positionIndependentExecutable, bool? relocationReadOnly, bool? canary, bool? stripped, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BinaryHardeningFeatures(bool? noExecute, bool? positionIndependentExecutable, bool? relocationReadOnly, bool? canary, bool? stripped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NoExecute = noExecute;
             PositionIndependentExecutable = positionIndependentExecutable;
             RelocationReadOnly = relocationReadOnly;
             Canary = canary;
             Stripped = stripped;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Flag indicating the binary's stack is set to NX (no-execute). </summary>
         public bool? NoExecute { get; set; }
+
         /// <summary> Flag indicating the binary was compiled to be a position independent executable. </summary>
         public bool? PositionIndependentExecutable { get; set; }
+
         /// <summary> Flag indicating the binary has enabled relocation read-only protections. </summary>
         public bool? RelocationReadOnly { get; set; }
+
         /// <summary> Flag indicating if the binary was compiled with stack canaries enabled. </summary>
         public bool? Canary { get; set; }
+
         /// <summary> Flag indicating if debug symbols have been stripped from the binary. </summary>
         public bool? Stripped { get; set; }
     }
