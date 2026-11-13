@@ -59,6 +59,11 @@ The API contract specifies a maximum of 100 paths.
 
 Use `InferenceClient.GetEmbeddings` or `GetEmbeddingsAsync` to embed text, queries, or document images.
 Request settings are named method arguments; no request options object is required.
+The `model` argument is required for both typed and anonymous inputs. Embedding
+`modelVersion` is not exposed by the SDK and is omitted from requests; responses
+from the service that include it can still be read. These temporary SDK-only
+customizations use the merged preview specification without changing its REST
+contract. Semantic reranking's `Metadata.ModelVersion` is unchanged.
 Embedding model availability and image input support depend on the endpoint.
 
 ## Examples
@@ -93,14 +98,13 @@ Response<EmbeddingResult> response = await client.GetEmbeddingsAsync(
         }
     },
     model: "microsoft-embedding-1-large",
-    modelVersion: "<supported-model-version>",
     dimensions: 2560,
     delivery: EmbeddingDelivery.Inline);
 
 EmbeddingResult result = response.Value;
 ```
 
-Use a model version and dimension supported by your endpoint. Omit `dimensions` to use the
+Use a model and dimension supported by your endpoint. Omit `dimensions` to use the
 model's native width. Each input produces a separate embedding, not a fused query/image embedding.
 Anonymous inputs use reflection-based JSON serialization; trimmed or Native AOT applications
 should use the typed `EmbeddingInput` overloads instead. These inputs have a parameterless

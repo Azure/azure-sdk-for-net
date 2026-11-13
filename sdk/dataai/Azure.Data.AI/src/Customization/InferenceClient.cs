@@ -26,8 +26,8 @@ namespace Azure.Data.AI
     // throws before a request is ever sent. The replacement below picks the policy that
     // matches the configured credential.
     [CodeGenSuppress("InferenceClient", typeof(InferenceClientSettings))]
-    // The typed GetEmbeddings overloads are re-declared below, with the generated bodies, only to
-    // name the multi-vector width multiVectorDimensions instead of the generated multiDimensions.
+    // The typed overloads require model, omit modelVersion, and name the multi-vector width
+    // multiVectorDimensions instead of the generated multiDimensions.
     [CodeGenSuppress("GetEmbeddings", typeof(IEnumerable<EmbeddingInput>), typeof(string), typeof(string), typeof(EmbeddingVectorKind?), typeof(int?), typeof(int?), typeof(int?), typeof(EmbeddingOutputDataKind?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingDelivery?), typeof(CancellationToken))]
     [CodeGenSuppress("GetEmbeddingsAsync", typeof(IEnumerable<EmbeddingInput>), typeof(string), typeof(string), typeof(EmbeddingVectorKind?), typeof(int?), typeof(int?), typeof(int?), typeof(EmbeddingOutputDataKind?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingDelivery?), typeof(CancellationToken))]
     public partial class InferenceClient
@@ -76,8 +76,7 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </param>
-        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
-        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
+        /// <param name="model"> The model to use. </param>
         /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
         /// <param name="dimensions">
         /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
@@ -98,16 +97,18 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="model"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="model"/> is empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<EmbeddingInput> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<EmbeddingInput> inputs, string model, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNullOrEmpty(model, nameof(model));
 
             EmbedContent spreadModel = new EmbedContent(
                 inputs?.ToList() as IList<EmbeddingInput> ?? new ChangeTrackingList<EmbeddingInput>(),
                 model,
-                modelVersion,
+                null,
                 vectorKind,
                 dimensions,
                 multiVectorDimensions,
@@ -131,8 +132,7 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </param>
-        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
-        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
+        /// <param name="model"> The model to use. </param>
         /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
         /// <param name="dimensions">
         /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
@@ -153,16 +153,18 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="model"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="model"/> is empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<EmbeddingInput> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<EmbeddingInput> inputs, string model, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNullOrEmpty(model, nameof(model));
 
             EmbedContent spreadModel = new EmbedContent(
                 inputs?.ToList() as IList<EmbeddingInput> ?? new ChangeTrackingList<EmbeddingInput>(),
                 model,
-                modelVersion,
+                null,
                 vectorKind,
                 dimensions,
                 multiVectorDimensions,
@@ -185,7 +187,6 @@ namespace Azure.Data.AI
         /// </summary>
         /// <param name="inputs"> The items to embed. </param>
         /// <param name="model"> The model to use. </param>
-        /// <param name="modelVersion"> The model version to use. </param>
         /// <param name="vectorKind"> The kind of vectors to return. </param>
         /// <param name="dimensions"> The number of dimensions of the returned vectors. </param>
         /// <param name="multiVectorDimensions"> The number of dimensions of multi-vector embeddings. </param>
@@ -194,17 +195,18 @@ namespace Azure.Data.AI
         /// <param name="encodingFormat"> The encoding format of the returned vectors. </param>
         /// <param name="delivery"> How results are delivered. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
-        /// <exception cref="ArgumentException"> An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/>, <paramref name="inputs"/> or one of its items is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="model"/> is empty. An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #if NET5_0_OR_GREATER
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<object> inputs, string model, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(model, nameof(model));
             IEnumerable<EmbeddingInput> items = ConvertToContentItems(inputs, nameof(inputs));
-            return GetEmbeddings(items, model, modelVersion, vectorKind, dimensions, multiVectorDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken);
+            return GetEmbeddings(items, model, vectorKind, dimensions, multiVectorDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +219,6 @@ namespace Azure.Data.AI
         /// </summary>
         /// <param name="inputs"> The items to embed. </param>
         /// <param name="model"> The model to use. </param>
-        /// <param name="modelVersion"> The model version to use. </param>
         /// <param name="vectorKind"> The kind of vectors to return. </param>
         /// <param name="dimensions"> The number of dimensions of the returned vectors. </param>
         /// <param name="multiVectorDimensions"> The number of dimensions of multi-vector embeddings. </param>
@@ -226,17 +227,18 @@ namespace Azure.Data.AI
         /// <param name="encodingFormat"> The encoding format of the returned vectors. </param>
         /// <param name="delivery"> How results are delivered. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
-        /// <exception cref="ArgumentException"> An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/>, <paramref name="inputs"/> or one of its items is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="model"/> is empty. An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #if NET5_0_OR_GREATER
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<object> inputs, string model, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiVectorDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(model, nameof(model));
             IEnumerable<EmbeddingInput> items = ConvertToContentItems(inputs, nameof(inputs));
-            return await GetEmbeddingsAsync(items, model, modelVersion, vectorKind, dimensions, multiVectorDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken).ConfigureAwait(false);
+            return await GetEmbeddingsAsync(items, model, vectorKind, dimensions, multiVectorDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken).ConfigureAwait(false);
         }
 
 #if NET5_0_OR_GREATER

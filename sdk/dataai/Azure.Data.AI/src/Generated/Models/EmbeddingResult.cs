@@ -57,9 +57,6 @@ namespace Azure.Data.AI
         /// <summary> The name of the model that produced the vectors. </summary>
         public string Model { get; }
 
-        /// <summary> The model version that produced the vectors. Pin it to keep an index stable. </summary>
-        public string ModelVersion { get; }
-
         /// <summary> The numeric type of the returned values. </summary>
         public EmbeddingOutputDataKind OutputDataKind { get; }
 

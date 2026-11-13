@@ -12,10 +12,10 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    internal partial class UnknownEmbeddingData : EmbeddingItem, IJsonModel<EmbeddingItem>
+    internal partial class UnknownEmbeddingItem : EmbeddingItem, IJsonModel<EmbeddingItem>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEmbeddingData"/> for deserialization. </summary>
-        internal UnknownEmbeddingData()
+        /// <summary> Initializes a new instance of <see cref="UnknownEmbeddingItem"/> for deserialization. </summary>
+        internal UnknownEmbeddingItem()
         {
         }
 
@@ -99,7 +99,7 @@ namespace Azure.Data.AI
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownEmbeddingData DeserializeUnknownEmbeddingData(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownEmbeddingItem DeserializeUnknownEmbeddingItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +131,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownEmbeddingData(kind, index, id, additionalBinaryDataProperties);
+            return new UnknownEmbeddingItem(kind, index, id, additionalBinaryDataProperties);
         }
     }
 }

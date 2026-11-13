@@ -15,7 +15,7 @@ namespace Azure.Data.AI
     /// Common metadata for one embedding result item, in request order.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MultimodalDenseAndMultiVectorEmbedding"/>, <see cref="MultimodalDenseEmbedding"/>, and <see cref="MultimodalMultiVectorEmbedding"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownEmbeddingData))]
+    [PersistableModelProxy(typeof(UnknownEmbeddingItem))]
     public abstract partial class EmbeddingItem : IJsonModel<EmbeddingItem>
     {
         /// <summary> Initializes a new instance of <see cref="EmbeddingItem"/> for deserialization. </summary>
@@ -144,7 +144,7 @@ namespace Azure.Data.AI
                         return MultimodalMultiVectorEmbedding.DeserializeMultimodalMultiVectorEmbedding(element, options);
                 }
             }
-            return UnknownEmbeddingData.DeserializeUnknownEmbeddingData(element, options);
+            return UnknownEmbeddingItem.DeserializeUnknownEmbeddingItem(element, options);
         }
     }
 }

@@ -143,31 +143,6 @@ namespace Azure.Data.AI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The result of an embedding operation. </summary>
-        /// <param name="model"> The name of the model that produced the vectors. </param>
-        /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
-        /// <param name="outputDataKind"> The numeric type of the returned values. </param>
-        /// <param name="data"> One entry per item in `inputs`, in request order. Empty when `output` is present. </param>
-        /// <param name="usage"> Usage for the operation. </param>
-        /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
-        /// <param name="output"> With `delivery: link`: where to read the results. </param>
-        /// <returns> A new <see cref="AI.EmbeddingResult"/> instance for mocking. </returns>
-        public static EmbeddingResult EmbeddingResult(string model = default, string modelVersion = default, EmbeddingOutputDataKind outputDataKind = default, IEnumerable<EmbeddingItem> data = default, EmbeddingUsage usage = default, IEnumerable<EmbeddingWarning> warnings = default, EmbeddingOutput output = default)
-        {
-            data ??= new ChangeTrackingList<EmbeddingItem>();
-            warnings ??= new ChangeTrackingList<EmbeddingWarning>();
-
-            return new EmbeddingResult(
-                model,
-                modelVersion,
-                outputDataKind,
-                data.ToList(),
-                usage,
-                warnings.ToList(),
-                output,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The result for one item when `vectorKind` is `dense`: one vector. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>

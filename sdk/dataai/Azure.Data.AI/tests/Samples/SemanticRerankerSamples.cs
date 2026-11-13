@@ -75,7 +75,6 @@ namespace Azure.Data.AI.Tests.Samples
                     }
                 },
                 model: "microsoft-embedding-1-large",
-                modelVersion: "<supported-model-version>",
                 dimensions: 2560,
                 delivery: EmbeddingDelivery.Inline);
 

@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AI
 {
-    internal partial class UnknownEmbeddingData : EmbeddingItem
+    internal partial class UnknownEmbeddingItem : EmbeddingItem
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEmbeddingData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEmbeddingItem"/>. </summary>
         /// <param name="kind"> The embedding implementation that produced this item. </param>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEmbeddingData(EmbeddingDataKind kind, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", index, id, additionalBinaryDataProperties)
+        internal UnknownEmbeddingItem(EmbeddingDataKind kind, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", index, id, additionalBinaryDataProperties)
         {
         }
     }

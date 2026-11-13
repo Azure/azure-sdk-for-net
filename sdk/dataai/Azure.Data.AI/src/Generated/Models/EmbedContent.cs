@@ -11,7 +11,6 @@ using System.Linq;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The EmbedContent. </summary>
     internal partial class EmbedContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -80,9 +79,6 @@ namespace Azure.Data.AI
 
         /// <summary> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </summary>
         public string Model { get; }
-
-        /// <summary> The model version. Defaults to the latest; the response always names the version used. </summary>
-        public string ModelVersion { get; }
 
         /// <summary> The kind of vectors to return. Defaults to `dense`. </summary>
         public EmbeddingVectorKind? VectorKind { get; }

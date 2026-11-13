@@ -13,7 +13,6 @@ using Azure.Core;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The EmbedContent. </summary>
     internal partial class EmbedContent : IJsonModel<EmbedContent>
     {
         /// <summary> Initializes a new instance of <see cref="EmbedContent"/> for deserialization. </summary>

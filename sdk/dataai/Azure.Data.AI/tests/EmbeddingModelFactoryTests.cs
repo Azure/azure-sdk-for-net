@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Linq;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -22,6 +23,22 @@ namespace Azure.Data.AI.Tests
 
             Assert.That(json.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"));
             Assert.That(result.OutputDataKind, Is.EqualTo(EmbeddingOutputDataKind.Float32));
+            Assert.That(json.RootElement.GetProperty("modelVersion").GetString(), Is.EqualTo("v1"));
+            Assert.That(typeof(EmbeddingResult).GetProperty("ModelVersion"), Is.Null);
+        }
+
+        [Test]
+        public void ResultFactoryDoesNotExposeModelVersion()
+        {
+            var factory = typeof(InferenceModelFactory).GetMethod(nameof(InferenceModelFactory.EmbeddingResult));
+            Assert.That(factory.GetParameters().Any(parameter => parameter.Name == "modelVersion"), Is.False);
+
+            var result = InferenceModelFactory.EmbeddingResult(model: "test-model");
+            Assert.That(result.Model, Is.EqualTo("test-model"));
+            using JsonDocument json = Serialize(result);
+            Assert.That(json.RootElement.GetProperty("modelVersion").ValueKind, Is.EqualTo(JsonValueKind.Null));
+            Assert.That(result.Data, Is.Empty);
+            Assert.That(result.Warnings, Is.Empty);
         }
 
         [TestCase(false)]

@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
@@ -43,7 +44,6 @@ namespace Azure.Data.AI.Tests
             using var handler = new EmbeddingHandler(contents, kind, new Dictionary<string, object>
             {
                 ["model"] = "test-model",
-                ["modelVersion"] = "v1",
                 ["vectorKind"] = vectorKind.ToString(),
                 ["dimensions"] = 2,
                 ["multiDimensions"] = multiVectorDimensions,
@@ -60,11 +60,11 @@ namespace Azure.Data.AI.Tests
             {
                 var inputs = new object[] { new { kind = "text", id = "item-1", content = "document" } };
                 response = async
-                    ? await client.GetEmbeddingsAsync(inputs, model: "test-model", modelVersion: "v1",
+                    ? await client.GetEmbeddingsAsync(inputs, model: "test-model",
                         vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery)
-                    : client.GetEmbeddings(inputs, model: "test-model", modelVersion: "v1",
+                    : client.GetEmbeddings(inputs, model: "test-model",
                         vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery);
@@ -72,11 +72,11 @@ namespace Azure.Data.AI.Tests
             else
             {
                 response = async
-                    ? await client.GetEmbeddingsAsync(contents, model: "test-model", modelVersion: "v1",
+                    ? await client.GetEmbeddingsAsync(contents, model: "test-model",
                         vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery)
-                    : client.GetEmbeddings(contents, model: "test-model", modelVersion: "v1",
+                    : client.GetEmbeddings(contents, model: "test-model",
                         vectorKind: vectorKind, dimensions: 2, multiVectorDimensions: multiVectorDimensions,
                         maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
                         encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery);
@@ -86,11 +86,11 @@ namespace Azure.Data.AI.Tests
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             EmbeddingResult result = response.Value;
             Assert.That(result.Model, Is.EqualTo("test-model"));
-            Assert.That(result.ModelVersion, Is.EqualTo("v1"));
             Assert.That(result.OutputDataKind, Is.EqualTo(EmbeddingOutputDataKind.Float16));
             Assert.That(result.Usage, Is.TypeOf<MultimodalEmbeddingUsage>());
             using JsonDocument resultJson = JsonDocument.Parse(
                 ModelReaderWriter.Write(result, ModelReaderWriterOptions.Json, AzureDataAIContext.Default).ToString());
+            Assert.That(resultJson.RootElement.GetProperty("modelVersion").GetString(), Is.EqualTo("v1"));
             Assert.That(resultJson.RootElement.GetProperty("usage").GetProperty("kind").GetString(), Is.EqualTo("multimodal"));
             Assert.That(result.Usage.TotalTokens, Is.EqualTo(2));
             Assert.That(((MultimodalEmbeddingUsage)result.Usage).ImageCount, Is.EqualTo(contents.Length - 1));
@@ -151,8 +151,8 @@ namespace Azure.Data.AI.Tests
             var client = CreateClient(httpClient);
 
             Response<EmbeddingResult> response = async
-                ? await client.GetEmbeddingsAsync(contents)
-                : client.GetEmbeddings(contents);
+                ? await client.GetEmbeddingsAsync(contents, "test-model")
+                : client.GetEmbeddings(contents, "test-model");
 
             Assert.That(handler.RequestCount, Is.EqualTo(1));
             Assert.That(response.Value.Data[0], Is.TypeOf<MultimodalDenseEmbedding>());
@@ -175,6 +175,7 @@ namespace Azure.Data.AI.Tests
             };
             using var handler = new EmbeddingHandler(contents, "dense", new Dictionary<string, object>
             {
+                ["model"] = "test-model",
                 ["vectorKind"] = "dense",
                 ["outputDataKind"] = "float32",
                 ["encodingFormat"] = "float",
@@ -184,10 +185,10 @@ namespace Azure.Data.AI.Tests
             var client = CreateClient(httpClient, useTokenCredential: true);
 
             Response<EmbeddingResult> response = async
-                ? await client.GetEmbeddingsAsync(inputs: contents,
+                ? await client.GetEmbeddingsAsync(inputs: contents, model: "test-model",
                     vectorKind: EmbeddingVectorKind.Dense, outputDataKind: EmbeddingOutputDataKind.Float32,
                     encodingFormat: EmbeddingEncodingFormat.Float, delivery: EmbeddingDelivery.Inline)
-                : client.GetEmbeddings(inputs: contents,
+                : client.GetEmbeddings(inputs: contents, model: "test-model",
                     vectorKind: EmbeddingVectorKind.Dense, outputDataKind: EmbeddingOutputDataKind.Float32,
                     encodingFormat: EmbeddingEncodingFormat.Float, delivery: EmbeddingDelivery.Inline);
 
@@ -227,7 +228,6 @@ namespace Azure.Data.AI.Tests
             using var handler = new EmbeddingHandler(contents, "dense", new Dictionary<string, object>
             {
                 ["model"] = "microsoft-embedding-1-large",
-                ["modelVersion"] = "test-model-version",
                 ["dimensions"] = dimensions,
                 ["delivery"] = "inline"
             }, useTokenCredential: true);
@@ -245,7 +245,6 @@ namespace Azure.Data.AI.Tests
                             new { id = "trail-map", kind = "image", url = contents[1].Uri.AbsoluteUri, sasToken = "fake-sas" }
                         },
                         model: "microsoft-embedding-1-large",
-                        modelVersion: "test-model-version",
                         dimensions: dimensions,
                         delivery: EmbeddingDelivery.Inline)
                     : client.GetEmbeddings(
@@ -255,7 +254,6 @@ namespace Azure.Data.AI.Tests
                             new { id = "trail-map", kind = "image", url = contents[1].Uri.AbsoluteUri, sasToken = "fake-sas" }
                         },
                         model: "microsoft-embedding-1-large",
-                        modelVersion: "test-model-version",
                         dimensions: dimensions,
                         delivery: EmbeddingDelivery.Inline);
             }
@@ -265,20 +263,20 @@ namespace Azure.Data.AI.Tests
                     ? await client.GetEmbeddingsAsync(
                         inputs: contents,
                         model: "microsoft-embedding-1-large",
-                        modelVersion: "test-model-version",
                         dimensions: dimensions,
                         delivery: EmbeddingDelivery.Inline)
                     : client.GetEmbeddings(
                         inputs: contents,
                         model: "microsoft-embedding-1-large",
-                        modelVersion: "test-model-version",
                         dimensions: dimensions,
                         delivery: EmbeddingDelivery.Inline);
             }
 
             Assert.That(handler.RequestCount, Is.EqualTo(1));
             Assert.That(response.Value.Model, Is.EqualTo("microsoft-embedding-1-large"));
-            Assert.That(response.Value.ModelVersion, Is.EqualTo("test-model-version"));
+            using JsonDocument resultJson = JsonDocument.Parse(
+                ModelReaderWriter.Write(response.Value, ModelReaderWriterOptions.Json, AzureDataAIContext.Default).ToString());
+            Assert.That(resultJson.RootElement.GetProperty("modelVersion").GetString(), Is.EqualTo("v1"));
             Assert.That(response.Value.Output, Is.Null);
             Assert.That(response.Value.Data, Has.Count.EqualTo(2));
             for (int index = 0; index < contents.Length; index++)
@@ -322,8 +320,8 @@ namespace Azure.Data.AI.Tests
             var client = CreateClient(httpClient, useTokenCredential: true);
 
             Response<EmbeddingResult> response = async
-                ? await client.GetEmbeddingsAsync(contents)
-                : client.GetEmbeddings(contents);
+                ? await client.GetEmbeddingsAsync(contents, "test-model")
+                : client.GetEmbeddings(contents, "test-model");
 
             Assert.That(handler.RequestCount, Is.EqualTo(1));
             Assert.That(response.Value.Data, Has.Count.EqualTo(2));
@@ -350,8 +348,8 @@ namespace Azure.Data.AI.Tests
             var client = CreateClient(httpClient);
 
             Response<EmbeddingResult> response = async
-                ? await client.GetEmbeddingsAsync(new[] { input })
-                : client.GetEmbeddings(new[] { input });
+                ? await client.GetEmbeddingsAsync(new[] { input }, "test-model")
+                : client.GetEmbeddings(new[] { input }, "test-model");
 
             Assert.That(handler.RequestCount, Is.EqualTo(1));
             Assert.That(((MultimodalDenseEmbedding)response.Value.Data[0]).ContentKind, Is.EqualTo(EmbeddingContentKind.Text));
@@ -396,8 +394,8 @@ namespace Azure.Data.AI.Tests
             var client = CreateClient(httpClient, useTokenCredential: true);
 
             Response<EmbeddingResult> response = async
-                ? await client.GetEmbeddingsAsync(inputs)
-                : client.GetEmbeddings(inputs);
+                ? await client.GetEmbeddingsAsync(inputs, "test-model")
+                : client.GetEmbeddings(inputs, "test-model");
 
             Assert.That(handler.RequestCount, Is.EqualTo(1));
             Assert.That(response.Value.Data, Has.Count.EqualTo(2));
@@ -413,8 +411,8 @@ namespace Azure.Data.AI.Tests
             var client = CreateClient(httpClient);
 
             Exception error = async
-                ? Assert.ThrowsAsync(exceptionType, () => client.GetEmbeddingsAsync(inputs: inputs))
-                : Assert.Throws(exceptionType, () => client.GetEmbeddings(inputs: inputs));
+                ? Assert.ThrowsAsync(exceptionType, () => client.GetEmbeddingsAsync(inputs: inputs, model: "test-model"))
+                : Assert.Throws(exceptionType, () => client.GetEmbeddings(inputs: inputs, model: "test-model"));
 
             Assert.That(((ArgumentException)error).ParamName, Is.EqualTo("inputs"));
             Assert.That(handler.RequestCount, Is.Zero);
@@ -453,8 +451,8 @@ namespace Azure.Data.AI.Tests
             var client = CreateClient(httpClient);
 
             ArgumentException error = async
-                ? Assert.ThrowsAsync<ArgumentException>(() => client.GetEmbeddingsAsync(inputs))
-                : Assert.Throws<ArgumentException>(() => client.GetEmbeddings(inputs));
+                ? Assert.ThrowsAsync<ArgumentException>(() => client.GetEmbeddingsAsync(inputs, "test-model"))
+                : Assert.Throws<ArgumentException>(() => client.GetEmbeddings(inputs, "test-model"));
 
             Assert.That(error.ParamName, Is.EqualTo("inputs"));
             Assert.That(error.Message, Does.Contain("index 1").And.Contain($"'{propertyName}'"));
@@ -481,9 +479,64 @@ namespace Azure.Data.AI.Tests
         {
             var client = new InferenceClient(new Uri("https://example.inference.azure.com"), new AzureKeyCredential("api-key"));
             ArgumentNullException error = async
-                ? Assert.ThrowsAsync<ArgumentNullException>(() => client.GetEmbeddingsAsync(inputs: (IEnumerable<EmbeddingInput>)null))
-                : Assert.Throws<ArgumentNullException>(() => client.GetEmbeddings(inputs: (IEnumerable<EmbeddingInput>)null));
+                ? Assert.ThrowsAsync<ArgumentNullException>(() => client.GetEmbeddingsAsync(inputs: (IEnumerable<EmbeddingInput>)null, model: "test-model"))
+                : Assert.Throws<ArgumentNullException>(() => client.GetEmbeddings(inputs: (IEnumerable<EmbeddingInput>)null, model: "test-model"));
             Assert.That(error.ParamName, Is.EqualTo("inputs"));
+        }
+
+        [TestCase(false, false, null)]
+        [TestCase(true, false, null)]
+        [TestCase(false, true, null)]
+        [TestCase(true, true, null)]
+        [TestCase(false, false, "")]
+        [TestCase(true, false, "")]
+        [TestCase(false, true, "")]
+        [TestCase(true, true, "")]
+        public void ConvenienceCallsRequireModelBeforeSending(bool async, bool anonymous, string model)
+        {
+            var contents = new[] { new EmbeddingInput { Content = "document" } };
+            using var handler = new EmbeddingHandler(contents, "dense");
+            using var httpClient = new HttpClient(handler);
+            var client = CreateClient(httpClient);
+            Type exceptionType = model == null ? typeof(ArgumentNullException) : typeof(ArgumentException);
+            Exception error;
+
+            if (anonymous)
+            {
+                var inputs = new object[] { new { content = "document" } };
+                error = async
+                    ? Assert.ThrowsAsync(exceptionType, () => client.GetEmbeddingsAsync(inputs, model))
+                    : Assert.Throws(exceptionType, () => client.GetEmbeddings(inputs, model));
+            }
+            else
+            {
+                error = async
+                    ? Assert.ThrowsAsync(exceptionType, () => client.GetEmbeddingsAsync(contents, model))
+                    : Assert.Throws(exceptionType, () => client.GetEmbeddings(contents, model));
+            }
+
+            Assert.That(((ArgumentException)error).ParamName, Is.EqualTo("model"));
+            Assert.That(handler.RequestCount, Is.Zero);
+        }
+
+        [Test]
+        public void ConvenienceApiRequiresModelAndHidesModelVersion()
+        {
+            var methods = typeof(InferenceClient).GetMethods()
+                .Where(method => method.Name == nameof(InferenceClient.GetEmbeddings)
+                    || method.Name == nameof(InferenceClient.GetEmbeddingsAsync))
+                .Where(method => method.GetParameters()[0].ParameterType != typeof(RequestContent))
+                .ToArray();
+
+            Assert.That(methods, Has.Length.EqualTo(4));
+            foreach (var method in methods)
+            {
+                var parameters = method.GetParameters();
+                Assert.That(parameters.Single(parameter => parameter.Name == "model").IsOptional, Is.False);
+                Assert.That(parameters.Any(parameter => parameter.Name == "modelVersion"), Is.False);
+            }
+            Type requestType = typeof(InferenceClient).Assembly.GetType("Azure.Data.AI.EmbedContent", throwOnError: true);
+            Assert.That(requestType.GetProperty("ModelVersion"), Is.Null);
         }
 
         [TestCase(false, false)]
@@ -507,20 +560,20 @@ namespace Azure.Data.AI.Tests
                 var inputs = new object[] { new { id = "item-1", kind = "text", content = "document" } };
                 if (async)
                 {
-                    Assert.CatchAsync<OperationCanceledException>(() => client.GetEmbeddingsAsync(inputs, cancellationToken: cancellation.Token));
+                    Assert.CatchAsync<OperationCanceledException>(() => client.GetEmbeddingsAsync(inputs, "test-model", cancellationToken: cancellation.Token));
                 }
                 else
                 {
-                    Assert.Catch<OperationCanceledException>(() => client.GetEmbeddings(inputs, cancellationToken: cancellation.Token));
+                    Assert.Catch<OperationCanceledException>(() => client.GetEmbeddings(inputs, "test-model", cancellationToken: cancellation.Token));
                 }
             }
             else if (async)
             {
-                Assert.CatchAsync<OperationCanceledException>(() => client.GetEmbeddingsAsync(contents, cancellationToken: cancellation.Token));
+                Assert.CatchAsync<OperationCanceledException>(() => client.GetEmbeddingsAsync(contents, "test-model", cancellationToken: cancellation.Token));
             }
             else
             {
-                Assert.Catch<OperationCanceledException>(() => client.GetEmbeddings(contents, cancellationToken: cancellation.Token));
+                Assert.Catch<OperationCanceledException>(() => client.GetEmbeddings(contents, "test-model", cancellationToken: cancellation.Token));
             }
         }
 
@@ -569,7 +622,7 @@ namespace Azure.Data.AI.Tests
                 IReadOnlyDictionary<string, object> expectedOptions = null, bool useTokenCredential = false)
             {
                 _contents = contents;
-                _expectedOptions = expectedOptions ?? new Dictionary<string, object>();
+                _expectedOptions = expectedOptions ?? new Dictionary<string, object> { ["model"] = "test-model" };
                 _kind = kind;
                 _useTokenCredential = useTokenCredential;
             }
@@ -693,7 +746,7 @@ namespace Azure.Data.AI.Tests
                 {
                     ["object"] = "list",
                     ["model"] = _expectedOptions.TryGetValue("model", out object model) ? model : "test-model",
-                    ["modelVersion"] = _expectedOptions.TryGetValue("modelVersion", out object modelVersion) ? modelVersion : "v1",
+                    ["modelVersion"] = "v1",
                     ["outputDataKind"] = "float16",
                     ["data"] = responseData,
                     ["usage"] = new { kind = "multimodal", totalTokens = 2, imageCount = _contents.Count - 1 }
