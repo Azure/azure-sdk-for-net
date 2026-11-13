@@ -13,9 +13,8 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
-    /// Defines account-level connections used to publish cost-control telemetry and events.
-    /// Application Insights is optional and may be removed while policies remain attached.
-    /// Event Grid is required for alerts; supplied connection references must still be valid.
+    /// Account-level telemetry connections. Application Insights is optional and may be removed while controls exist.
+    /// Budget notifications specify their own Event Grid destinations; the account Event Grid connection remains a fallback for existing legacy alerts.
     /// </summary>
     public partial class CostControlConnections
     {
@@ -32,8 +31,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CostControlConnections"/>. </summary>
-        /// <param name="appInsightsConnectionId"> Gets or sets the full resource ID of the optional Application Insights connection. </param>
-        /// <param name="eventGridConnectionId"> The full resource ID of the Event Grid connection used for cost control alerts. This connection must be configured when an attached cost control contains an alert threshold action and cannot be removed while such an action remains attached. </param>
+        /// <param name="appInsightsConnectionId"> The full resource ID of the optional Application Insights connection. Set to null in an account update to remove it. </param>
+        /// <param name="eventGridConnectionId"> The full resource ID of the fallback Event Grid connection for legacy alerts. It cannot be removed while legacy alerts depend on it. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CostControlConnections(ResourceIdentifier appInsightsConnectionId, ResourceIdentifier eventGridConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the full resource ID of the optional Application Insights connection. </summary>
+        /// <summary> The full resource ID of the optional Application Insights connection. Set to null in an account update to remove it. </summary>
         [WirePath("appInsightsConnectionId")]
         public ResourceIdentifier AppInsightsConnectionId
         {
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        /// <summary> The full resource ID of the Event Grid connection used for cost control alerts. This connection must be configured when an attached cost control contains an alert threshold action and cannot be removed while such an action remains attached. </summary>
+        /// <summary> The full resource ID of the fallback Event Grid connection for legacy alerts. It cannot be removed while legacy alerts depend on it. </summary>
         [WirePath("eventGridConnectionId")]
         public ResourceIdentifier EventGridConnectionId
         {

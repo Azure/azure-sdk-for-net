@@ -7,44 +7,131 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The customer-authored settings of a cost control. </summary>
+    /// <summary>
+    /// The consumption budget and its traffic selection, notifications, and enforcement actions.
+    /// A newly created control applies within its owner's scope without attaching resource IDs.
+    /// </summary>
     public partial class CostControlProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CostControlProperties"/>. </summary>
-        /// <param name="rules"> The rules enforced by the cost control. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
-        public CostControlProperties(IEnumerable<CostControlRule> rules)
+        /// <param name="category"> Whether the budget measures estimated cost in United States dollars or token consumption. This category cannot be changed after creation. </param>
+        /// <param name="amount">
+        /// The positive budget amount, in United States dollars for Cost or tokens for Tokens.
+        /// Token amounts must be whole numbers no greater than 9223372036854775807.
+        /// </param>
+        /// <param name="timeGrain"> The calendar-aligned UTC interval at which consumption counters renew within the validity window. </param>
+        /// <param name="timePeriod"> The finite UTC validity window during which the control applies. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="timePeriod"/> is null. </exception>
+        public CostControlProperties(CostControlCategory category, double amount, CostControlTimeGrain timeGrain, CostControlTimePeriod timePeriod)
         {
-            Argument.AssertNotNull(rules, nameof(rules));
+            Argument.AssertNotNull(timePeriod, nameof(timePeriod));
 
-            Rules = rules.ToList();
+            Grouping = new ChangeTrackingList<CostControlGrouping>();
+            Category = category;
+            Amount = amount;
+            TimeGrain = timeGrain;
+            TimePeriod = timePeriod;
+            Notifications = new ChangeTrackingDictionary<string, CostControlNotification>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CostControlProperties"/>. </summary>
-        /// <param name="displayName"> An optional human-readable name for the cost control. </param>
-        /// <param name="rules"> The rules enforced by the cost control. </param>
+        /// <param name="provider"> The resource provider for this budget. Omission selects Microsoft.CognitiveServices; responses return that value. </param>
+        /// <param name="grouping">
+        /// Optional additional partitioning of consumption. Omission or an empty array uses one counter for the owning account or Foundry project.
+        /// Responses omit owner-default grouping. A project-owned control cannot explicitly group by projectId.
+        /// </param>
+        /// <param name="category"> Whether the budget measures estimated cost in United States dollars or token consumption. This category cannot be changed after creation. </param>
+        /// <param name="amount">
+        /// The positive budget amount, in United States dollars for Cost or tokens for Tokens.
+        /// Token amounts must be whole numbers no greater than 9223372036854775807.
+        /// </param>
+        /// <param name="timeGrain"> The calendar-aligned UTC interval at which consumption counters renew within the validity window. </param>
+        /// <param name="timePeriod"> The finite UTC validity window during which the control applies. </param>
+        /// <param name="filter"> Optional traffic selection. Omission selects all eligible traffic within the owner's scope. </param>
+        /// <param name="notifications">
+        /// Alert notifications keyed by nonempty, case-insensitively unique names. Each notification supplies its own Event Grid connection.
+        /// Notifications and provider actions together are limited to ten entries. Omission creates no notifications.
+        /// </param>
+        /// <param name="providerProperties"> Optional provider-specific enforcement settings. Omission creates no blocking actions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostControlProperties(string displayName, IList<CostControlRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostControlProperties(CostControlPropertiesProvider? provider, IList<CostControlGrouping> grouping, CostControlCategory category, double amount, CostControlTimeGrain timeGrain, CostControlTimePeriod timePeriod, CostControlFilter filter, IDictionary<string, CostControlNotification> notifications, CostControlProviderProperties providerProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            Rules = rules;
+            Provider = provider;
+            Grouping = grouping;
+            Category = category;
+            Amount = amount;
+            TimeGrain = timeGrain;
+            TimePeriod = timePeriod;
+            Filter = filter;
+            Notifications = notifications;
+            ProviderProperties = providerProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> An optional human-readable name for the cost control. </summary>
-        [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        /// <summary> The resource provider for this budget. Omission selects Microsoft.CognitiveServices; responses return that value. </summary>
+        [WirePath("provider")]
+        public CostControlPropertiesProvider? Provider { get; set; }
 
-        /// <summary> The rules enforced by the cost control. </summary>
-        [WirePath("rules")]
-        public IList<CostControlRule> Rules { get; }
+        /// <summary>
+        /// Optional additional partitioning of consumption. Omission or an empty array uses one counter for the owning account or Foundry project.
+        /// Responses omit owner-default grouping. A project-owned control cannot explicitly group by projectId.
+        /// </summary>
+        [WirePath("grouping")]
+        public IList<CostControlGrouping> Grouping { get; }
+
+        /// <summary> Whether the budget measures estimated cost in United States dollars or token consumption. This category cannot be changed after creation. </summary>
+        [WirePath("category")]
+        public CostControlCategory Category { get; set; }
+
+        /// <summary>
+        /// The positive budget amount, in United States dollars for Cost or tokens for Tokens.
+        /// Token amounts must be whole numbers no greater than 9223372036854775807.
+        /// </summary>
+        [WirePath("amount")]
+        public double Amount { get; set; }
+
+        /// <summary> The calendar-aligned UTC interval at which consumption counters renew within the validity window. </summary>
+        [WirePath("timeGrain")]
+        public CostControlTimeGrain TimeGrain { get; set; }
+
+        /// <summary> The finite UTC validity window during which the control applies. </summary>
+        [WirePath("timePeriod")]
+        public CostControlTimePeriod TimePeriod { get; set; }
+
+        /// <summary> Optional traffic selection. Omission selects all eligible traffic within the owner's scope. </summary>
+        [WirePath("filter")]
+        public CostControlFilter Filter { get; set; }
+
+        /// <summary>
+        /// Alert notifications keyed by nonempty, case-insensitively unique names. Each notification supplies its own Event Grid connection.
+        /// Notifications and provider actions together are limited to ten entries. Omission creates no notifications.
+        /// </summary>
+        [WirePath("notifications")]
+        public IDictionary<string, CostControlNotification> Notifications { get; }
+
+        /// <summary> Optional provider-specific enforcement settings. Omission creates no blocking actions. </summary>
+        [WirePath("providerProperties")]
+        internal CostControlProviderProperties ProviderProperties { get; set; }
+
+        /// <summary> Blocking actions keyed by nonempty, case-insensitively unique names. Actions and notifications together are limited to ten entries. </summary>
+        [WirePath("providerProperties.actions")]
+        public IDictionary<string, CostControlAction> ProviderActions
+        {
+            get
+            {
+                if (ProviderProperties is null)
+                {
+                    ProviderProperties = new CostControlProviderProperties();
+                }
+                return ProviderProperties.Actions;
+            }
+        }
     }
 }

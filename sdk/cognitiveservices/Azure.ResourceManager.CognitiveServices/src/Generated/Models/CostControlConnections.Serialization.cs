@@ -15,9 +15,8 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
-    /// Defines account-level connections used to publish cost-control telemetry and events.
-    /// Application Insights is optional and may be removed while policies remain attached.
-    /// Event Grid is required for alerts; supplied connection references must still be valid.
+    /// Account-level telemetry connections. Application Insights is optional and may be removed while controls exist.
+    /// Budget notifications specify their own Event Grid destinations; the account Event Grid connection remains a fallback for existing legacy alerts.
     /// </summary>
     public partial class CostControlConnections : IJsonModel<CostControlConnections>
     {
