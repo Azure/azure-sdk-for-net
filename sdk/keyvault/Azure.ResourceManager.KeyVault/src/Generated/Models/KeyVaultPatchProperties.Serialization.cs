@@ -144,6 +144,21 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
+            if (Optional.IsDefined(TokenBindingParameters))
+            {
+                writer.WritePropertyName("tokenBindingParameters"u8);
+                writer.WriteObjectValue(TokenBindingParameters, options);
+            }
+            if (Optional.IsDefined(EnableCrossTenantAccessProtection))
+            {
+                writer.WritePropertyName("enableCrossTenantAccessProtection"u8);
+                writer.WriteBooleanValue(EnableCrossTenantAccessProtection.Value);
+            }
+            if (Optional.IsDefined(ProtectionKeysWrappingKey))
+            {
+                writer.WritePropertyName("protectionKeysWrappingKey"u8);
+                writer.WriteObjectValue(ProtectionKeysWrappingKey, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -199,6 +214,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             bool? enablePurgeProtection = default;
             KeyVaultNetworkRuleSet networkRuleSet = default;
             string publicNetworkAccess = default;
+            TokenBindingParameters tokenBindingParameters = default;
+            bool? enableCrossTenantAccessProtection = default;
+            WrappingKeyConfiguration protectionKeysWrappingKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -320,6 +338,33 @@ namespace Azure.ResourceManager.KeyVault.Models
                     publicNetworkAccess = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tokenBindingParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenBindingParameters = TokenBindingParameters.DeserializeTokenBindingParameters(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("enableCrossTenantAccessProtection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableCrossTenantAccessProtection = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("protectionKeysWrappingKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectionKeysWrappingKey = WrappingKeyConfiguration.DeserializeWrappingKeyConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -339,6 +384,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 enablePurgeProtection,
                 networkRuleSet,
                 publicNetworkAccess,
+                tokenBindingParameters,
+                enableCrossTenantAccessProtection,
+                protectionKeysWrappingKey,
                 additionalBinaryDataProperties);
         }
     }

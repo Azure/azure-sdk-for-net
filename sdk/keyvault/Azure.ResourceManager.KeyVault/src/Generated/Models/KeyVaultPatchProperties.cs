@@ -37,8 +37,22 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </param>
         /// <param name="networkRuleSet"> A collection of rules governing the accessibility of the vault from specific network locations. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
+        /// <param name="tokenBindingParameters"> Configuration for Token Binding for Entra tokens. </param>
+        /// <param name="enableCrossTenantAccessProtection"> Whether cross-tenant access protection is enabled for this vault. When enabled, changes to the vault tenant ID must use the subscription's home tenant ID. Once enabled, this protection cannot be disabled. If omitted, the existing value is preserved. </param>
+        /// <param name="protectionKeysWrappingKey">
+        /// Configures an external Managed HSM key used to wrap the vault's protection keys.
+        /// When configured, this property is returned in create, update, get, and list responses.
+        /// Responses contain the persisted key reference and authentication mechanism, not key material or credentials.
+        /// It can be supplied when enabling wrapping on an existing vault.
+        /// This property is available starting with API version 2026-10-01-preview, when the protection-key wrapping capability is available for the target vault.
+        /// Reapplying an equivalent configuration is supported; replacing or removing it is not.
+        /// A versionless reference can match the persisted versioned reference; resubmitting it does not rotate the key.
+        /// After configuration, vault availability depends on the persisted Managed HSM key version remaining usable and accessible to the service.
+        /// Disabling or deleting that key version, or revoking the service's access, can make the vault unavailable.
+        /// Omitting this property preserves the existing configuration.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPatchProperties(Guid? tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, bool? enableRbacAuthorization, int? softDeleteRetentionInDays, KeyVaultPatchMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, string publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultPatchProperties(Guid? tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, bool? enableRbacAuthorization, int? softDeleteRetentionInDays, KeyVaultPatchMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, string publicNetworkAccess, TokenBindingParameters tokenBindingParameters, bool? enableCrossTenantAccessProtection, WrappingKeyConfiguration protectionKeysWrappingKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -53,6 +67,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             EnablePurgeProtection = enablePurgeProtection;
             NetworkRuleSet = networkRuleSet;
             PublicNetworkAccess = publicNetworkAccess;
+            TokenBindingParameters = tokenBindingParameters;
+            EnableCrossTenantAccessProtection = enableCrossTenantAccessProtection;
+            ProtectionKeysWrappingKey = protectionKeysWrappingKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -107,5 +124,28 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </summary>
         [WirePath("publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
+
+        /// <summary> Configuration for Token Binding for Entra tokens. </summary>
+        [WirePath("tokenBindingParameters")]
+        public TokenBindingParameters TokenBindingParameters { get; set; }
+
+        /// <summary> Whether cross-tenant access protection is enabled for this vault. When enabled, changes to the vault tenant ID must use the subscription's home tenant ID. Once enabled, this protection cannot be disabled. If omitted, the existing value is preserved. </summary>
+        [WirePath("enableCrossTenantAccessProtection")]
+        public bool? EnableCrossTenantAccessProtection { get; set; }
+
+        /// <summary>
+        /// Configures an external Managed HSM key used to wrap the vault's protection keys.
+        /// When configured, this property is returned in create, update, get, and list responses.
+        /// Responses contain the persisted key reference and authentication mechanism, not key material or credentials.
+        /// It can be supplied when enabling wrapping on an existing vault.
+        /// This property is available starting with API version 2026-10-01-preview, when the protection-key wrapping capability is available for the target vault.
+        /// Reapplying an equivalent configuration is supported; replacing or removing it is not.
+        /// A versionless reference can match the persisted versioned reference; resubmitting it does not rotate the key.
+        /// After configuration, vault availability depends on the persisted Managed HSM key version remaining usable and accessible to the service.
+        /// Disabling or deleting that key version, or revoking the service's access, can make the vault unavailable.
+        /// Omitting this property preserves the existing configuration.
+        /// </summary>
+        [WirePath("protectionKeysWrappingKey")]
+        public WrappingKeyConfiguration ProtectionKeysWrappingKey { get; set; }
     }
 }

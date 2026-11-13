@@ -16,6 +16,9 @@ namespace Azure.ResourceManager.KeyVault
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccessRule))]
+    [ModelReaderWriterBuildable(typeof(AccessRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(AccessRulePropertiesSubscription))]
     [ModelReaderWriterBuildable(typeof(DeletedKeyVaultData))]
     [ModelReaderWriterBuildable(typeof(DeletedKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(DeletedKeyVaultResource))]
@@ -77,8 +80,15 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MHSMPrivateEndpointConnectionsListResult))]
     [ModelReaderWriterBuildable(typeof(MhsmPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeter))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ProvisioningIssue))]
+    [ModelReaderWriterBuildable(typeof(ProvisioningIssueProperties))]
+    [ModelReaderWriterBuildable(typeof(ResourceAssociation))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretAttributes))]
     [ModelReaderWriterBuildable(typeof(SecretBaseAttributes))]
@@ -86,8 +96,11 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(SecretPatchProperties))]
     [ModelReaderWriterBuildable(typeof(SecretProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TokenBindingParameters))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultListResult))]
+    [ModelReaderWriterBuildable(typeof(WrappingKeyConfiguration))]
+    [ModelReaderWriterBuildable(typeof(WrappingKeyValue))]
     public partial class AzureResourceManagerKeyVaultContext : ModelReaderWriterContext
     {
     }
