@@ -270,7 +270,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
                 var options = new AzureMonitorExporterOptions();
                 var restClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), WestUs);
-                var statsManager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
+                using var statsManager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
 
                 string? observedHost = null;
                 using var listener = new MeterListener

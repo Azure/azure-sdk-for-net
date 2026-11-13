@@ -47,11 +47,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(scope.ResourceProviderId, attach.Properties["rpId"]);
             Assert.NotNull(scope.Statsbeat.NetworkSdkStatsManager);
             Assert.Contains(scope.Statsbeat.NetworkSdkStatsManager.BuildBaseTags("westeurope-5"),
-                tag => tag.Key == "cikey" && (string?)tag.Value == CustomerKey);
+                tag => tag.Key == "cikey" && (string?)tag.Value == (multiEndpointEnabled ? "N/A" : CustomerKey));
         }
 
         [Fact]
-        public void RoutingOnlyAttachReportsObservedKeysWithoutEnablingNetworkStats()
+        public void RoutingOnlyAttachReportsObservedKeysWithoutRecordingNetworkStats()
         {
             using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
             scope.Observe(("first-key", EastUs), ("second-key", WestEurope));
@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(new[] { "first-key", "second-key" },
                 scope.AttachMeasurements().Select(data => data.Properties["cikey"]).OrderBy(key => key));
             Assert.All(scope.AttachMeasurements(), data => Assert.Equal(scope.ResourceProviderId, data.Properties["rpId"]));
-            Assert.Null(scope.Statsbeat.NetworkSdkStatsManager);
+            Assert.NotNull(scope.Statsbeat.NetworkSdkStatsManager);
             Assert.Equal(scope.StatsConnectionString, scope.Statsbeat._statsbeat_ConnectionString);
         }
 
@@ -85,9 +85,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void AttachMetadataReflectsResourceHydrationAfterTheFirstCollection(bool useOverride)
+        [InlineData(false, "Microsoft.OpenTelemetry", "mot")]
+        [InlineData(true, "Microsoft.OpenTelemetry", "mot")]
+        [InlineData(false, "Azure.Monitor.OpenTelemetry.AspNetCore", "dst")]
+        [InlineData(true, "Azure.Monitor.OpenTelemetry.AspNetCore", "dst")]
+        public void AttachMetadataReflectsResourceHydrationAfterTheFirstCollection(bool useOverride, string distroName, string distroLabel)
         {
             var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
             var sdkVersion = SdkVersionUtils.s_sdkVersion;
@@ -104,6 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false, useOverride);
                 var provider = scope.Statsbeat._statsbeatMeterProvider!;
                 scope.Observe(("early", EastUs));
+                scope.Statsbeat.NetworkSdkStatsManager!.TrackSuccess("eastus-1.in.applicationinsights.azure.com");
                 Assert.True(provider.ForceFlush());
                 var early = Assert.Single(scope.AttachMeasurements());
                 Assert.Equal(initialVersion, early.Properties["version"]);
@@ -112,18 +115,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 var resource = ResourceBuilder.CreateEmpty().AddAttributes(new Dictionary<string, object>
                 {
                     ["ai.sdk.prefix"] = "test",
-                    ["telemetry.distro.name"] = "Microsoft.OpenTelemetry",
+                    ["telemetry.distro.name"] = distroName,
                     ["telemetry.distro.version"] = "1.2.3",
                 }).Build();
                 _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: scope.Platform);
                 scope.Observe(("late", WestEurope));
+                scope.Statsbeat.NetworkSdkStatsManager.TrackSuccess("eastus-1.in.applicationinsights.azure.com");
                 Assert.True(provider.ForceFlush());
 
                 Assert.Equal(2, scope.AttachMeasurements().Length);
                 var late = Assert.Single(scope.AttachMeasurements().Where(data => data.Properties["cikey"] == "late"));
-                Assert.Equal("mot1.2.3", late.Properties["version"]);
+                Assert.Equal(distroLabel + "1.2.3", late.Properties["version"]);
                 Assert.Equal("IntegratedAuto", late.Properties["attach"]);
                 Assert.Equal(scope.ResourceProviderId, late.Properties["rpId"]);
+                var network = scope.Measurements().Where(data => data.Metrics.Any(metric => metric.Name == "Request_Success_Count")).ToArray();
+                Assert.Equal(2, network.Length);
+                Assert.Equal(SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter), truncate: false),
+                    Assert.Single(network.Where(data => data.Properties["attach"] == "Manual")).Properties["version"]);
+                Assert.Equal("1.2.3",
+                    Assert.Single(network.Where(data => data.Properties["attach"] == "IntegratedAuto")).Properties["version"]);
             }
             finally
             {
@@ -153,7 +163,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AnUnrecognizedConfiguredRegionDoesNotNewlyEnableNetworkStats()
+        public void AnUnrecognizedConfiguredRegionDoesNotPreventRoutedStats()
         {
             using var scope = new MockStatsbeatScope();
             using var statsbeat = new AzureMonitorStatsbeat(
@@ -163,7 +173,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 multiEndpointEnabled: true);
             statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(("observed", EastUs)));
 
-            Assert.Null(statsbeat.NetworkSdkStatsManager);
+            Assert.NotNull(statsbeat.NetworkSdkStatsManager);
             Assert.True(statsbeat._statsbeatMeterProvider!.ForceFlush());
             Assert.Equal("observed", ((MetricsData)Assert.Single(scope.TelemetryItems).Data.BaseData).Properties["cikey"]);
         }

@@ -14,6 +14,7 @@
 
 ### Features Added
 
+- Added Network SDK statistics for multi-endpoint routing.
 - Added Attach SDK statistics per customer connection string observed in newly exported telemetry for multi-endpoint routing. A configured connection string alone no longer produces Attach in this mode, and offline-storage replays do not create or refresh Attach associations. Single-endpoint Attach is unchanged.
 - Multi-endpoint routing reads a new `microsoft.ingestion_auth` attribute. Telemetry marked `"aad"` is sent and stored separately from instrumentation-key telemetry for the same endpoint, in preparation for Microsoft Entra ID support.
 - Multi-endpoint routing can now be used with `AzureMonitorExporterOptions.Credential`. Only telemetry marked `"aad"` is sent with a token, scoped to the audience in the `Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience` AppContext value (public cloud by default). Without a credential, telemetry marked `"aad"` is dropped.
@@ -21,6 +22,8 @@
 
 ### Bugs Fixed
 
+- Network request duration includes attempts that fail before receiving a response, including offline-storage replays.
+- Network SDK statistics report the full recognized distro version when available, otherwise the full exporter version, including after late resource initialization. Runtime versions are untruncated and cloud-role context is omitted.
 - Fixed a multi-endpoint offline-storage race where disk-size recounts discarded in-progress write reservations, potentially allowing storage to exceed its shared budget. ([#63845](https://github.com/Azure/azure-sdk-for-net/pull/63845))
 - Multi-endpoint Attach SDK statistics refresh version and attachment mode after late resource initialization.
 - Attach SDK statistics use monotonic time for reporting intervals and association expiry, avoiding delays caused by system clock adjustments.
