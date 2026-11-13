@@ -32,12 +32,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a fake <see cref="FormRecognizerClient" />.
         /// </summary>
         /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateClient()
+        private FormRecognizerClient CreateClient(FormRecognizerClientOptions options = default)
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new FormRecognizerClient(fakeEndpoint, fakeCredential, new FormRecognizerClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
+            options ??= new FormRecognizerClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } };
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential, options);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
+        private FormRecognizerClient CreateInstrumentedClient(FormRecognizerClientOptions options = default) => InstrumentClient(CreateClient(options));
 
         #region Client
         /// <summary>
@@ -102,21 +103,15 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
+        public void FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
         {
-            var client = CreateInstrumentedClient();
+            var options = new FormRecognizerClientOptions();
+            var transport = TransportFailureTestHelpers.ConfigureConnectionFailure(options, IsAsync);
+            var client = CreateInstrumentedClient(options);
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
 
-            try
-            {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-                await client.StartRecognizeContentFromUriAsync(uri);
-            }
-            catch (AggregateException ex)
-            {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
-            }
+            TransportFailureTestHelpers.AssertRetryFailure(
+                async () => await client.StartRecognizeContentFromUriAsync(uri), options, transport);
         }
 
         #endregion
